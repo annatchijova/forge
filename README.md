@@ -69,6 +69,29 @@ reproduce, challenge, or verify.
 
 ---
 
+## Architecture at a glance
+
+FORGE is not a single script that scans a repository and prints findings. It
+is a small set of layers, each with one job, composed by one runtime:
+
+| Layer | Lives in | Responsibility |
+|---|---|---|
+| **Core** | `forge/models.py`, `canonical.py`, `sealing.py`, `metrics.py`, `severity.py`, `io.py` | Typed data contracts, canonical serialization, SHA-256 sealing, run metrics |
+| **Specialized agents** | `forge/agents/*.py` | Single-responsibility detectors (Archaeologist, Bug Investigator, Security Auditor, Integrity Inspector, Report Composer, Patch Reviewer, Recommendation Agent) |
+| **Governance skills** | `forge/governance/runtime.py`, `forge/skills/*` | Executable, versioned contracts loaded by domain applicability, not hardcoded into the core |
+| **Harness** | `forge/harness/*.py` | Mines weaknesses from sealed runs, proposes bounded fixes, validates against the real held-in/held-out test suite |
+| **Tracing** | `forge/tracing.py`, `forge/cronos/*` | Event-level, tamper-evident record of what the runtime *did*, sealed alongside findings |
+| **Orchestration** | `forge/runtime.py`, `orchestrator.py`, `mcp_server.py`, `cli.py` | The single execution engine and its three thin frontends |
+| **Reporting** | `forge/report.py`, `tiered_report.py` | Self-contained HTML at multiple detail tiers |
+
+No agent reasons on another agent's behalf, and the orchestrator does not
+delegate open-ended judgment to anything: **each agent has a verifiable
+responsibility and an explicit contract. The runtime coordinates a pipeline
+in which hypotheses, evidence, and conclusions stay visibly separate** —
+never a single black box that says "trust me, I found a bug."
+
+---
+
 ## Engineering philosophy
 
 FORGE is built around one principle:
@@ -156,24 +179,39 @@ another agent's conclusions: findings are merged into one
 
 ---
 
-## Two orchestrator entry points
-
 ## Unified runtime and frontends
 
 `forge.Runtime` is the single execution engine. It owns discovery, triage,
 domain hypotheses, executable skill contracts, findings, sealing, and report
-artifacts. CLI, MCP, and Python callers are frontends over this same engine.
+artifacts. The four supported frontends are thin adapters over this same
+engine:
+
+| Mode | Entry point | Use case |
+|---|---|---|
+| **Python API** | `from forge import Runtime` | Embed an audit in Python code or tests. |
+| **CLI** | `python3 -m forge audit ...` | Run audits and render reports from a shell or CI job. |
+| **Orchestrator** | `python3 -m forge.orchestrator ...` | Use the backward-compatible orchestration entry point. |
+| **MCP** | `python3 -m forge.mcp_server` | Expose the same operations through MCP tools. |
+
+CI is an invocation environment, not a fifth FORGE frontend: the CLI can run
+inside CI, and CI configuration is only reported as a detected repository
+stack when present.
 
 ```python
 from forge import Runtime
 result = Runtime().audit("/path/to/repository", "forge-run")
 ```
 
-The fully automated CLI is `python3 -m forge audit /path/to/repository -o
-forge-run`. MCP exposes the same runtime through triage, domain inference,
-skill listing/execution, audit, sealing, verification, and report tools.
+The fully automated CLI is:
+
+```bash
+python3 -m forge audit /path/to/repository -o forge-run --max-connected 100
+```
+
+MCP exposes the same runtime through triage, domain inference, skill
+listing/execution, audit, sealing, verification, and report tools.
 `run_pipeline()` and `run_specialized_pipeline()` remain compatibility wrappers
-around `Runtime.audit()`.
+around `Runtime.audit()` for Python callers and the orchestrator frontend.
 
 ### `forge.orchestrator.run_pipeline()` — the original 5-stage pipeline
 
@@ -226,7 +264,7 @@ discovery, governance skills, findings, sealing, and reports.
 
 ### Agent status: seventh agent is optional
 
-FORGE currently has exactly six agent modules:
+FORGE currently has exactly seven agent modules:
 
 | Agent | Automatic repository scan | Role |
 |---|---:|---|
@@ -257,6 +295,20 @@ The same operation is available as the optional MCP tool
 `recommend_changes`.
 
 ## CRONOS as FORGE infrastructure
+
+CRONOS and FORGE answer two different questions, and neither substitutes for
+the other:
+
+* **CRONOS asks: what did the system do?** — the event-level trace of the
+  runtime itself: which stage ran, in what order, what it read, what it
+  decided to skip.
+* **FORGE asks: what did the system find?** — the sealed findings, discarded
+  hypotheses, and coverage that make up the actual audit result.
+
+One audits the process; the other audits the software. FORGE's sealed
+`audit-trace.json` is where they meet: it is CRONOS's answer, cryptographically
+bound to FORGE's answer, so a verifier can confirm not just *that* findings
+weren't altered, but *how the run that produced them actually proceeded*.
 
 CRONOS is a private project owned by the FORGE maintainer and is not a user
 dependency or a public repository requirement. We use its strongest ideas
@@ -351,6 +403,32 @@ SHA-256 chain-of-custody block, all in one file with no external assets.
 
 ---
 
+## Artifacts, not one giant JSON
+
+A single `Runtime().audit()` run writes separate files rather than one
+undifferentiated blob:
+
+```
+triage-manifest.json                every module's classification
+hypotheses-manifest.json            candidates generated before verification
+verification-manifest.json          findings + discarded, pre-seal
+verification-manifest.sealed.json   the SHA-256 hash chain
+coverage-report.json                discovered/analyzed/skipped, with reasons
+skills-runtime.json                 governance-skill applicability + findings
+metrics.json                        per-agent counts and examination summaries
+audit-trace.json                    the CRONOS-derived event trace, sealed
+forge-report.html                   the self-contained human-readable report
+```
+
+Splitting these on purpose, instead of nesting everything into one report
+object, is what makes it possible to: reuse one stage's output without
+recomputing the others; inspect a single stage in isolation when something
+looks wrong; version each format independently as it evolves; and consume
+any of it from MCP (`get_coverage`, `get_findings`, `verify_seal`, ...)
+without parsing HTML.
+
+---
+
 ## Sealing
 
 Every completed `run_specialized_pipeline()` and `run_pipeline()` call
@@ -375,6 +453,35 @@ domain hypothesis determines applicability. At present,
 `validate-at-the-boundary` is the complete executable reference plugin; the
 remaining catalog is not represented as active checks merely because its
 documentation exists.
+
+A governance skill is not a hardcoded `if float(): finding` check bolted onto
+the core. It is a pipeline stage:
+
+```
+module
+   │
+   ▼
+domain hypothesis            (infer_domains: machine_learning /
+   │                          input_boundary / cryptographic, or none)
+   ▼
+applicable contracts         (each skill's own applicability() decides
+   │                          APPLICABLE / NOT_APPLICABLE / UNDETERMINED)
+   ▼
+executable checks            (each applicable skill's evaluate())
+   │
+   ▼
+findings
+```
+
+A new skill is a new directory under `forge/skills/` with a `manifest.json`
+and a contract class — `forge/governance/runtime.py::load_skills()` discovers
+it by walking `skills_root`, with no change to the core required. That is
+the actual extensibility path today: a compliance, privacy, licensing, or
+performance skill plugs in the same way `validate-at-the-boundary` did.
+Adding a wholly new *specialized agent* (in the `Runtime._audit()` sense,
+like Security Auditor) is a different, less pluggable path — it still means
+touching the runtime — so this extensibility claim is scoped precisely to
+governance skills, not to agents in general.
 
 **Core reasoning** — Abductive Engineering · Red-Team Auditing · Secure by
 Construction · Software Archaeology · Diagnosing Bugs · Codebase Health
@@ -478,6 +585,15 @@ prompt engineering exercise.
 Its goal is not to generate convincing explanations.
 
 Its goal is to produce findings that survive independent scrutiny.
+
+The differentiator is not the detector. "FORGE finds bugs with AI" describes
+a script. What FORGE actually is: a governance runtime for reproducible
+audits, where the detector is one replaceable layer among several — agents,
+governance skills, a sealed trace, tiered reporting — each with its own
+verifiable contract. A compliance, privacy, or licensing skill can be added
+the same way `validate-at-the-boundary` was, without touching the core.
+That is the difference between "an auditor" and a platform where the audits
+themselves are traceable, reproducible, and governed by contracts.
 
 ## License
 
