@@ -1,0 +1,735 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>FORGE standard report</title>
+<style>
+:root{--bg:#E3B8B8;--bg-elevated:#FFFFFF;--bg-sunken:#E8E9E3;--ink:#1C2222;--ink-muted:#5B6460;--rule:#D5D6CE;--accent:#2B5D63;--ok:#3C7A52;--fail:#A8501C;--serif:Georgia,"Times New Roman",serif;--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}.wrap{max-width:1180px;margin:0 auto;padding:0 24px 56px}header{border-bottom:2px solid var(--ink);padding:40px 0 22px;margin-bottom:36px}h1{font:600 clamp(28px,4vw,40px) var(--serif);margin:0 0 18px}h2{font:600 21px var(--serif);color:var(--accent);border-bottom:1px solid var(--rule);padding-bottom:10px}h3{font:600 17px var(--serif);margin-bottom:6px}section{background:var(--bg-elevated);border:1px solid var(--rule);border-radius:3px;margin:24px 0;padding:22px 24px;box-shadow:0 4px 14px rgba(28,34,34,.06)}#seal p{display:inline-block;background:#DFEDE2;color:#2A5A3C;border-radius:14px;padding:6px 12px;font:12px var(--mono);letter-spacing:.04em}.finding{background:var(--bg);border:1px solid var(--rule);border-left:4px solid var(--accent);border-radius:3px;padding:14px 18px;margin:14px 0}.finding p:first-of-type{color:var(--ink-muted);font:12px var(--mono)}pre{background:var(--bg-sunken);border-radius:3px;padding:12px 14px;overflow:auto;white-space:pre-wrap;font:13px/1.5 var(--mono)}#limitations h2,#discarded h2{color:var(--fail)}
+</style>
+</head><body><div class='wrap'><header><h1>FORGE standard report</h1></header><section id='seal'><h2>Seal status</h2><p>VERIFIED</p></section><section id='findings'><h2>Findings</h2><article class='finding'><h3>src/report_exporter.py</h3><p>Agent: integrity_inspector · Severity: MEDIUM · Category: OBSERVED · Outcome: OBSERVED</p><p>non-deterministic arithmetic in a decision-adjacent path</p><pre>src/report_exporter.py:24: non-deterministic arithmetic in a decision-adjacent path</pre></article><article class='finding'><h3>src/report_exporter.py</h3><p>Agent: integrity_inspector · Severity: MEDIUM · Category: OBSERVED · Outcome: OBSERVED</p><p>unversioned serialization</p><pre>src/report_exporter.py:62: unversioned serialization</pre></article><article class='finding'><h3>src/report_exporter.py</h3><p>Agent: integrity_inspector · Severity: MEDIUM · Category: OBSERVED · Outcome: OBSERVED</p><p>unversioned serialization</p><pre>src/report_exporter.py:168: unversioned serialization</pre></article><article class='finding'><h3>src/stylometry_core/commit_atomicity_core.py</h3><p>Agent: integrity_inspector · Severity: MEDIUM · Category: OBSERVED · Outcome: OBSERVED</p><p>unversioned serialization</p><pre>src/stylometry_core/commit_atomicity_core.py:92: unversioned serialization</pre></article><article class='finding'><h3>src/stylometry_core/syntax_fingerprint_core.py</h3><p>Agent: integrity_inspector · Severity: MEDIUM · Category: OBSERVED · Outcome: OBSERVED</p><p>unversioned serialization</p><pre>src/stylometry_core/syntax_fingerprint_core.py:117: unversioned serialization</pre></article><article class='finding'><h3>src/stylometry_core/identifier_fingerprint_core.py</h3><p>Agent: integrity_inspector · Severity: MEDIUM · Category: OBSERVED · Outcome: OBSERVED</p><p>unversioned serialization</p><pre>src/stylometry_core/identifier_fingerprint_core.py:167: unversioned serialization</pre></article></section><section id='limitations'><h2>Limitations</h2><ul><li>The seal proves findings were not altered after sealing.</li><li>The seal does not prove findings are correct.</li><li>A full-access attacker can forge a consistent replacement chain from scratch.</li></ul></section><section id='discarded'><h2>Discarded hypotheses</h2><pre>[
+  {
+    "module_path": "src/stylometry_core/syntax_fingerprint_core.py",
+    "reason": "AST proves known parser exception handler."
+  }
+]</pre></section><section id='coverage'><h2>Per-module coverage</h2><pre>{
+  ".dockerignore": {
+    "coverage": "non_python_not_analyzed"
+  },
+  ".env.agent.example": {
+    "coverage": "non_python_not_analyzed"
+  },
+  ".gcloudignore": {
+    "coverage": "non_python_not_analyzed"
+  },
+  ".git/COMMIT_EDITMSG": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/HEAD": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/config": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/description": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/applypatch-msg.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/commit-msg.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/fsmonitor-watchman.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/post-update.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/pre-applypatch.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/pre-commit.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/pre-merge-commit.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/pre-push.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/pre-rebase.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/pre-receive.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/prepare-commit-msg.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/push-to-checkout.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/sendemail-validate.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/hooks/update.sample": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/index": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/info/exclude": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/logs/HEAD": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/logs/refs/heads/main": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/logs/refs/heads/test/impostor-attack": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/logs/refs/heads/test/suspicious-commit": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/logs/refs/remotes/github/main": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/logs/refs/remotes/origin/main": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/logs/refs/remotes/origin/test/impostor-attack": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/logs/refs/remotes/origin/test/suspicious-commit": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/06/9c7c99ad122afe0c23c2e6e1c818d21a6ef4c5": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/08/2ef1b9623ef5bcd0d929c6f50b4f21c644e2c6": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/09/96237a385c440281dd540eeb1d24f041c4d38c": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/0d/eabcfd7ee37f00077bccd6a6241b55a0b848ae": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/0e/790aad87594b59dfb46177e0b89c6bdf6faf88": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/0f/3a8d3043f8dfdacb5babc128be1a5b52964b6f": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/15/a6c6dbb59524790487c8eb4f9cefc103ac9524": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/18/f4e6a1438e94fb73c2d10988be681d3dc92222": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/1a/cc4892fdceff63022e772ce633994e4367b1c3": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/1e/77647c007fe20132168677b5df06d76a4e5eaa": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/21/02effd0942f4d2963238581299b6afb9d2e10f": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/23/39732d113d75292985fb6ac498b3bb720266d4": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/23/d67636af4df2bb438e6d98a276528cf5cbdcb4": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/26/4e7bcc412d54a427b252bb0f302f4d425f213d": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/2c/613a8b2ec5e10801fe2a59ca525dcfa119f2d0": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/2c/a7f550c6ae8382890f94698dad465e580bc13a": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/2d/781701ccc806c919914a83162716b841afe99b": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/2f/cb169d709287b7f71c05cb8d6add17b3d79735": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/32/ec9f70c6cc11fd041f8cffedeb59f3f2328e5f": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/33/1bc3c91067ab698f721972f9382e3139c89986": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/33/4bd251d57a1bd126736b3c343375dd2586cfaf": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/33/5c9fce4bd8dce16f0807c48d9edd06644b34ea": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/33/855b91dc4e7d3ffe6f27b1d2817415dc3fa998": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/34/5f3b4db69831526086cc54ec13822724cf7cb0": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/37/a81a38ee548f6d38d62620a88a18f007f711ef": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/39/558e385c9829e07414e17c911f1b4f7a2bb43c": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/3b/d274e1bb9096af96553451db42b03c8d69d942": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/3d/0be8917d9210ec55335703d99d2b45b25e2af9": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/40/90a97de3cab03f38d7a45c470dfaeb6108a0ff": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/41/8877d9a9f24d356815ab003563e9e5e330fe80": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/45/471e3cd0ed8dc3b480b2a0c005b5446149aedf": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/46/877601faf3c72709024fd51aebe63e831fccbd": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/46/c2848829ec141901947e1582544567ac4c8c8d": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/49/cb7a525cf715ae78e3954dcd0195f0b499c47d": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/4a/7b459f116d8b6fee6176b16e2473df8a40d05b": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/4d/3726578d3aa49b82d153bacc6a97eab1b7fb5b": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/4e/1efddd73311b3a9e14cec6b82d90cd9e2a0f5d": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/51/38ce2ab9e4a33a9845e9365fa272bb4ff7250b": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/54/92881dfb59fd98a4917e4292a833fe7b57ed59": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/58/ad916aef7ba9b3ab5739babd4e3571daee1c74": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/5b/d4c853b6c94b18e3c9c307438da29f1edc952a": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/5c/d5dea7beacddaaaf40d276f2d7648840b07604": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/60/56b56beff444d5fd8913c0a21847c97bb8564b": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/60/6822077c2b25bccb30a11a2719581a1bf29e15": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/61/08f42a7a6a17d37278c808a514fd104f70b047": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/61/8402b4817bcc6e41ce6a5e76bf170b1f47de71": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/63/3746c44a777cee490bd303b49628575b804c21": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/67/f14c06392e6a8309cc13e97c16c201f0ee1ed8": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/6a/42eb140833bb73333c271082592caf4c343286": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/6c/5e468ac948d4eadae55544958c0a752a49872e": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/6d/7ea029635a038e2f97d6dcb41ec91edb4f07f9": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/6e/a900501f652a79bc63f751b9898f73604457ce": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/70/fe9e801b5a638f57fda0d6b4f0f022780ed885": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/76/ae540329d654fe38d3a0942aeadaeb2b9f8872": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/77/948e52d1ac19e64a6d03c6ce86cad3742023ea": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/79/c57a0e367ad1d35ecedb0eb39d84a53a9cba01": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/7a/3afa9b6137476f7d4a4ce8ca3477d32ac336ef": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/7d/c5269229b5017cbdf79ff0a1c6ce009feb6b57": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/7e/f981da37dc1002ef01d2db4546469a7e536a0c": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/86/eea94aab3124b6e9c4ad89c1aaf0dcec121222": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/87/b55eebb08fcd3bd59ea8c72a7ba3ee11f6e306": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/8a/c8b6a0aceb2b7e7b6ebd75d29636085ab0fcc7": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/8e/e3c47317e26ed9b653c9221cc11daac54b5792": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/8f/d4062d4bfd5485829f94c146e5f06833f1b752": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/91/82d51d02bcc48875851c75c6401614ac4e1800": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/93/b0e1ae5543344f55c91e9b3edbe20802dc7e25": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/96/3208597fe09949b1e8b037782af67b167889a7": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/99/e9756ce3330cbfcd937ba1a24674ec42e89c06": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/9a/317cff357f162359622ca61e5d6b7634e6dc4f": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/9e/83d74f99261cae80e2920148d6d5b298d3886e": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/9f/092e2bdfe35a76bd5f305ee214d7eaa4116a62": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/a1/93c5198bcc2889c0ba23791dc1c4a53dd98385": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/a4/b70804d3412dcabb26bc1c6ef383a85807efe5": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/a5/f343be3131d4d3b029d8dfbd877f3f4621575f": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/a6/57afa5bf80a18a305328b6340f95ceb15cd14b": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/a6/98476b7adc773b083088b68f2abb7b5e75d19e": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/aa/4a2dc21f326ad99ffb61b58701287309952e58": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/ac/0501d3c60cd7a309d28f1e65a0aa706e07cfd4": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/ac/17b416164f77b097dd3dd6cec1c7cf09ab5a4e": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/b0/a6ec5ab6184a297b60c2cdef50c084d3641585": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/b0/daaa24662dea8dd7c99aaf21007e7d57c10460": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/b1/157f1c8cce9d0afab876734f44fb256a07e418": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/b3/c9ab9c86d682675e0d06a5146fb664a16559a5": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/b8/743b38953f5d550f94c7ac002429cc63345d8e": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/ba/27ec9a74948ccbacd9dce9d19d8cc3e462be7f": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/ba/5d8553c4f7f43222a60acb81b041503bf0eef6": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/bb/8e58e6d63dff5cc04ecc25515cbec434ea1255": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/bc/ffe7368251132c7943f71e106a84c6f18e633f": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/be/ff26843d94a297f68e8bae251b9efe71118472": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/c1/2cde0f44794af38ad14a637038518d9d76703e": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/c1/ee9a8dfe8ff43f5298cd61f86becde5f30a271": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/c4/50df7f57bc9740b58e5079820dbe192f33ee30": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/c5/2ae997270fbbd62e1eab734f7cd74981794172": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/c9/fe8575e98e4c6d874ae889f23e39407aa48ba3": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/ce/2f6fda95a2ec5fe410d9629053a403bbe1b2a5": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/ce/ed70949939def7805178dbfb144ffd323db6c4": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/d2/97aae07336f81e59dff88a72c1fa961add3230": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/d4/63b91fb0652fbbb1f51553c6b7c8536b26ca50": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/d5/b09ba873aff308a3a45f114f1305e9bad4c011": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/d6/45695673349e3947e8e5ae42332d0ac3164cd7": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/d7/d65af871e850fc5e1ead4f8cb17399de0dae3e": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/da/baa9db8fe4ab71c25cf4a07306fb6a09f3dcf2": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/db/654d88cd944f3e0205703fd2f4d230eacbd6a1": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/dc/57b8524a9f8ab7c05a1cba5d05960f9ff315bd": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/dc/aae4f37463318ce44fec753a94e36e8bdb0ef5": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/dd/096019914bd3dd228e16197239454c4d128a72": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/dd/f0cbee087704a21849666164c50be832af2ddd": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/de/d1c66b7454203d5c82dea4484f4de47f6cd60f": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/e4/6734d039d065cbe968274f1b97337ac0742e14": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/e6/d8b90829ea62fc0520a01a7d94573825816dac": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/ea/6c6b897e47ab088f17b452afd765b026c5f894": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/eb/31f72de5aac836e17a36fb6ccf3b0ef8f1055c": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/f5/d8b80f0b38c0e6d2871ec994a0928264e99708": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/f9/6c2a47c1d8b996c4d9c0c99d79dc0e8786169f": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/fc/119f26b53ef5be55903bec693bdd2b5f4d651c": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/objects/fe/ab401de23f0f41ecb48c4479f694988d10117b": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/refs/heads/main": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/refs/heads/test/impostor-attack": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/refs/heads/test/suspicious-commit": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/refs/remotes/github/main": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/refs/remotes/origin/main": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/refs/remotes/origin/test/impostor-attack": {
+    "coverage": "excluded_by_policy"
+  },
+  ".git/refs/remotes/origin/test/suspicious-commit": {
+    "coverage": "excluded_by_policy"
+  },
+  ".gitignore": {
+    "coverage": "non_python_not_analyzed"
+  },
+  ".gitlab-ci.yml": {
+    "coverage": "non_python_not_analyzed"
+  },
+  ".pytest_cache/.gitignore": {
+    "coverage": "excluded_by_policy"
+  },
+  ".pytest_cache/CACHEDIR.TAG": {
+    "coverage": "excluded_by_policy"
+  },
+  ".pytest_cache/README.md": {
+    "coverage": "excluded_by_policy"
+  },
+  ".pytest_cache/v/cache/lastfailed": {
+    "coverage": "excluded_by_policy"
+  },
+  ".pytest_cache/v/cache/nodeids": {
+    "coverage": "excluded_by_policy"
+  },
+  "Dockerfile": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "Dockerfile.agent": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "LICENSE": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "README.md": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "__pycache__/conftest.cpython-312-pytest-9.0.3.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "adk_agent/__init__.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "adk_agent/agent.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "agent.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "conftest.py": {
+    "triage": "DEAD_WEIGHT"
+  },
+  "data/dev_profiles.db": {
+    "coverage": "binary_or_unreadable"
+  },
+  "docker-compose.yml": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "gemini_agent.py": {
+    "triage": "FOSSIL_HIGH_RISK"
+  },
+  "index.html": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "know_limitations.md": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "main.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "mcp/Dockerfile": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "mcp/docker-compose.yml": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "mcp/requirements.txt": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "photos/1.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "photos/2.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "photos/3.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "photos/4.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "photos/5.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "photos/6.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "photos/logo.jpeg": {
+    "coverage": "binary_or_unreadable"
+  },
+  "requirements-agent.txt": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "requirements.txt": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "screenshots/1.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "screenshots/3.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "screenshots/4.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "screenshots/5.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "screenshots/6.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "screenshots/7.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "screenshots/8.png": {
+    "coverage": "binary_or_unreadable"
+  },
+  "src/__init__.py": {
+    "triage": "DUPLICATE"
+  },
+  "src/__pycache__/migrate_db.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/__pycache__/pipeline_gate.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/__pycache__/policy_engine.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/__pycache__/report_exporter.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/agent_tools_api.py": {
+    "triage": "FOSSIL_HIGH_RISK"
+  },
+  "src/generate_benign_edge_cases.py": {
+    "triage": "DEAD_WEIGHT"
+  },
+  "src/generate_synthetic_profiles.py": {
+    "triage": "DEAD_WEIGHT"
+  },
+  "src/gitlab_mcp_server.py": {
+    "triage": "FOSSIL_HIGH_RISK"
+  },
+  "src/hydrate_profiles.py": {
+    "triage": "DEAD_WEIGHT"
+  },
+  "src/migrate_db.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "src/pipeline_gate.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "src/policy_engine.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "src/report_exporter.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "src/setup_demo_db.py": {
+    "triage": "DEAD_WEIGHT"
+  },
+  "src/static/index.html": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "src/stylometry_core/__init__.py": {
+    "triage": "DUPLICATE"
+  },
+  "src/stylometry_core/__pycache__/__init__.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/stylometry_core/__pycache__/behavioral_core.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/stylometry_core/__pycache__/commit_atomicity_core.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/stylometry_core/__pycache__/entropy_core.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/stylometry_core/__pycache__/identifier_fingerprint_core.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/stylometry_core/__pycache__/nlp_metrics.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/stylometry_core/__pycache__/register_drift_core.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/stylometry_core/__pycache__/semiotic_core.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/stylometry_core/__pycache__/syntax_fingerprint_core.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "src/stylometry_core/behavioral_core.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "src/stylometry_core/commit_atomicity_core.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "src/stylometry_core/entropy_core.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "src/stylometry_core/identifier_fingerprint_core.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "src/stylometry_core/nlp_metrics.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "src/stylometry_core/register_drift_core.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "src/stylometry_core/semiotic_core.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "src/stylometry_core/syntax_fingerprint_core.py": {
+    "triage": "CONNECTED_ALIVE"
+  },
+  "src/suspicious_hotfix.py": {
+    "triage": "DEAD_WEIGHT"
+  },
+  "stylometry-ci-openapi.yaml": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "stylometry-ci_simulator.html": {
+    "coverage": "non_python_not_analyzed"
+  },
+  "tests/__init__.py": {
+    "triage": "DUPLICATE"
+  },
+  "tests/__pycache__/__init__.cpython-312.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "tests/__pycache__/test_advanced_cores.cpython-312-pytest-9.0.3.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "tests/__pycache__/test_determinism.cpython-312-pytest-9.0.3.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "tests/__pycache__/test_gate.cpython-312-pytest-9.0.3.pyc": {
+    "coverage": "excluded_by_policy"
+  },
+  "tests/test_advanced_cores.py": {
+    "triage": "FOSSIL_HIGH_RISK"
+  },
+  "tests/test_determinism.py": {
+    "triage": "FOSSIL_HIGH_RISK"
+  },
+  "tests/test_gate.py": {
+    "triage": "FOSSIL_HIGH_RISK"
+  }
+}</pre></section><meta id='forge-findings' data-canonical-base64='W3siYWdlbnQiOiJpbnRlZ3JpdHlfaW5zcGVjdG9yIiwiY2F0ZWdvcnkiOiJPQlNFUlZFRCIsImRlc2NyaXB0aW9uIjoibm9uLWRldGVybWluaXN0aWMgYXJpdGhtZXRpYyBpbiBhIGRlY2lzaW9uLWFkamFjZW50IHBhdGgiLCJlcGlzdGVtaWNfbGV2ZWwiOiJDT0RFIEZBQ1QiLCJldmlkZW5jZSI6W3siZGV0YWlsIjoibm9uLWRldGVybWluaXN0aWMgYXJpdGhtZXRpYyBpbiBhIGRlY2lzaW9uLWFkamFjZW50IHBhdGgiLCJraW5kIjoic291cmNlIiwicm9sZSI6InByaW1hcnkiLCJzb3VyY2UiOiJzcmMvcmVwb3J0X2V4cG9ydGVyLnB5OjI0In1dLCJtb2R1bGVfcGF0aCI6InNyYy9yZXBvcnRfZXhwb3J0ZXIucHkiLCJvdXRjb21lIjoiT0JTRVJWRUQiLCJwcm92ZW5hbmNlIjpbIkFTVCIsIlJVTlRJTUVfTk9UX0VYRUNVVEVEIl0sInJlYXNvbmluZyI6IkFTVCBkZXRlY3RvciBlbWl0dGVkIHRoaXMgb2JzZXJ2YXRpb246IGRlY2lzaW9uLWFkamFjZW50LWZsb2F0LiIsInNldmVyaXR5IjoiTUVESVVNIn0seyJhZ2VudCI6ImludGVncml0eV9pbnNwZWN0b3IiLCJjYXRlZ29yeSI6Ik9CU0VSVkVEIiwiZGVzY3JpcHRpb24iOiJ1bnZlcnNpb25lZCBzZXJpYWxpemF0aW9uIiwiZXBpc3RlbWljX2xldmVsIjoiQ09ERSBGQUNUIiwiZXZpZGVuY2UiOlt7ImRldGFpbCI6InVudmVyc2lvbmVkIHNlcmlhbGl6YXRpb24iLCJraW5kIjoic291cmNlIiwicm9sZSI6InByaW1hcnkiLCJzb3VyY2UiOiJzcmMvcmVwb3J0X2V4cG9ydGVyLnB5OjYyIn1dLCJtb2R1bGVfcGF0aCI6InNyYy9yZXBvcnRfZXhwb3J0ZXIucHkiLCJvdXRjb21lIjoiT0JTRVJWRUQiLCJwcm92ZW5hbmNlIjpbIkFTVCIsIlJVTlRJTUVfTk9UX0VYRUNVVEVEIl0sInJlYXNvbmluZyI6IkFTVCBkZXRlY3RvciBlbWl0dGVkIHRoaXMgb2JzZXJ2YXRpb246IHVudmVyc2lvbmVkLXNlcmlhbGl6YXRpb24uIiwic2V2ZXJpdHkiOiJNRURJVU0ifSx7ImFnZW50IjoiaW50ZWdyaXR5X2luc3BlY3RvciIsImNhdGVnb3J5IjoiT0JTRVJWRUQiLCJkZXNjcmlwdGlvbiI6InVudmVyc2lvbmVkIHNlcmlhbGl6YXRpb24iLCJlcGlzdGVtaWNfbGV2ZWwiOiJDT0RFIEZBQ1QiLCJldmlkZW5jZSI6W3siZGV0YWlsIjoidW52ZXJzaW9uZWQgc2VyaWFsaXphdGlvbiIsImtpbmQiOiJzb3VyY2UiLCJyb2xlIjoicHJpbWFyeSIsInNvdXJjZSI6InNyYy9yZXBvcnRfZXhwb3J0ZXIucHk6MTY4In1dLCJtb2R1bGVfcGF0aCI6InNyYy9yZXBvcnRfZXhwb3J0ZXIucHkiLCJvdXRjb21lIjoiT0JTRVJWRUQiLCJwcm92ZW5hbmNlIjpbIkFTVCIsIlJVTlRJTUVfTk9UX0VYRUNVVEVEIl0sInJlYXNvbmluZyI6IkFTVCBkZXRlY3RvciBlbWl0dGVkIHRoaXMgb2JzZXJ2YXRpb246IHVudmVyc2lvbmVkLXNlcmlhbGl6YXRpb24uIiwic2V2ZXJpdHkiOiJNRURJVU0ifSx7ImFnZW50IjoiaW50ZWdyaXR5X2luc3BlY3RvciIsImNhdGVnb3J5IjoiT0JTRVJWRUQiLCJkZXNjcmlwdGlvbiI6InVudmVyc2lvbmVkIHNlcmlhbGl6YXRpb24iLCJlcGlzdGVtaWNfbGV2ZWwiOiJDT0RFIEZBQ1QiLCJldmlkZW5jZSI6W3siZGV0YWlsIjoidW52ZXJzaW9uZWQgc2VyaWFsaXphdGlvbiIsImtpbmQiOiJzb3VyY2UiLCJyb2xlIjoicHJpbWFyeSIsInNvdXJjZSI6InNyYy9zdHlsb21ldHJ5X2NvcmUvY29tbWl0X2F0b21pY2l0eV9jb3JlLnB5OjkyIn1dLCJtb2R1bGVfcGF0aCI6InNyYy9zdHlsb21ldHJ5X2NvcmUvY29tbWl0X2F0b21pY2l0eV9jb3JlLnB5Iiwib3V0Y29tZSI6Ik9CU0VSVkVEIiwicHJvdmVuYW5jZSI6WyJBU1QiLCJSVU5USU1FX05PVF9FWEVDVVRFRCJdLCJyZWFzb25pbmciOiJBU1QgZGV0ZWN0b3IgZW1pdHRlZCB0aGlzIG9ic2VydmF0aW9uOiB1bnZlcnNpb25lZC1zZXJpYWxpemF0aW9uLiIsInNldmVyaXR5IjoiTUVESVVNIn0seyJhZ2VudCI6ImludGVncml0eV9pbnNwZWN0b3IiLCJjYXRlZ29yeSI6Ik9CU0VSVkVEIiwiZGVzY3JpcHRpb24iOiJ1bnZlcnNpb25lZCBzZXJpYWxpemF0aW9uIiwiZXBpc3RlbWljX2xldmVsIjoiQ09ERSBGQUNUIiwiZXZpZGVuY2UiOlt7ImRldGFpbCI6InVudmVyc2lvbmVkIHNlcmlhbGl6YXRpb24iLCJraW5kIjoic291cmNlIiwicm9sZSI6InByaW1hcnkiLCJzb3VyY2UiOiJzcmMvc3R5bG9tZXRyeV9jb3JlL3N5bnRheF9maW5nZXJwcmludF9jb3JlLnB5OjExNyJ9XSwibW9kdWxlX3BhdGgiOiJzcmMvc3R5bG9tZXRyeV9jb3JlL3N5bnRheF9maW5nZXJwcmludF9jb3JlLnB5Iiwib3V0Y29tZSI6Ik9CU0VSVkVEIiwicHJvdmVuYW5jZSI6WyJBU1QiLCJSVU5USU1FX05PVF9FWEVDVVRFRCJdLCJyZWFzb25pbmciOiJBU1QgZGV0ZWN0b3IgZW1pdHRlZCB0aGlzIG9ic2VydmF0aW9uOiB1bnZlcnNpb25lZC1zZXJpYWxpemF0aW9uLiIsInNldmVyaXR5IjoiTUVESVVNIn0seyJhZ2VudCI6ImludGVncml0eV9pbnNwZWN0b3IiLCJjYXRlZ29yeSI6Ik9CU0VSVkVEIiwiZGVzY3JpcHRpb24iOiJ1bnZlcnNpb25lZCBzZXJpYWxpemF0aW9uIiwiZXBpc3RlbWljX2xldmVsIjoiQ09ERSBGQUNUIiwiZXZpZGVuY2UiOlt7ImRldGFpbCI6InVudmVyc2lvbmVkIHNlcmlhbGl6YXRpb24iLCJraW5kIjoic291cmNlIiwicm9sZSI6InByaW1hcnkiLCJzb3VyY2UiOiJzcmMvc3R5bG9tZXRyeV9jb3JlL2lkZW50aWZpZXJfZmluZ2VycHJpbnRfY29yZS5weToxNjcifV0sIm1vZHVsZV9wYXRoIjoic3JjL3N0eWxvbWV0cnlfY29yZS9pZGVudGlmaWVyX2ZpbmdlcnByaW50X2NvcmUucHkiLCJvdXRjb21lIjoiT0JTRVJWRUQiLCJwcm92ZW5hbmNlIjpbIkFTVCIsIlJVTlRJTUVfTk9UX0VYRUNVVEVEIl0sInJlYXNvbmluZyI6IkFTVCBkZXRlY3RvciBlbWl0dGVkIHRoaXMgb2JzZXJ2YXRpb246IHVudmVyc2lvbmVkLXNlcmlhbGl6YXRpb24uIiwic2V2ZXJpdHkiOiJNRURJVU0ifV0='></div></body></html>

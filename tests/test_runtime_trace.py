@@ -58,3 +58,29 @@ def test_cronos_store_cannot_write_inside_the_audited_repository(tmp_path):
     (tmp_path / "main.py").write_text("x = 1\n")
     with pytest.raises(ValueError, match="outside the audited repository"):
         Runtime(cronos_db=tmp_path / "cronos.sqlite3").audit(tmp_path, tmp_path / "out")
+
+
+def test_seal_results_requires_a_forge_source_attestation(tmp_path):
+    (tmp_path / "main.py").write_text("x = 1\n")
+    result = Runtime().audit(tmp_path, tmp_path / "out")
+    verification = tmp_path / "out" / "verification-manifest.json"
+    sealed = Runtime().seal_results(verification, tmp_path / "res ealed.json")
+    assert sealed.exists()
+
+    fabricated = json.loads(verification.read_text())
+    fabricated.pop("source_attestation", None)
+    fake = tmp_path / "fake.json"
+    fake.write_text(json.dumps(fabricated))
+    with pytest.raises(ValueError, match="source attestation"):
+        Runtime().seal_results(fake, tmp_path / "fake.sealed.json")
+
+
+def test_seal_results_rejects_manifest_tampered_after_audit(tmp_path):
+    (tmp_path / "main.py").write_text("x = 1\n")
+    Runtime().audit(tmp_path, tmp_path / "out")
+    verification = tmp_path / "out" / "verification-manifest.json"
+    data = json.loads(verification.read_text())
+    data["root"] = "/fabricated"
+    verification.write_text(json.dumps(data))
+    with pytest.raises(ValueError, match="source attestation"):
+        Runtime().seal_results(verification, tmp_path / "tampered.sealed.json")

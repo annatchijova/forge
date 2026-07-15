@@ -1,0 +1,508 @@
+{
+  "applicability": {
+    "adk_agent/__init__.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "adk_agent/agent.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "agent.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "conftest.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "gemini_agent.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "main.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "src/__init__.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "src/agent_tools_api.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "src/generate_benign_edge_cases.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "src/generate_synthetic_profiles.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "src/gitlab_mcp_server.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "src/hydrate_profiles.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "src/migrate_db.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "src/pipeline_gate.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "src/policy_engine.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "src/report_exporter.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "src/setup_demo_db.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "src/stylometry_core/__init__.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "src/stylometry_core/behavioral_core.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "src/stylometry_core/commit_atomicity_core.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "src/stylometry_core/entropy_core.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "src/stylometry_core/identifier_fingerprint_core.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "src/stylometry_core/nlp_metrics.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "src/stylometry_core/register_drift_core.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "src/stylometry_core/semiotic_core.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "src/stylometry_core/syntax_fingerprint_core.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "src/suspicious_hotfix.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "tests/__init__.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "tests/test_advanced_cores.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "tests/test_determinism.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "tests/test_gate.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    }
+  },
+  "domain_hypotheses": [
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "adk_agent/__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "adk_agent/agent.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "agent.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "conftest.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "gemini_agent.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "main.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/agent_tools_api.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/generate_benign_edge_cases.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/generate_synthetic_profiles.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/gitlab_mcp_server.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/hydrate_profiles.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/migrate_db.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/pipeline_gate.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/policy_engine.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "src/report_exporter.py"
+        }
+      ],
+      "module_path": "src/report_exporter.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/setup_demo_db.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/stylometry_core/__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/stylometry_core/behavioral_core.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "src/stylometry_core/commit_atomicity_core.py"
+        }
+      ],
+      "module_path": "src/stylometry_core/commit_atomicity_core.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/stylometry_core/entropy_core.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "src/stylometry_core/identifier_fingerprint_core.py"
+        }
+      ],
+      "module_path": "src/stylometry_core/identifier_fingerprint_core.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/stylometry_core/nlp_metrics.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/stylometry_core/register_drift_core.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/stylometry_core/semiotic_core.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "src/stylometry_core/syntax_fingerprint_core.py"
+        }
+      ],
+      "module_path": "src/stylometry_core/syntax_fingerprint_core.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "src/suspicious_hotfix.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "tests/__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "tests/test_advanced_cores.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "cryptographic"
+      ],
+      "evidence": [
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "tests/test_determinism.py"
+        }
+      ],
+      "module_path": "tests/test_determinism.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "tests/test_gate.py"
+    }
+  ],
+  "findings": [],
+  "limitations": []
+}

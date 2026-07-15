@@ -26,7 +26,8 @@ class ModelRouting:
 
     Built-in FORGE agents currently execute deterministic Python detectors and
     do not invoke an LLM. This shared configuration surface records intended
-    routing without pretending that a model was called.
+    routing without pretending that a model was called; configured model names
+    are inert metadata until a model-backed adapter is explicitly installed.
     """
 
     orchestrator: str | None = None
@@ -248,5 +249,6 @@ class VerificationManifest:
     ast_unverified_families: tuple[str, ...] = ()
     induction: tuple[dict[str, str], ...] = ()
     repository_snapshot_sha256: str | None = None
+    source_attestation: str | None = None
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

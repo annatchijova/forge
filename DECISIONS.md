@@ -348,3 +348,41 @@ the global disposition abstains. In particular:
 The same boundary is reflected in the self-assessment metrics. A qualitative
 confidence boundary is reported instead of an invented numeric score. This
 keeps the VIGÍA lesson intact while preserving FORGE's code-audit vocabulary.
+## Git ref auditing
+
+`Runtime.audit_ref()` audits a branch, tag, or commit by resolving the ref with
+`git rev-parse --verify` and extracting its committed tree with `git archive`
+into an isolated temporary directory. It never performs checkout, reset, merge,
+index updates, or writes to the audited repository. The trace records both the
+requested ref and its resolved commit SHA before the audit is sealed.
+
+`git archive` reads exactly the committed tree. Untracked files and uncommitted
+working-tree changes are intentionally not included. This is correct for CI
+and branch governance, where the audited unit is a committed ref, but it must
+not be confused with auditing the caller's local working directory.
+
+`Runtime.compare_refs()` audits base and head independently, then compares their
+verified sealed manifests into `new`, `resolved`, and `unchanged` findings. It
+also records the merge-base-derived changed file list and both resolved commit
+SHAs. The two audit directories remain available under the comparison output
+for independent verification.
+
+## Proposal loops and authority boundaries
+
+The optional proposal loop is a separate concern from the audit MCP. The audit
+MCP produces the sealed forensic evidence; the loop consumes that evidence and
+may propose or temporarily apply a patch, but it cannot edit the original
+repository or alter a sealed manifest.
+
+The loop uses a detached Git worktree for patch application and test execution.
+Each iteration is bounded and re-audited by the normal FORGE runtime. Only the
+re-audit can classify a finding as resolved. A proposal provider may be
+`deterministic`, `human`, or an explicitly configured `llm` adapter. The
+deterministic and human paths require no model credits. The current `llm`
+provider abstains when no adapter is installed; it never pretends that a model
+was called.
+
+The state machine records `AUDITED`, `PATCH_PROPOSED`,
+`PATCH_APPLIED_TEMPORARILY`, `TESTED`, `REAUDITED`, `CONVERGED`,
+`STILL_PRESENT`, and explicit abstention/failure states. A model or human may
+author a proposal; FORGE remains the judge.

@@ -6,6 +6,8 @@ governance execution live here. The engine is deliberately UI-agnostic.
 from __future__ import annotations
 import ast
 import json
+import shutil
+import tempfile
 import time
 from contextlib import nullcontext
 from dataclasses import asdict, dataclass, replace
@@ -29,6 +31,8 @@ from forge.reporting import render_dashboard
 from forge.sealing import read_and_verify, write_sealed_manifest
 from forge.tracing import RuntimeTrace
 from forge.verification import verify_hypotheses, write_verification_manifest
+from forge.git_refs import archive_ref, changed_files, resolve_ref
+from forge.attestation import attest_manifest, verify_manifest_attestation
 
 def _coverage(root: Path, families=(), discovered=None) -> CoverageReport:
     discovered = discovered if discovered is not None else discover_files(root, include_excluded=True)
@@ -149,7 +153,8 @@ class Runtime:
         if skill_name not in known: raise ValueError(f"unknown skill: {skill_name}")
         return type(result)(tuple(f for f in result.findings if f.agent == skill_name), result.hypotheses, {path: {skill_name: states.get(skill_name, "NOT_APPLICABLE")} for path, states in result.applicability.items()}, result.limitations)
 
-    def audit(self, repo: str | Path, output_dir: str | Path, max_connected: int | None = None) -> AuditResult:
+    def audit(self, repo: str | Path, output_dir: str | Path, max_connected: int | None = None,
+              ref_context: dict[str, Any] | None = None) -> AuditResult:
         trace = RuntimeTrace()
         cronos_context = nullcontext(None)
         store = None
@@ -163,7 +168,7 @@ class Runtime:
             cronos_context = CronosTracer(store, "forge-runtime", "", "", objective=f"Audit repository {Path(repo).resolve()}")
         with cronos_context as cronos:
             try:
-                return self._audit(repo, output_dir, max_connected, trace, cronos)
+                return self._audit(repo, output_dir, max_connected, trace, cronos, ref_context)
             except Exception as exc:
                 self._event(trace, cronos, "run_failed", exception_type=type(exc).__name__, message=str(exc))
                 try:
@@ -173,12 +178,15 @@ class Runtime:
                     pass
                 raise
 
-    def _audit(self, repo: str | Path, output_dir: str | Path, max_connected: int | None, trace: RuntimeTrace, cronos=None) -> AuditResult:
+    def _audit(self, repo: str | Path, output_dir: str | Path, max_connected: int | None, trace: RuntimeTrace, cronos=None,
+               ref_context: dict[str, Any] | None = None) -> AuditResult:
         root, out = Path(repo).resolve(), Path(output_dir)
         discovered = discover_files(root, include_excluded=True)
         repository_snapshot_sha256 = snapshot_sha256(root, discovered)
         out.mkdir(parents=True, exist_ok=True)
         started = time.monotonic(); self._event(trace, cronos, "run_started", repository=str(root), max_connected=self.max_connected if max_connected is None else max_connected, model_routing=self.model_routing.to_dict())
+        if ref_context is not None:
+            self._event(trace, cronos, "ref_resolved", **ref_context)
         triage_manifest = self.triage_repository(root)
         self._event(trace, cronos, "repository_discovered", modules=len(triage_manifest.modules), stacks=[item.name for item in triage_manifest.stacks])
         self._event(trace, cronos, "modules_classified", summary=triage_manifest.summary, deletion_judgments=triage_manifest.deletion_judgments)
@@ -223,6 +231,7 @@ class Runtime:
             self._event(trace, cronos, "finding_emitted", agent=finding.agent, module_path=finding.module_path, category=finding.category, outcome=finding.outcome, description=finding.description, evidence=[asdict(item) for item in finding.evidence])
         self._event(trace, cronos, "hypotheses_discarded", count=len(bug.verification.discarded), records=bug.verification.discarded)
         verification = VerificationManifest("2.0", "0.1.0", bug.verification.hypotheses_schema_version, str(root), int(time.time()), tuple(findings), bug.verification.discarded, bug.verification.ast_verified_families, bug.verification.ast_unverified_families, bug.verification.induction, repository_snapshot_sha256)
+        verification = replace(verification, source_attestation=attest_manifest(verification.to_dict()))
         coverage = CoverageReport(coverage.files_discovered, coverage.files_analyzed, coverage.files_skipped, coverage.skipped_reasons, verification.ast_verified_families, coverage.coverage_ratio)
         triage_path, hypotheses_path = out / "triage-manifest.json", out / "hypotheses-manifest.json"
         verification_path, sealed_path, coverage_path = out / "verification-manifest.json", out / "verification-manifest.sealed.json", out / "coverage-report.json"
@@ -266,6 +275,57 @@ class Runtime:
             artifacts["cronos_db"] = str(self.cronos_db)
         return AuditResult(str(root), connected, len(findings), len(verification.discarded), tuple(findings), coverage.to_dict(), artifacts)
 
+    def audit_ref(self, repo: str | Path, ref: str, output_dir: str | Path,
+                  max_connected: int | None = None, keep_checkout: bool = False) -> AuditResult:
+        """Audit a committed Git ref in an isolated archive, never changing repo state."""
+        repository = Path(repo).resolve()
+        if not repository.is_dir():
+            raise ValueError(f"repository path is not a directory: {repo}")
+        commit = resolve_ref(repository, ref)
+        temporary = Path(tempfile.mkdtemp(prefix="forge-ref-"))
+        try:
+            archive_ref(repository, commit, temporary)
+            result = self.audit(
+                temporary,
+                output_dir,
+                max_connected=max_connected,
+                ref_context={"ref": ref, "commit": commit},
+            )
+            if keep_checkout:
+                return result
+            return result
+        finally:
+            if not keep_checkout:
+                shutil.rmtree(temporary, ignore_errors=True)
+
+    def compare_refs(self, repo: str | Path, base_ref: str, head_ref: str,
+                     output_dir: str | Path, max_connected: int | None = None) -> dict[str, Any]:
+        """Audit two committed refs and emit the governance delta between them."""
+        repository = Path(repo).resolve()
+        base_commit = resolve_ref(repository, base_ref)
+        head_commit = resolve_ref(repository, head_ref)
+        destination = Path(output_dir)
+        destination.mkdir(parents=True, exist_ok=True)
+        base_result = self.audit_ref(repository, base_ref, destination / "base", max_connected=max_connected)
+        head_result = self.audit_ref(repository, head_ref, destination / "head", max_connected=max_connected)
+        from forge.comparison import compare_runs
+        comparison = compare_runs(destination / "base", destination / "head")
+        comparison.update({
+            "comparison_kind": "git_refs",
+            "repository": str(repository),
+            "base_ref": base_ref,
+            "base_commit": base_commit,
+            "head_ref": head_ref,
+            "head_commit": head_commit,
+            "changed_files": list(changed_files(repository, base_ref, head_ref)),
+            "base_run": base_result.artifacts,
+            "head_run": head_result.artifacts,
+        })
+        comparison_path = destination / "branch-comparison.json"
+        comparison_path.write_text(json.dumps(comparison, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        comparison["comparison_artifact"] = str(comparison_path)
+        return comparison
+
     def verify_findings(self, sealed_path: str | Path) -> dict[str, Any]:
         return read_and_verify(sealed_path)
 
@@ -287,7 +347,9 @@ class Runtime:
     def seal_results(self, verification_path: str | Path, destination: str | Path | None = None) -> Path:
         data = load_json(verification_path, f"verification manifest {verification_path}")
         findings = tuple(Finding(item["category"], item["epistemic_level"], item["module_path"], item["description"], tuple(Evidence(e["kind"], e["source"], e["detail"], e.get("role", "primary")) for e in item["evidence"]), item["reasoning"], item.get("agent", "bug_investigator"), item.get("outcome", "OBSERVED"), item.get("severity", "MEDIUM"), tuple(item.get("provenance", ()))) for item in data.get("findings", []))
-        manifest = VerificationManifest(data["schema_version"], data["forge_version"], data["hypotheses_schema_version"], data["root"], data["generated_at_epoch"], findings, tuple(data.get("discarded", [])), tuple(data.get("ast_verified_families", [])), tuple(data.get("ast_unverified_families", [])), tuple(data.get("induction", [])), data.get("repository_snapshot_sha256"))
+        if not verify_manifest_attestation(data):
+            raise ValueError("verification manifest lacks a valid FORGE source attestation")
+        manifest = VerificationManifest(data["schema_version"], data["forge_version"], data["hypotheses_schema_version"], data["root"], data["generated_at_epoch"], findings, tuple(data.get("discarded", [])), tuple(data.get("ast_verified_families", [])), tuple(data.get("ast_unverified_families", [])), tuple(data.get("induction", [])), data.get("repository_snapshot_sha256"), data.get("source_attestation"))
         target = Path(destination) if destination else Path(verification_path).with_suffix(Path(verification_path).suffix + ".sealed.json")
         write_sealed_manifest(manifest, target)
         return target

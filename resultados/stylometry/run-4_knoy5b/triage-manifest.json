@@ -1,0 +1,1021 @@
+{
+  "deletion_judgments": {
+    "conftest.py": "deleting would remove unreachable code",
+    "gemini_agent.py": "deleting would remove unreachable code",
+    "src/agent_tools_api.py": "deleting would remove unreachable code",
+    "src/generate_benign_edge_cases.py": "deleting would remove unreachable code",
+    "src/generate_synthetic_profiles.py": "deleting would remove unreachable code",
+    "src/gitlab_mcp_server.py": "deleting would remove unreachable code",
+    "src/hydrate_profiles.py": "deleting would remove unreachable code",
+    "src/setup_demo_db.py": "deleting would remove unreachable code",
+    "src/suspicious_hotfix.py": "deleting would remove unreachable code",
+    "tests/test_advanced_cores.py": "deleting would remove unreachable code",
+    "tests/test_determinism.py": "deleting would remove unreachable code",
+    "tests/test_gate.py": "deleting would remove unreachable code"
+  },
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784157245,
+  "limitations": [],
+  "modules": [
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "adk_agent/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "adk_agent/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "adk_agent/__init__.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "adk_agent/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "adk_agent/agent.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "adk_agent/agent.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "adk_agent/agent.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "adk_agent/agent.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "agent.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "agent.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780971997",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "agent.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": 1780971997,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "agent.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "conftest.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "conftest.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "conftest.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "DEAD_WEIGHT",
+      "path": "conftest.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "gemini_agent.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "gemini_agent.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "gemini_agent.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "gemini_agent.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "main.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "main.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "main.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "main.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/__init__.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "DUPLICATE",
+      "path": "src/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "decision",
+        "gate",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/agent_tools_api.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'gate', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/agent_tools_api.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780753854",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/agent_tools_api.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780753854,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "src/agent_tools_api.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/generate_benign_edge_cases.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/generate_benign_edge_cases.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/generate_benign_edge_cases.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "DEAD_WEIGHT",
+      "path": "src/generate_benign_edge_cases.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/generate_synthetic_profiles.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/generate_synthetic_profiles.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/generate_synthetic_profiles.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "DEAD_WEIGHT",
+      "path": "src/generate_synthetic_profiles.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "classification",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/gitlab_mcp_server.py"
+        },
+        {
+          "detail": "decision keywords: ['classification', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/gitlab_mcp_server.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/gitlab_mcp_server.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "src/gitlab_mcp_server.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/hydrate_profiles.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/hydrate_profiles.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780753854",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/hydrate_profiles.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780753854,
+      "module_class": "DEAD_WEIGHT",
+      "path": "src/hydrate_profiles.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/migrate_db.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/migrate_db.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780753854",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/migrate_db.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1780753854,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "src/migrate_db.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "Gate",
+        "Verdict",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/pipeline_gate.py"
+        },
+        {
+          "detail": "decision keywords: ['Gate', 'Verdict', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/pipeline_gate.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/pipeline_gate.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "src/pipeline_gate.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/policy_engine.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/policy_engine.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/policy_engine.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "src/policy_engine.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Score",
+        "Verdict",
+        "gate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/report_exporter.py"
+        },
+        {
+          "detail": "decision keywords: ['Score', 'Verdict', 'gate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/report_exporter.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780753854",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/report_exporter.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": 1780753854,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "src/report_exporter.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/setup_demo_db.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/setup_demo_db.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/setup_demo_db.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "DEAD_WEIGHT",
+      "path": "src/setup_demo_db.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/stylometry_core/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/stylometry_core/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/stylometry_core/__init__.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "DUPLICATE",
+      "path": "src/stylometry_core/__init__.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/stylometry_core/behavioral_core.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/stylometry_core/behavioral_core.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/stylometry_core/behavioral_core.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "src/stylometry_core/behavioral_core.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/stylometry_core/commit_atomicity_core.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/stylometry_core/commit_atomicity_core.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/stylometry_core/commit_atomicity_core.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "src/stylometry_core/commit_atomicity_core.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "classify",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/stylometry_core/entropy_core.py"
+        },
+        {
+          "detail": "decision keywords: ['classify', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/stylometry_core/entropy_core.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/stylometry_core/entropy_core.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "src/stylometry_core/entropy_core.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "classification",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/stylometry_core/identifier_fingerprint_core.py"
+        },
+        {
+          "detail": "decision keywords: ['classification', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/stylometry_core/identifier_fingerprint_core.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/stylometry_core/identifier_fingerprint_core.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "src/stylometry_core/identifier_fingerprint_core.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/stylometry_core/nlp_metrics.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/stylometry_core/nlp_metrics.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/stylometry_core/nlp_metrics.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "src/stylometry_core/nlp_metrics.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/stylometry_core/register_drift_core.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/stylometry_core/register_drift_core.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/stylometry_core/register_drift_core.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "src/stylometry_core/register_drift_core.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/stylometry_core/semiotic_core.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/stylometry_core/semiotic_core.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/stylometry_core/semiotic_core.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "src/stylometry_core/semiotic_core.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/stylometry_core/syntax_fingerprint_core.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/stylometry_core/syntax_fingerprint_core.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/stylometry_core/syntax_fingerprint_core.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "src/stylometry_core/syntax_fingerprint_core.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "src/suspicious_hotfix.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "src/suspicious_hotfix.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "src/suspicious_hotfix.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "DEAD_WEIGHT",
+      "path": "src/suspicious_hotfix.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/__init__.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "DUPLICATE",
+      "path": "tests/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_advanced_cores.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_advanced_cores.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_advanced_cores.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "tests/test_advanced_cores.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Validate",
+        "gate"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_determinism.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate', 'gate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_determinism.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_determinism.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "tests/test_determinism.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_gate.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_gate.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1780620542",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_gate.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1780620542,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "tests/test_gate.py"
+    }
+  ],
+  "root": "/home/labestiadevigia/stylometry",
+  "schema_version": "1.1",
+  "stacks": [
+    {
+      "confidence": {
+        "denominator": 20,
+        "numerator": 19
+      },
+      "evidence": [
+        {
+          "detail": "Python: 31 files with extension",
+          "kind": "file_count",
+          "role": "primary",
+          "source": "filesystem"
+        },
+        {
+          "detail": "requirements.txt present",
+          "kind": "manifest",
+          "role": "primary",
+          "source": "filesystem"
+        }
+      ],
+      "name": "Python"
+    },
+    {
+      "confidence": {
+        "denominator": 100,
+        "numerator": 99
+      },
+      "evidence": [
+        {
+          "detail": "home/labestiadevigia/stylometry/.gitlab-ci.yml present",
+          "kind": "config",
+          "role": "primary",
+          "source": "filesystem"
+        }
+      ],
+      "name": "CI"
+    }
+  ],
+  "summary": {
+    "CONNECTED_ALIVE": 16,
+    "DEAD_WEIGHT": 6,
+    "DUPLICATE": 3,
+    "FOSSIL_HIGH_RISK": 6
+  }
+}

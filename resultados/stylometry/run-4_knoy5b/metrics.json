@@ -1,0 +1,1389 @@
+{
+  "agent_metrics": {
+    "archaeologist": {
+      "elapsed_seconds": "0.37664",
+      "modules_classified": 31
+    },
+    "bug_investigator": {
+      "discarded": 1,
+      "examinations": {
+        "adk_agent/__init__.py": "no_hypothesis_generated",
+        "adk_agent/agent.py": "no_hypothesis_generated",
+        "agent.py": "no_hypothesis_generated",
+        "conftest.py": "excluded_by_scope",
+        "gemini_agent.py": "excluded_by_scope",
+        "main.py": "no_hypothesis_generated",
+        "src/__init__.py": "excluded_by_scope",
+        "src/agent_tools_api.py": "excluded_by_scope",
+        "src/generate_benign_edge_cases.py": "excluded_by_scope",
+        "src/generate_synthetic_profiles.py": "excluded_by_scope",
+        "src/gitlab_mcp_server.py": "excluded_by_scope",
+        "src/hydrate_profiles.py": "excluded_by_scope",
+        "src/migrate_db.py": "no_hypothesis_generated",
+        "src/pipeline_gate.py": "no_hypothesis_generated",
+        "src/policy_engine.py": "no_hypothesis_generated",
+        "src/report_exporter.py": "no_hypothesis_generated",
+        "src/setup_demo_db.py": "excluded_by_scope",
+        "src/stylometry_core/__init__.py": "excluded_by_scope",
+        "src/stylometry_core/behavioral_core.py": "no_hypothesis_generated",
+        "src/stylometry_core/commit_atomicity_core.py": "no_hypothesis_generated",
+        "src/stylometry_core/entropy_core.py": "no_hypothesis_generated",
+        "src/stylometry_core/identifier_fingerprint_core.py": "no_hypothesis_generated",
+        "src/stylometry_core/nlp_metrics.py": "no_hypothesis_generated",
+        "src/stylometry_core/register_drift_core.py": "no_hypothesis_generated",
+        "src/stylometry_core/semiotic_core.py": "no_hypothesis_generated",
+        "src/stylometry_core/syntax_fingerprint_core.py": "hypothesis_discarded_benign",
+        "src/suspicious_hotfix.py": "excluded_by_scope",
+        "tests/__init__.py": "excluded_by_scope",
+        "tests/test_advanced_cores.py": "excluded_by_scope",
+        "tests/test_determinism.py": "excluded_by_scope",
+        "tests/test_gate.py": "excluded_by_scope"
+      },
+      "hypotheses_generated": 1,
+      "survived": 0
+    },
+    "governance_skills": {
+      "applicability_counts": {
+        "APPLICABLE": 4,
+        "NOT_APPLICABLE": 15,
+        "UNDETERMINED": 12
+      },
+      "findings": 0,
+      "loaded": [
+        "validate-at-the-boundary"
+      ]
+    },
+    "integrity_inspector": {
+      "examinations": {
+        ".dockerignore": "excluded_by_scope",
+        ".env.agent.example": "excluded_by_scope",
+        ".gcloudignore": "excluded_by_scope",
+        ".git/COMMIT_EDITMSG": "excluded_by_policy",
+        ".git/HEAD": "excluded_by_policy",
+        ".git/config": "excluded_by_policy",
+        ".git/description": "excluded_by_policy",
+        ".git/hooks/applypatch-msg.sample": "excluded_by_policy",
+        ".git/hooks/commit-msg.sample": "excluded_by_policy",
+        ".git/hooks/fsmonitor-watchman.sample": "excluded_by_policy",
+        ".git/hooks/post-update.sample": "excluded_by_policy",
+        ".git/hooks/pre-applypatch.sample": "excluded_by_policy",
+        ".git/hooks/pre-commit.sample": "excluded_by_policy",
+        ".git/hooks/pre-merge-commit.sample": "excluded_by_policy",
+        ".git/hooks/pre-push.sample": "excluded_by_policy",
+        ".git/hooks/pre-rebase.sample": "excluded_by_policy",
+        ".git/hooks/pre-receive.sample": "excluded_by_policy",
+        ".git/hooks/prepare-commit-msg.sample": "excluded_by_policy",
+        ".git/hooks/push-to-checkout.sample": "excluded_by_policy",
+        ".git/hooks/sendemail-validate.sample": "excluded_by_policy",
+        ".git/hooks/update.sample": "excluded_by_policy",
+        ".git/index": "excluded_by_policy",
+        ".git/info/exclude": "excluded_by_policy",
+        ".git/logs/HEAD": "excluded_by_policy",
+        ".git/logs/refs/heads/main": "excluded_by_policy",
+        ".git/logs/refs/heads/test/impostor-attack": "excluded_by_policy",
+        ".git/logs/refs/heads/test/suspicious-commit": "excluded_by_policy",
+        ".git/logs/refs/remotes/github/main": "excluded_by_policy",
+        ".git/logs/refs/remotes/origin/main": "excluded_by_policy",
+        ".git/logs/refs/remotes/origin/test/impostor-attack": "excluded_by_policy",
+        ".git/logs/refs/remotes/origin/test/suspicious-commit": "excluded_by_policy",
+        ".git/objects/06/9c7c99ad122afe0c23c2e6e1c818d21a6ef4c5": "excluded_by_policy",
+        ".git/objects/08/2ef1b9623ef5bcd0d929c6f50b4f21c644e2c6": "excluded_by_policy",
+        ".git/objects/09/96237a385c440281dd540eeb1d24f041c4d38c": "excluded_by_policy",
+        ".git/objects/0d/eabcfd7ee37f00077bccd6a6241b55a0b848ae": "excluded_by_policy",
+        ".git/objects/0e/790aad87594b59dfb46177e0b89c6bdf6faf88": "excluded_by_policy",
+        ".git/objects/0f/3a8d3043f8dfdacb5babc128be1a5b52964b6f": "excluded_by_policy",
+        ".git/objects/15/a6c6dbb59524790487c8eb4f9cefc103ac9524": "excluded_by_policy",
+        ".git/objects/18/f4e6a1438e94fb73c2d10988be681d3dc92222": "excluded_by_policy",
+        ".git/objects/1a/cc4892fdceff63022e772ce633994e4367b1c3": "excluded_by_policy",
+        ".git/objects/1e/77647c007fe20132168677b5df06d76a4e5eaa": "excluded_by_policy",
+        ".git/objects/21/02effd0942f4d2963238581299b6afb9d2e10f": "excluded_by_policy",
+        ".git/objects/23/39732d113d75292985fb6ac498b3bb720266d4": "excluded_by_policy",
+        ".git/objects/23/d67636af4df2bb438e6d98a276528cf5cbdcb4": "excluded_by_policy",
+        ".git/objects/26/4e7bcc412d54a427b252bb0f302f4d425f213d": "excluded_by_policy",
+        ".git/objects/2c/613a8b2ec5e10801fe2a59ca525dcfa119f2d0": "excluded_by_policy",
+        ".git/objects/2c/a7f550c6ae8382890f94698dad465e580bc13a": "excluded_by_policy",
+        ".git/objects/2d/781701ccc806c919914a83162716b841afe99b": "excluded_by_policy",
+        ".git/objects/2f/cb169d709287b7f71c05cb8d6add17b3d79735": "excluded_by_policy",
+        ".git/objects/32/ec9f70c6cc11fd041f8cffedeb59f3f2328e5f": "excluded_by_policy",
+        ".git/objects/33/1bc3c91067ab698f721972f9382e3139c89986": "excluded_by_policy",
+        ".git/objects/33/4bd251d57a1bd126736b3c343375dd2586cfaf": "excluded_by_policy",
+        ".git/objects/33/5c9fce4bd8dce16f0807c48d9edd06644b34ea": "excluded_by_policy",
+        ".git/objects/33/855b91dc4e7d3ffe6f27b1d2817415dc3fa998": "excluded_by_policy",
+        ".git/objects/34/5f3b4db69831526086cc54ec13822724cf7cb0": "excluded_by_policy",
+        ".git/objects/37/a81a38ee548f6d38d62620a88a18f007f711ef": "excluded_by_policy",
+        ".git/objects/39/558e385c9829e07414e17c911f1b4f7a2bb43c": "excluded_by_policy",
+        ".git/objects/3b/d274e1bb9096af96553451db42b03c8d69d942": "excluded_by_policy",
+        ".git/objects/3d/0be8917d9210ec55335703d99d2b45b25e2af9": "excluded_by_policy",
+        ".git/objects/40/90a97de3cab03f38d7a45c470dfaeb6108a0ff": "excluded_by_policy",
+        ".git/objects/41/8877d9a9f24d356815ab003563e9e5e330fe80": "excluded_by_policy",
+        ".git/objects/45/471e3cd0ed8dc3b480b2a0c005b5446149aedf": "excluded_by_policy",
+        ".git/objects/46/877601faf3c72709024fd51aebe63e831fccbd": "excluded_by_policy",
+        ".git/objects/46/c2848829ec141901947e1582544567ac4c8c8d": "excluded_by_policy",
+        ".git/objects/49/cb7a525cf715ae78e3954dcd0195f0b499c47d": "excluded_by_policy",
+        ".git/objects/4a/7b459f116d8b6fee6176b16e2473df8a40d05b": "excluded_by_policy",
+        ".git/objects/4d/3726578d3aa49b82d153bacc6a97eab1b7fb5b": "excluded_by_policy",
+        ".git/objects/4e/1efddd73311b3a9e14cec6b82d90cd9e2a0f5d": "excluded_by_policy",
+        ".git/objects/51/38ce2ab9e4a33a9845e9365fa272bb4ff7250b": "excluded_by_policy",
+        ".git/objects/54/92881dfb59fd98a4917e4292a833fe7b57ed59": "excluded_by_policy",
+        ".git/objects/58/ad916aef7ba9b3ab5739babd4e3571daee1c74": "excluded_by_policy",
+        ".git/objects/5b/d4c853b6c94b18e3c9c307438da29f1edc952a": "excluded_by_policy",
+        ".git/objects/5c/d5dea7beacddaaaf40d276f2d7648840b07604": "excluded_by_policy",
+        ".git/objects/60/56b56beff444d5fd8913c0a21847c97bb8564b": "excluded_by_policy",
+        ".git/objects/60/6822077c2b25bccb30a11a2719581a1bf29e15": "excluded_by_policy",
+        ".git/objects/61/08f42a7a6a17d37278c808a514fd104f70b047": "excluded_by_policy",
+        ".git/objects/61/8402b4817bcc6e41ce6a5e76bf170b1f47de71": "excluded_by_policy",
+        ".git/objects/63/3746c44a777cee490bd303b49628575b804c21": "excluded_by_policy",
+        ".git/objects/67/f14c06392e6a8309cc13e97c16c201f0ee1ed8": "excluded_by_policy",
+        ".git/objects/6a/42eb140833bb73333c271082592caf4c343286": "excluded_by_policy",
+        ".git/objects/6c/5e468ac948d4eadae55544958c0a752a49872e": "excluded_by_policy",
+        ".git/objects/6d/7ea029635a038e2f97d6dcb41ec91edb4f07f9": "excluded_by_policy",
+        ".git/objects/6e/a900501f652a79bc63f751b9898f73604457ce": "excluded_by_policy",
+        ".git/objects/70/fe9e801b5a638f57fda0d6b4f0f022780ed885": "excluded_by_policy",
+        ".git/objects/76/ae540329d654fe38d3a0942aeadaeb2b9f8872": "excluded_by_policy",
+        ".git/objects/77/948e52d1ac19e64a6d03c6ce86cad3742023ea": "excluded_by_policy",
+        ".git/objects/79/c57a0e367ad1d35ecedb0eb39d84a53a9cba01": "excluded_by_policy",
+        ".git/objects/7a/3afa9b6137476f7d4a4ce8ca3477d32ac336ef": "excluded_by_policy",
+        ".git/objects/7d/c5269229b5017cbdf79ff0a1c6ce009feb6b57": "excluded_by_policy",
+        ".git/objects/7e/f981da37dc1002ef01d2db4546469a7e536a0c": "excluded_by_policy",
+        ".git/objects/86/eea94aab3124b6e9c4ad89c1aaf0dcec121222": "excluded_by_policy",
+        ".git/objects/87/b55eebb08fcd3bd59ea8c72a7ba3ee11f6e306": "excluded_by_policy",
+        ".git/objects/8a/c8b6a0aceb2b7e7b6ebd75d29636085ab0fcc7": "excluded_by_policy",
+        ".git/objects/8e/e3c47317e26ed9b653c9221cc11daac54b5792": "excluded_by_policy",
+        ".git/objects/8f/d4062d4bfd5485829f94c146e5f06833f1b752": "excluded_by_policy",
+        ".git/objects/91/82d51d02bcc48875851c75c6401614ac4e1800": "excluded_by_policy",
+        ".git/objects/93/b0e1ae5543344f55c91e9b3edbe20802dc7e25": "excluded_by_policy",
+        ".git/objects/96/3208597fe09949b1e8b037782af67b167889a7": "excluded_by_policy",
+        ".git/objects/99/e9756ce3330cbfcd937ba1a24674ec42e89c06": "excluded_by_policy",
+        ".git/objects/9a/317cff357f162359622ca61e5d6b7634e6dc4f": "excluded_by_policy",
+        ".git/objects/9e/83d74f99261cae80e2920148d6d5b298d3886e": "excluded_by_policy",
+        ".git/objects/9f/092e2bdfe35a76bd5f305ee214d7eaa4116a62": "excluded_by_policy",
+        ".git/objects/a1/93c5198bcc2889c0ba23791dc1c4a53dd98385": "excluded_by_policy",
+        ".git/objects/a4/b70804d3412dcabb26bc1c6ef383a85807efe5": "excluded_by_policy",
+        ".git/objects/a5/f343be3131d4d3b029d8dfbd877f3f4621575f": "excluded_by_policy",
+        ".git/objects/a6/57afa5bf80a18a305328b6340f95ceb15cd14b": "excluded_by_policy",
+        ".git/objects/a6/98476b7adc773b083088b68f2abb7b5e75d19e": "excluded_by_policy",
+        ".git/objects/aa/4a2dc21f326ad99ffb61b58701287309952e58": "excluded_by_policy",
+        ".git/objects/ac/0501d3c60cd7a309d28f1e65a0aa706e07cfd4": "excluded_by_policy",
+        ".git/objects/ac/17b416164f77b097dd3dd6cec1c7cf09ab5a4e": "excluded_by_policy",
+        ".git/objects/b0/a6ec5ab6184a297b60c2cdef50c084d3641585": "excluded_by_policy",
+        ".git/objects/b0/daaa24662dea8dd7c99aaf21007e7d57c10460": "excluded_by_policy",
+        ".git/objects/b1/157f1c8cce9d0afab876734f44fb256a07e418": "excluded_by_policy",
+        ".git/objects/b3/c9ab9c86d682675e0d06a5146fb664a16559a5": "excluded_by_policy",
+        ".git/objects/b8/743b38953f5d550f94c7ac002429cc63345d8e": "excluded_by_policy",
+        ".git/objects/ba/27ec9a74948ccbacd9dce9d19d8cc3e462be7f": "excluded_by_policy",
+        ".git/objects/ba/5d8553c4f7f43222a60acb81b041503bf0eef6": "excluded_by_policy",
+        ".git/objects/bb/8e58e6d63dff5cc04ecc25515cbec434ea1255": "excluded_by_policy",
+        ".git/objects/bc/ffe7368251132c7943f71e106a84c6f18e633f": "excluded_by_policy",
+        ".git/objects/be/ff26843d94a297f68e8bae251b9efe71118472": "excluded_by_policy",
+        ".git/objects/c1/2cde0f44794af38ad14a637038518d9d76703e": "excluded_by_policy",
+        ".git/objects/c1/ee9a8dfe8ff43f5298cd61f86becde5f30a271": "excluded_by_policy",
+        ".git/objects/c4/50df7f57bc9740b58e5079820dbe192f33ee30": "excluded_by_policy",
+        ".git/objects/c5/2ae997270fbbd62e1eab734f7cd74981794172": "excluded_by_policy",
+        ".git/objects/c9/fe8575e98e4c6d874ae889f23e39407aa48ba3": "excluded_by_policy",
+        ".git/objects/ce/2f6fda95a2ec5fe410d9629053a403bbe1b2a5": "excluded_by_policy",
+        ".git/objects/ce/ed70949939def7805178dbfb144ffd323db6c4": "excluded_by_policy",
+        ".git/objects/d2/97aae07336f81e59dff88a72c1fa961add3230": "excluded_by_policy",
+        ".git/objects/d4/63b91fb0652fbbb1f51553c6b7c8536b26ca50": "excluded_by_policy",
+        ".git/objects/d5/b09ba873aff308a3a45f114f1305e9bad4c011": "excluded_by_policy",
+        ".git/objects/d6/45695673349e3947e8e5ae42332d0ac3164cd7": "excluded_by_policy",
+        ".git/objects/d7/d65af871e850fc5e1ead4f8cb17399de0dae3e": "excluded_by_policy",
+        ".git/objects/da/baa9db8fe4ab71c25cf4a07306fb6a09f3dcf2": "excluded_by_policy",
+        ".git/objects/db/654d88cd944f3e0205703fd2f4d230eacbd6a1": "excluded_by_policy",
+        ".git/objects/dc/57b8524a9f8ab7c05a1cba5d05960f9ff315bd": "excluded_by_policy",
+        ".git/objects/dc/aae4f37463318ce44fec753a94e36e8bdb0ef5": "excluded_by_policy",
+        ".git/objects/dd/096019914bd3dd228e16197239454c4d128a72": "excluded_by_policy",
+        ".git/objects/dd/f0cbee087704a21849666164c50be832af2ddd": "excluded_by_policy",
+        ".git/objects/de/d1c66b7454203d5c82dea4484f4de47f6cd60f": "excluded_by_policy",
+        ".git/objects/e4/6734d039d065cbe968274f1b97337ac0742e14": "excluded_by_policy",
+        ".git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391": "excluded_by_policy",
+        ".git/objects/e6/d8b90829ea62fc0520a01a7d94573825816dac": "excluded_by_policy",
+        ".git/objects/ea/6c6b897e47ab088f17b452afd765b026c5f894": "excluded_by_policy",
+        ".git/objects/eb/31f72de5aac836e17a36fb6ccf3b0ef8f1055c": "excluded_by_policy",
+        ".git/objects/f5/d8b80f0b38c0e6d2871ec994a0928264e99708": "excluded_by_policy",
+        ".git/objects/f9/6c2a47c1d8b996c4d9c0c99d79dc0e8786169f": "excluded_by_policy",
+        ".git/objects/fc/119f26b53ef5be55903bec693bdd2b5f4d651c": "excluded_by_policy",
+        ".git/objects/fe/ab401de23f0f41ecb48c4479f694988d10117b": "excluded_by_policy",
+        ".git/refs/heads/main": "excluded_by_policy",
+        ".git/refs/heads/test/impostor-attack": "excluded_by_policy",
+        ".git/refs/heads/test/suspicious-commit": "excluded_by_policy",
+        ".git/refs/remotes/github/main": "excluded_by_policy",
+        ".git/refs/remotes/origin/main": "excluded_by_policy",
+        ".git/refs/remotes/origin/test/impostor-attack": "excluded_by_policy",
+        ".git/refs/remotes/origin/test/suspicious-commit": "excluded_by_policy",
+        ".gitignore": "excluded_by_scope",
+        ".gitlab-ci.yml": "excluded_by_scope",
+        ".pytest_cache/.gitignore": "excluded_by_policy",
+        ".pytest_cache/CACHEDIR.TAG": "excluded_by_policy",
+        ".pytest_cache/README.md": "excluded_by_policy",
+        ".pytest_cache/v/cache/lastfailed": "excluded_by_policy",
+        ".pytest_cache/v/cache/nodeids": "excluded_by_policy",
+        "Dockerfile": "excluded_by_scope",
+        "Dockerfile.agent": "excluded_by_scope",
+        "LICENSE": "excluded_by_scope",
+        "README.md": "excluded_by_scope",
+        "__pycache__/conftest.cpython-312-pytest-9.0.3.pyc": "excluded_by_policy",
+        "adk_agent/__init__.py": "examined_clean",
+        "adk_agent/agent.py": "examined_clean",
+        "agent.py": "examined_clean",
+        "conftest.py": "excluded_by_scope",
+        "data/dev_profiles.db": "excluded_by_scope",
+        "docker-compose.yml": "excluded_by_scope",
+        "gemini_agent.py": "excluded_by_scope",
+        "index.html": "excluded_by_scope",
+        "know_limitations.md": "excluded_by_scope",
+        "main.py": "examined_clean",
+        "mcp/Dockerfile": "excluded_by_scope",
+        "mcp/docker-compose.yml": "excluded_by_scope",
+        "mcp/requirements.txt": "excluded_by_scope",
+        "photos/1.png": "excluded_by_scope",
+        "photos/2.png": "excluded_by_scope",
+        "photos/3.png": "excluded_by_scope",
+        "photos/4.png": "excluded_by_scope",
+        "photos/5.png": "excluded_by_scope",
+        "photos/6.png": "excluded_by_scope",
+        "photos/logo.jpeg": "excluded_by_scope",
+        "requirements-agent.txt": "excluded_by_scope",
+        "requirements.txt": "excluded_by_scope",
+        "screenshots/1.png": "excluded_by_scope",
+        "screenshots/3.png": "excluded_by_scope",
+        "screenshots/4.png": "excluded_by_scope",
+        "screenshots/5.png": "excluded_by_scope",
+        "screenshots/6.png": "excluded_by_scope",
+        "screenshots/7.png": "excluded_by_scope",
+        "screenshots/8.png": "excluded_by_scope",
+        "src/__init__.py": "excluded_by_scope",
+        "src/__pycache__/migrate_db.cpython-312.pyc": "excluded_by_policy",
+        "src/__pycache__/pipeline_gate.cpython-312.pyc": "excluded_by_policy",
+        "src/__pycache__/policy_engine.cpython-312.pyc": "excluded_by_policy",
+        "src/__pycache__/report_exporter.cpython-312.pyc": "excluded_by_policy",
+        "src/agent_tools_api.py": "excluded_by_scope",
+        "src/generate_benign_edge_cases.py": "excluded_by_scope",
+        "src/generate_synthetic_profiles.py": "excluded_by_scope",
+        "src/gitlab_mcp_server.py": "excluded_by_scope",
+        "src/hydrate_profiles.py": "excluded_by_scope",
+        "src/migrate_db.py": "examined_clean",
+        "src/pipeline_gate.py": "examined_clean",
+        "src/policy_engine.py": "examined_clean",
+        "src/report_exporter.py": "examined_with_findings",
+        "src/setup_demo_db.py": "excluded_by_scope",
+        "src/static/index.html": "excluded_by_scope",
+        "src/stylometry_core/__init__.py": "excluded_by_scope",
+        "src/stylometry_core/__pycache__/__init__.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/behavioral_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/commit_atomicity_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/entropy_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/identifier_fingerprint_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/nlp_metrics.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/register_drift_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/semiotic_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/syntax_fingerprint_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/behavioral_core.py": "examined_clean",
+        "src/stylometry_core/commit_atomicity_core.py": "examined_with_findings",
+        "src/stylometry_core/entropy_core.py": "examined_clean",
+        "src/stylometry_core/identifier_fingerprint_core.py": "examined_with_findings",
+        "src/stylometry_core/nlp_metrics.py": "examined_clean",
+        "src/stylometry_core/register_drift_core.py": "examined_clean",
+        "src/stylometry_core/semiotic_core.py": "examined_clean",
+        "src/stylometry_core/syntax_fingerprint_core.py": "examined_with_findings",
+        "src/suspicious_hotfix.py": "excluded_by_scope",
+        "stylometry-ci-openapi.yaml": "excluded_by_scope",
+        "stylometry-ci_simulator.html": "excluded_by_scope",
+        "tests/__init__.py": "excluded_by_scope",
+        "tests/__pycache__/__init__.cpython-312.pyc": "excluded_by_policy",
+        "tests/__pycache__/test_advanced_cores.cpython-312-pytest-9.0.3.pyc": "excluded_by_policy",
+        "tests/__pycache__/test_determinism.cpython-312-pytest-9.0.3.pyc": "excluded_by_policy",
+        "tests/__pycache__/test_gate.cpython-312-pytest-9.0.3.pyc": "excluded_by_policy",
+        "tests/test_advanced_cores.py": "excluded_by_scope",
+        "tests/test_determinism.py": "excluded_by_scope",
+        "tests/test_gate.py": "excluded_by_scope"
+      },
+      "findings_per_family": {
+        "decision-adjacent-float": 1,
+        "unversioned-serialization": 5
+      }
+    },
+    "security_auditor": {
+      "examinations": {
+        ".dockerignore": "excluded_by_scope",
+        ".env.agent.example": "excluded_by_scope",
+        ".gcloudignore": "excluded_by_scope",
+        ".git/COMMIT_EDITMSG": "excluded_by_policy",
+        ".git/HEAD": "excluded_by_policy",
+        ".git/config": "excluded_by_policy",
+        ".git/description": "excluded_by_policy",
+        ".git/hooks/applypatch-msg.sample": "excluded_by_policy",
+        ".git/hooks/commit-msg.sample": "excluded_by_policy",
+        ".git/hooks/fsmonitor-watchman.sample": "excluded_by_policy",
+        ".git/hooks/post-update.sample": "excluded_by_policy",
+        ".git/hooks/pre-applypatch.sample": "excluded_by_policy",
+        ".git/hooks/pre-commit.sample": "excluded_by_policy",
+        ".git/hooks/pre-merge-commit.sample": "excluded_by_policy",
+        ".git/hooks/pre-push.sample": "excluded_by_policy",
+        ".git/hooks/pre-rebase.sample": "excluded_by_policy",
+        ".git/hooks/pre-receive.sample": "excluded_by_policy",
+        ".git/hooks/prepare-commit-msg.sample": "excluded_by_policy",
+        ".git/hooks/push-to-checkout.sample": "excluded_by_policy",
+        ".git/hooks/sendemail-validate.sample": "excluded_by_policy",
+        ".git/hooks/update.sample": "excluded_by_policy",
+        ".git/index": "excluded_by_policy",
+        ".git/info/exclude": "excluded_by_policy",
+        ".git/logs/HEAD": "excluded_by_policy",
+        ".git/logs/refs/heads/main": "excluded_by_policy",
+        ".git/logs/refs/heads/test/impostor-attack": "excluded_by_policy",
+        ".git/logs/refs/heads/test/suspicious-commit": "excluded_by_policy",
+        ".git/logs/refs/remotes/github/main": "excluded_by_policy",
+        ".git/logs/refs/remotes/origin/main": "excluded_by_policy",
+        ".git/logs/refs/remotes/origin/test/impostor-attack": "excluded_by_policy",
+        ".git/logs/refs/remotes/origin/test/suspicious-commit": "excluded_by_policy",
+        ".git/objects/06/9c7c99ad122afe0c23c2e6e1c818d21a6ef4c5": "excluded_by_policy",
+        ".git/objects/08/2ef1b9623ef5bcd0d929c6f50b4f21c644e2c6": "excluded_by_policy",
+        ".git/objects/09/96237a385c440281dd540eeb1d24f041c4d38c": "excluded_by_policy",
+        ".git/objects/0d/eabcfd7ee37f00077bccd6a6241b55a0b848ae": "excluded_by_policy",
+        ".git/objects/0e/790aad87594b59dfb46177e0b89c6bdf6faf88": "excluded_by_policy",
+        ".git/objects/0f/3a8d3043f8dfdacb5babc128be1a5b52964b6f": "excluded_by_policy",
+        ".git/objects/15/a6c6dbb59524790487c8eb4f9cefc103ac9524": "excluded_by_policy",
+        ".git/objects/18/f4e6a1438e94fb73c2d10988be681d3dc92222": "excluded_by_policy",
+        ".git/objects/1a/cc4892fdceff63022e772ce633994e4367b1c3": "excluded_by_policy",
+        ".git/objects/1e/77647c007fe20132168677b5df06d76a4e5eaa": "excluded_by_policy",
+        ".git/objects/21/02effd0942f4d2963238581299b6afb9d2e10f": "excluded_by_policy",
+        ".git/objects/23/39732d113d75292985fb6ac498b3bb720266d4": "excluded_by_policy",
+        ".git/objects/23/d67636af4df2bb438e6d98a276528cf5cbdcb4": "excluded_by_policy",
+        ".git/objects/26/4e7bcc412d54a427b252bb0f302f4d425f213d": "excluded_by_policy",
+        ".git/objects/2c/613a8b2ec5e10801fe2a59ca525dcfa119f2d0": "excluded_by_policy",
+        ".git/objects/2c/a7f550c6ae8382890f94698dad465e580bc13a": "excluded_by_policy",
+        ".git/objects/2d/781701ccc806c919914a83162716b841afe99b": "excluded_by_policy",
+        ".git/objects/2f/cb169d709287b7f71c05cb8d6add17b3d79735": "excluded_by_policy",
+        ".git/objects/32/ec9f70c6cc11fd041f8cffedeb59f3f2328e5f": "excluded_by_policy",
+        ".git/objects/33/1bc3c91067ab698f721972f9382e3139c89986": "excluded_by_policy",
+        ".git/objects/33/4bd251d57a1bd126736b3c343375dd2586cfaf": "excluded_by_policy",
+        ".git/objects/33/5c9fce4bd8dce16f0807c48d9edd06644b34ea": "excluded_by_policy",
+        ".git/objects/33/855b91dc4e7d3ffe6f27b1d2817415dc3fa998": "excluded_by_policy",
+        ".git/objects/34/5f3b4db69831526086cc54ec13822724cf7cb0": "excluded_by_policy",
+        ".git/objects/37/a81a38ee548f6d38d62620a88a18f007f711ef": "excluded_by_policy",
+        ".git/objects/39/558e385c9829e07414e17c911f1b4f7a2bb43c": "excluded_by_policy",
+        ".git/objects/3b/d274e1bb9096af96553451db42b03c8d69d942": "excluded_by_policy",
+        ".git/objects/3d/0be8917d9210ec55335703d99d2b45b25e2af9": "excluded_by_policy",
+        ".git/objects/40/90a97de3cab03f38d7a45c470dfaeb6108a0ff": "excluded_by_policy",
+        ".git/objects/41/8877d9a9f24d356815ab003563e9e5e330fe80": "excluded_by_policy",
+        ".git/objects/45/471e3cd0ed8dc3b480b2a0c005b5446149aedf": "excluded_by_policy",
+        ".git/objects/46/877601faf3c72709024fd51aebe63e831fccbd": "excluded_by_policy",
+        ".git/objects/46/c2848829ec141901947e1582544567ac4c8c8d": "excluded_by_policy",
+        ".git/objects/49/cb7a525cf715ae78e3954dcd0195f0b499c47d": "excluded_by_policy",
+        ".git/objects/4a/7b459f116d8b6fee6176b16e2473df8a40d05b": "excluded_by_policy",
+        ".git/objects/4d/3726578d3aa49b82d153bacc6a97eab1b7fb5b": "excluded_by_policy",
+        ".git/objects/4e/1efddd73311b3a9e14cec6b82d90cd9e2a0f5d": "excluded_by_policy",
+        ".git/objects/51/38ce2ab9e4a33a9845e9365fa272bb4ff7250b": "excluded_by_policy",
+        ".git/objects/54/92881dfb59fd98a4917e4292a833fe7b57ed59": "excluded_by_policy",
+        ".git/objects/58/ad916aef7ba9b3ab5739babd4e3571daee1c74": "excluded_by_policy",
+        ".git/objects/5b/d4c853b6c94b18e3c9c307438da29f1edc952a": "excluded_by_policy",
+        ".git/objects/5c/d5dea7beacddaaaf40d276f2d7648840b07604": "excluded_by_policy",
+        ".git/objects/60/56b56beff444d5fd8913c0a21847c97bb8564b": "excluded_by_policy",
+        ".git/objects/60/6822077c2b25bccb30a11a2719581a1bf29e15": "excluded_by_policy",
+        ".git/objects/61/08f42a7a6a17d37278c808a514fd104f70b047": "excluded_by_policy",
+        ".git/objects/61/8402b4817bcc6e41ce6a5e76bf170b1f47de71": "excluded_by_policy",
+        ".git/objects/63/3746c44a777cee490bd303b49628575b804c21": "excluded_by_policy",
+        ".git/objects/67/f14c06392e6a8309cc13e97c16c201f0ee1ed8": "excluded_by_policy",
+        ".git/objects/6a/42eb140833bb73333c271082592caf4c343286": "excluded_by_policy",
+        ".git/objects/6c/5e468ac948d4eadae55544958c0a752a49872e": "excluded_by_policy",
+        ".git/objects/6d/7ea029635a038e2f97d6dcb41ec91edb4f07f9": "excluded_by_policy",
+        ".git/objects/6e/a900501f652a79bc63f751b9898f73604457ce": "excluded_by_policy",
+        ".git/objects/70/fe9e801b5a638f57fda0d6b4f0f022780ed885": "excluded_by_policy",
+        ".git/objects/76/ae540329d654fe38d3a0942aeadaeb2b9f8872": "excluded_by_policy",
+        ".git/objects/77/948e52d1ac19e64a6d03c6ce86cad3742023ea": "excluded_by_policy",
+        ".git/objects/79/c57a0e367ad1d35ecedb0eb39d84a53a9cba01": "excluded_by_policy",
+        ".git/objects/7a/3afa9b6137476f7d4a4ce8ca3477d32ac336ef": "excluded_by_policy",
+        ".git/objects/7d/c5269229b5017cbdf79ff0a1c6ce009feb6b57": "excluded_by_policy",
+        ".git/objects/7e/f981da37dc1002ef01d2db4546469a7e536a0c": "excluded_by_policy",
+        ".git/objects/86/eea94aab3124b6e9c4ad89c1aaf0dcec121222": "excluded_by_policy",
+        ".git/objects/87/b55eebb08fcd3bd59ea8c72a7ba3ee11f6e306": "excluded_by_policy",
+        ".git/objects/8a/c8b6a0aceb2b7e7b6ebd75d29636085ab0fcc7": "excluded_by_policy",
+        ".git/objects/8e/e3c47317e26ed9b653c9221cc11daac54b5792": "excluded_by_policy",
+        ".git/objects/8f/d4062d4bfd5485829f94c146e5f06833f1b752": "excluded_by_policy",
+        ".git/objects/91/82d51d02bcc48875851c75c6401614ac4e1800": "excluded_by_policy",
+        ".git/objects/93/b0e1ae5543344f55c91e9b3edbe20802dc7e25": "excluded_by_policy",
+        ".git/objects/96/3208597fe09949b1e8b037782af67b167889a7": "excluded_by_policy",
+        ".git/objects/99/e9756ce3330cbfcd937ba1a24674ec42e89c06": "excluded_by_policy",
+        ".git/objects/9a/317cff357f162359622ca61e5d6b7634e6dc4f": "excluded_by_policy",
+        ".git/objects/9e/83d74f99261cae80e2920148d6d5b298d3886e": "excluded_by_policy",
+        ".git/objects/9f/092e2bdfe35a76bd5f305ee214d7eaa4116a62": "excluded_by_policy",
+        ".git/objects/a1/93c5198bcc2889c0ba23791dc1c4a53dd98385": "excluded_by_policy",
+        ".git/objects/a4/b70804d3412dcabb26bc1c6ef383a85807efe5": "excluded_by_policy",
+        ".git/objects/a5/f343be3131d4d3b029d8dfbd877f3f4621575f": "excluded_by_policy",
+        ".git/objects/a6/57afa5bf80a18a305328b6340f95ceb15cd14b": "excluded_by_policy",
+        ".git/objects/a6/98476b7adc773b083088b68f2abb7b5e75d19e": "excluded_by_policy",
+        ".git/objects/aa/4a2dc21f326ad99ffb61b58701287309952e58": "excluded_by_policy",
+        ".git/objects/ac/0501d3c60cd7a309d28f1e65a0aa706e07cfd4": "excluded_by_policy",
+        ".git/objects/ac/17b416164f77b097dd3dd6cec1c7cf09ab5a4e": "excluded_by_policy",
+        ".git/objects/b0/a6ec5ab6184a297b60c2cdef50c084d3641585": "excluded_by_policy",
+        ".git/objects/b0/daaa24662dea8dd7c99aaf21007e7d57c10460": "excluded_by_policy",
+        ".git/objects/b1/157f1c8cce9d0afab876734f44fb256a07e418": "excluded_by_policy",
+        ".git/objects/b3/c9ab9c86d682675e0d06a5146fb664a16559a5": "excluded_by_policy",
+        ".git/objects/b8/743b38953f5d550f94c7ac002429cc63345d8e": "excluded_by_policy",
+        ".git/objects/ba/27ec9a74948ccbacd9dce9d19d8cc3e462be7f": "excluded_by_policy",
+        ".git/objects/ba/5d8553c4f7f43222a60acb81b041503bf0eef6": "excluded_by_policy",
+        ".git/objects/bb/8e58e6d63dff5cc04ecc25515cbec434ea1255": "excluded_by_policy",
+        ".git/objects/bc/ffe7368251132c7943f71e106a84c6f18e633f": "excluded_by_policy",
+        ".git/objects/be/ff26843d94a297f68e8bae251b9efe71118472": "excluded_by_policy",
+        ".git/objects/c1/2cde0f44794af38ad14a637038518d9d76703e": "excluded_by_policy",
+        ".git/objects/c1/ee9a8dfe8ff43f5298cd61f86becde5f30a271": "excluded_by_policy",
+        ".git/objects/c4/50df7f57bc9740b58e5079820dbe192f33ee30": "excluded_by_policy",
+        ".git/objects/c5/2ae997270fbbd62e1eab734f7cd74981794172": "excluded_by_policy",
+        ".git/objects/c9/fe8575e98e4c6d874ae889f23e39407aa48ba3": "excluded_by_policy",
+        ".git/objects/ce/2f6fda95a2ec5fe410d9629053a403bbe1b2a5": "excluded_by_policy",
+        ".git/objects/ce/ed70949939def7805178dbfb144ffd323db6c4": "excluded_by_policy",
+        ".git/objects/d2/97aae07336f81e59dff88a72c1fa961add3230": "excluded_by_policy",
+        ".git/objects/d4/63b91fb0652fbbb1f51553c6b7c8536b26ca50": "excluded_by_policy",
+        ".git/objects/d5/b09ba873aff308a3a45f114f1305e9bad4c011": "excluded_by_policy",
+        ".git/objects/d6/45695673349e3947e8e5ae42332d0ac3164cd7": "excluded_by_policy",
+        ".git/objects/d7/d65af871e850fc5e1ead4f8cb17399de0dae3e": "excluded_by_policy",
+        ".git/objects/da/baa9db8fe4ab71c25cf4a07306fb6a09f3dcf2": "excluded_by_policy",
+        ".git/objects/db/654d88cd944f3e0205703fd2f4d230eacbd6a1": "excluded_by_policy",
+        ".git/objects/dc/57b8524a9f8ab7c05a1cba5d05960f9ff315bd": "excluded_by_policy",
+        ".git/objects/dc/aae4f37463318ce44fec753a94e36e8bdb0ef5": "excluded_by_policy",
+        ".git/objects/dd/096019914bd3dd228e16197239454c4d128a72": "excluded_by_policy",
+        ".git/objects/dd/f0cbee087704a21849666164c50be832af2ddd": "excluded_by_policy",
+        ".git/objects/de/d1c66b7454203d5c82dea4484f4de47f6cd60f": "excluded_by_policy",
+        ".git/objects/e4/6734d039d065cbe968274f1b97337ac0742e14": "excluded_by_policy",
+        ".git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391": "excluded_by_policy",
+        ".git/objects/e6/d8b90829ea62fc0520a01a7d94573825816dac": "excluded_by_policy",
+        ".git/objects/ea/6c6b897e47ab088f17b452afd765b026c5f894": "excluded_by_policy",
+        ".git/objects/eb/31f72de5aac836e17a36fb6ccf3b0ef8f1055c": "excluded_by_policy",
+        ".git/objects/f5/d8b80f0b38c0e6d2871ec994a0928264e99708": "excluded_by_policy",
+        ".git/objects/f9/6c2a47c1d8b996c4d9c0c99d79dc0e8786169f": "excluded_by_policy",
+        ".git/objects/fc/119f26b53ef5be55903bec693bdd2b5f4d651c": "excluded_by_policy",
+        ".git/objects/fe/ab401de23f0f41ecb48c4479f694988d10117b": "excluded_by_policy",
+        ".git/refs/heads/main": "excluded_by_policy",
+        ".git/refs/heads/test/impostor-attack": "excluded_by_policy",
+        ".git/refs/heads/test/suspicious-commit": "excluded_by_policy",
+        ".git/refs/remotes/github/main": "excluded_by_policy",
+        ".git/refs/remotes/origin/main": "excluded_by_policy",
+        ".git/refs/remotes/origin/test/impostor-attack": "excluded_by_policy",
+        ".git/refs/remotes/origin/test/suspicious-commit": "excluded_by_policy",
+        ".gitignore": "excluded_by_scope",
+        ".gitlab-ci.yml": "excluded_by_scope",
+        ".pytest_cache/.gitignore": "excluded_by_policy",
+        ".pytest_cache/CACHEDIR.TAG": "excluded_by_policy",
+        ".pytest_cache/README.md": "excluded_by_policy",
+        ".pytest_cache/v/cache/lastfailed": "excluded_by_policy",
+        ".pytest_cache/v/cache/nodeids": "excluded_by_policy",
+        "Dockerfile": "excluded_by_scope",
+        "Dockerfile.agent": "excluded_by_scope",
+        "LICENSE": "excluded_by_scope",
+        "README.md": "excluded_by_scope",
+        "__pycache__/conftest.cpython-312-pytest-9.0.3.pyc": "excluded_by_policy",
+        "adk_agent/__init__.py": "examined_clean",
+        "adk_agent/agent.py": "examined_clean",
+        "agent.py": "examined_clean",
+        "conftest.py": "examined_clean",
+        "data/dev_profiles.db": "excluded_by_scope",
+        "docker-compose.yml": "excluded_by_scope",
+        "gemini_agent.py": "examined_clean",
+        "index.html": "excluded_by_scope",
+        "know_limitations.md": "excluded_by_scope",
+        "main.py": "examined_clean",
+        "mcp/Dockerfile": "excluded_by_scope",
+        "mcp/docker-compose.yml": "excluded_by_scope",
+        "mcp/requirements.txt": "excluded_by_scope",
+        "photos/1.png": "excluded_by_scope",
+        "photos/2.png": "excluded_by_scope",
+        "photos/3.png": "excluded_by_scope",
+        "photos/4.png": "excluded_by_scope",
+        "photos/5.png": "excluded_by_scope",
+        "photos/6.png": "excluded_by_scope",
+        "photos/logo.jpeg": "excluded_by_scope",
+        "requirements-agent.txt": "excluded_by_scope",
+        "requirements.txt": "excluded_by_scope",
+        "screenshots/1.png": "excluded_by_scope",
+        "screenshots/3.png": "excluded_by_scope",
+        "screenshots/4.png": "excluded_by_scope",
+        "screenshots/5.png": "excluded_by_scope",
+        "screenshots/6.png": "excluded_by_scope",
+        "screenshots/7.png": "excluded_by_scope",
+        "screenshots/8.png": "excluded_by_scope",
+        "src/__init__.py": "excluded_by_scope",
+        "src/__pycache__/migrate_db.cpython-312.pyc": "excluded_by_policy",
+        "src/__pycache__/pipeline_gate.cpython-312.pyc": "excluded_by_policy",
+        "src/__pycache__/policy_engine.cpython-312.pyc": "excluded_by_policy",
+        "src/__pycache__/report_exporter.cpython-312.pyc": "excluded_by_policy",
+        "src/agent_tools_api.py": "examined_clean",
+        "src/generate_benign_edge_cases.py": "examined_clean",
+        "src/generate_synthetic_profiles.py": "examined_clean",
+        "src/gitlab_mcp_server.py": "examined_clean",
+        "src/hydrate_profiles.py": "examined_clean",
+        "src/migrate_db.py": "examined_clean",
+        "src/pipeline_gate.py": "examined_clean",
+        "src/policy_engine.py": "examined_clean",
+        "src/report_exporter.py": "examined_clean",
+        "src/setup_demo_db.py": "examined_clean",
+        "src/static/index.html": "excluded_by_scope",
+        "src/stylometry_core/__init__.py": "excluded_by_scope",
+        "src/stylometry_core/__pycache__/__init__.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/behavioral_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/commit_atomicity_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/entropy_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/identifier_fingerprint_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/nlp_metrics.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/register_drift_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/semiotic_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/__pycache__/syntax_fingerprint_core.cpython-312.pyc": "excluded_by_policy",
+        "src/stylometry_core/behavioral_core.py": "examined_clean",
+        "src/stylometry_core/commit_atomicity_core.py": "examined_clean",
+        "src/stylometry_core/entropy_core.py": "examined_clean",
+        "src/stylometry_core/identifier_fingerprint_core.py": "examined_clean",
+        "src/stylometry_core/nlp_metrics.py": "examined_clean",
+        "src/stylometry_core/register_drift_core.py": "examined_clean",
+        "src/stylometry_core/semiotic_core.py": "examined_clean",
+        "src/stylometry_core/syntax_fingerprint_core.py": "examined_clean",
+        "src/suspicious_hotfix.py": "examined_clean",
+        "stylometry-ci-openapi.yaml": "excluded_by_scope",
+        "stylometry-ci_simulator.html": "excluded_by_scope",
+        "tests/__init__.py": "excluded_by_scope",
+        "tests/__pycache__/__init__.cpython-312.pyc": "excluded_by_policy",
+        "tests/__pycache__/test_advanced_cores.cpython-312-pytest-9.0.3.pyc": "excluded_by_policy",
+        "tests/__pycache__/test_determinism.cpython-312-pytest-9.0.3.pyc": "excluded_by_policy",
+        "tests/__pycache__/test_gate.cpython-312-pytest-9.0.3.pyc": "excluded_by_policy",
+        "tests/test_advanced_cores.py": "examined_clean",
+        "tests/test_determinism.py": "examined_clean",
+        "tests/test_gate.py": "examined_clean"
+      },
+      "findings_per_family": {
+        "hardcoded-credential": 0,
+        "path-traversal": 0,
+        "unsafe-deserialization": 0
+      }
+    }
+  },
+  "agents": {
+    "abduction": {
+      "average_evidence_per_hypothesis": null,
+      "hypotheses_discarded": 1,
+      "hypotheses_generated": 1,
+      "hypotheses_merged": null,
+      "patterns_observed": 1
+    },
+    "integrity_inspector": {
+      "applicable": 4,
+      "contracts_evaluated": 4,
+      "design_inconsistencies": 0,
+      "not_applicable": 15,
+      "protocol_gaps": 0,
+      "undetermined": 12
+    },
+    "verification": {
+      "benign_explanations_accepted": 1,
+      "benign_explanations_rejected": 0,
+      "checks_executed": 1,
+      "checks_failed": 0,
+      "checks_note": "Surviving hypotheses are unresolved candidates, not failed tests; dynamic induction is required before calling them defects.",
+      "checks_passed": 1,
+      "checks_unresolved": 0,
+      "structural_proofs_found": 1
+    }
+  },
+  "audit_disposition": {
+    "action_required": "Inspect skipped files and rerun with complete source coverage.",
+    "evidence_boundary": [
+      "binary_or_unreadable: 15 file(s)",
+      "excluded_by_policy: 175 file(s)",
+      "out_of_scope_modules: 15 module(s)",
+      "skill_applicability: 12 undetermined result(s)"
+    ],
+    "reason": "The run found evidence, but one or more source boundaries were not verified.",
+    "reason_code": "UNVERIFIED_SOURCE_BOUNDARY",
+    "status": "ABSTAIN_INSUFFICIENT_SCOPE"
+  },
+  "audit_trail": {
+    "artifacts_produced": null,
+    "chain_verification": null,
+    "events_hashed": 18,
+    "events_verified": null,
+    "hash_chain_length": null,
+    "partial_trace": false,
+    "runtime_events": 18,
+    "tampering_detected": null
+  },
+  "contradictions": [],
+  "discovery": {
+    "CONNECTED_ALIVE": 16,
+    "DEAD_WEIGHT": 6,
+    "DUPLICATE": 3,
+    "FOSSIL_HIGH_RISK": 6,
+    "FOSSIL_LOW_RISK": 0,
+    "UNKNOWN": 0,
+    "average_dependency_degree": null,
+    "dependency_graph_size": null,
+    "mixed_domain_modules": 0
+  },
+  "domain_classification": {
+    "hypothesis_confidence": [
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "adk_agent/__init__.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "adk_agent/agent.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "agent.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "conftest.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "gemini_agent.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "main.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/__init__.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/agent_tools_api.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/generate_benign_edge_cases.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/generate_synthetic_profiles.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/gitlab_mcp_server.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/hydrate_profiles.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/migrate_db.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/pipeline_gate.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/policy_engine.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "input_boundary"
+        ],
+        "evidence_count": 1,
+        "module_path": "src/report_exporter.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/setup_demo_db.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/stylometry_core/__init__.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/stylometry_core/behavioral_core.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "input_boundary"
+        ],
+        "evidence_count": 1,
+        "module_path": "src/stylometry_core/commit_atomicity_core.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/stylometry_core/entropy_core.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "input_boundary"
+        ],
+        "evidence_count": 1,
+        "module_path": "src/stylometry_core/identifier_fingerprint_core.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/stylometry_core/nlp_metrics.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/stylometry_core/register_drift_core.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/stylometry_core/semiotic_core.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "input_boundary"
+        ],
+        "evidence_count": 1,
+        "module_path": "src/stylometry_core/syntax_fingerprint_core.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "src/suspicious_hotfix.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "tests/__init__.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "tests/test_advanced_cores.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "cryptographic"
+        ],
+        "evidence_count": 1,
+        "module_path": "tests/test_determinism.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "tests/test_gate.py"
+      }
+    ],
+    "modules_by_domain": {
+      "cryptographic": 1,
+      "input_boundary": 4
+    }
+  },
+  "evidence": {
+    "by_kind": {
+      "source": 6
+    },
+    "derived_evidence": 0,
+    "evidence_conflicts": 0,
+    "evidence_items": 6,
+    "evidence_reused": null,
+    "primary_evidence": 6,
+    "recommendation_evidence": 0,
+    "secondary_evidence": 0
+  },
+  "findings": {
+    "by_agent": {
+      "integrity_inspector": 6
+    },
+    "by_epistemic_level": {
+      "CODE FACT": 6
+    },
+    "by_family": {
+      "other": 1,
+      "unversioned-serialization": 5
+    },
+    "by_module": {
+      "src/report_exporter.py": 3,
+      "src/stylometry_core/commit_atomicity_core.py": 1,
+      "src/stylometry_core/identifier_fingerprint_core.py": 1,
+      "src/stylometry_core/syntax_fingerprint_core.py": 1
+    },
+    "by_outcome": {
+      "DESIGN_INCONSISTENCY": 0,
+      "NOT_APPLICABLE": 0,
+      "OBSERVED": 6,
+      "PROTOCOL_GAP": 0,
+      "UNDETERMINED": 0
+    },
+    "by_severity": {
+      "MEDIUM": 6
+    },
+    "discarded_hypotheses": 1,
+    "finding_digest": "6e9091694721e3f4a695177fcd7d09b6a9211ea8a2e9ec57dc27ff9ff4ddd1ce",
+    "induction": {
+      "confirmed": 0,
+      "falsified": 0,
+      "undetermined": 0
+    }
+  },
+  "honest_degradation": {
+    "limitations": [
+      "Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only.",
+      "210 discovered file(s) were skipped; see skipped_reasons for the exact paths and policy categories.",
+      "15 triaged module(s) were outside CONNECTED_ALIVE audit scope.",
+      "12 skill applicability result(s) were UNDETERMINED; no conclusion was inferred for them."
+    ],
+    "skipped_reasons": {
+      "binary_or_unreadable": [
+        "data/dev_profiles.db",
+        "photos/1.png",
+        "photos/2.png",
+        "photos/3.png",
+        "photos/4.png",
+        "photos/5.png",
+        "photos/6.png",
+        "photos/logo.jpeg",
+        "screenshots/1.png",
+        "screenshots/3.png",
+        "screenshots/4.png",
+        "screenshots/5.png",
+        "screenshots/6.png",
+        "screenshots/7.png",
+        "screenshots/8.png"
+      ],
+      "excluded_by_policy": [
+        ".git/COMMIT_EDITMSG",
+        ".git/HEAD",
+        ".git/config",
+        ".git/description",
+        ".git/hooks/applypatch-msg.sample",
+        ".git/hooks/commit-msg.sample",
+        ".git/hooks/fsmonitor-watchman.sample",
+        ".git/hooks/post-update.sample",
+        ".git/hooks/pre-applypatch.sample",
+        ".git/hooks/pre-commit.sample",
+        ".git/hooks/pre-merge-commit.sample",
+        ".git/hooks/pre-push.sample",
+        ".git/hooks/pre-rebase.sample",
+        ".git/hooks/pre-receive.sample",
+        ".git/hooks/prepare-commit-msg.sample",
+        ".git/hooks/push-to-checkout.sample",
+        ".git/hooks/sendemail-validate.sample",
+        ".git/hooks/update.sample",
+        ".git/index",
+        ".git/info/exclude",
+        ".git/logs/HEAD",
+        ".git/logs/refs/heads/main",
+        ".git/logs/refs/heads/test/impostor-attack",
+        ".git/logs/refs/heads/test/suspicious-commit",
+        ".git/logs/refs/remotes/github/main",
+        ".git/logs/refs/remotes/origin/main",
+        ".git/logs/refs/remotes/origin/test/impostor-attack",
+        ".git/logs/refs/remotes/origin/test/suspicious-commit",
+        ".git/objects/06/9c7c99ad122afe0c23c2e6e1c818d21a6ef4c5",
+        ".git/objects/08/2ef1b9623ef5bcd0d929c6f50b4f21c644e2c6",
+        ".git/objects/09/96237a385c440281dd540eeb1d24f041c4d38c",
+        ".git/objects/0d/eabcfd7ee37f00077bccd6a6241b55a0b848ae",
+        ".git/objects/0e/790aad87594b59dfb46177e0b89c6bdf6faf88",
+        ".git/objects/0f/3a8d3043f8dfdacb5babc128be1a5b52964b6f",
+        ".git/objects/15/a6c6dbb59524790487c8eb4f9cefc103ac9524",
+        ".git/objects/18/f4e6a1438e94fb73c2d10988be681d3dc92222",
+        ".git/objects/1a/cc4892fdceff63022e772ce633994e4367b1c3",
+        ".git/objects/1e/77647c007fe20132168677b5df06d76a4e5eaa",
+        ".git/objects/21/02effd0942f4d2963238581299b6afb9d2e10f",
+        ".git/objects/23/39732d113d75292985fb6ac498b3bb720266d4",
+        ".git/objects/23/d67636af4df2bb438e6d98a276528cf5cbdcb4",
+        ".git/objects/26/4e7bcc412d54a427b252bb0f302f4d425f213d",
+        ".git/objects/2c/613a8b2ec5e10801fe2a59ca525dcfa119f2d0",
+        ".git/objects/2c/a7f550c6ae8382890f94698dad465e580bc13a",
+        ".git/objects/2d/781701ccc806c919914a83162716b841afe99b",
+        ".git/objects/2f/cb169d709287b7f71c05cb8d6add17b3d79735",
+        ".git/objects/32/ec9f70c6cc11fd041f8cffedeb59f3f2328e5f",
+        ".git/objects/33/1bc3c91067ab698f721972f9382e3139c89986",
+        ".git/objects/33/4bd251d57a1bd126736b3c343375dd2586cfaf",
+        ".git/objects/33/5c9fce4bd8dce16f0807c48d9edd06644b34ea",
+        ".git/objects/33/855b91dc4e7d3ffe6f27b1d2817415dc3fa998",
+        ".git/objects/34/5f3b4db69831526086cc54ec13822724cf7cb0",
+        ".git/objects/37/a81a38ee548f6d38d62620a88a18f007f711ef",
+        ".git/objects/39/558e385c9829e07414e17c911f1b4f7a2bb43c",
+        ".git/objects/3b/d274e1bb9096af96553451db42b03c8d69d942",
+        ".git/objects/3d/0be8917d9210ec55335703d99d2b45b25e2af9",
+        ".git/objects/40/90a97de3cab03f38d7a45c470dfaeb6108a0ff",
+        ".git/objects/41/8877d9a9f24d356815ab003563e9e5e330fe80",
+        ".git/objects/45/471e3cd0ed8dc3b480b2a0c005b5446149aedf",
+        ".git/objects/46/877601faf3c72709024fd51aebe63e831fccbd",
+        ".git/objects/46/c2848829ec141901947e1582544567ac4c8c8d",
+        ".git/objects/49/cb7a525cf715ae78e3954dcd0195f0b499c47d",
+        ".git/objects/4a/7b459f116d8b6fee6176b16e2473df8a40d05b",
+        ".git/objects/4d/3726578d3aa49b82d153bacc6a97eab1b7fb5b",
+        ".git/objects/4e/1efddd73311b3a9e14cec6b82d90cd9e2a0f5d",
+        ".git/objects/51/38ce2ab9e4a33a9845e9365fa272bb4ff7250b",
+        ".git/objects/54/92881dfb59fd98a4917e4292a833fe7b57ed59",
+        ".git/objects/58/ad916aef7ba9b3ab5739babd4e3571daee1c74",
+        ".git/objects/5b/d4c853b6c94b18e3c9c307438da29f1edc952a",
+        ".git/objects/5c/d5dea7beacddaaaf40d276f2d7648840b07604",
+        ".git/objects/60/56b56beff444d5fd8913c0a21847c97bb8564b",
+        ".git/objects/60/6822077c2b25bccb30a11a2719581a1bf29e15",
+        ".git/objects/61/08f42a7a6a17d37278c808a514fd104f70b047",
+        ".git/objects/61/8402b4817bcc6e41ce6a5e76bf170b1f47de71",
+        ".git/objects/63/3746c44a777cee490bd303b49628575b804c21",
+        ".git/objects/67/f14c06392e6a8309cc13e97c16c201f0ee1ed8",
+        ".git/objects/6a/42eb140833bb73333c271082592caf4c343286",
+        ".git/objects/6c/5e468ac948d4eadae55544958c0a752a49872e",
+        ".git/objects/6d/7ea029635a038e2f97d6dcb41ec91edb4f07f9",
+        ".git/objects/6e/a900501f652a79bc63f751b9898f73604457ce",
+        ".git/objects/70/fe9e801b5a638f57fda0d6b4f0f022780ed885",
+        ".git/objects/76/ae540329d654fe38d3a0942aeadaeb2b9f8872",
+        ".git/objects/77/948e52d1ac19e64a6d03c6ce86cad3742023ea",
+        ".git/objects/79/c57a0e367ad1d35ecedb0eb39d84a53a9cba01",
+        ".git/objects/7a/3afa9b6137476f7d4a4ce8ca3477d32ac336ef",
+        ".git/objects/7d/c5269229b5017cbdf79ff0a1c6ce009feb6b57",
+        ".git/objects/7e/f981da37dc1002ef01d2db4546469a7e536a0c",
+        ".git/objects/86/eea94aab3124b6e9c4ad89c1aaf0dcec121222",
+        ".git/objects/87/b55eebb08fcd3bd59ea8c72a7ba3ee11f6e306",
+        ".git/objects/8a/c8b6a0aceb2b7e7b6ebd75d29636085ab0fcc7",
+        ".git/objects/8e/e3c47317e26ed9b653c9221cc11daac54b5792",
+        ".git/objects/8f/d4062d4bfd5485829f94c146e5f06833f1b752",
+        ".git/objects/91/82d51d02bcc48875851c75c6401614ac4e1800",
+        ".git/objects/93/b0e1ae5543344f55c91e9b3edbe20802dc7e25",
+        ".git/objects/96/3208597fe09949b1e8b037782af67b167889a7",
+        ".git/objects/99/e9756ce3330cbfcd937ba1a24674ec42e89c06",
+        ".git/objects/9a/317cff357f162359622ca61e5d6b7634e6dc4f",
+        ".git/objects/9e/83d74f99261cae80e2920148d6d5b298d3886e",
+        ".git/objects/9f/092e2bdfe35a76bd5f305ee214d7eaa4116a62",
+        ".git/objects/a1/93c5198bcc2889c0ba23791dc1c4a53dd98385",
+        ".git/objects/a4/b70804d3412dcabb26bc1c6ef383a85807efe5",
+        ".git/objects/a5/f343be3131d4d3b029d8dfbd877f3f4621575f",
+        ".git/objects/a6/57afa5bf80a18a305328b6340f95ceb15cd14b",
+        ".git/objects/a6/98476b7adc773b083088b68f2abb7b5e75d19e",
+        ".git/objects/aa/4a2dc21f326ad99ffb61b58701287309952e58",
+        ".git/objects/ac/0501d3c60cd7a309d28f1e65a0aa706e07cfd4",
+        ".git/objects/ac/17b416164f77b097dd3dd6cec1c7cf09ab5a4e",
+        ".git/objects/b0/a6ec5ab6184a297b60c2cdef50c084d3641585",
+        ".git/objects/b0/daaa24662dea8dd7c99aaf21007e7d57c10460",
+        ".git/objects/b1/157f1c8cce9d0afab876734f44fb256a07e418",
+        ".git/objects/b3/c9ab9c86d682675e0d06a5146fb664a16559a5",
+        ".git/objects/b8/743b38953f5d550f94c7ac002429cc63345d8e",
+        ".git/objects/ba/27ec9a74948ccbacd9dce9d19d8cc3e462be7f",
+        ".git/objects/ba/5d8553c4f7f43222a60acb81b041503bf0eef6",
+        ".git/objects/bb/8e58e6d63dff5cc04ecc25515cbec434ea1255",
+        ".git/objects/bc/ffe7368251132c7943f71e106a84c6f18e633f",
+        ".git/objects/be/ff26843d94a297f68e8bae251b9efe71118472",
+        ".git/objects/c1/2cde0f44794af38ad14a637038518d9d76703e",
+        ".git/objects/c1/ee9a8dfe8ff43f5298cd61f86becde5f30a271",
+        ".git/objects/c4/50df7f57bc9740b58e5079820dbe192f33ee30",
+        ".git/objects/c5/2ae997270fbbd62e1eab734f7cd74981794172",
+        ".git/objects/c9/fe8575e98e4c6d874ae889f23e39407aa48ba3",
+        ".git/objects/ce/2f6fda95a2ec5fe410d9629053a403bbe1b2a5",
+        ".git/objects/ce/ed70949939def7805178dbfb144ffd323db6c4",
+        ".git/objects/d2/97aae07336f81e59dff88a72c1fa961add3230",
+        ".git/objects/d4/63b91fb0652fbbb1f51553c6b7c8536b26ca50",
+        ".git/objects/d5/b09ba873aff308a3a45f114f1305e9bad4c011",
+        ".git/objects/d6/45695673349e3947e8e5ae42332d0ac3164cd7",
+        ".git/objects/d7/d65af871e850fc5e1ead4f8cb17399de0dae3e",
+        ".git/objects/da/baa9db8fe4ab71c25cf4a07306fb6a09f3dcf2",
+        ".git/objects/db/654d88cd944f3e0205703fd2f4d230eacbd6a1",
+        ".git/objects/dc/57b8524a9f8ab7c05a1cba5d05960f9ff315bd",
+        ".git/objects/dc/aae4f37463318ce44fec753a94e36e8bdb0ef5",
+        ".git/objects/dd/096019914bd3dd228e16197239454c4d128a72",
+        ".git/objects/dd/f0cbee087704a21849666164c50be832af2ddd",
+        ".git/objects/de/d1c66b7454203d5c82dea4484f4de47f6cd60f",
+        ".git/objects/e4/6734d039d065cbe968274f1b97337ac0742e14",
+        ".git/objects/e6/9de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        ".git/objects/e6/d8b90829ea62fc0520a01a7d94573825816dac",
+        ".git/objects/ea/6c6b897e47ab088f17b452afd765b026c5f894",
+        ".git/objects/eb/31f72de5aac836e17a36fb6ccf3b0ef8f1055c",
+        ".git/objects/f5/d8b80f0b38c0e6d2871ec994a0928264e99708",
+        ".git/objects/f9/6c2a47c1d8b996c4d9c0c99d79dc0e8786169f",
+        ".git/objects/fc/119f26b53ef5be55903bec693bdd2b5f4d651c",
+        ".git/objects/fe/ab401de23f0f41ecb48c4479f694988d10117b",
+        ".git/refs/heads/main",
+        ".git/refs/heads/test/impostor-attack",
+        ".git/refs/heads/test/suspicious-commit",
+        ".git/refs/remotes/github/main",
+        ".git/refs/remotes/origin/main",
+        ".git/refs/remotes/origin/test/impostor-attack",
+        ".git/refs/remotes/origin/test/suspicious-commit",
+        ".pytest_cache/.gitignore",
+        ".pytest_cache/CACHEDIR.TAG",
+        ".pytest_cache/README.md",
+        ".pytest_cache/v/cache/lastfailed",
+        ".pytest_cache/v/cache/nodeids",
+        "__pycache__/conftest.cpython-312-pytest-9.0.3.pyc",
+        "src/__pycache__/migrate_db.cpython-312.pyc",
+        "src/__pycache__/pipeline_gate.cpython-312.pyc",
+        "src/__pycache__/policy_engine.cpython-312.pyc",
+        "src/__pycache__/report_exporter.cpython-312.pyc",
+        "src/stylometry_core/__pycache__/__init__.cpython-312.pyc",
+        "src/stylometry_core/__pycache__/behavioral_core.cpython-312.pyc",
+        "src/stylometry_core/__pycache__/commit_atomicity_core.cpython-312.pyc",
+        "src/stylometry_core/__pycache__/entropy_core.cpython-312.pyc",
+        "src/stylometry_core/__pycache__/identifier_fingerprint_core.cpython-312.pyc",
+        "src/stylometry_core/__pycache__/nlp_metrics.cpython-312.pyc",
+        "src/stylometry_core/__pycache__/register_drift_core.cpython-312.pyc",
+        "src/stylometry_core/__pycache__/semiotic_core.cpython-312.pyc",
+        "src/stylometry_core/__pycache__/syntax_fingerprint_core.cpython-312.pyc",
+        "tests/__pycache__/__init__.cpython-312.pyc",
+        "tests/__pycache__/test_advanced_cores.cpython-312-pytest-9.0.3.pyc",
+        "tests/__pycache__/test_determinism.cpython-312-pytest-9.0.3.pyc",
+        "tests/__pycache__/test_gate.cpython-312-pytest-9.0.3.pyc"
+      ],
+      "non_python_not_analyzed": [
+        ".dockerignore",
+        ".env.agent.example",
+        ".gcloudignore",
+        ".gitignore",
+        ".gitlab-ci.yml",
+        "Dockerfile",
+        "Dockerfile.agent",
+        "LICENSE",
+        "README.md",
+        "docker-compose.yml",
+        "index.html",
+        "know_limitations.md",
+        "mcp/Dockerfile",
+        "mcp/docker-compose.yml",
+        "mcp/requirements.txt",
+        "requirements-agent.txt",
+        "requirements.txt",
+        "src/static/index.html",
+        "stylometry-ci-openapi.yaml",
+        "stylometry-ci_simulator.html"
+      ]
+    }
+  },
+  "metrics_schema_version": "1.0",
+  "quality": {
+    "contract_coverage": {
+      "covered": 4,
+      "total": 31
+    },
+    "contract_coverage_note": "1 executable skill(s) loaded; this ratio measures applicability observations for executable skills only, not the documented skills catalog.",
+    "evidence_completeness": null,
+    "evidence_completeness_note": "Requires an explicit obligation ledger mapping each executed contract obligation to satisfied or missing Evidence items.",
+    "module_coverage": {
+      "covered": 16,
+      "total": 31
+    },
+    "repository_coverage": {
+      "covered": 31,
+      "total": 241
+    },
+    "verification_coverage": null,
+    "verification_coverage_note": "Requires a count of planned checks versus checks actually executed, including skipped checks and their reasons."
+  },
+  "repository": {
+    "branches_inspected": null,
+    "classes": 9,
+    "configuration_files": 4,
+    "directories": 130,
+    "documentation_files": 6,
+    "files_by_language": {
+      "Other": 210,
+      "Python": 31
+    },
+    "files_discovered": 241,
+    "functions": 104,
+    "git_commits_analyzed": null,
+    "loc": {
+      "blank": 1097,
+      "code": 5932,
+      "comment": 1061,
+      "total": 8090
+    },
+    "methods": 29,
+    "modules": 31,
+    "tags_inspected": null,
+    "tests": 10
+  },
+  "reproducibility": {
+    "artifact_hashes": null,
+    "environment": {
+      "os": "Linux-6.14.0-37-generic-x86_64-with-glibc2.39",
+      "python": "3.12.3"
+    },
+    "forge_version": "0.1.0",
+    "repository_snapshot_sha256": "353d9e897609e00732084a130fdafc5a4243d74335a87f4b35b98ca57d505ff4",
+    "runtime_deterministic": null,
+    "schema_versions": {
+      "triage": "1.1"
+    },
+    "seal_verified": null,
+    "seed_used": null,
+    "skill_versions": {
+      "validate-at-the-boundary": "1.0"
+    }
+  },
+  "scope": {
+    "asts_built": 31,
+    "coverage": {
+      "denominator": 241,
+      "numerator": 31
+    },
+    "files_analyzed": 31,
+    "files_skipped": 210,
+    "functions_analyzed": 104,
+    "lines_analyzed": 3470,
+    "modules_excluded": 15,
+    "out_of_scope_modules": [
+      "conftest.py",
+      "gemini_agent.py",
+      "src/__init__.py",
+      "src/agent_tools_api.py",
+      "src/generate_benign_edge_cases.py",
+      "src/generate_synthetic_profiles.py",
+      "src/gitlab_mcp_server.py",
+      "src/hydrate_profiles.py",
+      "src/setup_demo_db.py",
+      "src/stylometry_core/__init__.py",
+      "src/suspicious_hotfix.py",
+      "tests/__init__.py",
+      "tests/test_advanced_cores.py",
+      "tests/test_determinism.py",
+      "tests/test_gate.py"
+    ],
+    "repositories_chained": 1
+  },
+  "self_assessment": {
+    "abstentions": 1,
+    "confidence_boundary": "scope-limited",
+    "contradictions": 0,
+    "coverage": {
+      "covered": 31,
+      "total": 241
+    },
+    "limitations": 4,
+    "note": "Self-assessment describes audit boundaries; it is not a repository quality score.",
+    "specialized_agents": {
+      "available": 4,
+      "total": 4
+    }
+  },
+  "skill_runtime": {
+    "contract_failures": 0,
+    "contracts_executed": 4,
+    "contracts_skipped": 15,
+    "evidence_obligations_missing": null,
+    "evidence_obligations_satisfied": null,
+    "limitations_emitted": 0,
+    "skills_activated": 4,
+    "skills_loaded": 1,
+    "skills_not_applicable": 15,
+    "undetermined_skills": 12
+  }
+}

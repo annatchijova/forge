@@ -55,6 +55,39 @@ def audit_repository(path: str, max_connected: int = 100, output_dir: str | None
         return _error("audit_failed", str(exc))
 
 @mcp.tool()
+def audit_ref(path: str, ref: str, max_connected: int = 100, output_dir: str | None = None,
+              keep_checkout: bool = False) -> dict[str, Any]:
+    """Audit a committed Git branch, tag, or commit without changing the repository."""
+    root = Path(path).expanduser()
+    if not root.exists(): return _error("not_found", f"repository path does not exist: {path}")
+    if not root.is_dir(): return _error("not_directory", f"repository path is not a directory: {path}")
+    try:
+        if output_dir is None:
+            output = Path(tempfile.mkdtemp(prefix="forge-mcp-ref-"))
+        else:
+            output_root = Path(output_dir).expanduser()
+            output_root.mkdir(parents=True, exist_ok=True)
+            output = Path(tempfile.mkdtemp(prefix="run-", dir=output_root))
+        result = Runtime(max_connected=max_connected).audit_ref(root, ref, output, keep_checkout=keep_checkout).to_dict()
+        result["ok"] = True
+        return result
+    except (OSError, ValueError, RuntimeError) as exc:
+        return _error("audit_ref_failed", str(exc))
+
+@mcp.tool()
+def compare_refs(path: str, base_ref: str, head_ref: str, max_connected: int = 100,
+                 output_dir: str | None = None) -> dict[str, Any]:
+    """Audit two committed Git refs and report new, fixed, and pre-existing findings."""
+    root = Path(path).expanduser()
+    if not root.exists(): return _error("not_found", f"repository path does not exist: {path}")
+    if not root.is_dir(): return _error("not_directory", f"repository path is not a directory: {path}")
+    try:
+        output = Path(output_dir).expanduser() if output_dir is not None else Path(tempfile.mkdtemp(prefix="forge-mcp-compare-"))
+        return {"ok": True, **Runtime(max_connected=max_connected).compare_refs(root, base_ref, head_ref, output)}
+    except (OSError, ValueError, RuntimeError, json.JSONDecodeError) as exc:
+        return _error("compare_refs_failed", str(exc))
+
+@mcp.tool()
 def get_coverage(run_output_dir: str) -> dict[str, Any]:
     """Read the coverage-report.json artifact from a prior audit_repository() run.
 
@@ -194,9 +227,11 @@ def generate_report(sealed_path: str, mode: str = "standard", output: str | None
 
 @mcp.tool()
 def seal_results(verification_path: str, output: str | None = None) -> dict[str, Any]:
-    """Seal an existing verification manifest into a SHA-256 tamper-evident hash chain.
+    """Seal a FORGE-attested verification manifest into a SHA-256 chain.
 
-    `output` defaults to a path next to `verification_path` if not given.
+    Only manifests emitted by this FORGE process are accepted. This prevents a
+    caller from presenting arbitrary JSON as a genuine FORGE audit. `output`
+    defaults to a path next to `verification_path` if not given.
     """
     try: return {"ok": True, "path": str(runtime.seal_results(verification_path, output))}
     except (OSError, ValueError, KeyError, json.JSONDecodeError) as exc: return _error("seal_failed", str(exc))

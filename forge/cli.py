@@ -8,6 +8,7 @@ from forge.runtime import Runtime
 from forge.models import ModelRouting
 from forge.benchmark import run_benchmark
 from forge.comparison import compare_runs
+from forge.loop import run_loop
 
 def main() -> int:
     import sys
@@ -47,6 +48,17 @@ def main() -> int:
         else:
             print(json.dumps(result.to_dict(), indent=2, sort_keys=True))
         return 0
+    if len(sys.argv) > 1 and sys.argv[1] == "audit-ref":
+        ref_parser = argparse.ArgumentParser(description="Audit a committed Git ref without changing the repository")
+        ref_parser.add_argument("repo", type=Path)
+        ref_parser.add_argument("ref")
+        ref_parser.add_argument("-o", "--output-dir", type=Path, default=Path("forge-ref-run"))
+        ref_parser.add_argument("--max-connected", type=int, default=100)
+        ref_parser.add_argument("--keep-checkout", action="store_true", help="keep the isolated extracted tree")
+        ref_args = ref_parser.parse_args(sys.argv[2:])
+        result = Runtime(max_connected=ref_args.max_connected).audit_ref(ref_args.repo, ref_args.ref, ref_args.output_dir, keep_checkout=ref_args.keep_checkout)
+        print(json.dumps(result.to_dict(), indent=2, sort_keys=True))
+        return 0
     if len(sys.argv) > 1 and sys.argv[1] == "preflight":
         preflight_parser = argparse.ArgumentParser(description="Run bounded FORGE discovery without auditing findings")
         preflight_parser.add_argument("repo", type=Path)
@@ -83,6 +95,31 @@ def main() -> int:
         compare_parser.add_argument("current", type=Path)
         compare_args = compare_parser.parse_args(sys.argv[2:])
         print(json.dumps(compare_runs(compare_args.previous, compare_args.current), indent=2, sort_keys=True))
+        return 0
+    if len(sys.argv) > 1 and sys.argv[1] == "compare-refs":
+        refs_parser = argparse.ArgumentParser(description="Compare two committed Git refs through FORGE")
+        refs_parser.add_argument("repo", type=Path)
+        refs_parser.add_argument("base_ref")
+        refs_parser.add_argument("head_ref")
+        refs_parser.add_argument("-o", "--output-dir", type=Path, default=Path("forge-branch-run"))
+        refs_parser.add_argument("--max-connected", type=int, default=100)
+        refs_args = refs_parser.parse_args(sys.argv[2:])
+        print(json.dumps(Runtime(max_connected=refs_args.max_connected).compare_refs(refs_args.repo, refs_args.base_ref, refs_args.head_ref, refs_args.output_dir), indent=2, sort_keys=True))
+        return 0
+    if len(sys.argv) > 1 and sys.argv[1] == "loop":
+        loop_parser = argparse.ArgumentParser(description="Run the bounded FORGE proposal/re-audit loop")
+        loop_parser.add_argument("repo", type=Path)
+        loop_parser.add_argument("ref")
+        loop_parser.add_argument("-o", "--output-dir", type=Path, default=Path("forge-loop-run"))
+        loop_parser.add_argument("--proposal-provider", choices=("deterministic", "human", "llm"), default="deterministic")
+        loop_parser.add_argument("--patch", action="append", default=[], help="unified patch proposal; repeat per iteration")
+        loop_parser.add_argument("--max-iterations", type=int, default=3)
+        loop_parser.add_argument("--max-connected", type=int, default=100)
+        loop_parser.add_argument("--test-command", nargs="+", help="test command to run in the temporary worktree")
+        loop_args = loop_parser.parse_args(sys.argv[2:])
+        print(json.dumps(run_loop(loop_args.repo, loop_args.ref, loop_args.output_dir, loop_args.proposal_provider,
+                                  loop_args.patch, loop_args.max_iterations, loop_args.max_connected,
+                                  loop_args.test_command), indent=2, sort_keys=True))
         return 0
     parser = argparse.ArgumentParser(description="FORGE module 1: stack detector and triage")
     parser.add_argument("repo", type=Path, nargs="?", help="repository root (required except with --verify-seal)")
