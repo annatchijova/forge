@@ -116,3 +116,10 @@ bounded claims from repeated observations. This applies beyond simple static
 code: repositories using floating point or ML must expose numerical precision,
 model uncertainty, data provenance, boundary tests, and degradation behavior
 rather than being forced into an inappropriate binary safety story.
+
+## Self-harness scope
+
+The self-harness is a scoped deterministic analogue applied to FORGE itself. It
+mines signatures from sealed runs, proposes only predefined edits, and uses the
+real regression suite as held-out validation. The name does not imply the
+paper's full stochastic, LLM-proposer implementation.

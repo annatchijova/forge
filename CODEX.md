@@ -163,3 +163,12 @@ FORGE's deterministic pipeline, sealing, HTML reporting, role contracts, and
 sequential orchestrator are implemented. The numeric/ML specialist remains an
 extension point, and MCP transport, concurrent agent execution, negotiation,
 and LLM-mediated reasoning are not implemented by this file.
+
+## Scoped self-harness boundary
+
+FORGE's self-harness is a deterministic analogue of the Self-Harness paper's
+three stages: mine recurring signatures from sealed FORGE runs, propose
+predefined edits against FORGE's detector surface, and validate them with
+held-in fixtures plus the existing pytest suite as held-out regression. It is
+not the full paper implementation: there is no stochastic evaluation, task
+generation, external model-under-test, or LLM proposer.
