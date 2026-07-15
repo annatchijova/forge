@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from forge.mcp_server import audit_repository, get_findings, verify_seal
+from forge.mcp_server import audit_repository, get_findings, verify_seal, review_patch
 
 def put(root, name, text):
     p=root/name; p.parent.mkdir(parents=True, exist_ok=True); p.write_text(text); return p
@@ -33,6 +33,16 @@ def test_mcp_verify_seal_reports_tamper(tmp_path):
 def test_mcp_audit_invalid_path_is_structured(tmp_path):
     result=audit_repository(str(tmp_path/"missing"))
     assert result["ok"] is False and result["error"]["code"] == "not_found"
+
+def test_mcp_review_patch_result_is_json_serializable():
+    diff = "@@ -1,2 +1,2 @@\n def run():\n-    return 1\n+    return 2\n"
+    result = review_patch(diff, "run behavior change", "def run():\n    return 1\n", "def run():\n    return 2\n")
+    # PatchReview.ratio is an exact Fraction; an MCP tool result must survive
+    # a real json.dumps() round trip, not just asdict().
+    encoded = json.dumps(result)
+    assert "ratio" in result
+    decoded = json.loads(encoded)
+    assert decoded["ratio"] == result["ratio"]
 
 def test_mcp_audit_default_ignores_audited_parent_permissions(tmp_path, monkeypatch):
     put(tmp_path, "main.py", "x = 1\n")

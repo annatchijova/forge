@@ -159,6 +159,17 @@ class HypothesesManifest:
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
 
+# Two legitimate, distinct vocabularies share the epistemic_level field today:
+# the red-team-auditing confidence ladder (bug_investigator, security_auditor,
+# integrity_inspector) and the skills-runtime protocol-conformance outcomes
+# (forge/skills/*, e.g. validate-at-the-boundary). "OBSERVED" is deliberately
+# excluded from both: it is the category field's own vocabulary, and reusing
+# it as epistemic_level is exactly the conflation bug this validation exists
+# to catch (see DECISIONS.md).
+RED_TEAM_EPISTEMIC_LEVELS = frozenset({"CODE FACT", "PLAUSIBLE HYPOTHESIS", "CONFIRMED BY INDUCTION", "FALSIFIED"})
+PROTOCOL_EPISTEMIC_LEVELS = frozenset({"PROTOCOL_GAP", "DESIGN_INCONSISTENCY", "UNDETERMINED", "NOT_APPLICABLE"})
+EPISTEMIC_LEVELS = RED_TEAM_EPISTEMIC_LEVELS | PROTOCOL_EPISTEMIC_LEVELS
+
 @dataclass(frozen=True)
 class Finding:
     category: str
@@ -172,6 +183,14 @@ class Finding:
     def __post_init__(self) -> None:
         if self.category not in {"OBSERVED", "INFERRED", "OPINION"}:
             raise ValueError("invalid finding category")
+        if self.epistemic_level not in EPISTEMIC_LEVELS:
+            raise ValueError(
+                f"invalid epistemic_level {self.epistemic_level!r}; must be one of "
+                f"{sorted(EPISTEMIC_LEVELS)} and must not reuse the category field's "
+                "own vocabulary (OBSERVED/INFERRED/OPINION)"
+            )
+        if self.outcome not in {"OBSERVED", "PROTOCOL_GAP", "DESIGN_INCONSISTENCY", "UNDETERMINED", "NOT_APPLICABLE"}:
+            raise ValueError("invalid finding outcome")
         if not self.evidence:
             raise ValueError("every finding requires evidence")
 

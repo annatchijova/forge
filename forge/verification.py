@@ -54,9 +54,20 @@ def _parser_benign(tree: ast.AST, line: int, function_name: str | None = None) -
     call = _call_at(tree, line, function_name)
     return bool(call and _named_handler(tree, call, ("JSONDecodeError", "ValueError", "YAMLError", "TomlDecodeError")))
 
+_DANGEROUS_EVAL_CONTENT = re.compile(
+    r"\b(os\.system|os\.popen|os\.exec\w*|os\.remove|os\.unlink|subprocess\.\w+|"
+    r"shutil\.rmtree|__import__|\beval\s*\(|\bexec\s*\()"
+)
+
 def _eval_benign(tree: ast.AST, line: int, function_name: str | None = None) -> bool:
     call = _call_at(tree, line, function_name)
-    return bool(call and call.args and isinstance(call.args[0], ast.Constant) and isinstance(call.args[0].value, str))
+    if not (call and call.args and isinstance(call.args[0], ast.Constant) and isinstance(call.args[0].value, str)):
+        return False
+    # A literal argument only proves the *provenance* is fixed at read time; it
+    # does not prove the literal's own content is safe to execute. A literal
+    # that itself invokes OS-level execution is a finding regardless of
+    # provenance, so it must not be discarded by the literal-argument carve-out.
+    return not _DANGEROUS_EVAL_CONTENT.search(call.args[0].value)
 
 def _float_benign(tree: ast.AST, line: int, source: str, function_name: str | None = None) -> bool:
     call = _call_at(tree, line, function_name)

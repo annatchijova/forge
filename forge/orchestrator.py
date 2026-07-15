@@ -68,7 +68,22 @@ def run_specialized_pipeline(repo: str | Path, output_dir: str | Path, max_conne
     write_manifest(triage_manifest, triage_path); write_hypotheses_manifest(bug.manifest, hypotheses_path)
     write_verification_manifest(verification, verification_path); write_sealed_manifest(verification, sealed_path); coverage_path.write_text(json.dumps(coverage.to_dict(), indent=2, sort_keys=True) + "\n"); skills_path.write_text(json.dumps(skill_run.to_dict(), indent=2, sort_keys=True) + "\n")
     metrics = {"archaeologist": {"modules_classified": len(triage_manifest.modules), "elapsed_seconds": round(time.monotonic()-started, 6)}, "bug_investigator": {"hypotheses_generated": len(bug.hypotheses), "discarded": len(verification.discarded), "survived": len([f for f in findings if f.agent == "bug_investigator"])}, "security_auditor": {"findings_per_family": {family: sum(x.family == family for x in security) for family in ("hardcoded-credential", "unsafe-deserialization", "path-traversal")}}, "integrity_inspector": {"findings_per_family": {family: sum(x.family == family for x in integrity) for family in ("decision-adjacent-float", "unversioned-serialization")}}}
-    metrics["bug_investigator"]["examinations"] = {m.path: ("examined_with_findings" if any(f.module_path == m.path for f in findings if f.agent == "bug_investigator") else "examined_clean") if m.module_class.value == "CONNECTED_ALIVE" else "excluded_by_scope" for m in triage_manifest.modules}
+    bug_generated_paths = {h.module_path for h in bug.manifest.hypotheses}
+    bug_finding_paths = {f.module_path for f in findings if f.agent == "bug_investigator"}
+    def _bug_examination_status(module):
+        if module.module_class.value != "CONNECTED_ALIVE":
+            return "excluded_by_scope"
+        if module.path in bug_finding_paths:
+            return "examined_with_findings"
+        if module.path in bug_generated_paths:
+            # A hypothesis was generated, then discarded via module 3's AST
+            # proof of benignity - active scrutiny, not a keyword miss.
+            return "hypothesis_discarded_benign"
+        # No risk keyword ever matched: no hypothesis was generated for this
+        # module at all. See DECISIONS.md - conflating this with the discarded
+        # case understates how much scrutiny a "clean" module actually got.
+        return "no_hypothesis_generated"
+    metrics["bug_investigator"]["examinations"] = {m.path: _bug_examination_status(m) for m in triage_manifest.modules}
     metrics["security_auditor"]["examinations"] = security_result.examinations
     metrics["integrity_inspector"]["examinations"] = integrity_result.examinations
     metrics["governance_skills"] = {"loaded": ["validate-at-the-boundary"], "findings": len(skill_run.findings), "applicability_counts": {state: sum(state in module.values() for module in skill_run.applicability.values()) for state in ("APPLICABLE", "NOT_APPLICABLE", "UNDETERMINED")}}

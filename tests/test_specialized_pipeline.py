@@ -83,6 +83,22 @@ def test_report_does_not_inline_raw_examinations_dict_at_scale(tmp_path):
     )
     assert "examined_clean" in metrics_section, "a human-readable summary count must still be present"
 
+def test_bug_investigator_examinations_distinguish_no_hypothesis_from_discarded(tmp_path):
+    put(tmp_path, "main.py", "import boring\nimport risky\nimport confirmed\n")
+    put(tmp_path, "boring.py", "x = 1\n")  # no risk keyword: no hypothesis ever generated
+    put(tmp_path, "risky.py", "def run():\n    return eval('1 + 1')\n")  # hypothesis generated, discarded (literal, benign)
+    put(tmp_path, "confirmed.py", "def run(expr):\n    return eval(expr)\n")  # hypothesis generated, survives as a finding
+    run_specialized_pipeline(tmp_path, tmp_path / "out")
+    report = (tmp_path / "out/forge-report.html").read_text()
+    metrics_section = report[report.index('id="agent-metrics"'):report.index('</section>', report.index('id="agent-metrics"'))]
+    assert "no_hypothesis_generated" in metrics_section
+    assert "hypothesis_discarded_benign" in metrics_section
+    assert "examined_with_findings" in metrics_section
+    # The old conflated label must not survive for bug_investigator once split.
+    bug_investigator_block = metrics_section[metrics_section.index("bug_investigator"):]
+    bug_investigator_block = bug_investigator_block[:bug_investigator_block.index("</li>") + 5]
+    assert "examined_clean" not in bug_investigator_block
+
 def test_coverage_accounting_never_loses_readable_non_python_files(tmp_path):
     put(tmp_path, "main.py", "x = 1\n")
     put(tmp_path, "README.md", "# not python, but readable text\n")

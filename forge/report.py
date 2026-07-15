@@ -10,7 +10,10 @@ from pathlib import Path
 from typing import Any
 
 _EXAMINATIONS_DETAIL_THRESHOLD = 15
-_EXAMINATIONS_STATUS_ORDER = ("examined_clean", "examined_with_findings", "excluded_by_policy", "excluded_by_scope")
+_EXAMINATIONS_STATUS_ORDER = (
+    "examined_with_findings", "hypothesis_discarded_benign", "no_hypothesis_generated",
+    "examined_clean", "excluded_by_policy", "excluded_by_scope",
+)
 
 from forge.sealing import verify_sealed
 

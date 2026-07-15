@@ -1,3 +1,5 @@
+from fractions import Fraction
+
 from forge.agents.archaeologist import assess
 from forge.agents.security_auditor import audit
 from forge.agents.integrity_inspector import inspect
@@ -78,3 +80,23 @@ def test_archaeologist_adds_deletion_judgment(tmp_path):
 def test_patch_reviewer_is_optional_and_separate():
     result = review("@@ -1 +1 @@\n-old\n+new\n", "missing", "def run():\n    return 1\n")
     assert result.changed_lines == 2 and result.flags
+
+def test_patch_reviewer_ratio_is_exact_fraction_not_float():
+    diff = "@@ -1,2 +1,2 @@\n-return 1\n+return 2\n def run():\n"
+    result = review(diff, "run adjustment", "", "def run():\n    return 1\n    return 2\n")
+    assert isinstance(result.ratio, Fraction), f"ratio must be an exact Fraction, not {type(result.ratio)}"
+
+def test_patch_reviewer_intent_match_does_not_flag(tmp_path):
+    before = "def run():\n    return 1\n"
+    after = "def run():\n    return 2\n"
+    diff = "@@ -1,2 +1,2 @@\n def run():\n-    return 1\n+    return 2\n"
+    result = review(diff, "run behavior change", before, after)
+    assert result.touched_scopes == ("run",)
+    assert not result.flags
+
+def test_patch_reviewer_flags_scope_mismatch_with_stated_intent(tmp_path):
+    before = "def unrelated():\n    return 1\n"
+    after = "def unrelated():\n    return 2\n"
+    diff = "@@ -1,2 +1,2 @@\n def unrelated():\n-    return 1\n+    return 2\n"
+    result = review(diff, "database migration", before, after)
+    assert result.flags == ("changed lines do not match stated intent",)

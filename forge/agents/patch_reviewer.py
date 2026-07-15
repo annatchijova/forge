@@ -2,10 +2,11 @@
 from __future__ import annotations
 import ast, re
 from dataclasses import dataclass
+from fractions import Fraction
 
 @dataclass(frozen=True)
 class PatchReview:
-    changed_lines: int; touched_scopes: tuple[str, ...]; ratio: float; flags: tuple[str, ...]
+    changed_lines: int; touched_scopes: tuple[str, ...]; ratio: Fraction; flags: tuple[str, ...]
 
 def review(unified_diff: str, intent: str, before: str = "", after: str = "") -> PatchReview:
     lines = unified_diff.splitlines()
@@ -26,7 +27,7 @@ def review(unified_diff: str, intent: str, before: str = "", after: str = "") ->
             end = getattr(n, "end_lineno", n.lineno)
             touched = any(n.lineno <= line <= end for line in new_lines)
             if touched: scopes.append(n.name); scope_sizes.append(max(1, end - n.lineno + 1))
-    ratio = len(changed) / max(sum(scope_sizes), 1)
+    ratio = Fraction(len(changed), max(sum(scope_sizes), 1))
     intent_word = intent.split()[0] if intent.split() else ""
     flags = ()
     if intent_word and not any(re.search(re.escape(intent_word), s, re.I) for s in scopes):

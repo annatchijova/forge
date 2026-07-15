@@ -49,12 +49,15 @@ def _candidates(module_path: str, source: tuple[str, ...], language: str) -> lis
             candidates.append((f"The tolerance call `{stripped}` at {module_path}:{number} governs a float decision and must expose an explicit tolerance policy.", number, f"Vary values within and outside the stated tolerance; a documented, stable boundary falsifies this hypothesis."))
         if re.search(r"\b(eval|exec)\s*\(", stripped):
             candidates.append((f"The dynamic evaluation `{stripped}` at {module_path}:{number} may execute data as code instead of treating it as data.", number, f"Supply a payload that would create a harmless sentinel file; absence of the sentinel and explicit rejection falsify the hypothesis."))
-    return [Hypothesis(module_path, rank, desc, (line,), test) for rank, (desc, line, test) in enumerate(candidates[:5], 1)]
+    hypotheses = [Hypothesis(module_path, rank, desc, (line,), test) for rank, (desc, line, test) in enumerate(candidates[:5], 1)]
+    omitted = len(candidates) - len(hypotheses)
+    return hypotheses, omitted
 
 
 def generate_hypotheses(triage: TriageManifest) -> HypothesesManifest:
     hypotheses: list[Hypothesis] = []
     audited: list[str] = []
+    limitations: list[str] = ["Hypotheses are unverified candidates; module 3 must perform induction."]
     root = Path(triage.root)
     for module in sorted(triage.modules, key=lambda m: (m.module_class != ModuleClass.CONNECTED_ALIVE, m.path)):
         if module.module_class is not ModuleClass.CONNECTED_ALIVE:
@@ -62,8 +65,15 @@ def generate_hypotheses(triage: TriageManifest) -> HypothesesManifest:
         path = root / module.path
         source = _lines(path)
         audited.append(module.path)
-        hypotheses.extend(_candidates(module.path, source, module.language))
-    return HypothesesManifest("1.0", "0.1.0", triage.schema_version, triage.root, int(time.time()), tuple(hypotheses), tuple(audited), ("Hypotheses are unverified candidates; module 3 must perform induction.",))
+        module_hypotheses, omitted = _candidates(module.path, source, module.language)
+        hypotheses.extend(module_hypotheses)
+        if omitted:
+            limitations.append(
+                f"{module.path}: {omitted} additional risk pattern(s) beyond the 5-candidate "
+                "cap were detected but omitted from this report; this is a completeness "
+                "limitation, not evidence those patterns were absent."
+            )
+    return HypothesesManifest("1.0", "0.1.0", triage.schema_version, triage.root, int(time.time()), tuple(hypotheses), tuple(audited), tuple(limitations))
 
 
 def write_hypotheses_manifest(manifest: HypothesesManifest, destination: str | Path) -> None:

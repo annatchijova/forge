@@ -59,6 +59,16 @@ def test_float_pattern_ignores_inline_comment(tmp_path: Path):
     generated = generate_hypotheses(triage(tmp_path))
     assert generated.hypotheses == ()
 
+def test_candidate_cap_is_surfaced_in_limitations(tmp_path: Path):
+    body = "def run():\n" + "".join(f"    eval('{i}')\n" for i in range(6))
+    (tmp_path / "main.py").write_text(body)
+    generated = generate_hypotheses(triage(tmp_path))
+    assert len(generated.hypotheses) == 5, "the 5-candidate cap itself is unchanged"
+    assert any("main.py" in note and "1" in note for note in generated.limitations), (
+        "when a module's candidates are truncated by the 5-candidate cap, that "
+        "truncation must be surfaced in limitations, not silently dropped"
+    )
+
 def test_stack_confidence_float_baseline_is_reproducible(tmp_path: Path):
     (tmp_path / "a.py").write_text("x = 1\n")
     (tmp_path / "b.py").write_text("x = 2\n")

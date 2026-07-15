@@ -26,3 +26,17 @@ def test_report_cli_renders_existing_sealed_artifact(tmp_path, monkeypatch, caps
     monkeypatch.setattr("sys.argv", ["forge", "report", str(sealed), "--mode", "summary"])
     assert main() == 0
     assert capsys.readouterr().out.strip().endswith(".summary.html")
+
+def test_summary_renderer_escapes_script_text(tmp_path):
+    finding=Finding("OBSERVED", "CODE FACT", "evil.py", "<script>alert(1)</script>", (Evidence("source", "evil.py:1", "<script>alert(1)</script>"),), "raw input")
+    manifest=VerificationManifest("2.0", "0.1.0", "1.0", str(tmp_path), 0, (finding,), ())
+    sealed=tmp_path/"sealed.json"; write_sealed_manifest(manifest, sealed)
+    output=render_tiered_report(sealed, "summary", tmp_path/"summary.html")
+    html=output.read_text()
+    assert "<script>" not in html
+    assert "&lt;script&gt;" in html
+
+def test_invalid_finding_outcome_is_rejected():
+    import pytest
+    with pytest.raises(ValueError, match="invalid finding outcome"):
+        Finding("OBSERVED", "CODE FACT", "x.py", "x", (Evidence("source", "x.py:1", "x"),), "test", outcome="invalid_value")

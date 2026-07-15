@@ -74,7 +74,10 @@ def verify_seal(sealed_path: str) -> dict[str, Any]:
 
 @mcp.tool()
 def review_patch(unified_diff: str, intent: str, before: str = "", after: str = "") -> dict[str, Any]:
-    try: return asdict(review_patch_impl(unified_diff, intent, before, after))
+    try:
+        result = asdict(review_patch_impl(unified_diff, intent, before, after))
+        result["ratio"] = {"numerator": result["ratio"].numerator, "denominator": result["ratio"].denominator}
+        return result
     except (SyntaxError, ValueError) as exc: return _error("invalid_patch", str(exc))
 
 if __name__ == "__main__":

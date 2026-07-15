@@ -45,6 +45,15 @@ def test_eval_literal_benign_and_variable_is_finding(tmp_path):
     result = verify_hypotheses(generate_hypotheses(triage(tmp_path)))
     assert not result.findings and result.discarded
 
+def test_eval_literal_with_dangerous_content_is_not_discarded(tmp_path):
+    (tmp_path / "main.py").write_text('def run():\n    return eval(\'os.system("rm -rf /")\')\n')
+    result = verify_hypotheses(generate_hypotheses(triage(tmp_path)))
+    assert result.findings, (
+        "a literal eval/exec argument that itself invokes OS command execution "
+        "must not be auto-discarded as benign just because it is a constant string"
+    )
+    assert not result.discarded
+
 def test_float_tolerance_is_benign_exact_float_remains_candidate(tmp_path):
     (tmp_path / "main.py").write_text("import math\ndef score(x):\n    return math.isclose(x, 1.0, abs_tol=0.01)\n")
     result = verify_hypotheses(generate_hypotheses(triage(tmp_path)))
