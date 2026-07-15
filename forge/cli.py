@@ -7,8 +7,18 @@ from forge.hypotheses import generate_hypotheses, write_hypotheses_manifest
 from forge.verification import verify_hypotheses, write_verification_manifest
 from forge.sealing import read_and_verify, write_sealed_manifest
 from forge.report import render_report
+from forge.tiered_report import MODES, render_tiered_report
 
 def main() -> int:
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "report":
+        report_parser = argparse.ArgumentParser(description="Render an existing sealed FORGE artifact")
+        report_parser.add_argument("sealed", type=Path)
+        report_parser.add_argument("--mode", choices=MODES, default="standard")
+        report_parser.add_argument("-o", "--output", type=Path)
+        report_args = report_parser.parse_args(sys.argv[2:])
+        print(render_tiered_report(report_args.sealed, report_args.mode, report_args.output))
+        return 0
     parser = argparse.ArgumentParser(description="FORGE module 1: stack detector and triage")
     parser.add_argument("repo", type=Path, nargs="?", help="repository root (required except with --verify-seal)")
     parser.add_argument("-o", "--output", type=Path, default=Path("triage-manifest.json"))
