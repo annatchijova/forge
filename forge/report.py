@@ -4,9 +4,13 @@ from __future__ import annotations
 import html
 import json
 import subprocess
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+_EXAMINATIONS_DETAIL_THRESHOLD = 15
+_EXAMINATIONS_STATUS_ORDER = ("examined_clean", "examined_with_findings", "excluded_by_policy", "excluded_by_scope")
 
 from forge.sealing import verify_sealed
 
@@ -48,6 +52,34 @@ def _blame(root: str, module_path: str, line: int) -> str | None:
 
 def _hypothesis_for(hypotheses: list[dict[str, Any]], module: str, line: int) -> dict[str, Any] | None:
     return next((h for h in hypotheses if h.get("module_path") == module and line in h.get("file_lines", [])), None)
+
+
+def _examinations_html(examinations: dict[str, str]) -> str:
+    if not examinations:
+        return ""
+    counts = Counter(examinations.values())
+    ordered_statuses = [s for s in _EXAMINATIONS_STATUS_ORDER if s in counts]
+    ordered_statuses += sorted(s for s in counts if s not in _EXAMINATIONS_STATUS_ORDER)
+    summary = ", ".join(f"{_e(status)}: {_e(counts[status])}" for status in ordered_statuses)
+    out = f"<div class=\"examinations-summary\">{_e(len(examinations))} module(s) examined — {summary}</div>"
+    if len(examinations) <= _EXAMINATIONS_DETAIL_THRESHOLD:
+        rows = "".join(f"<li><code>{_e(path)}</code>: {_e(status)}</li>" for path, status in sorted(examinations.items()))
+        out += f"<details><summary>Per-module detail</summary><ul>{rows}</ul></details>"
+    else:
+        out += (
+            f"<p><small>Per-module detail omitted above the {_EXAMINATIONS_DETAIL_THRESHOLD}-module inline "
+            "threshold; the full per-module breakdown is in the coverage/verification JSON artifacts on disk.</small></p>"
+        )
+    return out
+
+
+def _metric_block(agent: str, values: Any) -> str:
+    if not isinstance(values, dict):
+        return f"<li><strong>{_e(agent)}</strong>: {_e(values)}</li>"
+    examinations = values.get("examinations")
+    other = {k: v for k, v in values.items() if k != "examinations"}
+    other_text = f": {_e(other)}" if other else ""
+    return f"<li><strong>{_e(agent)}</strong>{other_text}{_examinations_html(examinations)}</li>"
 
 
 def _finding_card(finding: dict[str, Any], hypotheses: list[dict[str, Any]], root: str) -> str:
@@ -119,7 +151,7 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
         ratio = coverage.get("coverage_ratio", {})
         ratio_text = f"{ratio.get('numerator', 0)}/{ratio.get('denominator', 1)}"
         info_rows = [("Coverage", f"discovered={coverage.get('files_discovered', 0)}, analyzed={coverage.get('files_analyzed', 0)}, skipped={coverage.get('files_skipped', 0)}, ratio={ratio_text}"), *info_rows]
-    metrics_html = "".join(f"<li><strong>{_e(agent)}</strong>: {_e(values)}</li>" for agent, values in metrics.items())
+    metrics_html = "".join(_metric_block(agent, values) for agent, values in metrics.items())
     info_table_html = "".join(f"<tr><td>{label}</td><td>{value}</td></tr>" for label, value in info_rows)
 
     objective_html = (

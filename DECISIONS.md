@@ -134,3 +134,30 @@ their false-positive-avoidance patterns or benign safe-context decisions. A
 synthetic regression test confirms that three safe Security Auditor runs
 produce zero mining clusters; this is an explicit coverage gap, not evidence
 that those agents had no examinable cases.
+
+### `examined_clean` conflates two different depths of scrutiny (known limitation)
+
+`bug_investigator`'s per-module `examinations` status (surfaced in the HTML
+report's agent-metrics summary and in `forge/orchestrator.py`) labels a
+module `examined_clean` in two structurally different cases:
+
+1. No hypothesis was generated at all, because no risk keyword matched
+   anywhere in the module (module 2's pattern step never fired).
+2. A hypothesis was generated, then discarded during module 3's adversarial
+   verification because an AST proof established the pattern was benign
+   (e.g. a parser call with a real exception handler).
+
+Case 2 involved active scrutiny and a structural proof of safety. Case 1
+involved no scrutiny beyond a keyword miss. Both currently render as the
+same `examined_clean` label, which conflates "looked hard and found nothing"
+with "never looked closely" — the same distinction `daubert-defensible-writing`
+requires elsewhere in this project (do not let a single label average over
+different evidence strengths). `security_auditor` and `integrity_inspector`
+do not have this ambiguity: their `examined_clean` always means an AST walk
+ran over the file and found no match for any of their implemented families.
+
+Not fixed as part of the coverage-report/report.py work above; flagged here
+so it is a deliberate, documented gap rather than a silent one. A fix would
+split `bug_investigator`'s `examined_clean` into two statuses (e.g.
+`no_hypothesis_generated` vs. `hypothesis_discarded_benign`) the same way
+`examined_with_findings` / `excluded_by_scope` are already distinct today.

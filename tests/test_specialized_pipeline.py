@@ -61,6 +61,27 @@ def test_ast_structural_agents_use_red_team_auditing_epistemic_vocabulary(tmp_pa
             "epistemic_level must not conflate with the category field (OBSERVED/INFERRED/OPINION)"
         )
 
+def test_report_does_not_inline_raw_examinations_dict_at_scale(tmp_path):
+    module_names = [f"mod{i}" for i in range(15)]
+    put(tmp_path, "main.py", "".join(f"import {name}\n" for name in module_names))
+    for i, name in enumerate(module_names):
+        put(tmp_path, f"{name}.py", f"x = {i}\n")
+    result = run_specialized_pipeline(tmp_path, tmp_path / "out")
+    assert result["connected_alive"] == 16, "fixture must actually produce 15+ CONNECTED_ALIVE modules to exercise the scale case"
+    report = (tmp_path / "out/forge-report.html").read_text()
+    # html.escape() turns a raw dict repr's quotes into &#x27; / &quot; rather than
+    # removing the dict shape, so check for the escaped form too, not just the
+    # literal Python repr.
+    assert "{'examined_clean'" not in report and "&#x27;examined_clean&#x27;:" not in report
+    assert "examinations': {" not in report and "&#x27;examinations&#x27;: {" not in report
+    metrics_section = report[report.index('id="agent-metrics"'):report.index('</section>', report.index('id="agent-metrics"'))]
+    assert "mod0.py" not in metrics_section, (
+        "per-module paths must not be inlined into the agent-metrics section once "
+        "the module count exceeds the summary threshold; other sections (e.g. clean "
+        "modules) are allowed to list module paths"
+    )
+    assert "examined_clean" in metrics_section, "a human-readable summary count must still be present"
+
 def test_coverage_accounting_never_loses_readable_non_python_files(tmp_path):
     put(tmp_path, "main.py", "x = 1\n")
     put(tmp_path, "README.md", "# not python, but readable text\n")
