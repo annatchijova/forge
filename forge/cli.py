@@ -2,15 +2,21 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from forge.detector.stack import triage, write_manifest
-from forge.hypotheses import generate_hypotheses, write_hypotheses_manifest
-from forge.verification import verify_hypotheses, write_verification_manifest
-from forge.sealing import read_and_verify, write_sealed_manifest
-from forge.report import render_report
+from forge.sealing import read_and_verify
 from forge.tiered_report import MODES, render_tiered_report
+from forge.runtime import Runtime
 
 def main() -> int:
     import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "audit":
+        audit_parser = argparse.ArgumentParser(description="Run the complete FORGE governance runtime")
+        audit_parser.add_argument("repo", type=Path)
+        audit_parser.add_argument("-o", "--output-dir", type=Path, default=Path("forge-run"))
+        audit_parser.add_argument("--max-connected", type=int, default=100)
+        audit_args = audit_parser.parse_args(sys.argv[2:])
+        result = Runtime(max_connected=audit_args.max_connected).audit(audit_args.repo, audit_args.output_dir)
+        print(json.dumps(result.to_dict(), indent=2, sort_keys=True))
+        return 0
     if len(sys.argv) > 1 and sys.argv[1] == "report":
         report_parser = argparse.ArgumentParser(description="Render an existing sealed FORGE artifact")
         report_parser.add_argument("sealed", type=Path)
@@ -29,25 +35,13 @@ def main() -> int:
     parser.add_argument("--report", action="store_true", help="write forge-report.html from generated manifests")
     args = parser.parse_args()
     if args.verify_seal:
-        result = read_and_verify(args.verify_seal)
+        result = Runtime().verify_findings(args.verify_seal)
         print(json.dumps(result, sort_keys=True))
         return 0 if result["ok"] else 1
     if args.repo is None:
         parser.error("repo is required unless --verify-seal is used")
-    manifest = triage(args.repo)
-    write_manifest(manifest, args.output)
-    if args.hypotheses:
-        hypotheses = generate_hypotheses(manifest)
-        write_hypotheses_manifest(hypotheses, args.hypotheses)
-        if args.verify:
-            verification = verify_hypotheses(hypotheses)
-            write_verification_manifest(verification, args.verify)
-            if args.seal:
-                sealed_path = args.verify.with_suffix(args.verify.suffix + ".sealed.json")
-                write_sealed_manifest(verification, sealed_path)
-                if args.report:
-                    render_report(args.output, args.hypotheses, sealed_path, Path("forge-report.html"))
-    print(args.output)
+    result = Runtime().audit(args.repo, args.output.parent)
+    print(result.artifacts["triage"])
     return 0
 
 if __name__ == "__main__":

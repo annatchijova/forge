@@ -188,6 +188,15 @@ reference implementation. Complete module-level applicability and domain
 hypotheses are retained in `skills-runtime.json`; the HTML report renders only
 aggregates at scale.
 
+## Unified runtime boundary
+
+`forge.Runtime` is the single source of truth for an audit run. It owns
+discovery, evidence, domain hypotheses, skill loading, contract evaluation,
+finding generation, sealing, and report artifacts. CLI argument parsing, MCP
+tool adaptation, and Python callers delegate to it. The legacy orchestrator
+entry points are compatibility wrappers and do not implement a second audit
+pipeline.
+
 ## Agent scope strategy
 
 Archaeologist classifies every discovered file. Bug Investigator examines only

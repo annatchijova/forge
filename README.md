@@ -129,6 +129,23 @@ another agent's conclusions: findings are merged into one
 
 ## Two orchestrator entry points
 
+## Unified runtime and frontends
+
+`forge.Runtime` is the single execution engine. It owns discovery, triage,
+domain hypotheses, executable skill contracts, findings, sealing, and report
+artifacts. CLI, MCP, and Python callers are frontends over this same engine.
+
+```python
+from forge import Runtime
+result = Runtime().audit("/path/to/repository", "forge-run")
+```
+
+The fully automated CLI is `python3 -m forge audit /path/to/repository -o
+forge-run`. MCP exposes the same runtime through triage, domain inference,
+skill listing/execution, audit, sealing, verification, and report tools.
+`run_pipeline()` and `run_specialized_pipeline()` remain compatibility wrappers
+around `Runtime.audit()`.
+
 ### `forge.orchestrator.run_pipeline()` — the original 5-stage pipeline
 
 The module-1-through-5 pipeline (triage → hypothesis generation →
