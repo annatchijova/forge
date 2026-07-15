@@ -40,6 +40,19 @@ class ModelRouting:
 
 
 @dataclass(frozen=True)
+class Recommendation:
+    """A post-audit suggestion, never a finding or an automatic patch."""
+
+    recommendation_id: str
+    module_path: str
+    action: str
+    rationale: str
+    regression_risk: str
+    basis: tuple[str, ...]
+    agent: str = "recommendation_agent"
+
+
+@dataclass(frozen=True)
 class Evidence:
     kind: str
     source: str

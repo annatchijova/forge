@@ -223,6 +223,11 @@ class Runtime:
         if path.is_dir(): path = path / "audit-trace.json"
         return json.loads(path.read_text(encoding="utf-8"))
 
+    def recommend(self, sealed_path: str | Path, metrics_path: str | Path | None = None):
+        """Run the optional post-audit recommendation agent only."""
+        from forge.agents.recommendation_agent import recommend
+        return recommend(sealed_path, metrics_path)
+
     def seal_results(self, verification_path: str | Path, destination: str | Path | None = None) -> Path:
         data = json.loads(Path(verification_path).read_text(encoding="utf-8"))
         findings = tuple(Finding(item["category"], item["epistemic_level"], item["module_path"], item["description"], tuple(Evidence(e["kind"], e["source"], e["detail"]) for e in item["evidence"]), item["reasoning"], item.get("agent", "bug_investigator"), item.get("outcome", "OBSERVED")) for item in data.get("findings", []))

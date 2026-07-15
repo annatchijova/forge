@@ -106,11 +106,10 @@ OPINION category field it sits next to.
 
 ## Multi-agent architecture
 
-`forge.orchestrator.run_specialized_pipeline()` sequences six specialized,
-single-responsibility agent modules. Five participate in the repository audit;
-Patch Reviewer is deliberately kept outside that scan because it reviews a
-proposed diff, not a whole repository. Report Composer renders the result but
-does not invent findings.
+FORGE contains seven specialized, single-responsibility agent modules. Five
+participate in the normal repository audit; Patch Reviewer and Recommendation
+Agent are deliberately kept optional and post-audit. Report Composer renders
+the result but does not invent findings.
 
 ```
                           Repository
@@ -182,7 +181,7 @@ The module-1-through-5 pipeline (triage → hypothesis generation →
 adversarial verification → sealing → reporting) as one dependency-ordered
 call chain. Runnable via `python3 -m forge.orchestrator`.
 
-### `forge.orchestrator.run_specialized_pipeline()` — the six-agent pipeline
+### `forge.orchestrator.run_specialized_pipeline()` — the automatic audit pipeline
 
 Runs Archaeologist, Bug Investigator, Security Auditor and Integrity
 Inspector, merges and seals their findings into a single `VerificationManifest`
@@ -225,7 +224,7 @@ The normal FORGE audit can use the same CRONOS implementation directly with
 CRONOS records how FORGE executed; FORGE remains responsible for repository
 discovery, governance skills, findings, sealing, and reports.
 
-### Agent status: no seventh agent yet
+### Agent status: seventh agent is optional
 
 FORGE currently has exactly six agent modules:
 
@@ -237,12 +236,25 @@ FORGE currently has exactly six agent modules:
 | Integrity Inspector | Yes | decision-path and serialization integrity |
 | Report Composer | Yes, presentation only | HTML rendering |
 | Patch Reviewer | No | review a requested unified diff |
+| Recommendation Agent | No | propose bounded changes after the audit |
 
-There is **no seventh recommendation agent implemented**. Recommendations
-will only be added after contextual domain hypotheses and executable skill
-contracts are mature; they must not compensate for a rigid or misapplied
-audit. The current model-routing options are configuration metadata only: the
-built-in agents do not call an LLM yet.
+The seventh agent is deliberately post-audit and optional. Recommendations
+are available only after contextual domain
+hypotheses and executable skill contracts have run. The Recommendation Agent
+consumes the sealed findings and metrics; it does not rescan, rewrite, or
+change findings. It emits a suggestion with its evidence basis and regression
+risk, and is never run by the normal audit. The current model-routing options
+are configuration metadata only: the built-in agents do not call an LLM yet.
+
+```python
+recommendations = Runtime().recommend(
+    "forge-run/verification-manifest.sealed.json",
+    "forge-run/metrics.json",
+)
+```
+
+The same operation is available as the optional MCP tool
+`recommend_changes`.
 
 ## CRONOS as FORGE infrastructure
 
@@ -275,7 +287,7 @@ JSON and cryptographically bound into the sealed artifact.
 
 ---
 
-## The six agents
+## The agents
 
 ### Archaeologist (`forge/agents/archaeologist.py`)
 

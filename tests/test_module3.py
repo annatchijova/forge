@@ -1,5 +1,5 @@
 from forge.detector.stack import triage
-from forge.hypotheses import generate_hypotheses
+from forge.hypotheses import _candidates, generate_hypotheses
 from forge.verification import verify_hypotheses
 from forge.verification import _call_at
 import ast
@@ -58,3 +58,20 @@ def test_float_tolerance_is_benign_exact_float_remains_candidate(tmp_path):
     (tmp_path / "main.py").write_text("import math\ndef score(x):\n    return math.isclose(x, 1.0, abs_tol=0.01)\n")
     result = verify_hypotheses(generate_hypotheses(triage(tmp_path)))
     assert not result.findings
+
+
+def test_math_isclose_phrase_inside_string_is_not_a_hypothesis():
+    # The detector's own surface pattern is a string literal, not a real call.
+    hypotheses, _ = _candidates("fixture.py", ('if "math.isclose" in stripped:\n',), "Python")
+    assert hypotheses == []
+
+
+def test_risk_shaped_strings_do_not_create_regex_hypotheses():
+    source = (
+        'note = "subprocess.run(cmd)"\n',
+        'note = "json.loads(raw)"\n',
+        'note = "score > 0.5"\n',
+        'note = "eval(expr)"\n',
+    )
+    hypotheses, _ = _candidates("fixture.py", source, "Python")
+    assert hypotheses == []

@@ -166,6 +166,14 @@ def get_audit_trace(run_output_dir: str) -> dict[str, Any]:
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc: return _error("malformed_artifact", str(exc))
 
 @mcp.tool()
+def recommend_changes(sealed_path: str, metrics_path: str | None = None) -> dict[str, Any]:
+    """Generate optional post-audit suggestions without rescanning or patching the repository."""
+    try:
+        return {"ok": True, "recommendations": [asdict(item) for item in runtime.recommend(sealed_path, metrics_path)]}
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+        return _error("recommendation_failed", str(exc))
+
+@mcp.tool()
 def generate_report(sealed_path: str, mode: str = "standard", output: str | None = None) -> dict[str, Any]:
     """Render a self-contained HTML forensic report from a sealed verification manifest.
 
