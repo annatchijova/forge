@@ -1,3 +1,4 @@
+import json
 from fractions import Fraction
 
 from forge.agents.archaeologist import assess
@@ -5,6 +6,8 @@ from forge.agents.security_auditor import audit
 from forge.agents.integrity_inspector import inspect
 from forge.detector.stack import SKIP_DIRS, discover_files
 from forge.agents.patch_reviewer import review
+from forge.orchestrator import run_specialized_pipeline
+from forge.severity import severity_for
 
 def write(root, name, text):
     p = root / name; p.parent.mkdir(parents=True, exist_ok=True); p.write_text(text); return p
@@ -25,14 +28,37 @@ def test_security_path_trigger_and_normalized_safe_context(tmp_path):
     write(tmp_path, "safe.py", "def read(path):\n    path = os.path.normpath(path)\n    return open(path)\n")
     assert [(x.path, x.family) for x in audit(tmp_path)] == [("bad.py", "path-traversal")]
 
+def test_pipeline_preserves_security_family_for_severity(tmp_path):
+    write(tmp_path, "reader.py", "def read(path):\n    return open(path)\n")
+    run_specialized_pipeline(tmp_path, tmp_path / "out")
+    sealed = json.loads((tmp_path / "out/verification-manifest.sealed.json").read_text())
+    finding = next(entry["finding"] for entry in sealed["chain"] if entry["finding"]["agent"] == "security_auditor")
+    expected = severity_for("reader.py", "CODE FACT", finding["description"], "security_auditor", family="path-traversal")
+    assert expected == "CRITICAL"
+    assert finding["severity"] == expected
+
 def test_integrity_float_trigger_and_unversioned_serialization(tmp_path):
     write(tmp_path, "bad.py", "def score(decision):\n    value = float(decision)\n    json.dump({'score': value}, out)\n")
     hits = inspect(tmp_path)
-    assert {x.family for x in hits} == {"decision-adjacent-float", "unversioned-serialization"}
+    assert {x.family for x in hits} == {"unversioned-serialization"}
+
+def test_integrity_ignores_unrelated_float_telemetry_but_flags_return_value(tmp_path):
+    write(tmp_path, "telemetry.py", "def verdict(response):\n    telemetry = {'score': float(response)}\n    return Verdict(telemetry=telemetry, verdict='BLOCKED')\n")
+    write(tmp_path, "genuine.py", "def verdict(response):\n    return float(response) > 0.5\n")
+    hits = inspect(tmp_path)
+    assert [(x.path, x.family) for x in hits] == [("genuine.py", "decision-adjacent-float")]
 
 def test_integrity_safe_float_and_versioned_serialization(tmp_path):
     write(tmp_path, "safe.py", "def display(value):\n    return float(value)\njson.dump({'schema_version': 1}, out)\n")
-    assert inspect(tmp_path) == ()
+    assert [(x.path, x.family) for x in inspect(tmp_path)] == [("safe.py", "decision-adjacent-float")]
+
+def test_integrity_recognizes_versioned_named_payload(tmp_path):
+    write(tmp_path, "benchmark.py", "import json\ndef write_benchmark(out):\n    payload = {'benchmark_schema_version': '1.0', 'repositories': []}\n    out.write_text(json.dumps(payload))\n")
+    assert not [x for x in inspect(tmp_path) if x.family == "unversioned-serialization"]
+
+def test_integrity_ignores_json_embedded_in_presentation_html(tmp_path):
+    write(tmp_path, "forge/report.py", "import json\ndef render(metrics):\n    return f'<pre>{json.dumps(metrics)}</pre>'\n")
+    assert not [x for x in inspect(tmp_path) if x.family == "unversioned-serialization"]
 
 def test_shared_discovery_excludes_venv_from_security(tmp_path):
     write(tmp_path, "main.py", "x = 1\n")
