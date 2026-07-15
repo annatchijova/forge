@@ -50,6 +50,18 @@ the MCP `audit_repository` tool. An agent model name is configuration metadata
 until that agent has a model-backed implementation; it is never presented as
 evidence that a model was called.
 
+For a full execution trace, enable the optional CRONOS runtime store:
+
+```bash
+python3 -m forge audit /path/to/repository \
+  --output-dir forge-run \
+  --cronos-db forge-run/cronos.sqlite3
+```
+
+The repository remains read-only. The SQLite database is an output artifact
+owned by FORGE, not a file written into the audited repository unless the
+caller explicitly chooses such an output location.
+
 The objective is not simply finding more bugs.
 
 The objective is producing findings that another engineer can independently
@@ -95,9 +107,10 @@ OPINION category field it sits next to.
 ## Multi-agent architecture
 
 `forge.orchestrator.run_specialized_pipeline()` sequences six specialized,
-single-responsibility agents. Five run automatically against a repository;
-the sixth (Patch Reviewer) is deliberately kept outside that scan, because it
-reviews a proposed diff, not a whole repository.
+single-responsibility agent modules. Five participate in the repository audit;
+Patch Reviewer is deliberately kept outside that scan because it reviews a
+proposed diff, not a whole repository. Report Composer renders the result but
+does not invent findings.
 
 ```
                           Repository
@@ -175,7 +188,8 @@ Runs Archaeologist, Bug Investigator, Security Auditor and Integrity
 Inspector, merges and seals their findings into a single `VerificationManifest`
 (`schema_version="2.0"`), and renders one HTML report that also carries a
 coverage breakdown. Called from Python today (`from forge.orchestrator import
-run_specialized_pipeline`); it does not yet have its own CLI flag.
+run_specialized_pipeline`) and through `forge audit`/MCP via the unified
+runtime.
 
 Both entry points share a scope guard: they refuse to run downstream agents
 when a repository has more `CONNECTED_ALIVE` modules than `--max-connected`
@@ -194,6 +208,70 @@ With the Python MCP SDK installed, start the stdio server with:
 ```bash
 python3 -m forge.mcp_server
 ```
+
+### Running the optional CRONOS MCP server
+
+FORGE also vendors the private CRONOS runtime under `forge/cronos/`. Its MCP
+surface is deliberately separate from the FORGE audit tools and is not started
+by the normal server:
+
+```bash
+python3 -m forge.cronos_mcp_server
+```
+
+This optional server exposes CRONOS trace operations for an external agent.
+The normal FORGE audit can use the same CRONOS implementation directly with
+`Runtime(cronos_db=...)` or the MCP `audit_repository(..., cronos_db=...)` tool.
+CRONOS records how FORGE executed; FORGE remains responsible for repository
+discovery, governance skills, findings, sealing, and reports.
+
+### Agent status: no seventh agent yet
+
+FORGE currently has exactly six agent modules:
+
+| Agent | Automatic repository scan | Role |
+|---|---:|---|
+| Archaeologist | Yes | discovery, triage, deletion judgments |
+| Bug Investigator | Yes | hypotheses and falsification |
+| Security Auditor | Yes | AST security checks |
+| Integrity Inspector | Yes | decision-path and serialization integrity |
+| Report Composer | Yes, presentation only | HTML rendering |
+| Patch Reviewer | No | review a requested unified diff |
+
+There is **no seventh recommendation agent implemented**. Recommendations
+will only be added after contextual domain hypotheses and executable skill
+contracts are mature; they must not compensate for a rigid or misapplied
+audit. The current model-routing options are configuration metadata only: the
+built-in agents do not call an LLM yet.
+
+## CRONOS as FORGE infrastructure
+
+CRONOS is a private project owned by the FORGE maintainer and is not a user
+dependency or a public repository requirement. We use its strongest ideas
+inside FORGE's runtime rather than exposing CRONOS as an agent:
+
+* event-level tracing while the audit executes, not post-hoc narration;
+* structured objective, discovery, hypothesis, evidence, discard, finding,
+  artifact, and completion events;
+* quality and limitation accounting derived from observed events;
+* exact Fraction-based values where a ratio or confidence-like quantity is
+  meaningful;
+* tamper-evident binding of the trace to FORGE's sealed findings artifact;
+* preservation of a partial trace when the runtime fails.
+
+The current native implementation is `forge/tracing.py` plus the sealed
+`audit-trace.json` artifact. It is adapted to FORGE's repository-audit domain:
+CRONOS concepts such as recalls, tool calls, hypotheses, evidence, decisions,
+quality, contradictions, and chain verification map to FORGE stages and
+findings. The runtime remains the single execution engine; CLI, MCP, and
+Python API all consume it.
+
+The next CRONOS-powered layer is not another detector. It is a forensic
+runtime store and trace-quality subsystem that can support cross-run history,
+quality/diversity/contradiction checks, atomic persistence, and richer audit
+trail metrics without changing detector logic. Until that exists, FORGE makes
+no claim of an external append-only CRONOS database: its trace is persisted as
+JSON and cryptographically bound into the sealed artifact.
 
 ---
 
@@ -278,9 +356,13 @@ a stronger guarantee than it is.
 
 ## Engineering discipline
 
-FORGE embeds 20 engineering methodologies as versioned policy documents in
-`skills-gpt/`, read in full before implementation and used as shared operating
-context for every agent rather than inventing separate standards per agent.
+FORGE keeps the engineering methodologies in `skills-gpt/` as shared source
+material and is migrating them into executable, contextual skill contracts.
+The runtime must not apply every skill as a universal policy: a module's
+domain hypothesis determines applicability. At present,
+`validate-at-the-boundary` is the complete executable reference plugin; the
+remaining catalog is not represented as active checks merely because its
+documentation exists.
 
 **Core reasoning** — Abductive Engineering · Red-Team Auditing · Secure by
 Construction · Software Archaeology · Diagnosing Bugs · Codebase Health

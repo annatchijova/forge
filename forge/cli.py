@@ -16,6 +16,7 @@ def main() -> int:
         audit_parser.add_argument("--max-connected", type=int, default=100)
         audit_parser.add_argument("--orchestrator-model", help="model identifier for future model-backed orchestration")
         audit_parser.add_argument("--agent-model", action="append", default=[], metavar="AGENT=MODEL", help="agent model routing; repeatable")
+        audit_parser.add_argument("--cronos-db", type=Path, help="optional SQLite CRONOS trace store")
         audit_args = audit_parser.parse_args(sys.argv[2:])
         agent_models = {}
         for assignment in audit_args.agent_model:
@@ -26,7 +27,7 @@ def main() -> int:
                 audit_parser.error("--agent-model must use non-empty AGENT=MODEL")
             agent_models[agent] = model
         routing = ModelRouting(audit_args.orchestrator_model, agent_models)
-        result = Runtime(max_connected=audit_args.max_connected, model_routing=routing).audit(audit_args.repo, audit_args.output_dir)
+        result = Runtime(max_connected=audit_args.max_connected, model_routing=routing, cronos_db=audit_args.cronos_db).audit(audit_args.repo, audit_args.output_dir)
         print(json.dumps(result.to_dict(), indent=2, sort_keys=True))
         return 0
     if len(sys.argv) > 1 and sys.argv[1] == "report":

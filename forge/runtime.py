@@ -7,6 +7,7 @@ from __future__ import annotations
 import ast
 import json
 import time
+from contextlib import nullcontext
 from dataclasses import asdict, dataclass
 from fractions import Fraction
 from pathlib import Path
@@ -69,7 +70,8 @@ class Runtime:
     """Reusable, stateless-per-run FORGE execution engine."""
     def __init__(self, skills_root: str | Path | None = None, max_connected: int = 100,
                  triage_override: Callable | None = None,
-                 model_routing: ModelRouting | None = None):
+                 model_routing: ModelRouting | None = None,
+                 cronos_db: str | Path | None = None):
         """Create a runtime.
 
         By default triage uses Archaeologist's enriched path, including
@@ -82,6 +84,20 @@ class Runtime:
         self.max_connected = max_connected
         self._triage_override = triage_override
         self.model_routing = model_routing or ModelRouting()
+        self.cronos_db = Path(cronos_db) if cronos_db is not None else None
+
+    @staticmethod
+    def _event(trace: RuntimeTrace, cronos, kind: str, **payload: Any) -> None:
+        trace.record(kind, **payload)
+        if cronos is None:
+            return
+        summary = json.dumps(payload, sort_keys=True, default=str)
+        cronos.call_tool(f"forge.{kind}", summary[:4000])
+        if kind == "finding_emitted":
+            cronos.add_evidence(payload.get("description", "finding emitted"))
+        elif kind == "hypotheses_discarded":
+            for record in payload.get("records", ()):
+                cronos.discard_hypothesis(record.get("module_path", "unknown"), record.get("reason", "discarded"))
 
     def triage_repository(self, repo: str | Path) -> TriageManifest:
         return self._triage_override(repo) if self._triage_override is not None else archaeologist.assess(repo)
@@ -102,47 +118,58 @@ class Runtime:
 
     def audit(self, repo: str | Path, output_dir: str | Path, max_connected: int | None = None) -> AuditResult:
         trace = RuntimeTrace()
-        try:
-            return self._audit(repo, output_dir, max_connected, trace)
-        except Exception as exc:
-            trace.record("run_failed", exception_type=type(exc).__name__, message=str(exc))
+        cronos_context = nullcontext(None)
+        store = None
+        if self.cronos_db is not None:
+            root = Path(repo).resolve()
+            database = self.cronos_db.expanduser().resolve()
+            if database == root or root in database.parents:
+                raise ValueError("cronos_db must be outside the audited repository")
+            from forge.cronos import CronosTracer, TraceStore
+            store = TraceStore(str(database))
+            cronos_context = CronosTracer(store, "forge-runtime", "", "", objective=f"Audit repository {Path(repo).resolve()}")
+        with cronos_context as cronos:
             try:
-                out = Path(output_dir); out.mkdir(parents=True, exist_ok=True)
-                (out / "audit-trace.json").write_text(json.dumps(trace.to_dict(), indent=2, sort_keys=True) + "\n")
-            except OSError:
-                pass
-            raise
+                return self._audit(repo, output_dir, max_connected, trace, cronos)
+            except Exception as exc:
+                self._event(trace, cronos, "run_failed", exception_type=type(exc).__name__, message=str(exc))
+                try:
+                    out = Path(output_dir); out.mkdir(parents=True, exist_ok=True)
+                    (out / "audit-trace.json").write_text(json.dumps(trace.to_dict(), indent=2, sort_keys=True) + "\n")
+                except OSError:
+                    pass
+                raise
 
-    def _audit(self, repo: str | Path, output_dir: str | Path, max_connected: int | None, trace: RuntimeTrace) -> AuditResult:
+    def _audit(self, repo: str | Path, output_dir: str | Path, max_connected: int | None, trace: RuntimeTrace, cronos=None) -> AuditResult:
         root, out = Path(repo).resolve(), Path(output_dir)
         discovered = discover_files(root, include_excluded=True)
         out.mkdir(parents=True, exist_ok=True)
-        started = time.monotonic(); trace.record("run_started", repository=str(root), max_connected=self.max_connected if max_connected is None else max_connected, model_routing=self.model_routing.to_dict())
+        started = time.monotonic(); self._event(trace, cronos, "run_started", repository=str(root), max_connected=self.max_connected if max_connected is None else max_connected, model_routing=self.model_routing.to_dict())
         triage_manifest = self.triage_repository(root)
-        trace.record("repository_discovered", modules=len(triage_manifest.modules), stacks=[item.name for item in triage_manifest.stacks])
-        trace.record("modules_classified", summary=triage_manifest.summary, deletion_judgments=triage_manifest.deletion_judgments)
+        self._event(trace, cronos, "repository_discovered", modules=len(triage_manifest.modules), stacks=[item.name for item in triage_manifest.stacks])
+        self._event(trace, cronos, "modules_classified", summary=triage_manifest.summary, deletion_judgments=triage_manifest.deletion_judgments)
         connected = triage_manifest.summary.get("CONNECTED_ALIVE", 0)
         limit = self.max_connected if max_connected is None else max_connected
         if connected > limit: raise ValueError(f"scope guard: {connected} CONNECTED_ALIVE modules exceeds max_connected={limit}")
         coverage = _coverage(root, discovered=discovered)
-        trace.record("coverage_collected", discovered=coverage.files_discovered, analyzed=coverage.files_analyzed, skipped=coverage.files_skipped, skipped_reasons=coverage.skipped_reasons)
+        self._event(trace, cronos, "coverage_collected", discovered=coverage.files_discovered, analyzed=coverage.files_analyzed, skipped=coverage.files_skipped, skipped_reasons=coverage.skipped_reasons)
         governance = run_skills(triage_manifest, self.skills_root)
-        trace.record("domain_hypotheses_formed", hypotheses=governance.to_dict()["domain_hypotheses"])
-        trace.record("skill_applicability_evaluated", applicability=governance.applicability)
-        trace.record("skill_contracts_executed", findings=len(governance.findings), limitations=governance.limitations)
+        self._event(trace, cronos, "domain_hypotheses_formed", hypotheses=governance.to_dict()["domain_hypotheses"])
+        self._event(trace, cronos, "skill_applicability_evaluated", applicability=governance.applicability)
+        self._event(trace, cronos, "skill_contracts_executed", findings=len(governance.findings), limitations=governance.limitations)
         bug = bug_investigator.investigate(triage_manifest)
-        trace.record("hypotheses_generated", count=len(bug.hypotheses), modules=list(bug.manifest.audited_modules))
-        trace.record("hypotheses_verified", discarded=len(bug.verification.discarded), findings=len(bug.verification.findings))
+        self._event(trace, cronos, "hypotheses_generated", count=len(bug.hypotheses), modules=list(bug.manifest.audited_modules))
+        self._event(trace, cronos, "hypotheses_verified", discarded=len(bug.verification.discarded), findings=len(bug.verification.findings))
         security_result, integrity_result = security_auditor.audit(root), integrity_inspector.inspect(root)
-        trace.record("agent_completed", agent="security_auditor", findings=len(security_result.findings), examinations=security_result.examinations)
-        trace.record("agent_completed", agent="integrity_inspector", findings=len(integrity_result.findings), examinations=integrity_result.examinations)
+        self._event(trace, cronos, "agent_completed", agent="security_auditor", findings=len(security_result.findings), examinations=security_result.examinations)
+        self._event(trace, cronos, "agent_completed", agent="integrity_inspector", findings=len(integrity_result.findings), examinations=integrity_result.examinations)
         findings = [Finding(f.category, f.epistemic_level, f.module_path, f.description, f.evidence, f.reasoning, "bug_investigator", f.outcome) for f in bug.verification.findings]
         findings += [_agent_finding("security_auditor", item) for item in security_result.findings]
         findings += [_agent_finding("integrity_inspector", item) for item in integrity_result.findings]
         findings += list(governance.findings)
         for finding in findings:
-            trace.record("finding_emitted", agent=finding.agent, module_path=finding.module_path, category=finding.category, outcome=finding.outcome, description=finding.description, evidence=[asdict(item) for item in finding.evidence])
-        trace.record("hypotheses_discarded", count=len(bug.verification.discarded), records=bug.verification.discarded)
+            self._event(trace, cronos, "finding_emitted", agent=finding.agent, module_path=finding.module_path, category=finding.category, outcome=finding.outcome, description=finding.description, evidence=[asdict(item) for item in finding.evidence])
+        self._event(trace, cronos, "hypotheses_discarded", count=len(bug.verification.discarded), records=bug.verification.discarded)
         verification = VerificationManifest("2.0", "0.1.0", bug.verification.hypotheses_schema_version, str(root), int(time.time()), tuple(findings), bug.verification.discarded, bug.verification.ast_verified_families, bug.verification.ast_unverified_families)
         coverage = CoverageReport(coverage.files_discovered, coverage.files_analyzed, coverage.files_skipped, coverage.skipped_reasons, verification.ast_verified_families, coverage.coverage_ratio)
         triage_path, hypotheses_path = out / "triage-manifest.json", out / "hypotheses-manifest.json"
@@ -168,17 +195,19 @@ class Runtime:
         metrics = collect_metrics(root=root, discovered=discovered, triage=triage_manifest, coverage=coverage, governance=governance, findings=findings, discarded=verification.discarded, trace=trace, skills=self.list_available_skills())
         metrics["agent_metrics"] = agent_metrics
         metrics_path.write_text(json.dumps(metrics, indent=2, sort_keys=True) + "\n")
-        trace.record("metrics_computed", metrics=metrics)
+        self._event(trace, cronos, "metrics_computed", metrics=metrics)
         for name, path in (("triage", triage_path), ("hypotheses", hypotheses_path), ("verification", verification_path), ("coverage", coverage_path), ("skills", skills_path), ("metrics", metrics_path)):
-            trace.record("artifact_written", artifact=name, path=str(path))
-        trace.record("artifact_written", artifact="report", path=str(report_path))
-        trace.record("seal_created", artifact="sealed", findings=len(findings))
-        trace.record("run_completed", findings=len(findings), elapsed_seconds=str(round(time.monotonic() - started, 6)))
+            self._event(trace, cronos, "artifact_written", artifact=name, path=str(path))
+        self._event(trace, cronos, "artifact_written", artifact="report", path=str(report_path))
+        self._event(trace, cronos, "seal_created", artifact="sealed", findings=len(findings))
+        self._event(trace, cronos, "run_completed", findings=len(findings), elapsed_seconds=str(round(time.monotonic() - started, 6)))
         trace_path = out / "audit-trace.json"
         trace_path.write_text(json.dumps(trace.to_dict(), indent=2, sort_keys=True) + "\n")
         write_sealed_manifest(verification, sealed_path, trace.to_dict())
         report_composer.compose(triage_path, hypotheses_path, sealed_path, report_path, coverage_path, metrics)
         artifacts = {"triage": str(triage_path), "hypotheses": str(hypotheses_path), "verification": str(verification_path), "sealed": str(sealed_path), "coverage": str(coverage_path), "skills": str(skills_path), "metrics": str(metrics_path), "trace": str(trace_path), "report": str(report_path)}
+        if self.cronos_db is not None:
+            artifacts["cronos_db"] = str(self.cronos_db)
         return AuditResult(str(root), connected, len(findings), len(verification.discarded), tuple(findings), coverage.to_dict(), artifacts)
 
     def verify_findings(self, sealed_path: str | Path) -> dict[str, Any]:

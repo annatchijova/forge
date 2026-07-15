@@ -156,7 +156,12 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
         ratio = coverage.get("coverage_ratio", {})
         ratio_text = f"{ratio.get('numerator', 0)}/{ratio.get('denominator', 1)}"
         info_rows = [("Coverage", f"discovered={coverage.get('files_discovered', 0)}, analyzed={coverage.get('files_analyzed', 0)}, skipped={coverage.get('files_skipped', 0)}, ratio={ratio_text}"), *info_rows]
-    metrics_html = "".join(_metric_block(agent, values) for agent, values in metrics.items())
+    # The detailed layered metrics are persisted as metrics.json. Keep the
+    # HTML agent panel compact and route only the legacy per-agent accounting
+    # through the examination-aware renderer; otherwise nested dictionaries
+    # would reintroduce the large raw examination dump this panel avoids.
+    display_metrics = metrics.get("agent_metrics", metrics)
+    metrics_html = "".join(_metric_block(agent, values) for agent, values in display_metrics.items())
     info_table_html = "".join(f"<tr><td>{label}</td><td>{value}</td></tr>" for label, value in info_rows)
 
     objective_html = (

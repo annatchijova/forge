@@ -27,7 +27,8 @@ def _error(code: str, message: str, **extra: Any) -> dict[str, Any]:
 @mcp.tool()
 def audit_repository(path: str, max_connected: int = 100, output_dir: str | None = None,
                      orchestrator_model: str | None = None,
-                     agent_models: dict[str, str] | None = None) -> dict[str, Any]:
+                     agent_models: dict[str, str] | None = None,
+                     cronos_db: str | None = None) -> dict[str, Any]:
     """Run the full FORGE governance pipeline against a repository and seal the findings.
 
     Writes triage, hypotheses, verification, sealed, and coverage artifacts plus an
@@ -45,7 +46,7 @@ def audit_repository(path: str, max_connected: int = 100, output_dir: str | None
             output_root = Path(output_dir).expanduser()
             output_root.mkdir(parents=True, exist_ok=True)
             output = Path(tempfile.mkdtemp(prefix="run-", dir=output_root))
-        configured_runtime = Runtime(max_connected=max_connected, model_routing=ModelRouting(orchestrator_model, agent_models or {}))
+        configured_runtime = Runtime(max_connected=max_connected, model_routing=ModelRouting(orchestrator_model, agent_models or {}), cronos_db=cronos_db)
         result = configured_runtime.audit(root, output).to_dict()
         result["report_html_path"] = result["artifacts"]["report"]; result["ok"] = True
         return result

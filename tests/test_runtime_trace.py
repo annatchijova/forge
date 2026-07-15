@@ -1,4 +1,5 @@
 import json
+import sqlite3
 from forge import Runtime
 from forge.sealing import verify_sealed
 from forge.models import ModelRouting
@@ -38,3 +39,22 @@ def test_model_routing_is_explicitly_recorded_without_faking_model_calls(tmp_pat
     assert started["kind"] == "run_started"
     assert started["payload"]["model_routing"] == routing.to_dict()
     assert result.artifacts["trace"].endswith("audit-trace.json")
+
+
+def test_cronos_trace_store_is_optional_and_records_the_runtime(tmp_path):
+    (tmp_path / "main.py").write_text("x = 1\n")
+    database = tmp_path.parent / f"{tmp_path.name}-cronos.sqlite3"
+    result = Runtime(cronos_db=database).audit(tmp_path, tmp_path / "out")
+
+    assert result.artifacts["cronos_db"] == str(database)
+    connection = sqlite3.connect(database)
+    assert connection.execute("SELECT COUNT(*) FROM traces").fetchone()[0] == 1
+    assert connection.execute("SELECT COUNT(*) FROM trace_steps").fetchone()[0] >= 2
+    assert connection.execute("SELECT COUNT(*) FROM trace_chain").fetchone()[0] == 1
+    connection.close()
+
+
+def test_cronos_store_cannot_write_inside_the_audited_repository(tmp_path):
+    (tmp_path / "main.py").write_text("x = 1\n")
+    with pytest.raises(ValueError, match="outside the audited repository"):
+        Runtime(cronos_db=tmp_path / "cronos.sqlite3").audit(tmp_path, tmp_path / "out")

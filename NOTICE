@@ -3,3 +3,8 @@ Copyright 2026 Anna Tchijova
 
 This product includes software developed with OpenAI Codex (GPT-5.6 Luna)
 as a collaborating agent, per DECISIONS.md in this repository.
+
+This product also includes the CRONOS runtime, vendored under
+`forge/cronos/`, developed by Anna Tchijova and incorporated under the Apache
+License, Version 2.0. The optional CRONOS MCP server is vendored as
+`forge/cronos_mcp_server.py`.
