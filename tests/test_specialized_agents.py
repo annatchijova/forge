@@ -1,6 +1,7 @@
 from forge.agents.archaeologist import assess
 from forge.agents.security_auditor import audit
 from forge.agents.integrity_inspector import inspect
+from forge.detector.stack import SKIP_DIRS, discover_files
 from forge.agents.patch_reviewer import review
 
 def write(root, name, text):
@@ -55,6 +56,19 @@ def test_clean_connected_module_is_explicitly_examined(tmp_path):
     integrity = inspect(tmp_path)
     assert security.examinations["clean.py"] == "examined_clean"
     assert integrity.examinations["clean.py"] == "examined_clean"
+
+def test_all_agents_share_exact_skip_directory_policy(tmp_path):
+    write(tmp_path, "main.py", "import clean\n")
+    for directory in SKIP_DIRS:
+        write(tmp_path, f"{directory}/hidden.py", "password = 'secret'\n")
+    discovered = {str(p.relative_to(tmp_path)) for p in discover_files(tmp_path)}
+    security = audit(tmp_path)
+    integrity = inspect(tmp_path)
+    for directory in SKIP_DIRS:
+        hidden = f"{directory}/hidden.py"
+        assert hidden not in discovered
+        assert security.examinations[hidden] == "excluded_by_policy"
+        assert integrity.examinations[hidden] == "excluded_by_policy"
 
 def test_archaeologist_adds_deletion_judgment(tmp_path):
     write(tmp_path, "dead.py", "x = 1\n")

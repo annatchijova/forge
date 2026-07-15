@@ -35,6 +35,22 @@ class CoverageReport:
         data["coverage_ratio"] = {"numerator": self.coverage_ratio.numerator, "denominator": self.coverage_ratio.denominator}
         return data
 
+@dataclass(frozen=True)
+class AgentScanResult:
+    findings: tuple
+    examinations: dict[str, str]
+
+    def __iter__(self):
+        return iter(self.findings)
+
+    def __len__(self):
+        return len(self.findings)
+
+    def __eq__(self, other):
+        if isinstance(other, (tuple, list)):
+            return tuple(self.findings) == tuple(other)
+        return super().__eq__(other)
+
 
 @dataclass(frozen=True)
 class ModuleRecord:
