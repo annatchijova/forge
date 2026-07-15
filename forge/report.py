@@ -64,6 +64,7 @@ def _finding_card(finding: dict[str, Any], hypotheses: list[dict[str, Any]], roo
     blame_html = _e(blame) if blame else "Git blame unavailable for this line; report continues with source evidence only."
     falsifier = hypothesis.get("falsification_test", "No originating hypothesis test was found in the supplied manifest.") if hypothesis else "No originating hypothesis test was found in the supplied manifest."
     return f"""<article class=\"finding\">
+      <p><strong>Agent:</strong> {_e(finding.get('agent', 'bug_investigator'))}</p>
       <div><span class=\"badge\">{_e(finding.get('epistemic_level', ''))}</span> <span class=\"ref\">{_e(source_ref)}</span></div>
       <p><strong>Description (inference):</strong> {_e(finding.get('description', ''))}</p>
       <p><strong>Source observation:</strong> <code>{_e(source.get('detail', ''))}</code></p>
@@ -73,10 +74,12 @@ def _finding_card(finding: dict[str, Any], hypotheses: list[dict[str, Any]], roo
     </article>"""
 
 
-def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_path: str | Path, destination: str | Path) -> None:
+def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_path: str | Path, destination: str | Path, coverage_path: str | Path | None = None, metrics: dict[str, Any] | None = None) -> None:
     triage = _load(triage_path)
     hypotheses_doc = _load(hypotheses_path)
     sealed = _load(sealed_path)
+    coverage = _load(coverage_path) if coverage_path else None
+    metrics = metrics or {}
     seal = verify_sealed(sealed)
     manifest = sealed.get("manifest", {})
     findings = [entry.get("finding", {}) for entry in sealed.get("chain", [])]
@@ -112,6 +115,11 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
         ("Seal version", _e(sealed.get("seal_version", "unknown"))),
         ("Canonicalize version", _e(sealed.get("canonicalize_version", "unknown"))),
     ]
+    if coverage:
+        ratio = coverage.get("coverage_ratio", {})
+        ratio_text = f"{ratio.get('numerator', 0)}/{ratio.get('denominator', 1)}"
+        info_rows = [("Coverage", f"discovered={coverage.get('files_discovered', 0)}, analyzed={coverage.get('files_analyzed', 0)}, skipped={coverage.get('files_skipped', 0)}, ratio={ratio_text}"), *info_rows]
+    metrics_html = "".join(f"<li><strong>{_e(agent)}</strong>: {_e(values)}</li>" for agent, values in metrics.items())
     info_table_html = "".join(f"<tr><td>{label}</td><td>{value}</td></tr>" for label, value in info_rows)
 
     objective_html = (
@@ -198,7 +206,9 @@ table.data-table td:first-child{{ font-family:var(--mono); font-size:12.5px; whi
 <div class=\"wrap\">
 <header class=\"masthead\">
   <h1>FORGE verification report</h1>
+  {('<section id="coverage"><h2>Coverage</h2><p>Files discovered: ' + _e(coverage.get('files_discovered')) + ' · analyzed: ' + _e(coverage.get('files_analyzed')) + ' · skipped: ' + _e(coverage.get('files_skipped')) + '</p><p>Skipped reasons: ' + _e(coverage.get('skipped_reasons', {})) + '</p></section>') if coverage else ''}
   <span class=\"seal-line {seal_class}\">{_e(seal_text)}</span>
+  {('<section id="agent-metrics"><h2>Agent metrics</h2><ul>' + metrics_html + '</ul></section>') if metrics else ''}
   <table class=\"data-table\">{info_table_html}</table>
 </header>
 

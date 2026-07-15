@@ -5,10 +5,6 @@ contracts without changing the evidence model.
 """
 
 AGENT_ROLES = (
-    "triage",
-    "abduction",
-    "adversarial_verification",
-    "numeric_ml_review",
-    "sealing",
-    "reporting",
+    "archaeologist", "bug_investigator", "security_auditor",
+    "integrity_inspector", "patch_reviewer", "report_composer",
 )

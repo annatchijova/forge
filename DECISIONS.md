@@ -72,6 +72,23 @@ These are structural proof obligations, not heuristics:
 
 ## Shared skills and future orchestration
 
+## Specialized agent benign criteria
+
+The Security Auditor uses structural proof obligations. A hardcoded credential is
+benign only when the value is empty, a documented placeholder, or comes from an
+environment lookup rather than an `ast.Constant` string. Deserialization is
+benign only for `yaml.load` with an explicit `Loader=yaml.SafeLoader`, or for a
+trusted local file created in the same function before a `pickle.load`; this is
+deliberately narrow. A path operation is benign only when the parameter is
+normalized/resolved or validated against an explicit allow-list before use.
+Comments and names alone never prove safety.
+
+The Integrity Inspector treats `float()` in a decision-adjacent function or
+variable scope as risky even when no comparison occurs. Serialization is benign
+only when the dumped mapping visibly contains `schema_version` or `version`.
+This is a structural versioning check, not a claim that the schema itself is
+correct.
+
 ## TriageManifest schema_version bump (1.0 -> 1.1)
 
 The Archaeologist agent adds `deletion_judgments: dict[str, str]` to

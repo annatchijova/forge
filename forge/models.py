@@ -4,6 +4,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import Any
+from fractions import Fraction
 
 
 class ModuleClass(str, Enum):
@@ -19,6 +20,20 @@ class Evidence:
     kind: str
     source: str
     detail: str
+
+@dataclass(frozen=True)
+class CoverageReport:
+    files_discovered: int
+    files_analyzed: int
+    files_skipped: int
+    skipped_reasons: dict[str, tuple[str, ...]]
+    ast_verified_families: tuple[str, ...] = ()
+    coverage_ratio: Fraction = field(default_factory=lambda: Fraction(0, 1))
+
+    def to_dict(self) -> dict[str, Any]:
+        data = asdict(self)
+        data["coverage_ratio"] = {"numerator": self.coverage_ratio.numerator, "denominator": self.coverage_ratio.denominator}
+        return data
 
 
 @dataclass(frozen=True)
@@ -50,6 +65,7 @@ class TriageManifest:
     modules: tuple[ModuleRecord, ...]
     summary: dict[str, int]
     limitations: tuple[str, ...] = ()
+    deletion_judgments: dict[str, str] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -100,6 +116,7 @@ class Finding:
     description: str
     evidence: tuple[Evidence, ...]
     reasoning: str
+    agent: str = "bug_investigator"
     def __post_init__(self) -> None:
         if self.category not in {"OBSERVED", "INFERRED", "OPINION"}:
             raise ValueError("invalid finding category")
