@@ -25,7 +25,7 @@
       "validate-at-the-boundary": "APPLICABLE"
     },
     "forge/agents/recommendation_agent.py": {
-      "validate-at-the-boundary": "APPLICABLE"
+      "validate-at-the-boundary": "UNDETERMINED"
     },
     "forge/agents/report_composer.py": {
       "validate-at-the-boundary": "UNDETERMINED"
@@ -55,7 +55,7 @@
       "validate-at-the-boundary": "UNDETERMINED"
     },
     "forge/cronos/store.py": {
-      "validate-at-the-boundary": "APPLICABLE"
+      "validate-at-the-boundary": "UNDETERMINED"
     },
     "forge/cronos/tracer.py": {
       "validate-at-the-boundary": "UNDETERMINED"
@@ -79,7 +79,7 @@
       "validate-at-the-boundary": "NOT_APPLICABLE"
     },
     "forge/harness/mining.py": {
-      "validate-at-the-boundary": "APPLICABLE"
+      "validate-at-the-boundary": "UNDETERMINED"
     },
     "forge/harness/proposal.py": {
       "validate-at-the-boundary": "UNDETERMINED"
@@ -89,6 +89,9 @@
     },
     "forge/hypotheses.py": {
       "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "forge/io.py": {
+      "validate-at-the-boundary": "APPLICABLE"
     },
     "forge/mcp_server.py": {
       "validate-at-the-boundary": "APPLICABLE"
@@ -103,19 +106,19 @@
       "validate-at-the-boundary": "UNDETERMINED"
     },
     "forge/report.py": {
-      "validate-at-the-boundary": "APPLICABLE"
+      "validate-at-the-boundary": "UNDETERMINED"
     },
     "forge/runtime.py": {
       "validate-at-the-boundary": "APPLICABLE"
     },
     "forge/sealing.py": {
-      "validate-at-the-boundary": "APPLICABLE"
+      "validate-at-the-boundary": "UNDETERMINED"
     },
     "forge/skills/validate_at_the_boundary/contract.py": {
       "validate-at-the-boundary": "APPLICABLE"
     },
     "forge/tiered_report.py": {
-      "validate-at-the-boundary": "APPLICABLE"
+      "validate-at-the-boundary": "UNDETERMINED"
     },
     "forge/tracing.py": {
       "validate-at-the-boundary": "UNDETERMINED"
@@ -285,21 +288,15 @@
       "module_path": "forge/agents/patch_reviewer.py"
     },
     {
-      "alternatives": [],
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
       "confidence": {
-        "denominator": 3,
-        "numerator": 1
+        "denominator": 1,
+        "numerator": 0
       },
-      "domains": [
-        "input_boundary"
-      ],
-      "evidence": [
-        {
-          "detail": "input or parser boundary call",
-          "kind": "source_pattern",
-          "source": "forge/agents/recommendation_agent.py"
-        }
-      ],
+      "domains": [],
+      "evidence": [],
       "module_path": "forge/agents/recommendation_agent.py"
     },
     {
@@ -423,21 +420,15 @@
       "module_path": "forge/cronos/quality.py"
     },
     {
-      "alternatives": [],
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
       "confidence": {
-        "denominator": 3,
-        "numerator": 1
+        "denominator": 1,
+        "numerator": 0
       },
-      "domains": [
-        "input_boundary"
-      ],
-      "evidence": [
-        {
-          "detail": "input or parser boundary call",
-          "kind": "source_pattern",
-          "source": "forge/cronos/store.py"
-        }
-      ],
+      "domains": [],
+      "evidence": [],
       "module_path": "forge/cronos/store.py"
     },
     {
@@ -551,21 +542,15 @@
       "module_path": "forge/harness/__init__.py"
     },
     {
-      "alternatives": [],
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
       "confidence": {
-        "denominator": 3,
-        "numerator": 1
+        "denominator": 1,
+        "numerator": 0
       },
-      "domains": [
-        "input_boundary"
-      ],
-      "evidence": [
-        {
-          "detail": "input or parser boundary call",
-          "kind": "source_pattern",
-          "source": "forge/harness/mining.py"
-        }
-      ],
+      "domains": [],
+      "evidence": [],
       "module_path": "forge/harness/mining.py"
     },
     {
@@ -617,10 +602,10 @@
         {
           "detail": "input or parser boundary call",
           "kind": "source_pattern",
-          "source": "forge/mcp_server.py"
+          "source": "forge/io.py"
         }
       ],
-      "module_path": "forge/mcp_server.py"
+      "module_path": "forge/io.py"
     },
     {
       "alternatives": [],
@@ -634,6 +619,32 @@
       "evidence": [
         {
           "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "source": "forge/mcp_server.py"
+        }
+      ],
+      "module_path": "forge/mcp_server.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "cryptographic",
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "source": "forge/metrics.py"
+        },
+        {
+          "detail": "cryptographic library reference",
           "kind": "source_pattern",
           "source": "forge/metrics.py"
         }
@@ -665,21 +676,15 @@
       "module_path": "forge/orchestrator.py"
     },
     {
-      "alternatives": [],
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
       "confidence": {
-        "denominator": 3,
-        "numerator": 1
+        "denominator": 1,
+        "numerator": 0
       },
-      "domains": [
-        "input_boundary"
-      ],
-      "evidence": [
-        {
-          "detail": "input or parser boundary call",
-          "kind": "source_pattern",
-          "source": "forge/report.py"
-        }
-      ],
+      "domains": [],
+      "evidence": [],
       "module_path": "forge/report.py"
     },
     {
@@ -701,23 +706,15 @@
       "module_path": "forge/runtime.py"
     },
     {
-      "alternatives": [
-        "mixed_or_unknown"
-      ],
+      "alternatives": [],
       "confidence": {
         "denominator": 3,
-        "numerator": 2
+        "numerator": 1
       },
       "domains": [
-        "cryptographic",
-        "input_boundary"
+        "cryptographic"
       ],
       "evidence": [
-        {
-          "detail": "input or parser boundary call",
-          "kind": "source_pattern",
-          "source": "forge/sealing.py"
-        },
         {
           "detail": "cryptographic library reference",
           "kind": "source_pattern",
@@ -745,21 +742,15 @@
       "module_path": "forge/skills/validate_at_the_boundary/contract.py"
     },
     {
-      "alternatives": [],
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
       "confidence": {
-        "denominator": 3,
-        "numerator": 1
+        "denominator": 1,
+        "numerator": 0
       },
-      "domains": [
-        "input_boundary"
-      ],
-      "evidence": [
-        {
-          "detail": "input or parser boundary call",
-          "kind": "source_pattern",
-          "source": "forge/tiered_report.py"
-        }
-      ],
+      "domains": [],
+      "evidence": [],
       "module_path": "forge/tiered_report.py"
     },
     {

@@ -17,6 +17,7 @@ from forge.agents import archaeologist, bug_investigator, integrity_inspector, r
 from forge.detector.stack import SKIP_DIRS, discover_files, write_manifest
 from forge.governance.runtime import infer_domains, load_skills, run_skills
 from forge.hypotheses import generate_hypotheses, write_hypotheses_manifest
+from forge.io import load_json
 from forge.models import CoverageReport, Evidence, Finding, ModelRouting, TriageManifest, VerificationManifest
 from forge.metrics import collect_metrics
 from forge.report import render_report
@@ -192,7 +193,7 @@ class Runtime:
             "integrity_inspector": {"findings_per_family": {family: sum(item.family == family for item in integrity_result.findings) for family in ("decision-adjacent-float", "unversioned-serialization")}, "examinations": integrity_result.examinations},
             "governance_skills": {"loaded": [item["name"] for item in self.list_available_skills()], "findings": len(governance.findings), "applicability_counts": {state: sum(state in values.values() for values in governance.applicability.values()) for state in ("APPLICABLE", "NOT_APPLICABLE", "UNDETERMINED")}},
         }
-        metrics = collect_metrics(root=root, discovered=discovered, triage=triage_manifest, coverage=coverage, governance=governance, findings=findings, discarded=verification.discarded, trace=trace, skills=self.list_available_skills())
+        metrics = collect_metrics(root=root, discovered=discovered, triage=triage_manifest, coverage=coverage, governance=governance, findings=findings, discarded=verification.discarded, trace=trace, skills=self.list_available_skills(), hypothesis_limitations=bug.manifest.limitations)
         metrics["agent_metrics"] = agent_metrics
         metrics_path.write_text(json.dumps(metrics, indent=2, sort_keys=True) + "\n")
         self._event(trace, cronos, "metrics_computed", metrics=metrics)
@@ -214,14 +215,14 @@ class Runtime:
         return read_and_verify(sealed_path)
 
     def get_findings(self, run_output_dir: str | Path, agent: str | None = None) -> list[dict[str, Any]]:
-        data = json.loads((Path(run_output_dir) / "verification-manifest.sealed.json").read_text(encoding="utf-8"))
+        data = load_json(Path(run_output_dir) / "verification-manifest.sealed.json", f"sealed manifest in {run_output_dir}")
         findings = [entry.get("finding", {}) for entry in data.get("chain", [])]
         return [item for item in findings if agent is None or item.get("agent", "bug_investigator") == agent]
 
     def get_audit_trace(self, run_output_dir: str | Path) -> dict[str, Any]:
         path = Path(run_output_dir)
         if path.is_dir(): path = path / "audit-trace.json"
-        return json.loads(path.read_text(encoding="utf-8"))
+        return load_json(path, f"audit trace {path}")
 
     def recommend(self, sealed_path: str | Path, metrics_path: str | Path | None = None):
         """Run the optional post-audit recommendation agent only."""
@@ -229,7 +230,7 @@ class Runtime:
         return recommend(sealed_path, metrics_path)
 
     def seal_results(self, verification_path: str | Path, destination: str | Path | None = None) -> Path:
-        data = json.loads(Path(verification_path).read_text(encoding="utf-8"))
+        data = load_json(verification_path, f"verification manifest {verification_path}")
         findings = tuple(Finding(item["category"], item["epistemic_level"], item["module_path"], item["description"], tuple(Evidence(e["kind"], e["source"], e["detail"]) for e in item["evidence"]), item["reasoning"], item.get("agent", "bug_investigator"), item.get("outcome", "OBSERVED")) for item in data.get("findings", []))
         manifest = VerificationManifest(data["schema_version"], data["forge_version"], data["hypotheses_schema_version"], data["root"], data["generated_at_epoch"], findings, tuple(data.get("discarded", [])), tuple(data.get("ast_verified_families", [])), tuple(data.get("ast_unverified_families", [])))
         target = Path(destination) if destination else Path(verification_path).with_suffix(Path(verification_path).suffix + ".sealed.json")

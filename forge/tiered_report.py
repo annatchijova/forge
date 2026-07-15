@@ -7,11 +7,12 @@ from pathlib import Path
 from typing import Any
 
 from forge.sealing import verify_sealed
+from forge.io import load_json
 
 MODES = ("summary", "standard", "extended", "json")
 
 def _load(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return load_json(path, f"report artifact {path}")
 
 def findings_from_sealed(sealed: dict[str, Any]) -> list[dict[str, Any]]:
     """The sole finding source for every tier; never recomputed by rendering."""
@@ -80,6 +81,6 @@ def render_tiered_report(sealed_path: str | Path, mode: str, destination: str | 
 def rendered_finding_bytes(path: str | Path, mode: str) -> bytes:
     """Test/consumer helper proving the renderer preserved the sealed finding set."""
     raw = Path(path).read_bytes()
-    if mode == "json": return canonical_findings_bytes(findings_from_sealed(json.loads(raw)))
+    if mode == "json": return canonical_findings_bytes(findings_from_sealed(load_json(path, f"report artifact {path}")))
     marker = b"data-canonical-base64='"; encoded = raw.split(marker, 1)[1].split(b"'", 1)[0]
     return base64.b64decode(encoded)

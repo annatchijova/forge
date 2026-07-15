@@ -100,3 +100,11 @@ def test_patch_reviewer_flags_scope_mismatch_with_stated_intent(tmp_path):
     diff = "@@ -1,2 +1,2 @@\n def unrelated():\n-    return 1\n+    return 2\n"
     result = review(diff, "database migration", before, after)
     assert result.flags == ("changed lines do not match stated intent",)
+
+
+def test_patch_reviewer_raises_named_error_for_malformed_source():
+    import pytest
+    from forge.agents.patch_reviewer import PatchReviewInputError
+
+    with pytest.raises(PatchReviewInputError, match="not valid Python"):
+        review("", "syntax", after="def broken(:")

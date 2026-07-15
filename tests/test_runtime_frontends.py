@@ -97,6 +97,17 @@ def test_get_findings_raises_a_clear_error_for_a_missing_run(tmp_path):
     with pytest.raises(FileNotFoundError, match="no-such-run.*verification-manifest.sealed.json"):
         Runtime().get_findings(missing)
 
+
+def test_malformed_json_artifacts_raise_a_named_error(tmp_path):
+    import pytest
+    from forge.io import ForgeArtifactError
+
+    run = tmp_path / "run"; run.mkdir()
+    (run / "verification-manifest.sealed.json").write_text("{not json")
+
+    with pytest.raises(ForgeArtifactError, match="malformed sealed manifest"):
+        Runtime().get_findings(run)
+
 def test_cli_rejects_inert_legacy_pipeline_flags(tmp_path, monkeypatch):
     put(tmp_path, "main.py", "x = 1\n")
     import pytest

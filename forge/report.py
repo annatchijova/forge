@@ -16,6 +16,7 @@ _EXAMINATIONS_STATUS_ORDER = (
 )
 
 from forge.sealing import verify_sealed
+from forge.io import load_json
 
 
 def _e(value: Any) -> str:
@@ -23,7 +24,7 @@ def _e(value: Any) -> str:
 
 
 def _load(path: str | Path) -> dict[str, Any]:
-    return json.loads(Path(path).read_text(encoding="utf-8"))
+    return load_json(path, f"report artifact {path}")
 
 
 def _iso(epoch: Any) -> str:
@@ -196,7 +197,16 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
     contract_ratio = quality_metrics.get("contract_coverage", {})
     if contract_ratio:
         quality_rows.append(("Contract coverage", f"{_e(contract_ratio.get('covered', 0))}/{_e(contract_ratio.get('total', 0))} — {_e(quality_metrics.get('contract_coverage_note', 'context unavailable'))}"))
+    finding_counts = metrics.get("findings", {}).get("by_agent", {})
+    if finding_counts:
+        quality_rows.append(("Findings by agent", _e(finding_counts)))
+    verification_metrics = metrics.get("agents", {}).get("verification", {})
+    if verification_metrics:
+        quality_rows.append(("Structural verification", _e({key: verification_metrics.get(key) for key in ("checks_passed", "checks_failed", "checks_unresolved") if key in verification_metrics})))
     quality_table_html = "".join(f"<tr><td>{label}</td><td>{value}</td></tr>" for label, value in quality_rows)
+    degradation = metrics.get("honest_degradation", {})
+    degradation_items = degradation.get("limitations", [])
+    degradation_html = "".join(f"<li>{_e(item)}</li>" for item in degradation_items) or "<li>No additional degradation was recorded.</li>"
     document = f"""<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>FORGE report</title>
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
 <style>
@@ -270,6 +280,7 @@ table.data-table td:first-child{{ font-family:var(--mono); font-size:12.5px; whi
 <section id=\"decision\"><h2>Decision</h2><p><strong>{_e(seal_text)}</strong></p><p>{limitations}</p><p><small>{_e(git_note)}</small></p></section>
 
 <section id=\"quality\"><h2>Quality metrics</h2><table class=\"data-table\">{quality_table_html}</table></section>
+<section id=\"limitations\"><h2>Honest degradation and limitations</h2><ul>{degradation_html}</ul></section>
 
 <section id=\"chain-of-custody\"><h2>Chain of custody</h2><div class=\"chain-block\">entry_hash : {_e(last_hash)}\nchain_ok   : {_e(seal["ok"])}</div></section>
 </div>

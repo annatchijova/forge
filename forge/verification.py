@@ -50,9 +50,10 @@ def _named_handler(tree: ast.AST, call: ast.AST, names: tuple[str, ...]) -> bool
                     if any(name in text for name in names): return True
     return False
 
-def _parser_benign(tree: ast.AST, line: int, function_name: str | None = None) -> bool:
+def _parser_benign(tree: ast.AST, line: int, function_name: str | None = None,
+                   handler_names: tuple[str, ...] = ("JSONDecodeError", "ValueError", "YAMLError", "TomlDecodeError")) -> bool:
     call = _call_at(tree, line, function_name)
-    return bool(call and _named_handler(tree, call, ("JSONDecodeError", "ValueError", "YAMLError", "TomlDecodeError")))
+    return bool(call and _named_handler(tree, call, handler_names))
 
 _DANGEROUS_EVAL_CONTENT = re.compile(
     r"\b(os\.system|os\.popen|os\.exec\w*|os\.remove|os\.unlink|subprocess\.\w+|"
@@ -100,7 +101,7 @@ def verify_hypotheses(manifest: HypothesesManifest) -> VerificationManifest:
                 benign = _subprocess_enclosure(tree, line, call_name) and _named_handler(tree, _call_at(tree, line, call_name), ("SubprocessError", "OSError"))
                 reason = "AST proves explicit subprocess exception enclosure."
             elif "parser call" in h.description:
-                benign = _parser_benign(tree, line, call_name); reason = "AST proves known parser exception handler."
+                benign = _parser_benign(tree, line, call_name, ("JSONDecodeError", "ValueError", "ForgeArtifactError")); reason = "AST proves known parser exception handler."
             elif "dynamic evaluation" in h.description.lower():
                 benign = _eval_benign(tree, line, call_name); reason = "AST proves literal string argument."
             elif "float threshold" in h.description or "tolerance call" in h.description:

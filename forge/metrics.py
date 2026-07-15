@@ -61,7 +61,8 @@ def _files_by_language(paths: Iterable[Path]) -> dict[str, int]:
 
 def collect_metrics(*, root: Path, discovered: list[Path], triage: Any, coverage: Any,
                     governance: Any, findings: Iterable[Any], discarded: Iterable[dict[str, Any]],
-                    trace: Any, skills: Iterable[dict[str, Any]]) -> dict[str, Any]:
+                    trace: Any, skills: Iterable[dict[str, Any]],
+                    hypothesis_limitations: Iterable[str] = ()) -> dict[str, Any]:
     """Build all currently supported metric layers from already collected data."""
     files = list(discovered)
     totals = [_loc(path) for path in files]
@@ -119,7 +120,7 @@ def collect_metrics(*, root: Path, discovered: list[Path], triage: Any, coverage
     skill_counts = {"skills_loaded": len(skills), "skills_activated": applicability["APPLICABLE"], "skills_not_applicable": applicability["NOT_APPLICABLE"], "undetermined_skills": applicability["UNDETERMINED"], "contracts_executed": applicability["APPLICABLE"], "contracts_skipped": applicability["NOT_APPLICABLE"], "contract_failures": applicability["ERROR"], "evidence_obligations_satisfied": None, "evidence_obligations_missing": None, "limitations_emitted": len(governance.limitations)}
     agent = {
         "abduction": {"patterns_observed": len(discarded) + len(bug_findings), "hypotheses_generated": event_kinds.get("hypotheses_generated", 0), "hypotheses_merged": None, "hypotheses_discarded": len(discarded), "average_evidence_per_hypothesis": None},
-        "verification": {"checks_executed": None, "checks_passed": len(discarded), "checks_failed": len(bug_findings), "benign_explanations_accepted": len(discarded), "benign_explanations_rejected": 0, "structural_proofs_found": len(discarded)},
+        "verification": {"checks_executed": len(bug_findings) + len(discarded), "checks_passed": len(discarded), "checks_failed": 0, "checks_unresolved": len(bug_findings), "benign_explanations_accepted": len(discarded), "benign_explanations_rejected": 0, "structural_proofs_found": len(discarded), "checks_note": "Surviving hypotheses are unresolved candidates, not failed tests; dynamic induction is required before calling them defects."},
         "integrity_inspector": {"contracts_evaluated": applicability["APPLICABLE"], "applicable": applicability["APPLICABLE"], "not_applicable": applicability["NOT_APPLICABLE"], "undetermined": applicability["UNDETERMINED"], "protocol_gaps": outcomes["PROTOCOL_GAP"], "design_inconsistencies": outcomes["DESIGN_INCONSISTENCY"]},
     }
     evidence_metrics = {"evidence_items": sum(evidence.values()), "primary_evidence": evidence.get("source", 0), "secondary_evidence": sum(value for key, value in evidence.items() if key != "source"), "by_kind": dict(sorted(evidence.items())), "evidence_reused": None, "evidence_conflicts": None}
@@ -130,4 +131,15 @@ def collect_metrics(*, root: Path, discovered: list[Path], triage: Any, coverage
     finding_metrics["finding_digest"] = finding_digest
     executable_count = len(skills)
     quality = {"repository_coverage": _ratio(coverage.files_analyzed, coverage.files_discovered), "module_coverage": _ratio(analyzed_modules, len(triage.modules)), "contract_coverage": _ratio(applicability["APPLICABLE"], sum(applicability.values()) or 1), "contract_coverage_note": f"{executable_count} executable skill(s) loaded; this ratio measures applicability observations for executable skills only, not the documented skills catalog.", "evidence_completeness": None, "evidence_completeness_note": "Requires an explicit obligation ledger mapping each executed contract obligation to satisfied or missing Evidence items.", "verification_coverage": None, "verification_coverage_note": "Requires a count of planned checks versus checks actually executed, including skipped checks and their reasons."}
-    return {"repository": repo, "scope": scope, "discovery": discovery, "domain_classification": {"modules_by_domain": dict(sorted(domains.items())), "hypothesis_confidence": [{"module_path": item.module_path, "domains": item.domains, "confidence": {"numerator": item.confidence.numerator, "denominator": item.confidence.denominator}, "alternatives": item.alternatives, "evidence_count": len(item.evidence)} for item in governance.hypotheses]}, "skill_runtime": skill_counts, "agents": agent, "evidence": evidence_metrics, "findings": finding_metrics, "audit_trail": trace_metrics, "reproducibility": reproducibility, "honest_degradation": {"skipped_reasons": coverage.skipped_reasons, "limitations": list(governance.limitations)}, "quality": quality}
+    limitations = list(governance.limitations) + list(hypothesis_limitations)
+    if coverage.files_skipped:
+        limitations.append(f"{coverage.files_skipped} discovered file(s) were skipped; see skipped_reasons for the exact paths and policy categories.")
+    if scope["modules_excluded"]:
+        limitations.append(f"{scope['modules_excluded']} triaged module(s) were outside CONNECTED_ALIVE audit scope.")
+    if applicability["UNDETERMINED"]:
+        limitations.append(f"{applicability['UNDETERMINED']} skill applicability result(s) were UNDETERMINED; no conclusion was inferred for them.")
+    if bug_findings:
+        limitations.append(f"{len(bug_findings)} hypothesis/hypotheses survived structural verification without dynamic induction; they remain plausible hypotheses, not confirmed defects.")
+    # Preserve ordering while avoiding repeated limitation text from multiple layers.
+    limitations = list(dict.fromkeys(limitations))
+    return {"metrics_schema_version": "1.0", "repository": repo, "scope": scope, "discovery": discovery, "domain_classification": {"modules_by_domain": dict(sorted(domains.items())), "hypothesis_confidence": [{"module_path": item.module_path, "domains": item.domains, "confidence": {"numerator": item.confidence.numerator, "denominator": item.confidence.denominator}, "alternatives": item.alternatives, "evidence_count": len(item.evidence)} for item in governance.hypotheses]}, "skill_runtime": skill_counts, "agents": agent, "evidence": evidence_metrics, "findings": finding_metrics, "audit_trail": trace_metrics, "reproducibility": reproducibility, "honest_degradation": {"skipped_reasons": coverage.skipped_reasons, "limitations": limitations}, "quality": quality}

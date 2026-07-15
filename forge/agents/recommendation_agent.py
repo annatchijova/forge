@@ -10,6 +10,7 @@ import json
 import re
 from pathlib import Path
 from forge.models import Recommendation
+from forge.io import load_json
 
 
 def _domains(metrics: dict, module: str) -> set[str]:
@@ -22,8 +23,8 @@ def _domains(metrics: dict, module: str) -> set[str]:
 
 def recommend(sealed_path: str | Path, metrics_path: str | Path | None = None) -> tuple[Recommendation, ...]:
     """Generate bounded suggestions from a completed sealed artifact."""
-    sealed = json.loads(Path(sealed_path).read_text(encoding="utf-8"))
-    metrics = json.loads(Path(metrics_path).read_text(encoding="utf-8")) if metrics_path else {}
+    sealed = load_json(sealed_path, f"sealed manifest {sealed_path}")
+    metrics = load_json(metrics_path, f"metrics artifact {metrics_path}") if metrics_path else {}
     output: list[Recommendation] = []
     counters: dict[str, int] = {}
 
@@ -51,11 +52,21 @@ def recommend(sealed_path: str | Path, metrics_path: str | Path | None = None) -
                 "The Security Auditor observed a path component reaching filesystem access without a recognized validation step.",
                 "Overly strict canonicalization can reject legitimate paths; preserve an explicit allowlist policy.",
                 (entry.get("hash", ""), "security_auditor", "path-traversal"))
-        elif "unversioned-serialization" in family:
+        elif "unversioned-serialization" in family or "unversioned serialization" in family:
             add(module, "Add an explicit schema_version or version field to the serialized structure",
                 "The Integrity Inspector observed serialization without a visible schema version.",
                 "Readers and writers must be migrated together or support the prior format.",
                 (entry.get("hash", ""), "integrity_inspector", "unversioned-serialization"))
+        elif "parser call" in family:
+            add(module, "Wrap the parser boundary with a named input or artifact error",
+                "The Bug Investigator found a parser call whose malformed-input behavior was not established by structural verification.",
+                "Changing exception types can affect callers; preserve the original exception as the cause and document the boundary contract.",
+                (entry.get("hash", ""), "bug_investigator", "parser-boundary"))
+        elif "tolerance call" in family or "float threshold" in family:
+            add(module, "Document and test the numeric tolerance policy at the decision boundary",
+                "The Bug Investigator found a float comparison or tolerance call without an induced boundary test.",
+                "Changing tolerance values can alter classifications; test below, at, and above the boundary before changing arithmetic.",
+                (entry.get("hash", ""), "bug_investigator", "numeric-boundary"))
         elif "decision-adjacent-float" in family or "non-deterministic arithmetic" in family:
             if "machine_learning" in _domains(metrics, module):
                 action = "Document model reproducibility, threshold semantics, calibration, and numeric tolerance policy"
