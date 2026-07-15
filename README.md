@@ -24,5 +24,8 @@ by repeated evidence. Deterministic sealing and exact arithmetic are preferred
 where results become evidence; floats and probabilistic ML outputs remain
 explicitly bounded, labeled, and tested at their boundary conditions.
 
-The orchestrator and MCP are planned integrations, not implemented components
-of the current module set.
+The first local orchestrator is available as `python3 -m forge.orchestrator`.
+It runs the deterministic agents in dependency order, writes all artifacts to
+an output directory, and stops when `--max-connected` is exceeded. Agent role
+contracts live in `forge/agents/README.md`. MCP remains a planned transport
+integration, not a current dependency.
