@@ -115,5 +115,7 @@ class VerificationManifest:
     generated_at_epoch: int
     findings: tuple[Finding, ...]
     discarded: tuple[dict[str, str], ...]
+    ast_verified_families: tuple[str, ...] = ()
+    ast_unverified_families: tuple[str, ...] = ()
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

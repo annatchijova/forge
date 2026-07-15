@@ -16,3 +16,22 @@ def test_ast_discards_actually_enclosed_subprocess(tmp_path):
     result = verify_hypotheses(manifest)
     assert not result.findings
     assert result.discarded
+
+def test_parser_known_handler_is_benign_but_generic_is_not(tmp_path):
+    (tmp_path / "main.py").write_text("import json\ndef load(raw):\n    try:\n        return json.loads(raw)\n    except json.JSONDecodeError:\n        return None\n")
+    result = verify_hypotheses(generate_hypotheses(triage(tmp_path)))
+    assert result.ast_verified_families == ("subprocess", "parser", "float comparison", "eval/exec")
+    assert not result.findings
+
+def test_eval_literal_benign_and_variable_is_finding(tmp_path):
+    (tmp_path / "main.py").write_text("def run(expr):\n    return eval(expr)\n")
+    result = verify_hypotheses(generate_hypotheses(triage(tmp_path)))
+    assert result.findings and "eval" in result.findings[0].description
+    (tmp_path / "main.py").write_text("def run():\n    return eval('1 + 1')\n")
+    result = verify_hypotheses(generate_hypotheses(triage(tmp_path)))
+    assert not result.findings and result.discarded
+
+def test_float_tolerance_is_benign_exact_float_remains_candidate(tmp_path):
+    (tmp_path / "main.py").write_text("import math\ndef score(x):\n    return math.isclose(x, 1.0, abs_tol=0.01)\n")
+    result = verify_hypotheses(generate_hypotheses(triage(tmp_path)))
+    assert not result.findings

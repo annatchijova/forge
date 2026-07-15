@@ -37,3 +37,14 @@ FORGE remains read-only against audited repositories. Manifests carry schema ver
 
 1. Pattern matching is line-based regex, not AST. It misses import aliases, multi-line calls, and indirection through wrapper functions. This is deliberate for fast candidate generation, not an oversight.
 2. The safe-context check (`try:` within N lines above) is a proximity heuristic, not a scope-accurate check. A nearby `try` can wrap unrelated code and create false negatives. Module 3 must not trust this heuristic; it independently re-verifies enclosure via AST parent-node inspection before downgrading or dismissing a hypothesis.
+
+## Module 3 benign criteria (AST decisions)
+
+These are structural proof obligations, not heuristics:
+
+1. **Parser without handling.** A parser call is benign only when its `ast.Call` has an actual `ast.Try` ancestor and an `ast.ExceptHandler` catches a known parse exception (`json.JSONDecodeError`, `ValueError`, `yaml.YAMLError`, or an equivalent explicitly named parser exception). A bare `except Exception` is classified as **silenced**, not handled: it does not prove that malformed input is distinguished safely.
+2. **Float comparison.** A comparison is benign when its operands are statically non-float exact types (`Decimal`/`Fraction` expressions), or when the surrounding expression is an explicit `math.isclose` call with a tolerance (`rel_tol` or `abs_tol`). Exact comparisons against `0.0` or `1.0` remain risk candidates; they may be legitimate edge checks, but legitimacy is not an AST proof of numerical safety.
+3. **Eval/exec.** Dynamic evaluation is benign only when its argument is an `ast.Constant` string literal. Variables, concatenations, attributes, and all other expressions remain findings because their provenance is not structurally constrained.
+4. **Subprocess.** A subprocess call is benign only when its `ast.Call` has a real `ast.Try` ancestor with an explicit subprocess-related handler (`subprocess.SubprocessError`, `OSError`, or a named equivalent). A generic catch does not establish a safe boundary.
+
+`VerificationManifest` must report these four families as `AST-verified`; any family without an implemented structural checker is explicitly `unverified — falls through to PLAUSIBLE HYPOTHESIS without structural check`.
