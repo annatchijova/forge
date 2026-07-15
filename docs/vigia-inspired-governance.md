@@ -83,6 +83,16 @@ VIGÍA maintains a numbered limitations register and adversarial boundary cases.
 FORGE should grow `docs/` and regression fixtures together: every known blind
 spot gets a reason, a reproducer, an expected disposition, and a status.
 
+### 7. Honest fallback for optional agents
+
+The fallback path in `vigia_agent.py` maps unavailable pipelines, unsupported
+formats, unreadable inputs, and analyzer errors to `ABSTAIN` rather than to a
+benign or empty result. FORGE now applies the same rule to specialized
+Security and Integrity agents: an agent failure is recorded, the surviving
+agents still produce their evidence, and the global disposition becomes
+`ABSTAIN_DEGRADED`. This keeps useful partial work without laundering a
+partial audit into a complete one.
+
 ## What FORGE should not copy blindly
 
 - VIGÍA's forensic verdict vocabulary does not map directly to code-audit
@@ -98,3 +108,21 @@ spot gets a reason, a reproducer, an expected disposition, and a status.
 The first implementation is covered by regression tests for an incomplete
 source boundary and for a complete run with findings. The full FORGE suite is
 the acceptance gate for subsequent VIGÍA-inspired changes.
+
+## Fallback-derived implementation status
+
+The current FORGE implementation now also includes:
+
+- cross-agent contradiction records with an `ABSTAIN_UNDETERMINED` disposition;
+- primary/derived/recommendation evidence roles and finding provenance;
+- a deterministic repository snapshot SHA-256 included in the sealed manifest;
+- actionable unsupported-language coverage boundaries;
+- a self-assessment section that reports agent availability, contradictions,
+  abstentions, limitations, and a qualitative confidence boundary.
+
+Still planned as separate contracts:
+
+- signed or human-reviewed false-positive ledger entries;
+- persisted cross-run comparison with resolved/new/unchanged findings;
+- an explicit auditor-of-the-auditor report section backed by seal verification
+  and CRONOS chain status.

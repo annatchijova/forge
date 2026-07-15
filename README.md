@@ -668,6 +668,27 @@ Every discovered file lands in exactly one bucket — `files_analyzed` or one
 invariant is enforced by an adversarial regression test
 (`tests/test_specialized_pipeline.py`), not just asserted in prose.
 
+## ABSTAIN: a feature, not a failure
+
+FORGE never turns an incomplete audit into a clean bill of health. The global
+audit disposition is deterministic and separate from the findings themselves:
+
+| Disposition | Meaning | Next action |
+|---|---|---|
+| `COMPLETE_NO_FINDINGS` | Declared source scope was verified and no finding survived | No action within that scope |
+| `COMPLETE_WITH_FINDINGS` | Declared source scope was verified and findings survived | Review the evidence |
+| `ABSTAIN_INSUFFICIENT_SCOPE` | Source files were skipped, unreadable, syntactically invalid, outside scope, or in an unsupported language | Complete the scope and rerun |
+| `ABSTAIN_UNDETERMINED` | Governance applicability or evidence interpretation could not be resolved | Resolve the ambiguity and rerun |
+| `ABSTAIN_DEGRADED` | A specialized agent was unavailable but partial evidence was preserved | Restore the agent and rerun |
+
+`ABSTAIN` does not erase findings. It says that FORGE refuses to generalize
+from the inspected portion to the repository as a whole. A sealed report proves
+artifact integrity; it does not prove complete coverage or analytical
+correctness. The exact reason, missing source boundary, required action, and
+confidence boundary are recorded in `metrics.json` and shown in the HTML
+report. See [`docs/vigia-inspired-governance.md`](docs/vigia-inspired-governance.md)
+for the design rationale and [`DECISIONS.md`](DECISIONS.md) for the contract.
+
 ---
 
 ## Design principles

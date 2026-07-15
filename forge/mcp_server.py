@@ -17,6 +17,7 @@ from forge.runtime import Runtime
 from forge.models import ModelRouting
 from forge.sealing import verify_sealed
 from forge.agents.patch_reviewer import review as review_patch_impl
+from forge.comparison import compare_runs
 
 mcp = FastMCP("forge")
 runtime = Runtime()
@@ -98,6 +99,14 @@ def verify_seal(sealed_path: str) -> dict[str, Any]:
         return runtime.verify_findings(sealed_path)
     except FileNotFoundError: return _error("not_found", f"sealed manifest not found: {sealed_path}")
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc: return _error("malformed_artifact", f"could not verify sealed manifest: {exc}")
+
+@mcp.tool()
+def compare_audits(previous_run_dir: str, current_run_dir: str) -> dict[str, Any]:
+    """Compare two verified FORGE runs and report resolved, new, unchanged, and coverage delta."""
+    try:
+        return {"ok": True, **compare_runs(previous_run_dir, current_run_dir)}
+    except (FileNotFoundError, OSError, ValueError, json.JSONDecodeError) as exc:
+        return _error("comparison_failed", str(exc))
 
 @mcp.tool()
 def triage_repository(path: str) -> dict[str, Any]:

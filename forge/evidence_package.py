@@ -83,6 +83,7 @@ def write_markdown_report(*, sealed: dict[str, Any], metrics: dict[str, Any], pr
         f"Seal: **{'VERIFIED' if sealed.get('chain') is not None else 'UNKNOWN'}**",
         f"Findings: **{len(findings)}** · Discarded hypotheses: **{len(manifest.get('discarded', []))}**",
         f"Coverage: **{ratio.get('numerator', 0)}/{denominator} ({percent:.1f}%)**",
+        f"Audit disposition: **{metrics.get('audit_disposition', {}).get('status', 'UNSPECIFIED')}**",
         "",
         "## Repository profile",
         "",

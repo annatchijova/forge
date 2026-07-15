@@ -8,7 +8,7 @@ import ast
 import json
 import time
 from contextlib import nullcontext
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from fractions import Fraction
 from pathlib import Path
 from typing import Any, Callable
@@ -20,8 +20,10 @@ from forge.governance.runtime import infer_domains, load_skills, run_skills
 from forge.hypotheses import generate_hypotheses, write_hypotheses_manifest
 from forge.io import load_json
 from forge.severity import severity_for
-from forge.models import CoverageReport, Evidence, Finding, ModelRouting, TriageManifest, VerificationManifest
+from forge.models import AgentScanResult, CoverageReport, Evidence, Finding, ModelRouting, TriageManifest, VerificationManifest
 from forge.metrics import collect_metrics
+from forge.contradictions import find_contradictions
+from forge.snapshot import snapshot_sha256
 from forge.report import render_report
 from forge.reporting import render_dashboard
 from forge.sealing import read_and_verify, write_sealed_manifest
@@ -47,14 +49,34 @@ def _coverage(root: Path, families=(), discovered=None) -> CoverageReport:
 def _agent_finding(agent: str, item) -> Finding:
     detail = item.description
     outcome = "PROTOCOL_GAP" if agent == "validate-at-the-boundary" else "OBSERVED"
-    return Finding("OBSERVED", "CODE FACT", item.path, detail, (Evidence("source", f"{item.path}:{item.line}", detail),), f"AST detector emitted this observation: {item.family}.", agent, outcome)
+    return Finding("OBSERVED", "CODE FACT", item.path, detail, (Evidence("source", f"{item.path}:{item.line}", detail, "primary"),), f"AST detector emitted this observation: {item.family}.", agent, outcome, provenance=("AST",))
 
 
 def _with_severity(finding: Finding, family: str | None = None) -> Finding:
     return Finding(finding.category, finding.epistemic_level, finding.module_path,
                    finding.description, finding.evidence, finding.reasoning,
                    finding.agent, finding.outcome,
-                   severity_for(finding.module_path, finding.epistemic_level, finding.description, finding.agent, family=family))
+                   severity_for(finding.module_path, finding.epistemic_level, finding.description, finding.agent, family=family),
+                   finding.provenance)
+
+
+def _attach_provenance(findings: list[Finding]) -> list[Finding]:
+    agents_by_module: dict[str, set[str]] = {}
+    for finding in findings:
+        agents_by_module.setdefault(finding.module_path, set()).add(finding.agent)
+    enriched = []
+    for finding in findings:
+        provenance = list(finding.provenance)
+        if any(item.kind == "source" for item in finding.evidence):
+            provenance.append("AST")
+        if finding.epistemic_level == "CONFIRMED BY INDUCTION":
+            provenance.append("REPRODUCED")
+        else:
+            provenance.append("RUNTIME_NOT_EXECUTED")
+        if len(agents_by_module.get(finding.module_path, set())) > 1:
+            provenance.append("MULTIPLE_AGENTS")
+        enriched.append(replace(finding, provenance=tuple(dict.fromkeys(provenance))))
+    return enriched
 
 @dataclass(frozen=True)
 class AuditResult:
@@ -154,6 +176,7 @@ class Runtime:
     def _audit(self, repo: str | Path, output_dir: str | Path, max_connected: int | None, trace: RuntimeTrace, cronos=None) -> AuditResult:
         root, out = Path(repo).resolve(), Path(output_dir)
         discovered = discover_files(root, include_excluded=True)
+        repository_snapshot_sha256 = snapshot_sha256(root, discovered)
         out.mkdir(parents=True, exist_ok=True)
         started = time.monotonic(); self._event(trace, cronos, "run_started", repository=str(root), max_connected=self.max_connected if max_connected is None else max_connected, model_routing=self.model_routing.to_dict())
         triage_manifest = self.triage_repository(root)
@@ -171,17 +194,35 @@ class Runtime:
         bug = bug_investigator.investigate(triage_manifest, induce=True)
         self._event(trace, cronos, "hypotheses_generated", count=len(bug.hypotheses), modules=list(bug.manifest.audited_modules))
         self._event(trace, cronos, "hypotheses_verified", discarded=len(bug.verification.discarded), findings=len(bug.verification.findings))
-        security_result, integrity_result = security_auditor.audit(root), integrity_inspector.inspect(root)
+        degraded_reasons: list[str] = []
+        try:
+            security_result = security_auditor.audit(root)
+        except Exception as exc:
+            message = f"security_auditor unavailable: {type(exc).__name__}: {exc}"
+            degraded_reasons.append(message)
+            security_result = AgentScanResult((), {"*": "agent_unavailable"})
+            self._event(trace, cronos, "agent_degraded", agent="security_auditor", error=message)
+        try:
+            integrity_result = integrity_inspector.inspect(root)
+        except Exception as exc:
+            message = f"integrity_inspector unavailable: {type(exc).__name__}: {exc}"
+            degraded_reasons.append(message)
+            integrity_result = AgentScanResult((), {"*": "agent_unavailable"})
+            self._event(trace, cronos, "agent_degraded", agent="integrity_inspector", error=message)
         self._event(trace, cronos, "agent_completed", agent="security_auditor", findings=len(security_result.findings), examinations=security_result.examinations)
         self._event(trace, cronos, "agent_completed", agent="integrity_inspector", findings=len(integrity_result.findings), examinations=integrity_result.examinations)
         findings = [_with_severity(Finding(f.category, f.epistemic_level, f.module_path, f.description, f.evidence, f.reasoning, "bug_investigator", f.outcome)) for f in bug.verification.findings]
         findings += [_with_severity(_agent_finding("security_auditor", item), family=item.family) for item in security_result.findings]
         findings += [_with_severity(_agent_finding("integrity_inspector", item), family=item.family) for item in integrity_result.findings]
         findings += [_with_severity(item) for item in governance.findings]
+        findings = _attach_provenance(findings)
+        contradictions = find_contradictions(findings, bug.verification.discarded)
+        if contradictions:
+            self._event(trace, cronos, "contradictions_detected", contradictions=[item.to_dict() for item in contradictions])
         for finding in findings:
             self._event(trace, cronos, "finding_emitted", agent=finding.agent, module_path=finding.module_path, category=finding.category, outcome=finding.outcome, description=finding.description, evidence=[asdict(item) for item in finding.evidence])
         self._event(trace, cronos, "hypotheses_discarded", count=len(bug.verification.discarded), records=bug.verification.discarded)
-        verification = VerificationManifest("2.0", "0.1.0", bug.verification.hypotheses_schema_version, str(root), int(time.time()), tuple(findings), bug.verification.discarded, bug.verification.ast_verified_families, bug.verification.ast_unverified_families, bug.verification.induction)
+        verification = VerificationManifest("2.0", "0.1.0", bug.verification.hypotheses_schema_version, str(root), int(time.time()), tuple(findings), bug.verification.discarded, bug.verification.ast_verified_families, bug.verification.ast_unverified_families, bug.verification.induction, repository_snapshot_sha256)
         coverage = CoverageReport(coverage.files_discovered, coverage.files_analyzed, coverage.files_skipped, coverage.skipped_reasons, verification.ast_verified_families, coverage.coverage_ratio)
         triage_path, hypotheses_path = out / "triage-manifest.json", out / "hypotheses-manifest.json"
         verification_path, sealed_path, coverage_path = out / "verification-manifest.json", out / "verification-manifest.sealed.json", out / "coverage-report.json"
@@ -204,7 +245,7 @@ class Runtime:
             "integrity_inspector": {"findings_per_family": {family: sum(item.family == family for item in integrity_result.findings) for family in ("decision-adjacent-float", "unversioned-serialization")}, "examinations": integrity_result.examinations},
             "governance_skills": {"loaded": [item["name"] for item in self.list_available_skills()], "findings": len(governance.findings), "applicability_counts": {state: sum(state in values.values() for values in governance.applicability.values()) for state in ("APPLICABLE", "NOT_APPLICABLE", "UNDETERMINED")}},
         }
-        metrics = collect_metrics(root=root, discovered=discovered, triage=triage_manifest, coverage=coverage, governance=governance, findings=findings, discarded=verification.discarded, trace=trace, skills=self.list_available_skills(), hypothesis_limitations=bug.manifest.limitations)
+        metrics = collect_metrics(root=root, discovered=discovered, triage=triage_manifest, coverage=coverage, governance=governance, findings=findings, discarded=verification.discarded, trace=trace, skills=self.list_available_skills(), hypothesis_limitations=bug.manifest.limitations, degraded_reasons=degraded_reasons, contradiction_records=contradictions, repository_snapshot_sha256=repository_snapshot_sha256)
         metrics["agent_metrics"] = agent_metrics
         metrics_path.write_text(json.dumps(metrics, indent=2, sort_keys=True) + "\n")
         profile = build_repository_profile(root=str(root), triage=triage_manifest, governance=governance, coverage=coverage, metrics=metrics, findings=findings, elapsed_seconds=time.monotonic() - started)
@@ -245,8 +286,8 @@ class Runtime:
 
     def seal_results(self, verification_path: str | Path, destination: str | Path | None = None) -> Path:
         data = load_json(verification_path, f"verification manifest {verification_path}")
-        findings = tuple(Finding(item["category"], item["epistemic_level"], item["module_path"], item["description"], tuple(Evidence(e["kind"], e["source"], e["detail"]) for e in item["evidence"]), item["reasoning"], item.get("agent", "bug_investigator"), item.get("outcome", "OBSERVED"), item.get("severity", "MEDIUM")) for item in data.get("findings", []))
-        manifest = VerificationManifest(data["schema_version"], data["forge_version"], data["hypotheses_schema_version"], data["root"], data["generated_at_epoch"], findings, tuple(data.get("discarded", [])), tuple(data.get("ast_verified_families", [])), tuple(data.get("ast_unverified_families", [])), tuple(data.get("induction", [])))
+        findings = tuple(Finding(item["category"], item["epistemic_level"], item["module_path"], item["description"], tuple(Evidence(e["kind"], e["source"], e["detail"], e.get("role", "primary")) for e in item["evidence"]), item["reasoning"], item.get("agent", "bug_investigator"), item.get("outcome", "OBSERVED"), item.get("severity", "MEDIUM"), tuple(item.get("provenance", ()))) for item in data.get("findings", []))
+        manifest = VerificationManifest(data["schema_version"], data["forge_version"], data["hypotheses_schema_version"], data["root"], data["generated_at_epoch"], findings, tuple(data.get("discarded", [])), tuple(data.get("ast_verified_families", [])), tuple(data.get("ast_unverified_families", [])), tuple(data.get("induction", [])), data.get("repository_snapshot_sha256"))
         target = Path(destination) if destination else Path(verification_path).with_suffix(Path(verification_path).suffix + ".sealed.json")
         write_sealed_manifest(manifest, target)
         return target

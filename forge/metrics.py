@@ -64,7 +64,10 @@ def _files_by_language(paths: Iterable[Path]) -> dict[str, int]:
 def collect_metrics(*, root: Path, discovered: list[Path], triage: Any, coverage: Any,
                     governance: Any, findings: Iterable[Any], discarded: Iterable[dict[str, Any]],
                     trace: Any, skills: Iterable[dict[str, Any]],
-                    hypothesis_limitations: Iterable[str] = ()) -> dict[str, Any]:
+                    hypothesis_limitations: Iterable[str] = (),
+                    degraded_reasons: Iterable[str] = (),
+                    contradiction_records: Iterable[Any] = (),
+                    repository_snapshot_sha256: str | None = None) -> dict[str, Any]:
     """Build all currently supported metric layers from already collected data."""
     files = list(discovered)
     totals = [_loc(path) for path in files]
@@ -125,7 +128,9 @@ def collect_metrics(*, root: Path, discovered: list[Path], triage: Any, coverage
         "verification": {"checks_executed": len(bug_findings) + len(discarded), "checks_passed": len(discarded), "checks_failed": 0, "checks_unresolved": len(bug_findings), "benign_explanations_accepted": len(discarded), "benign_explanations_rejected": 0, "structural_proofs_found": len(discarded), "checks_note": "Surviving hypotheses are unresolved candidates, not failed tests; dynamic induction is required before calling them defects."},
         "integrity_inspector": {"contracts_evaluated": applicability["APPLICABLE"], "applicable": applicability["APPLICABLE"], "not_applicable": applicability["NOT_APPLICABLE"], "undetermined": applicability["UNDETERMINED"], "protocol_gaps": outcomes["PROTOCOL_GAP"], "design_inconsistencies": outcomes["DESIGN_INCONSISTENCY"]},
     }
-    evidence_metrics = {"evidence_items": sum(evidence.values()), "primary_evidence": evidence.get("source", 0), "secondary_evidence": sum(value for key, value in evidence.items() if key != "source"), "by_kind": dict(sorted(evidence.items())), "evidence_reused": None, "evidence_conflicts": None}
+    contradiction_records = tuple(contradiction_records)
+    evidence_roles = Counter(item.role for finding in findings for item in finding.evidence)
+    evidence_metrics = {"evidence_items": sum(evidence.values()), "primary_evidence": evidence_roles.get("primary", 0), "derived_evidence": evidence_roles.get("derived", 0), "recommendation_evidence": evidence_roles.get("recommendation", 0), "secondary_evidence": sum(value for key, value in evidence.items() if key != "source"), "by_kind": dict(sorted(evidence.items())), "evidence_reused": None, "evidence_conflicts": len(contradiction_records)}
     finding_metrics = {"by_outcome": {key: outcomes.get(key, 0) for key in ("OBSERVED", "PROTOCOL_GAP", "DESIGN_INCONSISTENCY", "UNDETERMINED", "NOT_APPLICABLE")}, "discarded_hypotheses": len(discarded), "by_agent": dict(Counter(item.agent for item in findings)), "by_module": dict(Counter(item.module_path for item in findings))}
     finding_metrics["by_severity"] = dict(Counter(getattr(item, "severity", "MEDIUM") for item in findings))
     finding_metrics["by_family"] = dict(Counter(finding_family(item.description) for item in findings))
@@ -137,12 +142,14 @@ def collect_metrics(*, root: Path, discovered: list[Path], triage: Any, coverage
     }
     finding_digest = hashlib.sha256(canonical_json([asdict(item) for item in findings]).encode("utf-8")).hexdigest()
     trace_metrics = {"runtime_events": len(trace.events), "events_hashed": len(trace.events), "events_verified": None, "artifacts_produced": None, "hash_chain_length": None, "chain_verification": None, "tampering_detected": None, "partial_trace": event_kinds.get("run_failed", 0) > 0}
-    reproducibility = {"runtime_deterministic": None, "seed_used": None, "environment": {"python": sys.version.split()[0], "os": platform.platform()}, "forge_version": "0.1.0", "skill_versions": {item["name"]: item["version"] for item in skills}, "schema_versions": {"triage": triage.schema_version}, "artifact_hashes": None, "seal_verified": None}
+    reproducibility = {"runtime_deterministic": None, "seed_used": None, "environment": {"python": sys.version.split()[0], "os": platform.platform()}, "forge_version": "0.1.0", "skill_versions": {item["name"]: item["version"] for item in skills}, "schema_versions": {"triage": triage.schema_version}, "repository_snapshot_sha256": repository_snapshot_sha256, "artifact_hashes": None, "seal_verified": None}
     finding_metrics["finding_digest"] = finding_digest
     executable_count = len(skills)
     quality = {"repository_coverage": _ratio(coverage.files_analyzed, coverage.files_discovered), "module_coverage": _ratio(analyzed_modules, len(triage.modules)), "contract_coverage": _ratio(applicability["APPLICABLE"], sum(applicability.values()) or 1), "contract_coverage_note": f"{executable_count} executable skill(s) loaded; this ratio measures applicability observations for executable skills only, not the documented skills catalog.", "evidence_completeness": None, "evidence_completeness_note": "Requires an explicit obligation ledger mapping each executed contract obligation to satisfied or missing Evidence items.", "verification_coverage": None, "verification_coverage_note": "Requires a count of planned checks versus checks actually executed, including skipped checks and their reasons."}
-    disposition = determine_disposition(coverage=coverage, triage=triage, governance=governance, findings=findings)
-    limitations = list(governance.limitations) + list(hypothesis_limitations)
+    degraded_reasons = tuple(degraded_reasons)
+    contradiction_reasons = tuple(item.description for item in contradiction_records)
+    disposition = determine_disposition(coverage=coverage, triage=triage, governance=governance, findings=findings, degraded_reasons=degraded_reasons, contradiction_reasons=contradiction_reasons)
+    limitations = list(governance.limitations) + list(hypothesis_limitations) + list(degraded_reasons)
     if coverage.files_skipped:
         limitations.append(f"{coverage.files_skipped} discovered file(s) were skipped; see skipped_reasons for the exact paths and policy categories.")
     if scope["modules_excluded"]:
@@ -153,4 +160,15 @@ def collect_metrics(*, root: Path, discovered: list[Path], triage: Any, coverage
         limitations.append(f"{len(bug_findings)} hypothesis/hypotheses survived structural verification without dynamic induction; they remain plausible hypotheses, not confirmed defects.")
     # Preserve ordering while avoiding repeated limitation text from multiple layers.
     limitations = list(dict.fromkeys(limitations))
-    return {"metrics_schema_version": "1.0", "repository": repo, "scope": scope, "discovery": discovery, "domain_classification": {"modules_by_domain": dict(sorted(domains.items())), "hypothesis_confidence": [{"module_path": item.module_path, "domains": item.domains, "confidence": {"numerator": item.confidence.numerator, "denominator": item.confidence.denominator}, "alternatives": item.alternatives, "evidence_count": len(item.evidence)} for item in governance.hypotheses]}, "skill_runtime": skill_counts, "agents": agent, "evidence": evidence_metrics, "findings": finding_metrics, "audit_disposition": disposition.to_dict(), "audit_trail": trace_metrics, "reproducibility": reproducibility, "honest_degradation": {"skipped_reasons": coverage.skipped_reasons, "limitations": limitations}, "quality": quality}
+    specialized_total = 4
+    unavailable_agents = sum(" unavailable:" in item for item in degraded_reasons)
+    self_assessment = {
+        "coverage": quality["repository_coverage"],
+        "specialized_agents": {"available": specialized_total - unavailable_agents, "total": specialized_total},
+        "contradictions": len(contradiction_records),
+        "abstentions": int(disposition.status.startswith("ABSTAIN")),
+        "limitations": len(limitations),
+        "confidence_boundary": "scope-limited" if disposition.status.startswith("ABSTAIN") else "evidence-bounded",
+        "note": "Self-assessment describes audit boundaries; it is not a repository quality score.",
+    }
+    return {"metrics_schema_version": "1.0", "repository": repo, "scope": scope, "discovery": discovery, "domain_classification": {"modules_by_domain": dict(sorted(domains.items())), "hypothesis_confidence": [{"module_path": item.module_path, "domains": item.domains, "confidence": {"numerator": item.confidence.numerator, "denominator": item.confidence.denominator}, "alternatives": item.alternatives, "evidence_count": len(item.evidence)} for item in governance.hypotheses]}, "skill_runtime": skill_counts, "agents": agent, "evidence": evidence_metrics, "findings": finding_metrics, "contradictions": [item.to_dict() for item in contradiction_records], "audit_disposition": disposition.to_dict(), "self_assessment": self_assessment, "audit_trail": trace_metrics, "reproducibility": reproducibility, "honest_degradation": {"skipped_reasons": coverage.skipped_reasons, "limitations": limitations}, "quality": quality}

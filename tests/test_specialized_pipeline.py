@@ -3,6 +3,7 @@ from fractions import Fraction
 
 from forge.orchestrator import run_specialized_pipeline
 from forge.disposition import determine_disposition
+from forge.contradictions import find_contradictions
 
 def put(root, name, text):
     path = root / name
@@ -60,6 +61,59 @@ def test_disposition_can_complete_with_findings_without_abstaining():
     finding = object()
     result = determine_disposition(coverage=Coverage(), triage=Triage(), governance=Governance(), findings=[finding])
     assert result.status == "COMPLETE_WITH_FINDINGS"
+
+def test_unavailable_specialized_agent_degrades_to_abstain(monkeypatch, tmp_path):
+    put(tmp_path, "main.py", "x = 1\n")
+
+    def unavailable(_root):
+        raise RuntimeError("synthetic agent outage")
+
+    monkeypatch.setattr("forge.runtime.security_auditor.audit", unavailable)
+    run_specialized_pipeline(tmp_path, tmp_path / "out")
+    metrics = json.loads((tmp_path / "out/metrics.json").read_text())
+    assert metrics["audit_disposition"]["status"] == "ABSTAIN_DEGRADED"
+    assert any("security_auditor unavailable" in item for item in metrics["honest_degradation"]["limitations"])
+
+def test_contradictory_credential_explanations_force_abstention(tmp_path):
+    from forge.models import Evidence, Finding
+    finding = Finding("OBSERVED", "CODE FACT", "tests/config.py", "hardcoded credential", (Evidence("source", "tests/config.py:1", "token = 'x'"),), "credential assignment", "security_auditor")
+    contradictions = find_contradictions([finding], [{"module_path": "tests/config.py", "reason": "placeholder used in tests"}])
+    assert len(contradictions) == 1
+    class Coverage:
+        skipped_reasons = {}
+    class Triage:
+        modules = []
+    class Governance:
+        applicability = {}
+    result = determine_disposition(coverage=Coverage(), triage=Triage(), governance=Governance(), findings=[finding], contradiction_reasons=[item.description for item in contradictions])
+    assert result.status == "ABSTAIN_UNDETERMINED"
+    assert result.reason_code == "CONTRADICTORY_EVIDENCE"
+
+def test_audit_seals_repository_snapshot_and_provenance(tmp_path):
+    put(tmp_path, "main.py", "def run(value):\n    return eval(value)\n")
+    run_specialized_pipeline(tmp_path, tmp_path / "out")
+    sealed = json.loads((tmp_path / "out/verification-manifest.sealed.json").read_text())
+    assert len(sealed["manifest"]["repository_snapshot_sha256"]) == 64
+    finding = sealed["chain"][0]["finding"]
+    assert "AST" in finding["provenance"]
+    assert "RUNTIME_NOT_EXECUTED" in finding["provenance"]
+
+def test_unsupported_source_language_is_actionable_abstention(tmp_path):
+    put(tmp_path, "main.py", "x = 1\n")
+    put(tmp_path, "native.rs", "fn main() {}\n")
+    result = run_specialized_pipeline(tmp_path, tmp_path / "out")
+    metrics = json.loads((tmp_path / "out/metrics.json").read_text())
+    assert metrics["audit_disposition"]["status"] == "ABSTAIN_INSUFFICIENT_SCOPE"
+    assert "unsupported_source_language: Rust (1 file(s))" in metrics["audit_disposition"]["evidence_boundary"]
+
+def test_self_assessment_is_bounded_not_a_quality_score(tmp_path):
+    put(tmp_path, "main.py", "x = 1\n")
+    run_specialized_pipeline(tmp_path, tmp_path / "out")
+    metrics = json.loads((tmp_path / "out/metrics.json").read_text())
+    assessment = metrics["self_assessment"]
+    assert assessment["specialized_agents"] == {"available": 4, "total": 4}
+    assert assessment["confidence_boundary"] == "scope-limited"
+    assert "quality score" in assessment["note"]
 
 def test_ast_structural_agents_use_red_team_auditing_epistemic_vocabulary(tmp_path):
     put(tmp_path, "main.py", "import security\nimport integrity\n")

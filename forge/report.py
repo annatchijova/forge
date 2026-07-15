@@ -123,6 +123,8 @@ def _finding_card(finding: dict[str, Any], hypotheses: list[dict[str, Any]], roo
     severity = str(finding.get("severity", "MEDIUM")).upper()
     agent = str(finding.get("agent", "bug_investigator"))
     epistemic = str(finding.get("epistemic_level", ""))
+    provenance = ", ".join(str(item) for item in finding.get("provenance", ())) or "not recorded"
+    evidence_roles = ", ".join(f"{item.get('role', 'primary')}: {item.get('source', 'unknown')}" for item in evidence) or "none"
     searchable = " ".join(str(finding.get(key, "")) for key in ("module_path", "description", "reasoning", "agent", "epistemic_level", "severity"))
     return f"""<article class=\"finding severity-card-{_e(severity.lower())}\" data-agent=\"{_e(agent)}\" data-severity=\"{_e(severity)}\" data-epistemic=\"{_e(epistemic)}\" data-search=\"{_e(searchable.lower())}\">
       <p><strong>Agent:</strong> {_e(finding.get('agent', 'bug_investigator'))}</p>
@@ -130,6 +132,7 @@ def _finding_card(finding: dict[str, Any], hypotheses: list[dict[str, Any]], roo
       <p><strong>Description (inference):</strong> {_e(finding.get('description', ''))}</p>
       <p><strong>Source observation:</strong> <code>{_e(source.get('detail', ''))}</code></p>
       <p><strong>Reasoning:</strong> {_e(finding.get('reasoning', ''))}</p>
+      <p><strong>Evidence provenance:</strong> {_e(provenance)}<br/><strong>Evidence ledger:</strong> {_e(evidence_roles)}</p>
       <p><strong>Falsification test:</strong> {_e(falsifier)}</p>
       <p><strong>Additional evidence — git blame:</strong> {_e(blame_html)}</p>
     </article>"""
@@ -280,6 +283,8 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
     findings_metrics = metrics.get("findings", {})
     disposition = metrics.get("audit_disposition", {})
     disposition_status = disposition.get("status", "UNSPECIFIED")
+    self_assessment = metrics.get("self_assessment", {})
+    contradictions = metrics.get("contradictions", [])
     dashboard_html = f"""
 <section id="dashboard" class="dashboard">
   <div class="dashboard-heading"><div><p class="eyebrow">AUDIT PULSE</p><h2>Repository intelligence</h2><p class="section-lede">A visual readout of the sealed run: scope, evidence, findings, governance and reproducibility.</p></div><span class="dashboard-status">{_e('SEALED · ' + disposition_status + ' · ' + integrity_text)}</span></div>
@@ -290,6 +295,7 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
     <div class="dashboard-panel"><h3>Governance skills</h3><div class="mini-stat-grid"><div><strong>{_e(skill_runtime.get('skills_activated', 0))}</strong><span>activated</span></div><div><strong>{_e(skill_runtime.get('skills_not_applicable', 0))}</strong><span>not applicable</span></div><div><strong>{_e(skill_runtime.get('undetermined_skills', 0))}</strong><span>undetermined</span></div></div></div>
   </div>
   <div class="dashboard-panel"><h3>Audit disposition</h3><p><strong>{_e(disposition_status)}</strong> — {_e(disposition.get('reason', 'No disposition recorded.'))}</p><p class="section-lede">Action: {_e(disposition.get('action_required', 'Review the run contract.'))}</p></div>
+  <div class="dashboard-panel"><h3>FORGE self assessment</h3><p><strong>{_e(self_assessment.get('specialized_agents', {}).get('available', '—'))}/{_e(self_assessment.get('specialized_agents', {}).get('total', '—'))}</strong> specialized agents · <strong>{_e(len(contradictions))}</strong> contradictions · <strong>{_e(self_assessment.get('limitations', '—'))}</strong> limitations</p><p class="section-lede">Confidence boundary: {_e(self_assessment.get('confidence_boundary', 'not recorded'))}</p></div>
   <div class="metric-strip"><div><strong>{_e(repository_metrics.get('functions', 0))}</strong><span>functions</span></div><div><strong>{_e(repository_metrics.get('loc', {}).get('code', 0))}</strong><span>lines of code</span></div><div><strong>{_e(repository_metrics.get('tests', 0))}</strong><span>tests</span></div><div><strong>{_e(skill_runtime.get('contracts_executed', 0))}</strong><span>contracts executed</span></div><div><strong>{_e(metrics.get('evidence', {}).get('primary_evidence', 0))}</strong><span>primary evidence</span></div>{f'<div class="cost-tile"><strong>{_e(cost.get("credits_consumed"))}</strong><span>credits observed</span></div>' if cost else ''}</div>
   <details class="metrics-details"><summary>Full metrics and audit telemetry</summary><div class="detail-grid"><div><h3>Quality</h3><pre>{_e(json.dumps(metrics.get('quality', {}), indent=2, sort_keys=True))}</pre></div><div><h3>Reproducibility</h3><pre>{_e(json.dumps(metrics.get('reproducibility', {}), indent=2, sort_keys=True))}</pre></div><div><h3>Audit trail</h3><pre>{_e(json.dumps(metrics.get('audit_trail', {}), indent=2, sort_keys=True))}</pre></div><div><h3>Raw metrics</h3><pre>{_e(json.dumps(metrics, indent=2, sort_keys=True))}</pre></div></div></details>
 </section>"""
