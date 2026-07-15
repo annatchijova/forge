@@ -32,3 +32,8 @@ call chain. It writes all artifacts to an output directory and stops when
 blocks downstream work on broad repositories such as VIGIA but does not remove
 triage's own cost. Agent role contracts live in `forge/agents/README.md`. MCP
 remains a planned transport integration, not a current dependency.
+
+## License
+
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for
+the full text and [NOTICE](NOTICE) for attribution.
