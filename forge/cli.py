@@ -5,6 +5,7 @@ from pathlib import Path
 from forge.sealing import read_and_verify
 from forge.tiered_report import MODES, render_tiered_report
 from forge.runtime import Runtime
+from forge.models import ModelRouting
 
 def main() -> int:
     import sys
@@ -13,8 +14,19 @@ def main() -> int:
         audit_parser.add_argument("repo", type=Path)
         audit_parser.add_argument("-o", "--output-dir", type=Path, default=Path("forge-run"))
         audit_parser.add_argument("--max-connected", type=int, default=100)
+        audit_parser.add_argument("--orchestrator-model", help="model identifier for future model-backed orchestration")
+        audit_parser.add_argument("--agent-model", action="append", default=[], metavar="AGENT=MODEL", help="agent model routing; repeatable")
         audit_args = audit_parser.parse_args(sys.argv[2:])
-        result = Runtime(max_connected=audit_args.max_connected).audit(audit_args.repo, audit_args.output_dir)
+        agent_models = {}
+        for assignment in audit_args.agent_model:
+            if "=" not in assignment:
+                audit_parser.error("--agent-model must use AGENT=MODEL")
+            agent, model = assignment.split("=", 1)
+            if not agent or not model:
+                audit_parser.error("--agent-model must use non-empty AGENT=MODEL")
+            agent_models[agent] = model
+        routing = ModelRouting(audit_args.orchestrator_model, agent_models)
+        result = Runtime(max_connected=audit_args.max_connected, model_routing=routing).audit(audit_args.repo, audit_args.output_dir)
         print(json.dumps(result.to_dict(), indent=2, sort_keys=True))
         return 0
     if len(sys.argv) > 1 and sys.argv[1] == "report":
@@ -28,11 +40,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="FORGE module 1: stack detector and triage")
     parser.add_argument("repo", type=Path, nargs="?", help="repository root (required except with --verify-seal)")
     parser.add_argument("-o", "--output", type=Path, default=Path("triage-manifest.json"))
-    parser.add_argument("--hypotheses", type=Path, help="also write the module 2 hypotheses manifest")
-    parser.add_argument("--verify", type=Path, help="also write the module 3 verification manifest")
-    parser.add_argument("--seal", action="store_true", help="seal the verification manifest alongside it")
     parser.add_argument("--verify-seal", type=Path, help="verify a sealed verification manifest")
-    parser.add_argument("--report", action="store_true", help="write forge-report.html from generated manifests")
     args = parser.parse_args()
     if args.verify_seal:
         result = Runtime().verify_findings(args.verify_seal)

@@ -72,7 +72,7 @@ def render_tiered_report(sealed_path: str | Path, mode: str, destination: str | 
     if mode == "extended":
         skills = _sidecar(source, "skills-runtime.json")
         sections += ["<section id='contracts'><h2>Contract evaluations and governance applicability</h2><pre>" + (json.dumps(skills, indent=2, sort_keys=True) if skills else "Skill runtime sidecar unavailable") + "</pre></section>",
-                     "<section id='trace'><h2>Metrics and seal trace</h2><pre>" + json.dumps({"manifest": manifest, "chain": sealed.get("chain", [])}, indent=2, sort_keys=True) + "</pre></section>"]
+                     "<section id='trace'><h2>Metrics and audit trace</h2><pre>" + json.dumps({"manifest": manifest, "chain": sealed.get("chain", []), "audit_trace": sealed.get("audit_trace", "Audit trace unavailable")}, indent=2, sort_keys=True) + "</pre></section>"]
     document = "<!doctype html><html><body><h1>FORGE " + mode + " report</h1>" + "".join(sections) + f"<meta id='forge-findings' data-canonical-base64='{payload}'></body></html>"
     destination.write_text(document, encoding="utf-8")
     return destination

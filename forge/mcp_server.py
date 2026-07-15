@@ -14,6 +14,7 @@ from typing import Any
 from mcp.server.fastmcp import FastMCP
 
 from forge.runtime import Runtime
+from forge.models import ModelRouting
 from forge.sealing import verify_sealed
 from forge.agents.patch_reviewer import review as review_patch_impl
 
@@ -24,7 +25,9 @@ def _error(code: str, message: str, **extra: Any) -> dict[str, Any]:
     return {"ok": False, "error": {"code": code, "message": message, **extra}}
 
 @mcp.tool()
-def audit_repository(path: str, max_connected: int = 100, output_dir: str | None = None) -> dict[str, Any]:
+def audit_repository(path: str, max_connected: int = 100, output_dir: str | None = None,
+                     orchestrator_model: str | None = None,
+                     agent_models: dict[str, str] | None = None) -> dict[str, Any]:
     """Run the full FORGE governance pipeline against a repository and seal the findings.
 
     Writes triage, hypotheses, verification, sealed, and coverage artifacts plus an
@@ -42,7 +45,8 @@ def audit_repository(path: str, max_connected: int = 100, output_dir: str | None
             output_root = Path(output_dir).expanduser()
             output_root.mkdir(parents=True, exist_ok=True)
             output = Path(tempfile.mkdtemp(prefix="run-", dir=output_root))
-        result = runtime.audit(root, output, max_connected).to_dict()
+        configured_runtime = Runtime(max_connected=max_connected, model_routing=ModelRouting(orchestrator_model, agent_models or {}))
+        result = configured_runtime.audit(root, output).to_dict()
         result["report_html_path"] = result["artifacts"]["report"]; result["ok"] = True
         return result
     except (OSError, ValueError, RuntimeError) as exc:
@@ -153,6 +157,12 @@ def repository_summary(path: str) -> dict[str, Any]:
     if not root.is_dir(): return _error("invalid_repository", f"repository path is not a directory: {path}")
     try: return {"ok": True, **runtime.repository_summary(root)}
     except (OSError, ValueError) as exc: return _error("summary_failed", str(exc))
+
+@mcp.tool()
+def get_audit_trace(run_output_dir: str) -> dict[str, Any]:
+    try: return {"ok": True, "trace": runtime.get_audit_trace(run_output_dir)}
+    except FileNotFoundError: return _error("missing_artifact", f"audit trace not found: {run_output_dir}")
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc: return _error("malformed_artifact", str(exc))
 
 @mcp.tool()
 def generate_report(sealed_path: str, mode: str = "standard", output: str | None = None) -> dict[str, Any]:

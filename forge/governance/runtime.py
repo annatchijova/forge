@@ -42,14 +42,25 @@ def load_skills(skills_root: str | Path | None = None) -> tuple[LoadedSkill, ...
     root = Path(skills_root) if skills_root else default_skills_root()
     loaded=[]
     for manifest_path in sorted(root.glob("*/manifest.json")):
-        manifest=json.loads(manifest_path.read_text(encoding="utf-8"))
-        module_path=manifest_path.parent / manifest["entrypoint"]
-        spec=importlib.util.spec_from_file_location(f"forge_skill_{manifest['name'].replace('-', '_')}", module_path)
-        if spec is None or spec.loader is None: raise ValueError(f"cannot load skill entrypoint: {module_path}")
-        module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
-        implementation=getattr(module, manifest["class_name"])()
-        if implementation.contract.name != manifest["name"] or implementation.contract.version != manifest["version"]:
-            raise ValueError(f"skill manifest/contract mismatch: {manifest_path}")
+        # A broken optional plugin must not prevent the core audit from
+        # running. It is excluded from the active skill set; callers that need
+        # a detailed plugin-load diagnostic should validate manifests before
+        # deployment. The runtime still records execution failures for loaded
+        # skills in SkillRun.limitations. This covers the whole per-skill load
+        # (manifest parse, entrypoint import, contract check), not just JSON
+        # parsing - a missing entrypoint file or a manifest/contract mismatch
+        # must be isolated exactly the same way as a malformed manifest.json.
+        try:
+            manifest=json.loads(manifest_path.read_text(encoding="utf-8"))
+            module_path=manifest_path.parent / manifest["entrypoint"]
+            spec=importlib.util.spec_from_file_location(f"forge_skill_{manifest['name'].replace('-', '_')}", module_path)
+            if spec is None or spec.loader is None: raise ValueError(f"cannot load skill entrypoint: {module_path}")
+            module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
+            implementation=getattr(module, manifest["class_name"])()
+            if implementation.contract.name != manifest["name"] or implementation.contract.version != manifest["version"]:
+                raise ValueError(f"skill manifest/contract mismatch: {manifest_path}")
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError, ValueError, KeyError, AttributeError, ImportError):
+            continue
         loaded.append(LoadedSkill(implementation.contract, implementation, str(manifest_path)))
     return tuple(loaded)
 

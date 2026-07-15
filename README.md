@@ -33,6 +33,23 @@ a forensic engineering team:
 * reports both findings and discarded explanations,
 * seals the complete audit trail.
 
+Model routing is explicit and shared by the CLI, MCP, and Python runtime. The
+built-in detectors remain deterministic and do not invoke models yet; routing
+is recorded in the audit trace so a future model-backed stage cannot hide its
+provider choice:
+
+```bash
+python3 -m forge audit /path/to/repo \
+  --orchestrator-model large-model \
+  --agent-model bug_investigator=small-model \
+  --agent-model security_auditor=small-model
+```
+
+The same configuration is available through `Runtime(model_routing=...)` and
+the MCP `audit_repository` tool. An agent model name is configuration metadata
+until that agent has a model-backed implementation; it is never presented as
+evidence that a model was called.
+
 The objective is not simply finding more bugs.
 
 The objective is producing findings that another engineer can independently

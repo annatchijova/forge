@@ -29,5 +29,66 @@ def test_mcp_interactive_operations_delegate_to_runtime(tmp_path):
     assert triage_repository(str(tmp_path))["ok"]
     assert infer_module_domains(str(tmp_path))["ok"]
     assert repository_summary(str(tmp_path))["ok"]
-    assert list_available_skills()["skills"][0]["name"] == "validate-at-the-boundary"
+    # Membership, not skills[0]: asserting on index 0 couples this test to
+    # today's single-plugin load order and would break for an unrelated
+    # reason the moment a second skill is added ahead of it alphabetically.
+    assert any(item["name"] == "validate-at-the-boundary" for item in list_available_skills()["skills"])
     assert run_skill(str(tmp_path), "validate-at-the-boundary")["ok"]
+
+def test_audit_result_reports_discarded_count(tmp_path):
+    # eval('1 + 1') generates a hypothesis that module 3 discards via AST
+    # proof of benignity, so this fixture must produce discarded > 0.
+    put(tmp_path, "main.py", "def run():\n    return eval('1 + 1')\n")
+    result = Runtime().audit(tmp_path, tmp_path / "out").to_dict()
+    assert "discarded" in result, "AuditResult.to_dict() dropped the discarded count present in the pre-refactor API"
+    assert result["discarded"] == 1
+
+def test_audit_survives_a_malformed_skill_manifest(tmp_path):
+    skills_root = tmp_path / "skills"
+    broken = skills_root / "broken-skill"; broken.mkdir(parents=True)
+    (broken / "manifest.json").write_text("{not valid json")
+    repo = tmp_path / "repo"; repo.mkdir()
+    put(repo, "main.py", "x = 1\n")
+    # A malformed skill manifest must not take down the whole audit - the
+    # governance-skills layer degrades, the rest of the pipeline still runs.
+    result = Runtime(skills_root=skills_root).audit(repo, tmp_path / "out").to_dict()
+    assert result["connected_alive"] == 1
+
+def test_audit_survives_a_skill_with_a_manifest_contract_mismatch(tmp_path):
+    import json as json_module
+    skills_root = tmp_path / "skills"
+    bad = skills_root / "mismatched-skill"; bad.mkdir(parents=True)
+    (bad / "manifest.json").write_text(json_module.dumps(
+        {"name": "mismatched-skill", "version": "1.0", "entrypoint": "contract.py", "class_name": "MismatchedSkill"}
+    ))
+    (bad / "contract.py").write_text(
+        "from forge.models import SkillContract\n"
+        "class MismatchedSkill:\n"
+        "    contract=SkillContract('WRONG-NAME','1.0',(),(),(),())\n"
+        "    def applicability(self, context): return None\n"
+        "    def evaluate(self, context): return ()\n"
+    )
+    repo = tmp_path / "repo"; repo.mkdir()
+    put(repo, "main.py", "x = 1\n")
+    result = Runtime(skills_root=skills_root).audit(repo, tmp_path / "out").to_dict()
+    assert result["connected_alive"] == 1
+
+def test_audit_survives_a_skill_with_a_missing_entrypoint_file(tmp_path):
+    import json as json_module
+    skills_root = tmp_path / "skills"
+    bad = skills_root / "missing-entrypoint"; bad.mkdir(parents=True)
+    (bad / "manifest.json").write_text(json_module.dumps(
+        {"name": "missing-entrypoint", "version": "1.0", "entrypoint": "does_not_exist.py", "class_name": "X"}
+    ))
+    repo = tmp_path / "repo"; repo.mkdir()
+    put(repo, "main.py", "x = 1\n")
+    result = Runtime(skills_root=skills_root).audit(repo, tmp_path / "out").to_dict()
+    assert result["connected_alive"] == 1
+
+def test_cli_rejects_inert_legacy_pipeline_flags(tmp_path, monkeypatch):
+    put(tmp_path, "main.py", "x = 1\n")
+    import pytest
+    monkeypatch.setattr("sys.argv", ["forge", "audit", str(tmp_path), "--hypotheses"])
+    with pytest.raises(SystemExit) as exc:
+        cli_main()
+    assert exc.value.code == 2

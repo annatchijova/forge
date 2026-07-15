@@ -197,6 +197,20 @@ tool adaptation, and Python callers delegate to it. The legacy orchestrator
 entry points are compatibility wrappers and do not implement a second audit
 pipeline.
 
+Runtime traces are persisted as `audit-trace.json` and embedded into the
+sealed artifact. They record stage events, domain hypotheses, skill
+applicability, contract execution, hypotheses/discards, findings, metrics, and
+artifact writes. A trace hash is folded into the findings chain and verified
+alongside it. If execution fails, the runtime writes a partial trace with a
+`run_failed` event before propagating the original error.
+
+Model routing is also runtime-owned: `ModelRouting` accepts one orchestrator
+model and per-agent model identifiers, and CLI/MCP/Python frontends pass that
+same object to `Runtime`. The current built-in agents are deterministic AST
+detectors, so these identifiers are recorded configuration rather than a claim
+that an LLM was invoked. This keeps model selection auditable and prevents a
+frontend from silently implementing a second execution path.
+
 ## Agent scope strategy
 
 Archaeologist classifies every discovered file. Bug Investigator examines only

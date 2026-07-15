@@ -16,14 +16,19 @@ def _digest(payload: Any, previous: str) -> str:
     return hashlib.sha256((canonical_json(payload) + previous).encode("utf-8")).hexdigest()
 
 
-def seal_manifest(manifest: VerificationManifest) -> dict[str, Any]:
+def seal_manifest(manifest: VerificationManifest, audit_trace: dict[str, Any] | None = None) -> dict[str, Any]:
     data = manifest.to_dict()
     findings = data.pop("findings")
+    trace_hash = hashlib.sha256(canonical_json(audit_trace).encode("utf-8")).hexdigest() if audit_trace is not None else ""
+    if trace_hash: data["audit_trace_hash"] = trace_hash
     chain = []
     previous = GENESIS_HASH
     for index, finding in enumerate(findings):
         entry = {"index": index, "prev_hash": previous, "finding": finding}
-        entry["hash"] = _digest({"index": index, "finding": finding}, previous)
+        if trace_hash: entry["trace_hash"] = trace_hash
+        payload = {"index": index, "finding": finding}
+        if trace_hash: payload["trace_hash"] = trace_hash
+        entry["hash"] = _digest(payload, previous)
         chain.append(entry)
         previous = entry["hash"]
     return {
@@ -32,6 +37,7 @@ def seal_manifest(manifest: VerificationManifest) -> dict[str, Any]:
         "manifest": data,
         "reported_chain_length": len(chain),
         "chain": chain,
+        **({"audit_trace": audit_trace} if audit_trace is not None else {}),
         "limitations": [
             "The seal proves findings were not altered after sealing.",
             "The seal does not prove findings are correct.",
@@ -52,6 +58,13 @@ def verify_sealed(data: dict[str, Any]) -> dict[str, Any]:
         linkage_ok = False
         issues.append("reported chain length mismatch")
     previous = GENESIS_HASH
+    trace_hash = data.get("manifest", {}).get("audit_trace_hash", "")
+    if trace_hash:
+        trace = data.get("audit_trace")
+        if trace is None:
+            integrity_ok = False; issues.append("audit trace missing")
+        elif hashlib.sha256(canonical_json(trace).encode("utf-8")).hexdigest() != trace_hash:
+            integrity_ok = False; issues.append("audit trace hash mismatch")
     for expected_index, entry in enumerate(chain):
         index = entry.get("index")
         if index != expected_index:
@@ -60,7 +73,9 @@ def verify_sealed(data: dict[str, Any]) -> dict[str, Any]:
         if entry.get("prev_hash") != previous:
             linkage_ok = False
             issues.append(f"entry {expected_index}: broken prev_hash linkage")
-        actual = _digest({"index": index, "finding": entry.get("finding")}, entry.get("prev_hash", ""))
+        payload = {"index": index, "finding": entry.get("finding")}
+        if entry.get("trace_hash"): payload["trace_hash"] = entry.get("trace_hash")
+        actual = _digest(payload, entry.get("prev_hash", ""))
         if entry.get("hash") != actual:
             integrity_ok = False
             issues.append(f"entry {expected_index}: hash mismatch")
@@ -68,8 +83,8 @@ def verify_sealed(data: dict[str, Any]) -> dict[str, Any]:
     return {"ok": linkage_ok and integrity_ok, "linkage_ok": linkage_ok, "integrity_ok": integrity_ok, "issues": issues}
 
 
-def write_sealed_manifest(manifest: VerificationManifest, destination: str | Path) -> None:
-    Path(destination).write_text(json.dumps(seal_manifest(manifest), sort_keys=True, indent=2) + "\n", encoding="utf-8")
+def write_sealed_manifest(manifest: VerificationManifest, destination: str | Path, audit_trace: dict[str, Any] | None = None) -> None:
+    Path(destination).write_text(json.dumps(seal_manifest(manifest, audit_trace), sort_keys=True, indent=2) + "\n", encoding="utf-8")
 
 
 def read_and_verify(destination: str | Path) -> dict[str, Any]:

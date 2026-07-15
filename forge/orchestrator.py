@@ -8,10 +8,10 @@ from forge.detector.stack import triage
 from forge.hypotheses import generate_hypotheses
 
 def run_specialized_pipeline(repo: str | Path, output_dir: str | Path, max_connected: int = 100):
-    return Runtime(max_connected=max_connected, triage_fn=triage).audit(repo, output_dir).to_dict()
+    return Runtime(max_connected=max_connected, triage_override=triage).audit(repo, output_dir).to_dict()
 
 def run_pipeline(repo: str | Path, output_dir: str | Path, max_connected: int = 100):
-    return Runtime(max_connected=max_connected, triage_fn=triage).audit(repo, output_dir).to_dict()
+    return Runtime(max_connected=max_connected, triage_override=triage).audit(repo, output_dir).to_dict()
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run the FORGE governance runtime")

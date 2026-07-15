@@ -146,6 +146,16 @@ justify applicability. Only the `validate-at-the-boundary` skill is currently
 migrated as a complete reference contract; the remaining markdown skills are
 not yet executable plugins and must not be represented as active checks.
 
+## Runtime audit trail
+
+FORGE now records a structured runtime trace analogous to CRONOS: events for
+discovery, classification, coverage, domain hypotheses, skill applicability,
+contract execution, hypotheses, discards, findings, metrics, artifacts, and
+completion are persisted and embedded in the sealed artifact. The canonical
+trace hash is verified with the findings chain. On failure, a partial
+`audit-trace.json` with `run_failed` is retained; there is no claim of an
+external append-only database or external final-hash anchor yet.
+
 **Threat model — in-process plugin execution (documented, not sandboxed).**
 `forge/governance/runtime.py::load_skills()` loads a skill's `entrypoint.py`
 via `importlib.util.spec_from_file_location(...)` and

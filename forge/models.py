@@ -21,6 +21,25 @@ class Applicability(str, Enum):
 
 
 @dataclass(frozen=True)
+class ModelRouting:
+    """Declarative model assignment for future model-backed runtime stages.
+
+    Built-in FORGE agents currently execute deterministic Python detectors and
+    do not invoke an LLM. This shared configuration surface records intended
+    routing without pretending that a model was called.
+    """
+
+    orchestrator: str | None = None
+    agents: dict[str, str] = field(default_factory=dict)
+
+    def for_agent(self, agent: str) -> str | None:
+        return self.agents.get(agent)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {"orchestrator": self.orchestrator, "agents": dict(sorted(self.agents.items()))}
+
+
+@dataclass(frozen=True)
 class Evidence:
     kind: str
     source: str
