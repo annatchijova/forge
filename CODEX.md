@@ -19,8 +19,6 @@ evidence; it never promotes a plausible pattern by rhetoric alone.
 
 # CODEX.md — FORGE Repository Governance Agent
 
-## Identity and mission
-
 ## Non-negotiable boundaries
 
 - Read audited repositories; do not write into them.
