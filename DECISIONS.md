@@ -29,6 +29,22 @@ Before implementation, every file in `skills-gpt/` was read. The design follows 
 - A clean Git status and matching commit establish repository alignment, not correctness of the audit logic.
 - Hash sealing and HTML reporting remain later modules; no claim of tamper-evidence is made yet.
 
+## Module 3 call-selection limitation
+
+`_call_at` uses the function name extracted from the hypothesis description when
+the expected backtick-quoted call format is present. If extraction fails, it
+falls back to the first AST call on the line. This is deterministic but can be
+an arbitrary structural choice for nested calls such as `foo(bar())`; the code
+comment and regression test make this limitation explicit.
+
+## Module 4 sealing boundary
+
+The verification findings are sealed with a typed, versioned canonical JSON
+encoding and a SHA-256 genesis hash chain. The seal proves that findings were
+not altered after sealing; it does not prove that findings are correct. A
+full-access attacker who can rewrite the entire report can forge a consistent
+replacement chain from scratch, so the seal is tamper-evident, not tamper-proof.
+
 ## Safety and provenance
 
 FORGE remains read-only against audited repositories. Manifests carry schema versions and module-path references so triage and hypotheses can be cross-checked. Hypotheses are not findings and must not be rendered as confirmed conclusions.

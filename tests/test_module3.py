@@ -1,7 +1,10 @@
 from forge.detector.stack import triage
 from forge.hypotheses import generate_hypotheses
 from forge.verification import verify_hypotheses
+from forge.verification import _call_at
+import ast
 from forge.models import Hypothesis, HypothesesManifest
+from forge.verification import _description_call_name
 
 def test_ast_overrides_proximity_false_negative(tmp_path):
     (tmp_path / "main.py").write_text("import subprocess\ndef run(cmd):\n    try:\n        harmless = 1\n    except Exception:\n        harmless = 2\n    return subprocess.run(cmd)\n")
@@ -9,6 +12,17 @@ def test_ast_overrides_proximity_false_negative(tmp_path):
     result = verify_hypotheses(manifest)
     assert result.findings
     assert not result.discarded
+
+def test_call_at_disambiguates_nested_calls_on_same_line():
+    tree = ast.parse("foo(bar())\n")
+    assert ast.unparse(_call_at(tree, 1, "foo").func) == "foo"
+    assert ast.unparse(_call_at(tree, 1, "bar").func) == "bar"
+
+def test_call_name_extraction_fallback_is_explicit():
+    assert _description_call_name("a description without the expected call marker") is None
+    tree = ast.parse("foo(bar())\n")
+    # None intentionally means first call on the line; this is a known limitation.
+    assert ast.unparse(_call_at(tree, 1).func) == "foo"
 
 def test_ast_discards_actually_enclosed_subprocess(tmp_path):
     (tmp_path / "main.py").write_text("import subprocess\ndef run():\n    try:\n        return subprocess.run(['trusted'], check=True)\n    except subprocess.SubprocessError as exc:\n        raise RuntimeError from exc\n")

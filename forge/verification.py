@@ -1,23 +1,36 @@
 """Module 3: adversarial verification of abductive hypotheses."""
 from __future__ import annotations
 import ast, json, time
+import re
 from pathlib import Path
 from forge.models import Evidence, Finding, HypothesesManifest, VerificationManifest
 
-def _subprocess_enclosure(tree: ast.AST, target_line: int) -> bool:
+def _call_name(call: ast.Call) -> str:
+    return ast.unparse(call.func)
+
+def _call_at(tree: ast.AST, line: int, function_name: str | None = None):
+    calls = (n for n in ast.walk(tree) if isinstance(n, ast.Call) and getattr(n, "lineno", -1) == line)
+    if function_name is None:
+        # Known limitation: unmatched hypothesis descriptions fall back to the
+        # first AST call on the line, which is arbitrary when calls are nested.
+        return next(calls, None)
+    return next((c for c in calls if _call_name(c) == function_name), None)
+
+def _subprocess_enclosure(tree: ast.AST, target_line: int, function_name: str | None = None) -> bool:
     parents = {}
     for parent in ast.walk(tree):
         for child in ast.iter_child_nodes(parent):
             parents[child] = parent
-    node = next((n for n in ast.walk(tree) if isinstance(n, ast.Call) and getattr(n, "lineno", -1) == target_line), None)
+    node = _call_at(tree, target_line, function_name)
     while node in parents:
         node = parents[node]
         if isinstance(node, ast.Try):
             return True
     return False
 
-def _call_at(tree: ast.AST, line: int):
-    return next((n for n in ast.walk(tree) if isinstance(n, ast.Call) and getattr(n, "lineno", -1) == line), None)
+def _description_call_name(description: str) -> str | None:
+    match = re.search(r"`([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)*)\s*\(", description)
+    return match.group(1) if match else None
 
 def _ancestors(tree: ast.AST, node: ast.AST):
     parents = {}
@@ -37,16 +50,16 @@ def _named_handler(tree: ast.AST, call: ast.AST, names: tuple[str, ...]) -> bool
                     if any(name in text for name in names): return True
     return False
 
-def _parser_benign(tree: ast.AST, line: int) -> bool:
-    call = _call_at(tree, line)
+def _parser_benign(tree: ast.AST, line: int, function_name: str | None = None) -> bool:
+    call = _call_at(tree, line, function_name)
     return bool(call and _named_handler(tree, call, ("JSONDecodeError", "ValueError", "YAMLError", "TomlDecodeError")))
 
-def _eval_benign(tree: ast.AST, line: int) -> bool:
-    call = _call_at(tree, line)
+def _eval_benign(tree: ast.AST, line: int, function_name: str | None = None) -> bool:
+    call = _call_at(tree, line, function_name)
     return bool(call and call.args and isinstance(call.args[0], ast.Constant) and isinstance(call.args[0].value, str))
 
-def _float_benign(tree: ast.AST, line: int, source: str) -> bool:
-    call = _call_at(tree, line)
+def _float_benign(tree: ast.AST, line: int, source: str, function_name: str | None = None) -> bool:
+    call = _call_at(tree, line, function_name)
     if call and isinstance(call.func, ast.Attribute) and call.func.attr == "isclose":
         return len(call.args) >= 2 and any(k in {kw.arg for kw in call.keywords} for k in ("rel_tol", "abs_tol"))
     node = next((n for n in ast.walk(tree) if isinstance(n, ast.Compare) and getattr(n, "lineno", -1) == line), None)
@@ -71,15 +84,16 @@ def verify_hypotheses(manifest: HypothesesManifest) -> VerificationManifest:
                 continue
             benign = False
             reason = ""
+            call_name = _description_call_name(h.description)
             if "subprocess" in h.description:
-                benign = _subprocess_enclosure(tree, line) and _named_handler(tree, _call_at(tree, line), ("SubprocessError", "OSError"))
+                benign = _subprocess_enclosure(tree, line, call_name) and _named_handler(tree, _call_at(tree, line, call_name), ("SubprocessError", "OSError"))
                 reason = "AST proves explicit subprocess exception enclosure."
             elif "parser call" in h.description:
-                benign = _parser_benign(tree, line); reason = "AST proves known parser exception handler."
+                benign = _parser_benign(tree, line, call_name); reason = "AST proves known parser exception handler."
             elif "dynamic evaluation" in h.description.lower():
-                benign = _eval_benign(tree, line); reason = "AST proves literal string argument."
+                benign = _eval_benign(tree, line, call_name); reason = "AST proves literal string argument."
             elif "float threshold" in h.description or "tolerance call" in h.description:
-                benign = _float_benign(tree, line, source); reason = "AST proves exact-type operands or explicit tolerance."
+                benign = _float_benign(tree, line, source, call_name); reason = "AST proves exact-type operands or explicit tolerance."
             if benign:
                 discarded.append({"module_path": h.module_path, "reason": reason}); continue
         findings.append(Finding("INFERRED", "PLAUSIBLE HYPOTHESIS", h.module_path, h.description, evidence, "Observed construct matches; no induction was run, so level is capped at PLAUSIBLE HYPOTHESIS."))
