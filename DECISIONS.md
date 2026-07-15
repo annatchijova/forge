@@ -146,6 +146,27 @@ justify applicability. Only the `validate-at-the-boundary` skill is currently
 migrated as a complete reference contract; the remaining markdown skills are
 not yet executable plugins and must not be represented as active checks.
 
+**Threat model — in-process plugin execution (documented, not sandboxed).**
+`forge/governance/runtime.py::load_skills()` loads a skill's `entrypoint.py`
+via `importlib.util.spec_from_file_location(...)` and
+`spec.loader.exec_module(module)`. This runs the plugin's Python code inside
+the FORGE process with FORGE's own privileges — there is no signature check,
+hash pinning, or sandboxing. A compromised or malicious skill file has full
+access to the FORGE process, not a restricted capability set. This is an
+explicit, accepted scope boundary for the hackathon timeline, not an
+oversight: **skills must only be loaded from directories controlled by the
+FORGE operator** (the default is `forge/skills/`, versioned in this repo;
+`skills_root` in `load_skills()`/`run_skills()` must never be pointed at an
+untrusted or user-supplied path). If skill plugins are ever sourced from
+outside the operator's own repository (a marketplace, a URL, a user upload),
+this boundary must be revisited before that lands — options in order of
+effort: (1) require a signed manifest with a hash pinned against a trusted
+list before `exec_module()` runs, (2) execute the skill in a subprocess with
+a restricted capability set, accepting the added latency. Neither is
+implemented today. `run_skills()` does catch and record per-skill exceptions
+(see below) so a *crashing* skill degrades gracefully — that is a reliability
+boundary, not a security boundary, and does not mitigate this threat model.
+
 ### Self-harness mining coverage limitation
 
 Self-harness weakness mining currently observes only
@@ -207,3 +228,18 @@ repeated after a *second* keyword occurrence later on the *same physical
 line*) that no real code in this repo's fixtures or corpus exercises; the
 lexical/conservative caller-graph limitation already documented above still
 applies unchanged.
+
+### `run_skills()` did not isolate a failing skill (fixed 2026-07-15)
+
+`run_skills()` called each loaded skill's `applicability()`/`evaluate()`
+directly inside the per-module loop with no exception handling: a bug or
+crash in any single skill (a missing file, a malformed AST assumption, an
+unhandled edge case in third-party-style plugin code) raised out of
+`run_skills()` and killed the entire governance run for every other module
+and every other skill, not just the one that failed. Fixed by wrapping each
+skill's evaluation in a `try/except Exception`: a failing skill now records
+`"ERROR"` in `applicability[module.path][skill.contract.name]` and appends a
+`"Skill <name> failed on <module>: <exc>"` entry to `SkillRun.limitations`,
+so the failure is visible and attributed rather than either silently
+swallowed or fatal to the run. This is a reliability boundary only — it does
+not change the in-process execution threat model documented above.

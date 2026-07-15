@@ -24,3 +24,19 @@ def test_runtime_loads_new_skill_plugin_without_core_change(tmp_path):
     repo=tmp_path/"repo"; repo.mkdir(); (repo/"main.py").write_text("x = 1\n")
     result=run_skills(triage(repo), tmp_path)
     assert result.applicability["main.py"]["example-skill"] == "APPLICABLE"
+
+def test_run_skills_survives_a_skill_that_raises(tmp_path):
+    plugin=tmp_path/"broken"; plugin.mkdir()
+    (plugin/"manifest.json").write_text(json.dumps({"name":"broken-skill","version":"1.0","entrypoint":"contract.py","class_name":"BrokenSkill"}))
+    (plugin/"contract.py").write_text(
+        "from forge.models import SkillContract\n"
+        "class BrokenSkill:\n"
+        "    contract=SkillContract('broken-skill','1.0',(),(),(),())\n"
+        "    def applicability(self, context): raise RuntimeError('boom')\n"
+        "    def evaluate(self, context): return ()\n"
+    )
+    repo=tmp_path/"repo"; repo.mkdir(); (repo/"main.py").write_text("x = 1\n")
+    # Must not raise: one broken skill must not take down the whole governance run.
+    result=run_skills(triage(repo), tmp_path)
+    assert result.applicability["main.py"]["broken-skill"] == "ERROR"
+    assert any("broken-skill" in note and "boom" in note for note in result.limitations)

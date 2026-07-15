@@ -81,8 +81,14 @@ def run_skills(triage: TriageManifest, skills_root: str | Path | None = None) ->
         context=EvaluationContext(str(root), module, source, by_path[module.path])
         applicability[module.path]={}
         for skill in skills:
-            state=skill.implementation.applicability(context)
-            applicability[module.path][skill.contract.name]=state.value
-            if state is Applicability.APPLICABLE:
-                findings.extend(skill.implementation.evaluate(context))
+            try:
+                state=skill.implementation.applicability(context)
+                applicability[module.path][skill.contract.name]=state.value
+                if state is Applicability.APPLICABLE:
+                    findings.extend(skill.implementation.evaluate(context))
+            except Exception as exc:
+                # A bug or crash in one plugin skill must not take down the
+                # whole governance run for every other module and skill.
+                applicability[module.path][skill.contract.name]="ERROR"
+                limitations.append(f"Skill {skill.contract.name} failed on {module.path}: {exc}")
     return SkillRun(tuple(findings), hypotheses, applicability, tuple(limitations))
