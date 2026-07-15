@@ -8,6 +8,10 @@ from fractions import Fraction
 class PatchReview:
     changed_lines: int; touched_scopes: tuple[str, ...]; ratio: Fraction; flags: tuple[str, ...]
 
+
+class PatchReviewInputError(ValueError):
+    """The supplied before/after patch text is not valid Python source."""
+
 def review(unified_diff: str, intent: str, before: str = "", after: str = "") -> PatchReview:
     lines = unified_diff.splitlines()
     changed = [l for l in lines if (l.startswith("+") or l.startswith("-")) and not l.startswith(("+++","---"))]
@@ -19,7 +23,11 @@ def review(unified_diff: str, intent: str, before: str = "", after: str = "") ->
         if line.startswith("+") and not line.startswith("+++"): new_lines.append(cursor); cursor += 1
         elif line.startswith("-") and not line.startswith("---"): pass
         elif line.startswith(" "): cursor += 1
-    tree = ast.parse(after or before or "")
+    source = after or before or ""
+    try:
+        tree = ast.parse(source)
+    except SyntaxError as exc:
+        raise PatchReviewInputError(f"patch review source is not valid Python: {exc}") from exc
     scopes=[]
     scope_sizes=[]
     for n in ast.walk(tree):

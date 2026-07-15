@@ -4,6 +4,7 @@ import json
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
+from forge.io import load_json
 
 @dataclass(frozen=True)
 class FailureInstance:
@@ -16,7 +17,7 @@ class WeaknessBundle:
     clusters: tuple[WeaknessCluster, ...]
 
 def _read(run):
-    if isinstance(run, (str, Path)): return json.loads(Path(run).read_text(encoding="utf-8")), str(run)
+    if isinstance(run, (str, Path)): return load_json(run, f"mined run {run}"), str(run)
     return run, "memory"
 
 def mine(runs) -> WeaknessBundle:

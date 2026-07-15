@@ -29,6 +29,8 @@ def test_metrics_are_layered_and_mark_uncollected_values_honestly(tmp_path):
     assert metrics["quality"]["repository_coverage"] == {"covered": 2, "total": 3}
     assert metrics["reproducibility"]["seed_used"] is None
     assert metrics["audit_trail"]["runtime_events"] > 0
+    assert metrics["honest_degradation"]["limitations"]
+    assert metrics["agents"]["verification"]["checks_failed"] == 0
     assert result.artifacts["metrics"].endswith("metrics.json")
 
 

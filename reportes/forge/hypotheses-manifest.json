@@ -22,6 +22,8 @@
     "forge/harness/proposal.py",
     "forge/harness/validation.py",
     "forge/hypotheses.py",
+    "forge/induction.py",
+    "forge/io.py",
     "forge/mcp_server.py",
     "forge/metrics.py",
     "forge/models.py",
@@ -29,68 +31,15 @@
     "forge/report.py",
     "forge/runtime.py",
     "forge/sealing.py",
+    "forge/severity.py",
     "forge/skills/validate_at_the_boundary/contract.py",
     "forge/tiered_report.py",
     "forge/tracing.py",
     "forge/verification.py"
   ],
   "forge_version": "0.1.0",
-  "generated_at_epoch": 1784132477,
+  "generated_at_epoch": 1784135537,
   "hypotheses": [
-    {
-      "description": "The parser call `tree = ast.parse(after or before or \"\")` at forge/agents/patch_reviewer.py:22 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 22; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        22
-      ],
-      "module_path": "forge/agents/patch_reviewer.py",
-      "rank": 1
-    },
-    {
-      "description": "The parser call `sealed = json.loads(Path(sealed_path).read_text(encoding=\"utf-8\"))` at forge/agents/recommendation_agent.py:25 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 25; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        25
-      ],
-      "module_path": "forge/agents/recommendation_agent.py",
-      "rank": 1
-    },
-    {
-      "description": "The parser call `metrics = json.loads(Path(metrics_path).read_text(encoding=\"utf-8\")) if metrics_path else {}` at forge/agents/recommendation_agent.py:26 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 26; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        26
-      ],
-      "module_path": "forge/agents/recommendation_agent.py",
-      "rank": 2
-    },
-    {
-      "description": "The parser call `payload=json.loads(r[1]),` at forge/cronos/store.py:217 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 217; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        217
-      ],
-      "module_path": "forge/cronos/store.py",
-      "rank": 1
-    },
-    {
-      "description": "The parser call `contradictions = json.loads(contradictions_json) if contradictions_json else []` at forge/cronos/store.py:225 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 225; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        225
-      ],
-      "module_path": "forge/cronos/store.py",
-      "rank": 2
-    },
-    {
-      "description": "The parser call `conf_warnings = json.loads(conf_warnings_json) if conf_warnings_json else []` at forge/cronos/store.py:226 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 226; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        226
-      ],
-      "module_path": "forge/cronos/store.py",
-      "rank": 3
-    },
     {
       "description": "The parser call `manifest=json.loads(manifest_path.read_text(encoding=\"utf-8\"))` at forge/governance/runtime.py:54 has no nearby exception handling, so malformed input may escape as an opaque failure.",
       "falsification_test": "Feed malformed input to the function containing line 54; a named boundary error or explicit rejection falsifies the hypothesis.",
@@ -99,91 +48,10 @@
       ],
       "module_path": "forge/governance/runtime.py",
       "rank": 1
-    },
-    {
-      "description": "The parser call `if isinstance(run, (str, Path)): return json.loads(Path(run).read_text(encoding=\"utf-8\")), str(run)` at forge/harness/mining.py:19 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 19; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        19
-      ],
-      "module_path": "forge/harness/mining.py",
-      "rank": 1
-    },
-    {
-      "description": "The tolerance call `if \"math.isclose\" in stripped:` at forge/hypotheses.py:48 governs a float decision and must expose an explicit tolerance policy.",
-      "falsification_test": "Vary values within and outside the stated tolerance; a documented, stable boundary falsifies this hypothesis.",
-      "file_lines": [
-        48
-      ],
-      "module_path": "forge/hypotheses.py",
-      "rank": 1
-    },
-    {
-      "description": "The parser call `return json.loads(Path(path).read_text(encoding=\"utf-8\"))` at forge/report.py:26 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 26; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        26
-      ],
-      "module_path": "forge/report.py",
-      "rank": 1
-    },
-    {
-      "description": "The parser call `data = json.loads((Path(run_output_dir) / \"verification-manifest.sealed.json\").read_text(encoding=\"utf-8\"))` at forge/runtime.py:217 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 217; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        217
-      ],
-      "module_path": "forge/runtime.py",
-      "rank": 1
-    },
-    {
-      "description": "The parser call `return json.loads(path.read_text(encoding=\"utf-8\"))` at forge/runtime.py:224 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 224; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        224
-      ],
-      "module_path": "forge/runtime.py",
-      "rank": 2
-    },
-    {
-      "description": "The parser call `data = json.loads(Path(verification_path).read_text(encoding=\"utf-8\"))` at forge/runtime.py:232 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 232; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        232
-      ],
-      "module_path": "forge/runtime.py",
-      "rank": 3
-    },
-    {
-      "description": "The parser call `return verify_sealed(json.loads(Path(destination).read_text(encoding=\"utf-8\")))` at forge/sealing.py:96 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 96; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        96
-      ],
-      "module_path": "forge/sealing.py",
-      "rank": 1
-    },
-    {
-      "description": "The parser call `return json.loads(path.read_text(encoding=\"utf-8\"))` at forge/tiered_report.py:14 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 14; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        14
-      ],
-      "module_path": "forge/tiered_report.py",
-      "rank": 1
-    },
-    {
-      "description": "The parser call `if mode == \"json\": return canonical_findings_bytes(findings_from_sealed(json.loads(raw)))` at forge/tiered_report.py:83 has no nearby exception handling, so malformed input may escape as an opaque failure.",
-      "falsification_test": "Feed malformed input to the function containing line 83; a named boundary error or explicit rejection falsifies the hypothesis.",
-      "file_lines": [
-        83
-      ],
-      "module_path": "forge/tiered_report.py",
-      "rank": 2
     }
   ],
   "limitations": [
-    "Hypotheses are unverified candidates; module 3 must perform induction."
+    "Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only."
   ],
   "root": "/home/labestiadevigia/forge",
   "schema_version": "1.0",

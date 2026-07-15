@@ -42,6 +42,10 @@ def test_audit_result_reports_discarded_count(tmp_path):
     result = Runtime().audit(tmp_path, tmp_path / "out").to_dict()
     assert "discarded" in result, "AuditResult.to_dict() dropped the discarded count present in the pre-refactor API"
     assert result["discarded"] == 1
+    assert result["artifacts"]["profile"].endswith("repository-profile.json")
+    assert result["artifacts"]["markdown"].endswith("report.md")
+    assert (tmp_path / "out" / "repository-profile.json").exists()
+    assert "# FORGE audit report" in (tmp_path / "out" / "report.md").read_text()
 
 def test_audit_survives_a_malformed_skill_manifest(tmp_path):
     skills_root = tmp_path / "skills"
@@ -97,6 +101,17 @@ def test_get_findings_raises_a_clear_error_for_a_missing_run(tmp_path):
     with pytest.raises(FileNotFoundError, match="no-such-run.*verification-manifest.sealed.json"):
         Runtime().get_findings(missing)
 
+
+def test_malformed_json_artifacts_raise_a_named_error(tmp_path):
+    import pytest
+    from forge.io import ForgeArtifactError
+
+    run = tmp_path / "run"; run.mkdir()
+    (run / "verification-manifest.sealed.json").write_text("{not json")
+
+    with pytest.raises(ForgeArtifactError, match="malformed sealed manifest"):
+        Runtime().get_findings(run)
+
 def test_cli_rejects_inert_legacy_pipeline_flags(tmp_path, monkeypatch):
     put(tmp_path, "main.py", "x = 1\n")
     import pytest
@@ -104,3 +119,19 @@ def test_cli_rejects_inert_legacy_pipeline_flags(tmp_path, monkeypatch):
     with pytest.raises(SystemExit) as exc:
         cli_main()
     assert exc.value.code == 2
+
+def test_cli_summary_omits_finding_records(tmp_path, monkeypatch, capsys):
+    put(tmp_path, "main.py", "x = eval('1 + 1')\n")
+    monkeypatch.setattr("sys.argv", ["forge", "audit", str(tmp_path), "--output-dir", str(tmp_path / "out"), "--summary"])
+    assert cli_main() == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert "finding_records" not in payload
+    assert payload["artifacts"]["metrics"].endswith("metrics.json")
+
+def test_cli_preflight_reports_scope_without_running_audit(tmp_path, monkeypatch, capsys):
+    put(tmp_path, "main.py", "x = 1\n")
+    monkeypatch.setattr("sys.argv", ["forge", "preflight", str(tmp_path)])
+    assert cli_main() == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["scope_guard"]["ok"] is True
+    assert payload["next_step"] == "audit"

@@ -9,9 +9,9 @@ class RankedHypotheses:
     verification: object
     manifest: object = None
 
-def investigate(triage_manifest) -> RankedHypotheses:
+def investigate(triage_manifest, induce: bool = False) -> RankedHypotheses:
     hypotheses = generate_hypotheses(triage_manifest)
-    verified = verify_hypotheses(hypotheses)
+    verified = verify_hypotheses(hypotheses, induce=induce)
     # Structural verification is the real property: verified families have a
     # runnable AST check today; the rest remain lower-actionability candidates.
     families = verified.ast_verified_families

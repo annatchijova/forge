@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from forge.canonical import CANONICALIZE_VERSION, canonical_json
+from forge.io import load_json
 from forge.models import VerificationManifest
 
 GENESIS_HASH = hashlib.sha256(b"FORGE-FINDINGS-GENESIS-v1").hexdigest()
@@ -93,4 +94,4 @@ def write_sealed_manifest(manifest: VerificationManifest, destination: str | Pat
 
 
 def read_and_verify(destination: str | Path) -> dict[str, Any]:
-    return verify_sealed(json.loads(Path(destination).read_text(encoding="utf-8")))
+    return verify_sealed(load_json(destination, f"sealed manifest {destination}"))

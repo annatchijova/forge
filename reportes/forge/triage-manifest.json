@@ -27,7 +27,7 @@
     "tests/test_tiered_report.py": "deleting would remove unreachable code"
   },
   "forge_version": "0.1.0",
-  "generated_at_epoch": 1784132477,
+  "generated_at_epoch": 1784135537,
   "limitations": [],
   "modules": [
     {
@@ -97,14 +97,14 @@
           "source": "forge/agents/__init__.py"
         },
         {
-          "detail": "last logic-touch epoch 1784121331",
+          "detail": "last logic-touch epoch 1784133368",
           "kind": "git_log",
           "source": "forge/agents/__init__.py"
         }
       ],
       "import_count": 0,
       "language": "Python",
-      "last_commit_epoch": 1784121331,
+      "last_commit_epoch": 1784133368,
       "module_class": "DEAD_WEIGHT",
       "path": "forge/agents/__init__.py"
     },
@@ -206,23 +206,23 @@
           "source": "forge/agents/integrity_inspector.py"
         },
         {
-          "detail": "last logic-touch epoch 1784123962",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "forge/agents/integrity_inspector.py"
         }
       ],
       "import_count": 2,
       "language": "Python",
-      "last_commit_epoch": 1784123962,
+      "last_commit_epoch": 1784134702,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/agents/integrity_inspector.py"
     },
     {
-      "caller_count": 1,
+      "caller_count": 2,
       "decision_keywords": [],
       "evidence": [
         {
-          "detail": "1 caller(s), 2 import reference(s)",
+          "detail": "2 caller(s), 3 import reference(s)",
           "kind": "caller_graph",
           "source": "forge/agents/patch_reviewer.py"
         },
@@ -232,14 +232,14 @@
           "source": "forge/agents/patch_reviewer.py"
         },
         {
-          "detail": "last logic-touch epoch 1784126389",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "forge/agents/patch_reviewer.py"
         }
       ],
-      "import_count": 2,
+      "import_count": 3,
       "language": "Python",
-      "last_commit_epoch": 1784126389,
+      "last_commit_epoch": 1784134702,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/agents/patch_reviewer.py"
     },
@@ -260,11 +260,16 @@
           "detail": "decision keywords: ['Validate', 'decision', 'validate']",
           "kind": "content",
           "source": "forge/agents/recommendation_agent.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784134702",
+          "kind": "git_log",
+          "source": "forge/agents/recommendation_agent.py"
         }
       ],
       "import_count": 1,
       "language": "Python",
-      "last_commit_epoch": null,
+      "last_commit_epoch": 1784134702,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/agents/recommendation_agent.py"
     },
@@ -321,11 +326,11 @@
       "path": "forge/agents/security_auditor.py"
     },
     {
-      "caller_count": 0,
+      "caller_count": 1,
       "decision_keywords": [],
       "evidence": [
         {
-          "detail": "0 caller(s), 1 import reference(s)",
+          "detail": "1 caller(s), 2 import reference(s)",
           "kind": "caller_graph",
           "source": "forge/canonical.py"
         },
@@ -340,7 +345,7 @@
           "source": "forge/canonical.py"
         }
       ],
-      "import_count": 1,
+      "import_count": 2,
       "language": "Python",
       "last_commit_epoch": 1784080153,
       "module_class": "CONNECTED_ALIVE",
@@ -533,14 +538,14 @@
           "source": "forge/cronos/store.py"
         },
         {
-          "detail": "last logic-touch epoch 1784131908",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "forge/cronos/store.py"
         }
       ],
       "import_count": 5,
       "language": "Python",
-      "last_commit_epoch": 1784131908,
+      "last_commit_epoch": 1784134702,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/cronos/store.py"
     },
@@ -652,14 +657,14 @@
           "source": "forge/detector/stack.py"
         },
         {
-          "detail": "last logic-touch epoch 1784128281",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "forge/detector/stack.py"
         }
       ],
       "import_count": 12,
       "language": "Python",
-      "last_commit_epoch": 1784128281,
+      "last_commit_epoch": 1784134702,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/detector/stack.py"
     },
@@ -758,14 +763,14 @@
           "source": "forge/harness/mining.py"
         },
         {
-          "detail": "last logic-touch epoch 1784121515",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "forge/harness/mining.py"
         }
       ],
       "import_count": 2,
       "language": "Python",
-      "last_commit_epoch": 1784121515,
+      "last_commit_epoch": 1784134702,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/harness/mining.py"
     },
@@ -843,16 +848,63 @@
           "source": "forge/hypotheses.py"
         },
         {
-          "detail": "last logic-touch epoch 1784126389",
+          "detail": "last logic-touch epoch 1784133368",
           "kind": "git_log",
           "source": "forge/hypotheses.py"
         }
       ],
       "import_count": 6,
       "language": "Python",
-      "last_commit_epoch": 1784126389,
+      "last_commit_epoch": 1784133368,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/hypotheses.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "source": "forge/induction.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "source": "forge/induction.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "forge/induction.py"
+    },
+    {
+      "caller_count": 8,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "8 caller(s), 9 import reference(s)",
+          "kind": "caller_graph",
+          "source": "forge/io.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "source": "forge/io.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784134702",
+          "kind": "git_log",
+          "source": "forge/io.py"
+        }
+      ],
+      "import_count": 9,
+      "language": "Python",
+      "last_commit_epoch": 1784134702,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "forge/io.py"
     },
     {
       "caller_count": 2,
@@ -871,14 +923,14 @@
           "source": "forge/mcp_server.py"
         },
         {
-          "detail": "last logic-touch epoch 1784131908",
+          "detail": "last logic-touch epoch 1784133368",
           "kind": "git_log",
           "source": "forge/mcp_server.py"
         }
       ],
       "import_count": 3,
       "language": "Python",
-      "last_commit_epoch": 1784131908,
+      "last_commit_epoch": 1784133368,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/mcp_server.py"
     },
@@ -897,14 +949,14 @@
           "source": "forge/metrics.py"
         },
         {
-          "detail": "last logic-touch epoch 1784131908",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "forge/metrics.py"
         }
       ],
       "import_count": 2,
       "language": "Python",
-      "last_commit_epoch": 1784131908,
+      "last_commit_epoch": 1784134702,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/metrics.py"
     },
@@ -925,14 +977,14 @@
           "source": "forge/models.py"
         },
         {
-          "detail": "last logic-touch epoch 1784130918",
+          "detail": "last logic-touch epoch 1784133368",
           "kind": "git_log",
           "source": "forge/models.py"
         }
       ],
       "import_count": 37,
       "language": "Python",
-      "last_commit_epoch": 1784130918,
+      "last_commit_epoch": 1784133368,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/models.py"
     },
@@ -963,14 +1015,14 @@
       "path": "forge/orchestrator.py"
     },
     {
-      "caller_count": 4,
+      "caller_count": 5,
       "decision_keywords": [
         "Decision",
         "decision"
       ],
       "evidence": [
         {
-          "detail": "4 caller(s), 5 import reference(s)",
+          "detail": "5 caller(s), 6 import reference(s)",
           "kind": "caller_graph",
           "source": "forge/report.py"
         },
@@ -980,14 +1032,14 @@
           "source": "forge/report.py"
         },
         {
-          "detail": "last logic-touch epoch 1784131908",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "forge/report.py"
         }
       ],
-      "import_count": 5,
+      "import_count": 6,
       "language": "Python",
-      "last_commit_epoch": 1784131908,
+      "last_commit_epoch": 1784134702,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/report.py"
     },
@@ -1009,14 +1061,14 @@
           "source": "forge/runtime.py"
         },
         {
-          "detail": "last logic-touch epoch 1784131908",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "forge/runtime.py"
         }
       ],
       "import_count": 6,
       "language": "Python",
-      "last_commit_epoch": 1784131908,
+      "last_commit_epoch": 1784134702,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/runtime.py"
     },
@@ -1035,25 +1087,50 @@
           "source": "forge/sealing.py"
         },
         {
-          "detail": "last logic-touch epoch 1784130918",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "forge/sealing.py"
         }
       ],
       "import_count": 10,
       "language": "Python",
-      "last_commit_epoch": 1784130918,
+      "last_commit_epoch": 1784134702,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/sealing.py"
     },
     {
       "caller_count": 1,
       "decision_keywords": [
+        "classification",
+        "score",
         "validate"
       ],
       "evidence": [
         {
           "detail": "1 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "source": "forge/severity.py"
+        },
+        {
+          "detail": "decision keywords: ['classification', 'score', 'validate']",
+          "kind": "content",
+          "source": "forge/severity.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "forge/severity.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "validate"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 3 import reference(s)",
           "kind": "caller_graph",
           "source": "forge/skills/validate_at_the_boundary/contract.py"
         },
@@ -1068,7 +1145,7 @@
           "source": "forge/skills/validate_at_the_boundary/contract.py"
         }
       ],
-      "import_count": 2,
+      "import_count": 3,
       "language": "Python",
       "last_commit_epoch": 1784125021,
       "module_class": "CONNECTED_ALIVE",
@@ -1089,14 +1166,14 @@
           "source": "forge/tiered_report.py"
         },
         {
-          "detail": "last logic-touch epoch 1784130918",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "forge/tiered_report.py"
         }
       ],
       "import_count": 3,
       "language": "Python",
-      "last_commit_epoch": 1784130918,
+      "last_commit_epoch": 1784134702,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/tiered_report.py"
     },
@@ -1127,11 +1204,11 @@
       "path": "forge/tracing.py"
     },
     {
-      "caller_count": 6,
+      "caller_count": 7,
       "decision_keywords": [],
       "evidence": [
         {
-          "detail": "6 caller(s), 7 import reference(s)",
+          "detail": "7 caller(s), 8 import reference(s)",
           "kind": "caller_graph",
           "source": "forge/verification.py"
         },
@@ -1141,14 +1218,14 @@
           "source": "forge/verification.py"
         },
         {
-          "detail": "last logic-touch epoch 1784126389",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "forge/verification.py"
         }
       ],
-      "import_count": 7,
+      "import_count": 8,
       "language": "Python",
-      "last_commit_epoch": 1784126389,
+      "last_commit_epoch": 1784134702,
       "module_class": "CONNECTED_ALIVE",
       "path": "forge/verification.py"
     },
@@ -1301,14 +1378,14 @@
           "source": "tests/test_metrics.py"
         },
         {
-          "detail": "last logic-touch epoch 1784131908",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "tests/test_metrics.py"
         }
       ],
       "import_count": 0,
       "language": "Python",
-      "last_commit_epoch": 1784131908,
+      "last_commit_epoch": 1784134702,
       "module_class": "DEAD_WEIGHT",
       "path": "tests/test_metrics.py"
     },
@@ -1358,14 +1435,14 @@
           "source": "tests/test_module3.py"
         },
         {
-          "detail": "last logic-touch epoch 1784126389",
+          "detail": "last logic-touch epoch 1784133368",
           "kind": "git_log",
           "source": "tests/test_module3.py"
         }
       ],
       "import_count": 0,
       "language": "Python",
-      "last_commit_epoch": 1784126389,
+      "last_commit_epoch": 1784133368,
       "module_class": "FOSSIL_HIGH_RISK",
       "path": "tests/test_module3.py"
     },
@@ -1408,11 +1485,16 @@
           "detail": "decision keywords: []",
           "kind": "content",
           "source": "tests/test_recommendation_agent.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784134702",
+          "kind": "git_log",
+          "source": "tests/test_recommendation_agent.py"
         }
       ],
       "import_count": 0,
       "language": "Python",
-      "last_commit_epoch": null,
+      "last_commit_epoch": 1784134702,
       "module_class": "DEAD_WEIGHT",
       "path": "tests/test_recommendation_agent.py"
     },
@@ -1459,14 +1541,14 @@
           "source": "tests/test_runtime_frontends.py"
         },
         {
-          "detail": "last logic-touch epoch 1784131185",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "tests/test_runtime_frontends.py"
         }
       ],
       "import_count": 0,
       "language": "Python",
-      "last_commit_epoch": 1784131185,
+      "last_commit_epoch": 1784134702,
       "module_class": "FOSSIL_HIGH_RISK",
       "path": "tests/test_runtime_frontends.py"
     },
@@ -1511,14 +1593,14 @@
           "source": "tests/test_sealing.py"
         },
         {
-          "detail": "last logic-touch epoch 1784080336",
+          "detail": "last logic-touch epoch 1784132940",
           "kind": "git_log",
           "source": "tests/test_sealing.py"
         }
       ],
       "import_count": 0,
       "language": "Python",
-      "last_commit_epoch": 1784080336,
+      "last_commit_epoch": 1784132940,
       "module_class": "DEAD_WEIGHT",
       "path": "tests/test_sealing.py"
     },
@@ -1540,14 +1622,14 @@
           "source": "tests/test_specialized_agents.py"
         },
         {
-          "detail": "last logic-touch epoch 1784126389",
+          "detail": "last logic-touch epoch 1784134702",
           "kind": "git_log",
           "source": "tests/test_specialized_agents.py"
         }
       ],
       "import_count": 0,
       "language": "Python",
-      "last_commit_epoch": 1784126389,
+      "last_commit_epoch": 1784134702,
       "module_class": "FOSSIL_HIGH_RISK",
       "path": "tests/test_specialized_agents.py"
     },
@@ -1619,7 +1701,7 @@
       },
       "evidence": [
         {
-          "detail": "Python: 58 files with extension",
+          "detail": "Python: 61 files with extension",
           "kind": "file_count",
           "source": "filesystem"
         },
@@ -1633,7 +1715,7 @@
     }
   ],
   "summary": {
-    "CONNECTED_ALIVE": 33,
+    "CONNECTED_ALIVE": 36,
     "DEAD_WEIGHT": 15,
     "FOSSIL_HIGH_RISK": 10
   }

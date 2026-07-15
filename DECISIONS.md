@@ -308,3 +308,43 @@ caller (`Runtime.list_available_skills`, `Runtime.run_skill`, `run_skills`).
 Left as a documented gap rather than a silent one; the fix is to return
 `(loaded, skipped_with_reasons)` and fold `skipped_with_reasons` into
 `SkillRun.limitations` in `run_skills()`.
+
+## VIGÍA-inspired abstention and evidence boundaries
+
+FORGE adopts VIGÍA's central fallback principle: inability to establish a
+claim must never be serialized as a positive or clean result. `ABSTAIN` is a
+first-class audit disposition, not an error path and not a synonym for “zero
+findings”.
+
+The disposition contract is implemented in `forge/disposition.py` and has five
+states:
+
+- `COMPLETE_NO_FINDINGS` — the declared source scope was verified and no
+  finding survived;
+- `COMPLETE_WITH_FINDINGS` — the declared source scope was verified and one or
+  more findings survived;
+- `ABSTAIN_INSUFFICIENT_SCOPE` — source boundaries were skipped, unreadable,
+  syntactically invalid, outside the connected audit scope, or represented by
+  unsupported source languages;
+- `ABSTAIN_UNDETERMINED` — governance applicability or cross-agent evidence
+  interpretation could not be resolved;
+- `ABSTAIN_DEGRADED` — a specialized agent was unavailable, while the
+  remaining agents' evidence was preserved.
+
+This is deliberately non-destructive. Findings, discarded hypotheses, skipped
+paths, contradictions, and limitations remain available for review even when
+the global disposition abstains. In particular:
+
+1. A seal proves artifact integrity, not source completeness or correctness.
+2. `non_python_not_analyzed` is an intentional engine boundary, but recognized
+   unsupported source languages are promoted to an actionable insufficient
+   scope boundary.
+3. A contradiction has precedence over a clean conclusion and produces
+   `ABSTAIN_UNDETERMINED` with `CONTRADICTORY_EVIDENCE`.
+4. A failed Security or Integrity agent produces `ABSTAIN_DEGRADED`, never a
+   zero-finding success.
+5. Every abstention carries an evidence boundary and a required next action.
+
+The same boundary is reflected in the self-assessment metrics. A qualitative
+confidence boundary is reported instead of an invented numeric score. This
+keeps the VIGÍA lesson intact while preserving FORGE's code-audit vocabulary.

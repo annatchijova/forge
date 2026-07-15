@@ -14,6 +14,7 @@ log = logging.getLogger("cronos.store")
 
 from .chain import TraceChain, _steps_hash
 from .models import Trace, TraceStep, StepKind, TraceQuality
+from forge.io import parse_json
 
 
 def _fraction_to_str(f: Optional[Fraction]) -> str:
@@ -214,7 +215,7 @@ class TraceStore:
         steps = [
             TraceStep(
                 kind=StepKind(r[0]),
-                payload=json.loads(r[1]),
+                payload=parse_json(r[1], f"CRONOS step payload for {tid}"),
                 timestamp=r[2],
             )
             for r in step_rows
@@ -222,8 +223,8 @@ class TraceStore:
 
         quality = TraceQuality(quality_str) if quality_str else None
         diversity = _str_to_fraction(diversity_str)
-        contradictions = json.loads(contradictions_json) if contradictions_json else []
-        conf_warnings = json.loads(conf_warnings_json) if conf_warnings_json else []
+        contradictions = parse_json(contradictions_json, f"CRONOS contradictions for {tid}") if contradictions_json else []
+        conf_warnings = parse_json(conf_warnings_json, f"CRONOS confidence warnings for {tid}") if conf_warnings_json else []
 
         # Honest degradation (§5.3): a stored confidence that is present but
         # unparseable must be surfaced, not silently mimicked as "no confidence".

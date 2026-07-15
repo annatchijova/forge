@@ -75,3 +75,24 @@ def test_risk_shaped_strings_do_not_create_regex_hypotheses():
     )
     hypotheses, _ = _candidates("fixture.py", source, "Python")
     assert hypotheses == []
+
+
+def test_shell_true_is_a_distinct_hypothesis_family():
+    hypotheses, _ = _candidates("fixture.py", ("subprocess.call(cmd, shell=True)\n",), "Python")
+    assert len(hypotheses) == 1
+    assert "shell=True" in hypotheses[0].description
+
+
+def test_parser_induction_confirms_opaque_failure_in_child_process(tmp_path):
+    (tmp_path / "main.py").write_text("def parse(raw):\n    raise RuntimeError('opaque parser failure')\n")
+    result = verify_hypotheses(generate_hypotheses(triage(tmp_path)), induce=True)
+    assert result.findings
+    assert result.findings[0].epistemic_level == "CONFIRMED BY INDUCTION"
+    assert result.induction[0]["status"] == "CONFIRMED BY INDUCTION"
+
+
+def test_parser_induction_respects_named_boundary_handler(tmp_path):
+    (tmp_path / "main.py").write_text("import json\ndef load(raw):\n    try:\n        return json.loads(raw)\n    except json.JSONDecodeError:\n        return None\n")
+    result = verify_hypotheses(generate_hypotheses(triage(tmp_path)), induce=True)
+    assert not result.findings
+    assert not result.induction
