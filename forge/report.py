@@ -14,6 +14,7 @@ _EXAMINATIONS_STATUS_ORDER = (
     "examined_with_findings", "hypothesis_discarded_benign", "no_hypothesis_generated",
     "examined_clean", "excluded_by_policy", "excluded_by_scope",
 )
+_SEVERITY_ORDER = {"CRITICAL": 0, "HIGH": 1, "MEDIUM": 2, "LOW": 3, "INFO": 4}
 
 from forge.sealing import verify_sealed
 from forge.io import load_json
@@ -101,7 +102,11 @@ def _finding_card(finding: dict[str, Any], hypotheses: list[dict[str, Any]], roo
     blame = _blame(root, module or finding.get("module_path", ""), line) if line else None
     blame_html = _e(blame) if blame else "Git blame unavailable for this line; report continues with source evidence only."
     falsifier = hypothesis.get("falsification_test", "No originating hypothesis test was found in the supplied manifest.") if hypothesis else "No originating hypothesis test was found in the supplied manifest."
-    return f"""<article class=\"finding\">
+    severity = str(finding.get("severity", "MEDIUM")).upper()
+    agent = str(finding.get("agent", "bug_investigator"))
+    epistemic = str(finding.get("epistemic_level", ""))
+    searchable = " ".join(str(finding.get(key, "")) for key in ("module_path", "description", "reasoning", "agent", "epistemic_level", "severity"))
+    return f"""<article class=\"finding severity-card-{_e(severity.lower())}\" data-agent=\"{_e(agent)}\" data-severity=\"{_e(severity)}\" data-epistemic=\"{_e(epistemic)}\" data-search=\"{_e(searchable.lower())}\">
       <p><strong>Agent:</strong> {_e(finding.get('agent', 'bug_investigator'))}</p>
       <div><span class=\"badge severity-{_e(str(finding.get('severity', 'MEDIUM')).lower())}\">Severity: {_e(finding.get('severity', 'MEDIUM'))}</span> <span class=\"badge\">{_e(finding.get('epistemic_level', ''))}</span> <span class=\"ref\">{_e(source_ref)}</span></div>
       <p><strong>Description (inference):</strong> {_e(finding.get('description', ''))}</p>
@@ -121,6 +126,7 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
     seal = verify_sealed(sealed)
     manifest = sealed.get("manifest", {})
     findings = [entry.get("finding", {}) for entry in sealed.get("chain", [])]
+    findings = sorted(findings, key=lambda item: (_SEVERITY_ORDER.get(str(item.get("severity", "MEDIUM")).upper(), 99), str(item.get("module_path", ""))))
     hypotheses = hypotheses_doc.get("hypotheses", [])
     root = triage.get("root", manifest.get("root", "."))
     finding_modules = {f.get("module_path") for f in findings}
@@ -132,6 +138,16 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
     seal_text = f"Chain integrity: VERIFIED ({len(sealed.get('chain', []))} entries, 0 issues)" if seal["ok"] else f"Chain integrity: FAILED ({len(sealed.get('chain', []))} entries, {len(seal['issues'])} issues): {'; '.join(seal['issues'])}"
     git_note = "Git blame is attempted per finding and is shown when available; unavailable blame is labeled rather than inferred."
     findings_html = "".join(_finding_card(f, hypotheses, root) for f in findings) or "<p>No surviving findings in the supplied sealed manifest.</p>"
+    agents = sorted({str(f.get("agent", "bug_investigator")) for f in findings})
+    severities = [name for name in _SEVERITY_ORDER if any(str(f.get("severity", "MEDIUM")).upper() == name for f in findings)]
+    epistemic_levels = sorted({str(f.get("epistemic_level", "")) for f in findings if f.get("epistemic_level")})
+    filter_html = f"""<div class=\"finding-toolbar\" role=\"search\" aria-label=\"Finding filters\">
+  <label>Search <input id=\"finding-search\" type=\"search\" placeholder=\"module, description, reasoning…\"></label>
+  <label>Agent <select id=\"finding-agent\"><option value=\"\">All agents</option>{''.join(f'<option value=\"{_e(value)}\">{_e(value)}</option>' for value in agents)}</select></label>
+  <label>Severity <select id=\"finding-severity\"><option value=\"\">All severities</option>{''.join(f'<option value=\"{_e(value)}\">{_e(value)}</option>' for value in severities)}</select></label>
+  <label>Status <select id=\"finding-epistemic\"><option value=\"\">All statuses</option>{''.join(f'<option value=\"{_e(value)}\">{_e(value)}</option>' for value in epistemic_levels)}</select></label>
+  <span id=\"finding-count\" class=\"filter-count\">Showing {len(findings)} of {len(findings)}</span>
+</div>"""
     discarded_html = "".join(f"<article class=\"discarded\"><strong>{_e(item.get('module_path'))}</strong><p>{_e(item.get('reason'))}</p></article>" for item in discarded) or "<p>No discarded hypotheses recorded.</p>"
     clean_html = "".join(f"<li>{_e(module)} — checked against: {_e(families)}</li>" for module in clean) or "<li>No audited module met the clean-module condition.</li>"
     scope_html = "".join(f"<article class=\"scope\"><strong>{_e(item.get('path'))}</strong> — {_e(item.get('module_class'))}. This module was outside CONNECTED_ALIVE scope for this run.</article>" for item in out_of_scope) or "<p>All triaged modules were in CONNECTED_ALIVE scope.</p>"
@@ -153,12 +169,13 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
         ("Seal version", _e(sealed.get("seal_version", "unknown"))),
         ("Canonicalize version", _e(sealed.get("canonicalize_version", "unknown"))),
     ]
+    coverage_summary = None
     if coverage:
         ratio = coverage.get("coverage_ratio", {})
         numerator, denominator = ratio.get('numerator', 0), ratio.get('denominator', 1)
         percent = (100 * numerator / denominator) if denominator else 0
         ratio_text = f"{numerator}/{denominator} ({percent:.1f}%)"
-        info_rows = [("Coverage", f"discovered={coverage.get('files_discovered', 0)}, analyzed={coverage.get('files_analyzed', 0)}, skipped={coverage.get('files_skipped', 0)}, ratio={ratio_text}"), *info_rows]
+        coverage_summary = (coverage, ratio_text)
     # The detailed layered metrics are persisted as metrics.json. Keep the
     # HTML agent panel compact and route only the legacy per-agent accounting
     # through the examination-aware renderer; otherwise nested dictionaries
@@ -166,6 +183,24 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
     display_metrics = metrics.get("agent_metrics", metrics)
     metrics_html = "".join(_metric_block(agent, values) for agent, values in display_metrics.items())
     info_table_html = "".join(f"<tr><td>{label}</td><td>{value}</td></tr>" for label, value in info_rows)
+    summary_tiles_html = "".join(
+        f'<div class="stat-tile {tone}"><div class="stat-number">{value}</div><div class="stat-label">{label}</div></div>'
+        for value, label, tone in (
+            (len(findings), "Surviving findings", "risk" if findings else "safe"),
+            (len(discarded), "Discarded hypotheses", "caution" if discarded else "safe"),
+            (len(audited), "Audited modules", "neutral"),
+            (len(out_of_scope), "Out of scope", "muted"),
+        )
+    )
+    coverage_section_html = ""
+    if coverage_summary:
+        coverage_data, ratio_text = coverage_summary
+        coverage_section_html = (
+            f'<section id="coverage"><h2>Coverage</h2>'
+            f'<p class="section-lede">Coverage is shown after the findings and decision context so the opening view stays focused.</p>'
+            f'<div class="coverage-hero"><strong>{_e(ratio_text)}</strong><span>{_e(coverage_data.get("files_analyzed", 0))} analyzed · {_e(coverage_data.get("files_skipped", 0))} skipped · {_e(coverage_data.get("files_discovered", 0))} discovered</span></div>'
+            f'<p>Skipped reasons: {_e(coverage_data.get("skipped_reasons", {}))}</p></section>'
+        )
 
     objective_html = (
         f"<p>Verify the hypotheses generated for <code>{_e(root)}</code> against the implemented structural AST "
@@ -219,14 +254,14 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
 <style>
 :root{{
-  --bg:#E3B8B8;
+  --bg:#F1F2EE;
   --bg-elevated:#FFFFFF;
-  --bg-sunken:#D9A9A9;
+  --bg-sunken:#E8E9E3;
   --ink:#1C2222;
   --ink-muted:#5B6460;
   --ink-faint:#8B9490;
-  --rule:#C99E9E;
-  --rule-strong:#B98888;
+  --rule:#D5D6CE;
+  --rule-strong:#B9BBB0;
   --accent:#2B5D63;
   --accent-soft:#DCE7E6;
   --ok:#3C7A52; --ok-bg:#DFEDE2; --ok-ink:#2A5A3C;
@@ -250,11 +285,30 @@ header.masthead h1{{ font-family:var(--serif); font-weight:600; font-size:clamp(
 header.masthead p{{ color:var(--ink-muted); font-size:14.5px; max-width:76ch; margin:14px 0 0; }}
 header.masthead small{{ display:block; margin-top:6px; color:var(--ink-faint); font-family:var(--mono); font-size:12px; }}
 section{{ background:var(--bg-elevated); border:1px solid var(--rule); border-radius:3px; margin:1.5rem 0; padding:22px 24px; box-shadow:var(--shadow); }}
+section .section-lede{{ color:var(--ink-muted); font-size:14px; max-width:72ch; margin:8px 0 18px; }}
+header.masthead .summary-grid{{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:24px 0 18px; }}
+.stat-tile{{ border:1px solid var(--rule); border-radius:3px; padding:13px 15px; background:var(--bg-sunken); }}
+.stat-number{{ font:600 25px var(--serif); }}
+.stat-label{{ color:var(--ink-muted); font:11px var(--mono); letter-spacing:.04em; text-transform:uppercase; margin-top:3px; }}
+.stat-tile.risk{{ border-top:4px solid var(--fail); }} .stat-tile.caution{{ border-top:4px solid #CDBB78; }}
+.stat-tile.safe{{ border-top:4px solid var(--ok); }} .stat-tile.neutral{{ border-top:4px solid var(--accent); }} .stat-tile.muted{{ border-top:4px solid var(--ink-faint); }}
+.coverage-hero{{ display:flex; align-items:baseline; gap:14px; padding:16px; background:var(--bg-sunken); border-left:5px solid var(--accent); border-radius:3px; }}
+.coverage-hero strong{{ font:600 27px var(--serif); }} .coverage-hero span{{ color:var(--ink-muted); font-size:13px; }}
 section h2{{ font-family:var(--serif); font-size:20px; font-weight:600; margin:0 0 14px; padding-bottom:10px; border-bottom:1px solid var(--rule); }}
 #findings h2{{ color:var(--accent); }}
 #discarded h2{{ color:#8A6A2E; }}
 #scope h2{{ color:var(--fail-ink); }}
 .finding,.discarded,.scope{{ border:1px solid var(--rule); border-radius:3px; padding:14px 18px; margin:14px 0; background:var(--bg); }}
+.finding-toolbar{{ display:flex; flex-wrap:wrap; gap:10px; align-items:end; padding:12px; margin:0 0 16px; background:var(--bg-sunken); border:1px solid var(--rule); border-radius:3px; }}
+.finding-toolbar label{{ display:flex; flex-direction:column; gap:4px; font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-muted); }}
+.finding-toolbar input,.finding-toolbar select{{ min-width:150px; padding:7px 9px; border:1px solid var(--rule-strong); border-radius:3px; background:var(--bg-elevated); color:var(--ink); font:13px var(--sans); text-transform:none; letter-spacing:normal; }}
+.finding-toolbar input:focus,.finding-toolbar select:focus{{ outline:2px solid var(--accent); outline-offset:1px; }}
+.filter-count{{ margin-left:auto; padding:8px 0; font-family:var(--mono); font-size:12px; color:var(--ink-muted); }}
+.finding.is-hidden{{ display:none; }}
+.severity-card-critical{{ border-left:6px solid #A8501C; }}
+.severity-card-high{{ border-left:6px solid #D89A70; }}
+.severity-card-medium{{ border-left:6px solid #CDBB78; }}
+.severity-card-low,.severity-card-info{{ border-left:6px solid #9BB8A2; }}
 .finding p,.discarded p,.scope p{{ margin:6px 0; font-size:14px; }}
 .badge{{ font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; background:var(--accent-soft); color:var(--accent); border:1px solid var(--rule-strong); padding:3px 9px; border-radius:11px; }}
 .severity-critical{{ background:#F6D7D5; color:#8E2420; border-color:#C76C67; }}
@@ -274,15 +328,15 @@ table.data-table td:first-child{{ font-family:var(--mono); font-size:12.5px; whi
 <div class=\"wrap\">
 <header class=\"masthead\">
   <h1>FORGE verification report</h1>
-  {('<section id="coverage"><h2>Coverage</h2><p>Files discovered: ' + _e(coverage.get('files_discovered')) + ' · analyzed: ' + _e(coverage.get('files_analyzed')) + ' · skipped: ' + _e(coverage.get('files_skipped')) + '</p><p>Skipped reasons: ' + _e(coverage.get('skipped_reasons', {})) + '</p></section>') if coverage else ''}
   <span class=\"seal-line {seal_class}\">{_e(seal_text)}</span>
+  <div class=\"summary-grid\">{summary_tiles_html}</div>
   {('<section id="agent-metrics"><h2>Agent metrics</h2><ul>' + metrics_html + '</ul></section>') if metrics else ''}
   <table class=\"data-table\">{info_table_html}</table>
 </header>
 
 <section id=\"objective\"><h2>Objective</h2>{objective_html}</section>
 
-<section id=\"findings\"><h2>FINDINGS</h2>{findings_html}</section>
+<section id=\"findings\"><h2>FINDINGS</h2>{filter_html}{findings_html}</section>
 <section id=\"discarded\"><h2>DISCARDED</h2><p>Generated hypotheses ruled out by the verification criteria are retained here with their reasons.</p>{discarded_html}</section>
 <section id=\"clean\"><h2>No structural risk indicators found</h2><p>Audited modules with zero surviving findings:</p><ul>{clean_html}</ul></section>
 <section id=\"scope\"><h2>NOT ANALYZED</h2><p>These triaged modules were not analyzed in this run because they were not classified as CONNECTED_ALIVE:</p>{scope_html}</section>
@@ -292,9 +346,34 @@ table.data-table td:first-child{{ font-family:var(--mono); font-size:12.5px; whi
 <section id=\"decision\"><h2>Decision</h2><p><strong>{_e(seal_text)}</strong></p><p>{limitations}</p><p><small>{_e(git_note)}</small></p></section>
 
 <section id=\"quality\"><h2>Quality metrics</h2><table class=\"data-table\">{quality_table_html}</table></section>
+{coverage_section_html}
 <section id=\"limitations\"><h2>Honest degradation and limitations</h2><ul>{degradation_html}</ul></section>
 
 <section id=\"chain-of-custody\"><h2>Chain of custody</h2><div class=\"chain-block\">entry_hash : {_e(last_hash)}\nchain_ok   : {_e(seal["ok"])}</div></section>
 </div>
+<script>
+(() => {{
+  const cards = [...document.querySelectorAll('.finding')];
+  const search = document.getElementById('finding-search');
+  const agent = document.getElementById('finding-agent');
+  const severity = document.getElementById('finding-severity');
+  const epistemic = document.getElementById('finding-epistemic');
+  const count = document.getElementById('finding-count');
+  const apply = () => {{
+    const query = (search.value || '').trim().toLowerCase();
+    let visible = 0;
+    cards.forEach(card => {{
+      const matches = (!agent.value || card.dataset.agent === agent.value)
+        && (!severity.value || card.dataset.severity === severity.value)
+        && (!epistemic.value || card.dataset.epistemic === epistemic.value)
+        && (!query || card.dataset.search.includes(query));
+      card.classList.toggle('is-hidden', !matches);
+      if (matches) visible += 1;
+    }});
+    count.textContent = `Showing ${{visible}} of ${{cards.length}}`;
+  }};
+  [search, agent, severity, epistemic].forEach(control => control.addEventListener('input', apply));
+}})();
+</script>
 </body></html>"""
     Path(destination).write_text(document, encoding="utf-8")
