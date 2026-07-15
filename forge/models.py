@@ -212,6 +212,7 @@ class Finding:
     reasoning: str
     agent: str = "bug_investigator"
     outcome: str = "OBSERVED"
+    severity: str = "MEDIUM"
     def __post_init__(self) -> None:
         if self.category not in {"OBSERVED", "INFERRED", "OPINION"}:
             raise ValueError("invalid finding category")
@@ -223,6 +224,8 @@ class Finding:
             )
         if self.outcome not in {"OBSERVED", "PROTOCOL_GAP", "DESIGN_INCONSISTENCY", "UNDETERMINED", "NOT_APPLICABLE"}:
             raise ValueError("invalid finding outcome")
+        if self.severity not in {"CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"}:
+            raise ValueError("invalid finding severity")
         if not self.evidence:
             raise ValueError("every finding requires evidence")
 
@@ -237,5 +240,6 @@ class VerificationManifest:
     discarded: tuple[dict[str, str], ...]
     ast_verified_families: tuple[str, ...] = ()
     ast_unverified_families: tuple[str, ...] = ()
+    induction: tuple[dict[str, str], ...] = ()
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

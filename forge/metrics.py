@@ -17,6 +17,7 @@ from typing import Any, Iterable
 
 from forge.models import ModuleClass
 from forge.canonical import canonical_json
+from forge.severity import finding_family
 
 
 def _ratio(covered: int, total: int) -> dict[str, int]:
@@ -125,6 +126,14 @@ def collect_metrics(*, root: Path, discovered: list[Path], triage: Any, coverage
     }
     evidence_metrics = {"evidence_items": sum(evidence.values()), "primary_evidence": evidence.get("source", 0), "secondary_evidence": sum(value for key, value in evidence.items() if key != "source"), "by_kind": dict(sorted(evidence.items())), "evidence_reused": None, "evidence_conflicts": None}
     finding_metrics = {"by_outcome": {key: outcomes.get(key, 0) for key in ("OBSERVED", "PROTOCOL_GAP", "DESIGN_INCONSISTENCY", "UNDETERMINED", "NOT_APPLICABLE")}, "discarded_hypotheses": len(discarded), "by_agent": dict(Counter(item.agent for item in findings)), "by_module": dict(Counter(item.module_path for item in findings))}
+    finding_metrics["by_severity"] = dict(Counter(getattr(item, "severity", "MEDIUM") for item in findings))
+    finding_metrics["by_family"] = dict(Counter(finding_family(item.description) for item in findings))
+    finding_metrics["by_epistemic_level"] = dict(Counter(item.epistemic_level for item in findings))
+    finding_metrics["induction"] = {
+        "confirmed": sum(item.epistemic_level == "CONFIRMED BY INDUCTION" for item in findings),
+        "undetermined": sum("induction was undetermined" in item.reasoning.lower() for item in findings),
+        "falsified": sum("induction falsified" in item.get("reason", "").lower() for item in discarded),
+    }
     finding_digest = hashlib.sha256(canonical_json([asdict(item) for item in findings]).encode("utf-8")).hexdigest()
     trace_metrics = {"runtime_events": len(trace.events), "events_hashed": len(trace.events), "events_verified": None, "artifacts_produced": None, "hash_chain_length": None, "chain_verification": None, "tampering_detected": None, "partial_trace": event_kinds.get("run_failed", 0) > 0}
     reproducibility = {"runtime_deterministic": None, "seed_used": None, "environment": {"python": sys.version.split()[0], "os": platform.platform()}, "forge_version": "0.1.0", "skill_versions": {item["name"]: item["version"] for item in skills}, "schema_versions": {"triage": triage.schema_version}, "artifact_hashes": None, "seal_verified": None}

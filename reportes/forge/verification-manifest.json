@@ -14,8 +14,9 @@
   ],
   "findings": [],
   "forge_version": "0.1.0",
-  "generated_at_epoch": 1784134373,
+  "generated_at_epoch": 1784135538,
   "hypotheses_schema_version": "1.0",
+  "induction": [],
   "root": "/home/labestiadevigia/forge",
   "schema_version": "2.0"
 }

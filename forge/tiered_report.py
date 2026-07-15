@@ -41,7 +41,7 @@ def _finding_html(finding: dict[str, Any], extended: bool) -> str:
     primary = evidence[0] if evidence else {}
     body = [
         f"<h3>{html.escape(str(finding.get('module_path', 'unknown')))}</h3>",
-        f"<p>Agent: {html.escape(str(finding.get('agent', 'bug_investigator')))} · Category: {html.escape(str(finding.get('category', '')))} · Outcome: {html.escape(str(finding.get('outcome', 'OBSERVED')))}</p>",
+        f"<p>Agent: {html.escape(str(finding.get('agent', 'bug_investigator')))} · Severity: {html.escape(str(finding.get('severity', 'MEDIUM')))} · Category: {html.escape(str(finding.get('category', '')))} · Outcome: {html.escape(str(finding.get('outcome', 'OBSERVED')))}</p>",
         f"<p>{html.escape(str(finding.get('description', '')))}</p>",
         f"<pre>{html.escape(str(primary.get('source', '')))}: {html.escape(str(primary.get('detail', '')))}</pre>",
     ]

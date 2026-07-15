@@ -71,6 +71,9 @@ def _candidates(module_path: str, source: tuple[str, ...], language: str) -> lis
         if not stripped or stripped.startswith("#"):
             continue
         if re.search(r"\b(subprocess\.(?:run|Popen|call|check_call|check_output)|os\.system)\s*\(", matching_stripped):
+            if re.search(r"\bshell\s*=\s*True\b", matching_stripped):
+                candidates.append((f"The subprocess call `{stripped}` at {module_path}:{number} enables shell=True, so command data may cross a shell interpretation boundary.", number, "Invoke the call with a harmless metacharacter fixture in the isolated harness; a named rejection without shell expansion falsifies the hypothesis."))
+                continue
             if not any("try:" in source[i] for i in range(max(0, number - 4), number)):
                 candidates.append((f"The dynamic command invocation `{stripped}` at {module_path}:{number} may pass attacker-controlled arguments without an enclosing failure boundary.", number, f"Invoke this call with a harmless invalid executable and a shell metacharacter fixture; an explicit exception path with no command execution falsifies the hypothesis."))
         if re.search(r"\b(?:json|yaml|toml)\.loads?\s*\(|\bparse\s*\(", matching_stripped):
@@ -90,7 +93,7 @@ def _candidates(module_path: str, source: tuple[str, ...], language: str) -> lis
 def generate_hypotheses(triage: TriageManifest) -> HypothesesManifest:
     hypotheses: list[Hypothesis] = []
     audited: list[str] = []
-    limitations: list[str] = ["Hypotheses are unverified candidates; module 3 must perform induction."]
+    limitations: list[str] = ["Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only."]
     root = Path(triage.root)
     for module in sorted(triage.modules, key=lambda m: (m.module_class != ModuleClass.CONNECTED_ALIVE, m.path)):
         if module.module_class is not ModuleClass.CONNECTED_ALIVE:

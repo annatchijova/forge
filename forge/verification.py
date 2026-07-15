@@ -4,6 +4,7 @@ import ast, json, time
 import re
 from pathlib import Path
 from forge.models import Evidence, Finding, HypothesesManifest, VerificationManifest
+from forge.induction import induce_hypothesis
 
 def _call_name(call: ast.Call) -> str:
     return ast.unparse(call.func)
@@ -79,8 +80,8 @@ def _float_benign(tree: ast.AST, line: int, source: str, function_name: str | No
     text = ast.unparse(node)
     return "Decimal(" in text or "Fraction(" in text
 
-def verify_hypotheses(manifest: HypothesesManifest) -> VerificationManifest:
-    findings, discarded = [], []
+def verify_hypotheses(manifest: HypothesesManifest, induce: bool = False) -> VerificationManifest:
+    findings, discarded, induction = [], [], []
     root = Path(manifest.root)
     verified = ("subprocess", "parser", "float comparison", "eval/exec")
     for h in manifest.hypotheses:
@@ -108,8 +109,20 @@ def verify_hypotheses(manifest: HypothesesManifest) -> VerificationManifest:
                 benign = _float_benign(tree, line, source, call_name); reason = "AST proves exact-type operands or explicit tolerance."
             if benign:
                 discarded.append({"module_path": h.module_path, "reason": reason}); continue
-        findings.append(Finding("INFERRED", "PLAUSIBLE HYPOTHESIS", h.module_path, h.description, evidence, "Observed construct matches; no induction was run, so level is capped at PLAUSIBLE HYPOTHESIS."))
-    return VerificationManifest("1.0", "0.1.0", manifest.schema_version, manifest.root, int(time.time()), tuple(findings), tuple(discarded), verified, ())
+        result = induce_hypothesis(manifest.root, h.module_path, line, h.description) if induce else None
+        if result is not None:
+            induction.append({"module_path": h.module_path, "line": str(line), **result.to_dict()})
+            if result.status == "FALSIFIED":
+                discarded.append({"module_path": h.module_path, "reason": f"Induction falsified hypothesis: {result.detail}", "evidence": result.evidence})
+                continue
+            if result.status == "CONFIRMED BY INDUCTION":
+                findings.append(Finding("INFERRED", result.status, h.module_path, h.description, evidence, f"{result.detail} Evidence: {result.evidence}"))
+                continue
+            reasoning = f"Observed construct matches; induction was undetermined: {result.detail}"
+        else:
+            reasoning = "Observed construct matches; no induction was run, so level is capped at PLAUSIBLE HYPOTHESIS."
+        findings.append(Finding("INFERRED", "PLAUSIBLE HYPOTHESIS", h.module_path, h.description, evidence, reasoning))
+    return VerificationManifest("1.0", "0.1.0", manifest.schema_version, manifest.root, int(time.time()), tuple(findings), tuple(discarded), verified, (), tuple(induction))
 
 def write_verification_manifest(manifest: VerificationManifest, destination: str | Path) -> None:
     Path(destination).write_text(json.dumps(manifest.to_dict(), sort_keys=True, indent=2) + "\n", encoding="utf-8")

@@ -25,13 +25,13 @@ def recommend(sealed_path: str | Path, metrics_path: str | Path | None = None) -
     """Generate bounded suggestions from a completed sealed artifact."""
     sealed = load_json(sealed_path, f"sealed manifest {sealed_path}")
     metrics = load_json(metrics_path, f"metrics artifact {metrics_path}") if metrics_path else {}
-    output: list[Recommendation] = []
-    counters: dict[str, int] = {}
+    grouped: dict[tuple[str, str, str], dict[str, object]] = {}
 
     def add(module: str, action: str, rationale: str, risk: str, basis: tuple[str, ...]) -> None:
-        key = re.sub(r"[^a-z0-9]+", "-", action.lower()).strip("-")
-        counters[key] = counters.get(key, 0) + 1
-        output.append(Recommendation(f"rec-{counters[key]}-{key}", module, action, rationale, risk, basis))
+        key = (action, rationale, risk)
+        item = grouped.setdefault(key, {"modules": set(), "basis": []})
+        item["modules"].add(module)
+        item["basis"].extend(basis)
 
     for entry in sealed.get("chain", []):
         finding = entry.get("finding", {})
@@ -76,4 +76,10 @@ def recommend(sealed_path: str | Path, metrics_path: str | Path | None = None) -
                 rationale = "The Integrity Inspector observed float construction near decision logic; domain intent must be established before changing arithmetic."
             add(module, action, rationale, "Changing numeric representation can alter thresholds and existing decisions.", (entry.get("hash", ""), "integrity_inspector", "decision-adjacent-float"))
 
+    output = []
+    for index, ((action, rationale, risk), item) in enumerate(sorted(grouped.items()), 1):
+        key = re.sub(r"[^a-z0-9]+", "-", action.lower()).strip("-")
+        modules = sorted(item["modules"])
+        module = modules[0] if len(modules) == 1 else f"{len(modules)} modules"
+        output.append(Recommendation(f"rec-{index}-{key}", module, action, rationale, risk, tuple(item["basis"])))
     return tuple(output)

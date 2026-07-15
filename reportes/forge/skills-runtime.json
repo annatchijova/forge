@@ -90,6 +90,9 @@
     "forge/hypotheses.py": {
       "validate-at-the-boundary": "UNDETERMINED"
     },
+    "forge/induction.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
     "forge/io.py": {
       "validate-at-the-boundary": "APPLICABLE"
     },
@@ -112,6 +115,9 @@
       "validate-at-the-boundary": "APPLICABLE"
     },
     "forge/sealing.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "forge/severity.py": {
       "validate-at-the-boundary": "UNDETERMINED"
     },
     "forge/skills/validate_at_the_boundary/contract.py": {
@@ -602,6 +608,24 @@
         {
           "detail": "input or parser boundary call",
           "kind": "source_pattern",
+          "source": "forge/induction.py"
+        }
+      ],
+      "module_path": "forge/induction.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
           "source": "forge/io.py"
         }
       ],
@@ -722,6 +746,18 @@
         }
       ],
       "module_path": "forge/sealing.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "forge/severity.py"
     },
     {
       "alternatives": [],

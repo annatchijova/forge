@@ -22,6 +22,7 @@
     "forge/harness/proposal.py",
     "forge/harness/validation.py",
     "forge/hypotheses.py",
+    "forge/induction.py",
     "forge/io.py",
     "forge/mcp_server.py",
     "forge/metrics.py",
@@ -30,13 +31,14 @@
     "forge/report.py",
     "forge/runtime.py",
     "forge/sealing.py",
+    "forge/severity.py",
     "forge/skills/validate_at_the_boundary/contract.py",
     "forge/tiered_report.py",
     "forge/tracing.py",
     "forge/verification.py"
   ],
   "forge_version": "0.1.0",
-  "generated_at_epoch": 1784134372,
+  "generated_at_epoch": 1784135537,
   "hypotheses": [
     {
       "description": "The parser call `manifest=json.loads(manifest_path.read_text(encoding=\"utf-8\"))` at forge/governance/runtime.py:54 has no nearby exception handling, so malformed input may escape as an opaque failure.",
@@ -49,7 +51,7 @@
     }
   ],
   "limitations": [
-    "Hypotheses are unverified candidates; module 3 must perform induction."
+    "Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only."
   ],
   "root": "/home/labestiadevigia/forge",
   "schema_version": "1.0",

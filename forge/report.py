@@ -103,7 +103,7 @@ def _finding_card(finding: dict[str, Any], hypotheses: list[dict[str, Any]], roo
     falsifier = hypothesis.get("falsification_test", "No originating hypothesis test was found in the supplied manifest.") if hypothesis else "No originating hypothesis test was found in the supplied manifest."
     return f"""<article class=\"finding\">
       <p><strong>Agent:</strong> {_e(finding.get('agent', 'bug_investigator'))}</p>
-      <div><span class=\"badge\">{_e(finding.get('epistemic_level', ''))}</span> <span class=\"ref\">{_e(source_ref)}</span></div>
+      <div><span class=\"badge severity-{_e(str(finding.get('severity', 'MEDIUM')).lower())}\">Severity: {_e(finding.get('severity', 'MEDIUM'))}</span> <span class=\"badge\">{_e(finding.get('epistemic_level', ''))}</span> <span class=\"ref\">{_e(source_ref)}</span></div>
       <p><strong>Description (inference):</strong> {_e(finding.get('description', ''))}</p>
       <p><strong>Source observation:</strong> <code>{_e(source.get('detail', ''))}</code></p>
       <p><strong>Reasoning:</strong> {_e(finding.get('reasoning', ''))}</p>
@@ -155,7 +155,9 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
     ]
     if coverage:
         ratio = coverage.get("coverage_ratio", {})
-        ratio_text = f"{ratio.get('numerator', 0)}/{ratio.get('denominator', 1)}"
+        numerator, denominator = ratio.get('numerator', 0), ratio.get('denominator', 1)
+        percent = (100 * numerator / denominator) if denominator else 0
+        ratio_text = f"{numerator}/{denominator} ({percent:.1f}%)"
         info_rows = [("Coverage", f"discovered={coverage.get('files_discovered', 0)}, analyzed={coverage.get('files_analyzed', 0)}, skipped={coverage.get('files_skipped', 0)}, ratio={ratio_text}"), *info_rows]
     # The detailed layered metrics are persisted as metrics.json. Keep the
     # HTML agent panel compact and route only the legacy per-agent accounting
@@ -193,6 +195,9 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
         ("AST-verified families", _e(families)),
         ("AST-unverified families", _e(ast_unverified)),
     ]
+    induction_records = manifest.get("induction", [])
+    if induction_records:
+        quality_rows.append(("Induction", _e(Counter(item.get("status", "UNDETERMINED") for item in induction_records))))
     quality_metrics = metrics.get("quality", {})
     contract_ratio = quality_metrics.get("contract_coverage", {})
     if contract_ratio:
@@ -200,6 +205,9 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
     finding_counts = metrics.get("findings", {}).get("by_agent", {})
     if finding_counts:
         quality_rows.append(("Findings by agent", _e(finding_counts)))
+    severity_counts = metrics.get("findings", {}).get("by_severity", {})
+    if severity_counts:
+        quality_rows.append(("Findings by severity", _e(severity_counts)))
     verification_metrics = metrics.get("agents", {}).get("verification", {})
     if verification_metrics:
         quality_rows.append(("Structural verification", _e({key: verification_metrics.get(key) for key in ("checks_passed", "checks_failed", "checks_unresolved") if key in verification_metrics})))
@@ -249,6 +257,10 @@ section h2{{ font-family:var(--serif); font-size:20px; font-weight:600; margin:0
 .finding,.discarded,.scope{{ border:1px solid var(--rule); border-radius:3px; padding:14px 18px; margin:14px 0; background:var(--bg); }}
 .finding p,.discarded p,.scope p{{ margin:6px 0; font-size:14px; }}
 .badge{{ font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; background:var(--accent-soft); color:var(--accent); border:1px solid var(--rule-strong); padding:3px 9px; border-radius:11px; }}
+.severity-critical{{ background:#F6D7D5; color:#8E2420; border-color:#C76C67; }}
+.severity-high{{ background:#F6E3D5; color:#7A3A14; border-color:#D89A70; }}
+.severity-medium{{ background:#F4EED8; color:#765D1C; border-color:#CDBB78; }}
+.severity-low,.severity-info{{ background:#E5EDE7; color:#356045; border-color:#9BB8A2; }}
 .ref{{ font-family:var(--mono); font-size:12.5px; color:var(--ink-muted); }}
 .finding code{{ display:block; white-space:pre-wrap; background:var(--bg-sunken); padding:.6rem; border-radius:3px; font-size:13px; margin-top:4px; }}
 small{{ color:var(--ink-faint); }}
