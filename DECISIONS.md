@@ -32,3 +32,8 @@ Before implementation, every file in `skills-gpt/` was read. The design follows 
 ## Safety and provenance
 
 FORGE remains read-only against audited repositories. Manifests carry schema versions and module-path references so triage and hypotheses can be cross-checked. Hypotheses are not findings and must not be rendered as confirmed conclusions.
+
+## Module 2 limitations (intentional scope boundaries)
+
+1. Pattern matching is line-based regex, not AST. It misses import aliases, multi-line calls, and indirection through wrapper functions. This is deliberate for fast candidate generation, not an oversight.
+2. The safe-context check (`try:` within N lines above) is a proximity heuristic, not a scope-accurate check. A nearby `try` can wrap unrelated code and create false negatives. Module 3 must not trust this heuristic; it independently re-verifies enclosure via AST parent-node inspection before downgrading or dismissing a hypothesis.

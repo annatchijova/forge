@@ -3,17 +3,22 @@ import argparse
 from pathlib import Path
 from forge.detector.stack import triage, write_manifest
 from forge.hypotheses import generate_hypotheses, write_hypotheses_manifest
+from forge.verification import verify_hypotheses, write_verification_manifest
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="FORGE module 1: stack detector and triage")
     parser.add_argument("repo", type=Path)
     parser.add_argument("-o", "--output", type=Path, default=Path("triage-manifest.json"))
     parser.add_argument("--hypotheses", type=Path, help="also write the module 2 hypotheses manifest")
+    parser.add_argument("--verify", type=Path, help="also write the module 3 verification manifest")
     args = parser.parse_args()
     manifest = triage(args.repo)
     write_manifest(manifest, args.output)
     if args.hypotheses:
-        write_hypotheses_manifest(generate_hypotheses(manifest), args.hypotheses)
+        hypotheses = generate_hypotheses(manifest)
+        write_hypotheses_manifest(hypotheses, args.hypotheses)
+        if args.verify:
+            write_verification_manifest(verify_hypotheses(hypotheses), args.verify)
     print(args.output)
     return 0
 

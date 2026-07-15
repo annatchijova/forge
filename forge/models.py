@@ -91,3 +91,29 @@ class HypothesesManifest:
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
+
+@dataclass(frozen=True)
+class Finding:
+    category: str
+    epistemic_level: str
+    module_path: str
+    description: str
+    evidence: tuple[Evidence, ...]
+    reasoning: str
+    def __post_init__(self) -> None:
+        if self.category not in {"OBSERVED", "INFERRED", "OPINION"}:
+            raise ValueError("invalid finding category")
+        if not self.evidence:
+            raise ValueError("every finding requires evidence")
+
+@dataclass(frozen=True)
+class VerificationManifest:
+    schema_version: str
+    forge_version: str
+    hypotheses_schema_version: str
+    root: str
+    generated_at_epoch: int
+    findings: tuple[Finding, ...]
+    discarded: tuple[dict[str, str], ...]
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
