@@ -175,6 +175,19 @@ held-in fixtures plus the existing pytest suite as held-out regression. It is
 not the full paper implementation: there is no stochastic evaluation, task
 generation, external model-under-test, or LLM proposer.
 
+## Executable governance skills
+
+FORGE treats skills as versioned governance plugins, not global rules or passive
+documentation. The stable runtime discovers `forge/skills/*/manifest.json`,
+loads the declared `contract.py`, formulates evidence-backed and non-exclusive
+domain hypotheses per module, and invokes only skills whose applicability is
+`APPLICABLE`. A plugin supplies its own obligations, checks, evidence needs, and
+limitations through `SkillContract`; adding a plugin does not require an
+orchestrator or detector-core change. `validate-at-the-boundary` is the first
+reference implementation. Complete module-level applicability and domain
+hypotheses are retained in `skills-runtime.json`; the HTML report renders only
+aggregates at scale.
+
 ## Agent scope strategy
 
 Archaeologist classifies every discovered file. Bug Investigator examines only

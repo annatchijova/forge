@@ -6,6 +6,7 @@ import os
 import re
 import subprocess
 import time
+from fractions import Fraction
 from collections import Counter
 from pathlib import Path
 from typing import Iterable
@@ -51,10 +52,10 @@ def detect_stack(root: Path) -> tuple[StackFingerprint, ...]:
         manifests = [p.name for p in files if p.name in MANIFESTS and MANIFESTS[p.name] == lang]
         if manifests:
             ev.append(_evidence("manifest", "filesystem", ", ".join(sorted(set(manifests))) + " present"))
-        confidence = min(0.99, 0.55 * (count / max(total_code, 1)) + (0.4 if manifests else 0.0))
-        out.append(StackFingerprint(name=lang, confidence=round(confidence, 3), evidence=tuple(ev)))
+        confidence = min(Fraction(99, 100), Fraction(55, 100) * Fraction(count, max(total_code, 1)) + (Fraction(40, 100) if manifests else Fraction(0, 1)))
+        out.append(StackFingerprint(name=lang, confidence=confidence, evidence=tuple(ev)))
     for marker in sorted(set(p.as_posix().split("/", 1)[-1] if p.is_file() else p.as_posix() for p in files for _ in [0] if any(c in p.as_posix() for c in CI_MARKERS))):
-        out.append(StackFingerprint(name="CI", confidence=0.99, evidence=(_evidence("config", "filesystem", marker + " present"),)))
+        out.append(StackFingerprint(name="CI", confidence=Fraction(99, 100), evidence=(_evidence("config", "filesystem", marker + " present"),)))
     return tuple(out)
 
 

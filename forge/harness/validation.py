@@ -12,5 +12,8 @@ def validate_many(proposals, measurements):
 
 def run_held_out_suite(repo_root="."):
     """Run FORGE's actual regression suite and return its test count/status."""
-    result = subprocess.run(["pytest", "-q"], cwd=repo_root, text=True, capture_output=True, check=False)
-    return {"passed": result.returncode == 0, "output": result.stdout + result.stderr}
+    try:
+        result = subprocess.run(["pytest", "-q"], cwd=repo_root, text=True, capture_output=True, check=False, timeout=120)
+        return {"passed": result.returncode == 0, "output": result.stdout + result.stderr}
+    except subprocess.TimeoutExpired as exc:
+        return {"passed": False, "timed_out": True, "output": "held-out pytest suite timed out after 120 seconds; validation did not complete."}

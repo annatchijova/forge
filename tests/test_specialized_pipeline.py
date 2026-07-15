@@ -21,6 +21,7 @@ def test_specialized_pipeline_merges_seals_and_attributes_all_agents(tmp_path):
     report = (tmp_path / "out/forge-report.html").read_text()
     assert "Coverage" in report and "security_auditor" in report and "integrity_inspector" in report
     assert result["coverage"]["coverage_ratio"] == {"numerator": 1, "denominator": 1}
+    assert (tmp_path / "out/skills-runtime.json").is_file()
 
 def test_coverage_surfaces_policy_exclusions(tmp_path):
     put(tmp_path, "main.py", "x = 1\n")

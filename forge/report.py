@@ -34,8 +34,10 @@ def _blame(root: str, module_path: str, line: int) -> str | None:
     try:
         raw = subprocess.check_output(
             ["git", "-C", root, "blame", "--line-porcelain", "-L", f"{line},{line}", "--", module_path],
-            stderr=subprocess.DEVNULL, text=True,
+            stderr=subprocess.DEVNULL, text=True, timeout=30,
         )
+    except subprocess.TimeoutExpired:
+        return "Git blame timed out after 30 seconds; report continues with source evidence only."
     except (OSError, subprocess.SubprocessError):
         return None
     fields = {}

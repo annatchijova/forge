@@ -1,0 +1,7 @@
+{
+  "name": "validate-at-the-boundary",
+  "version": "1.0",
+  "entrypoint": "contract.py",
+  "class_name": "ValidateAtBoundarySkill",
+  "skill_document": "skills-gpt/validate-at-the-boundary.md"
+}

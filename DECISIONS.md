@@ -124,6 +124,25 @@ mines signatures from sealed runs, proposes only predefined edits, and uses the
 real regression suite as held-out validation. The name does not imply the
 paper's full stochastic, LLM-proposer implementation.
 
+### Hypothesis candidate cap
+
+`hypotheses._candidates()` intentionally surfaces only `candidates[:5]` per
+module. A module that triggers more than five distinct risk patterns therefore
+has later candidates silently omitted; this cap is currently not surfaced in
+the user report. It is a known completeness limitation, not evidence that the
+omitted patterns were absent.
+
+## Executable skill runtime boundary
+
+Skills are executable, versioned contracts loaded from local plugin manifests.
+FORGE's core owns discovery, read-only context, applicability recording, typed
+evidence, sealing, and reporting; a skill owns its domain-specific methodology.
+Domain classification is an evidence-backed hypothesis per module, not a
+repository-wide fact, and `UNDETERMINED` is retained when evidence cannot
+justify applicability. Only the `validate-at-the-boundary` skill is currently
+migrated as a complete reference contract; the remaining markdown skills are
+not yet executable plugins and must not be represented as active checks.
+
 ### Self-harness mining coverage limitation
 
 Self-harness weakness mining currently observes only

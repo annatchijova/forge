@@ -14,12 +14,42 @@ class ModuleClass(str, Enum):
     FOSSIL_LOW_RISK = "FOSSIL_LOW_RISK"
     DUPLICATE = "DUPLICATE"
 
+class Applicability(str, Enum):
+    APPLICABLE = "APPLICABLE"
+    NOT_APPLICABLE = "NOT_APPLICABLE"
+    UNDETERMINED = "UNDETERMINED"
+
 
 @dataclass(frozen=True)
 class Evidence:
     kind: str
     source: str
     detail: str
+
+@dataclass(frozen=True)
+class ModuleDomainHypothesis:
+    """Evidence-backed, non-exclusive hypothesis about one module's domain."""
+    module_path: str
+    domains: tuple[str, ...]
+    confidence: Fraction
+    evidence: tuple[Evidence, ...]
+    alternatives: tuple[str, ...] = ()
+
+@dataclass(frozen=True)
+class SkillContract:
+    name: str
+    version: str
+    obligations: tuple[str, ...]
+    checks: tuple[str, ...]
+    evidence_required: tuple[str, ...]
+    limitations: tuple[str, ...]
+
+@dataclass(frozen=True)
+class EvaluationContext:
+    root: str
+    module: "ModuleRecord"
+    source: str
+    domain_hypothesis: ModuleDomainHypothesis
 
 @dataclass(frozen=True)
 class CoverageReport:
@@ -67,7 +97,7 @@ class ModuleRecord:
 @dataclass(frozen=True)
 class StackFingerprint:
     name: str
-    confidence: float
+    confidence: Fraction
     evidence: tuple[Evidence, ...]
 
 
@@ -84,7 +114,12 @@ class TriageManifest:
     deletion_judgments: dict[str, str] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        data = asdict(self)
+        for stack in data.get("stacks", []):
+            value = stack.get("confidence")
+            if isinstance(value, Fraction):
+                stack["confidence"] = {"numerator": value.numerator, "denominator": value.denominator}
+        return data
 
 
 @dataclass(frozen=True)
@@ -133,6 +168,7 @@ class Finding:
     evidence: tuple[Evidence, ...]
     reasoning: str
     agent: str = "bug_investigator"
+    outcome: str = "OBSERVED"
     def __post_init__(self) -> None:
         if self.category not in {"OBSERVED", "INFERRED", "OPINION"}:
             raise ValueError("invalid finding category")

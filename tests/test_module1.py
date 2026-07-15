@@ -1,5 +1,6 @@
 from pathlib import Path
-from forge.detector.stack import triage
+from fractions import Fraction
+from forge.detector.stack import triage, detect_stack
 from forge.models import ModuleClass
 from forge.hypotheses import generate_hypotheses
 
@@ -57,3 +58,12 @@ def test_float_pattern_ignores_inline_comment(tmp_path: Path):
     (tmp_path / "main.py").write_text('from enum import Enum\nclass Level(Enum):\n    SILENT = "SILENT"      # score < 0.2 — memory update only\n')
     generated = generate_hypotheses(triage(tmp_path))
     assert generated.hypotheses == ()
+
+def test_stack_confidence_float_baseline_is_reproducible(tmp_path: Path):
+    (tmp_path / "a.py").write_text("x = 1\n")
+    (tmp_path / "b.py").write_text("x = 2\n")
+    first = detect_stack(tmp_path)
+    second = detect_stack(tmp_path)
+    assert [item.confidence for item in first] == [item.confidence for item in second]
+    assert first == second
+    assert all(isinstance(item.confidence, Fraction) for item in first)
