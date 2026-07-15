@@ -42,6 +42,10 @@ def test_audit_result_reports_discarded_count(tmp_path):
     result = Runtime().audit(tmp_path, tmp_path / "out").to_dict()
     assert "discarded" in result, "AuditResult.to_dict() dropped the discarded count present in the pre-refactor API"
     assert result["discarded"] == 1
+    assert result["artifacts"]["profile"].endswith("repository-profile.json")
+    assert result["artifacts"]["markdown"].endswith("report.md")
+    assert (tmp_path / "out" / "repository-profile.json").exists()
+    assert "# FORGE audit report" in (tmp_path / "out" / "report.md").read_text()
 
 def test_audit_survives_a_malformed_skill_manifest(tmp_path):
     skills_root = tmp_path / "skills"

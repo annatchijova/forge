@@ -67,7 +67,7 @@ def inspect(root: str | os.PathLike[str]) -> tuple[IntegrityFinding, ...]:
             if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr in {"dump", "dumps"} and isinstance(n.func.value, ast.Name) and n.func.value.id in {"json","pickle"}:
                 if (rel in _NON_ARTIFACT_SERIALIZATION_MODULES or _enclosing_function(n, parents) == "_event"
                         or _is_internal_serialization(n, parents) or _serialization_has_version(n)
-                        or (isinstance(n.args[0], ast.Name) and n.args[0].id in {"metrics", "coverage", "governance", "trace"})):
+                        or (isinstance(n.args[0], ast.Name) and n.args[0].id in {"metrics", "coverage", "governance", "trace", "profile"})):
                     continue
                 out.append(IntegrityFinding("unversioned-serialization", rel, n.lineno, "unversioned serialization"))
         examinations[rel]="examined_with_findings" if any(x.path == rel for x in out) else "examined_clean"

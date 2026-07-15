@@ -6,6 +6,7 @@ from forge.sealing import read_and_verify
 from forge.tiered_report import MODES, render_tiered_report
 from forge.runtime import Runtime
 from forge.models import ModelRouting
+from forge.benchmark import run_benchmark
 
 def main() -> int:
     import sys
@@ -37,6 +38,14 @@ def main() -> int:
         report_parser.add_argument("-o", "--output", type=Path)
         report_args = report_parser.parse_args(sys.argv[2:])
         print(render_tiered_report(report_args.sealed, report_args.mode, report_args.output))
+        return 0
+    if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
+        benchmark_parser = argparse.ArgumentParser(description="Run bounded FORGE audits over a local corpus")
+        benchmark_parser.add_argument("corpus", type=Path)
+        benchmark_parser.add_argument("-o", "--output-dir", type=Path, default=Path("benchmark-run"))
+        benchmark_parser.add_argument("--max-connected", type=int, default=100)
+        benchmark_args = benchmark_parser.parse_args(sys.argv[2:])
+        print(json.dumps(run_benchmark(benchmark_args.corpus, benchmark_args.output_dir, benchmark_args.max_connected), indent=2, sort_keys=True))
         return 0
     parser = argparse.ArgumentParser(description="FORGE module 1: stack detector and triage")
     parser.add_argument("repo", type=Path, nargs="?", help="repository root (required except with --verify-seal)")

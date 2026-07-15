@@ -15,6 +15,7 @@ from typing import Any, Callable
 
 from forge.agents import archaeologist, bug_investigator, integrity_inspector, report_composer, security_auditor
 from forge.detector.stack import SKIP_DIRS, discover_files, write_manifest
+from forge.evidence_package import build_repository_profile, write_markdown_report, write_repository_profile
 from forge.governance.runtime import infer_domains, load_skills, run_skills
 from forge.hypotheses import generate_hypotheses, write_hypotheses_manifest
 from forge.io import load_json
@@ -184,6 +185,7 @@ class Runtime:
         triage_path, hypotheses_path = out / "triage-manifest.json", out / "hypotheses-manifest.json"
         verification_path, sealed_path, coverage_path = out / "verification-manifest.json", out / "verification-manifest.sealed.json", out / "coverage-report.json"
         skills_path, metrics_path, report_path = out / "skills-runtime.json", out / "metrics.json", out / "forge-report.html"
+        profile_path, markdown_path = out / "repository-profile.json", out / "report.md"
         write_manifest(triage_manifest, triage_path); write_hypotheses_manifest(bug.manifest, hypotheses_path)
         write_verification_manifest(verification, verification_path)
         coverage_path.write_text(json.dumps(coverage.to_dict(), indent=2, sort_keys=True) + "\n")
@@ -204,8 +206,10 @@ class Runtime:
         metrics = collect_metrics(root=root, discovered=discovered, triage=triage_manifest, coverage=coverage, governance=governance, findings=findings, discarded=verification.discarded, trace=trace, skills=self.list_available_skills(), hypothesis_limitations=bug.manifest.limitations)
         metrics["agent_metrics"] = agent_metrics
         metrics_path.write_text(json.dumps(metrics, indent=2, sort_keys=True) + "\n")
+        profile = build_repository_profile(root=str(root), triage=triage_manifest, governance=governance, coverage=coverage, metrics=metrics, findings=findings, elapsed_seconds=time.monotonic() - started)
+        write_repository_profile(profile, profile_path)
         self._event(trace, cronos, "metrics_computed", metrics=metrics)
-        for name, path in (("triage", triage_path), ("hypotheses", hypotheses_path), ("verification", verification_path), ("coverage", coverage_path), ("skills", skills_path), ("metrics", metrics_path)):
+        for name, path in (("triage", triage_path), ("hypotheses", hypotheses_path), ("verification", verification_path), ("coverage", coverage_path), ("skills", skills_path), ("metrics", metrics_path), ("profile", profile_path)):
             self._event(trace, cronos, "artifact_written", artifact=name, path=str(path))
         self._event(trace, cronos, "artifact_written", artifact="report", path=str(report_path))
         self._event(trace, cronos, "seal_created", artifact="sealed", findings=len(findings))
@@ -214,7 +218,8 @@ class Runtime:
         trace_path.write_text(json.dumps(trace.to_dict(), indent=2, sort_keys=True) + "\n")
         write_sealed_manifest(verification, sealed_path, trace.to_dict())
         report_composer.compose(triage_path, hypotheses_path, sealed_path, report_path, coverage_path, metrics)
-        artifacts = {"triage": str(triage_path), "hypotheses": str(hypotheses_path), "verification": str(verification_path), "sealed": str(sealed_path), "coverage": str(coverage_path), "skills": str(skills_path), "metrics": str(metrics_path), "trace": str(trace_path), "report": str(report_path)}
+        write_markdown_report(sealed=load_json(sealed_path, f"sealed manifest {sealed_path}"), metrics=metrics, profile=profile, destination=markdown_path)
+        artifacts = {"triage": str(triage_path), "hypotheses": str(hypotheses_path), "verification": str(verification_path), "sealed": str(sealed_path), "coverage": str(coverage_path), "skills": str(skills_path), "metrics": str(metrics_path), "profile": str(profile_path), "report": str(report_path), "markdown": str(markdown_path), "trace": str(trace_path)}
         if self.cronos_db is not None:
             artifacts["cronos_db"] = str(self.cronos_db)
         return AuditResult(str(root), connected, len(findings), len(verification.discarded), tuple(findings), coverage.to_dict(), artifacts)

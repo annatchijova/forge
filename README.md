@@ -208,6 +208,26 @@ The fully automated CLI is:
 python3 -m forge audit /path/to/repository -o forge-run --max-connected 100
 ```
 
+Every audit produces an evidence package in the output directory:
+`forge-report.html` (interactive), `report.md`, `repository-profile.json`,
+`metrics.json`, `audit-trace.json`, `coverage-report.json`, and the sealed
+verification manifest. JSON artifacts are the machine-readable source; HTML
+and Markdown are presentation layers over those artifacts.
+
+### Reproducible benchmark corpus
+
+Place local repositories under a corpus directory and run:
+
+```bash
+python3 -m forge benchmark benchmarks/ -o benchmark-run/ --max-connected 100
+```
+
+FORGE audits each detected repository through the same `Runtime`, then writes
+`benchmark.json` and `benchmark.html` with findings, discarded hypotheses,
+coverage percentage, elapsed time, connected modules, and status. It does not
+modify corpus repositories. The corpus can contain deterministic, parser,
+web, ML, crypto, and legacy fixtures without special cases in the engine.
+
 MCP exposes the same runtime through triage, domain inference, skill
 listing/execution, audit, sealing, verification, and report tools.
 `run_pipeline()` and `run_specialized_pipeline()` remain compatibility wrappers
@@ -237,6 +257,32 @@ An MCP transport is now available in `forge/mcp_server.py`. It exposes
 `audit_repository`, `get_coverage`, `get_findings`, `verify_seal`, and the
 standalone `review_patch` tool. It changes **how** FORGE is invoked, not
 **how** FORGE reasons.
+
+### Hackathon build notes
+
+FORGE is submitted in the **Developer Tools** track. The project was extended
+with Codex using GPT-5.6, with product decisions centered on reproducibility,
+evidence provenance, bounded execution, and judge-friendly outputs:
+
+* Codex accelerated repository archaeology, test-driven hardening, report UX,
+  and the benchmark/evidence-package workflow.
+* GPT-5.6 was used as the implementation and review partner; deterministic
+  detectors remain in the runtime, so model routing is recorded honestly and
+  is never presented as evidence of a model call.
+* The project separates observed findings, discarded hypotheses, optional
+  recommendations, and applied code changes.
+
+Before submission, provide the actual Codex `/feedback` Session ID for the
+build thread in the submission form. FORGE does not fabricate or hard-code
+that external identifier.
+
+### Codex build-session evidence
+
+Known Codex sessions used during the build:
+
+* `019f65d2-230f-71d2-ab70-e8195fb8fae0`
+* `019f6693-c5fa-75e1-bc61-3c7af5ab6cc0`
+* _Three additional session IDs pending retrieval from screenshots._
 
 ### Running the MCP server
 
