@@ -69,3 +69,17 @@ These are structural proof obligations, not heuristics:
 4. **Subprocess.** A subprocess call is benign only when its `ast.Call` has a real `ast.Try` ancestor with an explicit subprocess-related handler (`subprocess.SubprocessError`, `OSError`, or a named equivalent). A generic catch does not establish a safe boundary.
 
 `VerificationManifest` must report these four families as `AST-verified`; any family without an implemented structural checker is explicitly `unverified — falls through to PLAUSIBLE HYPOTHESIS without structural check`.
+
+## Shared skills and future orchestration
+
+The repository vendors the 20 shared policy documents from `skills-gpt/` under
+`skills-gpt/`. They are the common context for future specialized agents and an
+orchestrator. The current implementation does not claim that the orchestrator
+or MCP exists yet.
+
+The operating model follows the Peircean triad: abduction proposes candidate
+explanations, deduction derives falsifiable consequences, and induction earns
+bounded claims from repeated observations. This applies beyond simple static
+code: repositories using floating point or ML must expose numerical precision,
+model uncertainty, data provenance, boundary tests, and degradation behavior
+rather than being forced into an inappropriate binary safety story.
