@@ -25,6 +25,13 @@ def _error(code: str, message: str, **extra: Any) -> dict[str, Any]:
 
 @mcp.tool()
 def audit_repository(path: str, max_connected: int = 100, output_dir: str | None = None) -> dict[str, Any]:
+    """Run the full FORGE governance pipeline against a repository and seal the findings.
+
+    Writes triage, hypotheses, verification, sealed, and coverage artifacts plus an
+    HTML report to a temporary directory (or `output_dir` if given). Refuses to run
+    past triage if the repository has more than `max_connected` CONNECTED_ALIVE
+    modules. Never modifies the audited repository.
+    """
     root = Path(path).expanduser()
     if not root.exists(): return _error("not_found", f"repository path does not exist: {path}")
     if not root.is_dir(): return _error("not_directory", f"repository path is not a directory: {path}")
@@ -43,6 +50,12 @@ def audit_repository(path: str, max_connected: int = 100, output_dir: str | None
 
 @mcp.tool()
 def get_coverage(run_output_dir: str) -> dict[str, Any]:
+    """Read the coverage-report.json artifact from a prior audit_repository() run.
+
+    Reports files_discovered/analyzed/skipped and the exact reason each skipped
+    file was excluded, so the arithmetic can be checked (discovered == analyzed
+    + sum of skipped_reasons).
+    """
     path = Path(run_output_dir) / "coverage-report.json"
     try:
         if not path.is_file(): return _error("missing_artifact", f"coverage artifact not found: {path}")
@@ -52,6 +65,12 @@ def get_coverage(run_output_dir: str) -> dict[str, Any]:
 
 @mcp.tool()
 def get_findings(run_output_dir: str, agent: str | None = None) -> list | dict:
+    """List findings from a prior audit_repository() run's sealed manifest.
+
+    Optionally filter to one agent ("bug_investigator", "security_auditor", or
+    "integrity_inspector"). Each finding carries category, epistemic_level,
+    module_path, description, evidence, and reasoning.
+    """
     path = Path(run_output_dir) / "verification-manifest.sealed.json"
     allowed = {"bug_investigator", "security_auditor", "integrity_inspector"}
     if agent is not None and agent not in allowed: return _error("invalid_agent", f"unsupported agent filter: {agent}")
@@ -64,6 +83,12 @@ def get_findings(run_output_dir: str, agent: str | None = None) -> list | dict:
 
 @mcp.tool()
 def verify_seal(sealed_path: str) -> dict[str, Any]:
+    """Verify a sealed verification manifest's SHA-256 hash chain for tampering.
+
+    Confirms findings were not altered after sealing; it does not confirm the
+    findings themselves are correct, and it is not a defense against a full
+    cascade forgery (see DECISIONS.md).
+    """
     try:
         return runtime.verify_findings(sealed_path)
     except FileNotFoundError: return _error("not_found", f"sealed manifest not found: {sealed_path}")
@@ -71,6 +96,12 @@ def verify_seal(sealed_path: str) -> dict[str, Any]:
 
 @mcp.tool()
 def triage_repository(path: str) -> dict[str, Any]:
+    """Classify every module in a repository without running hypotheses or findings.
+
+    Returns the TriageManifest: each module's language, module_class
+    (CONNECTED_ALIVE / FOSSIL_HIGH_RISK / FOSSIL_LOW_RISK / DEAD_WEIGHT / DUPLICATE),
+    caller/import counts, and detected stacks. Read-only, no artifacts written.
+    """
     root = Path(path).expanduser()
     if not root.is_dir(): return _error("invalid_repository", f"repository path is not a directory: {path}")
     try:
@@ -80,6 +111,12 @@ def triage_repository(path: str) -> dict[str, Any]:
 
 @mcp.tool()
 def infer_module_domains(path: str) -> dict[str, Any]:
+    """Guess each module's domain (machine_learning, input_boundary, cryptographic) from source patterns.
+
+    Evidence-backed hypotheses per module, not repository-wide facts; a module
+    with no matching pattern gets zero confidence rather than a forced guess.
+    Used internally to decide which governance skills apply to which module.
+    """
     root = Path(path).expanduser()
     if not root.is_dir(): return _error("invalid_repository", f"repository path is not a directory: {path}")
     try:
@@ -89,11 +126,18 @@ def infer_module_domains(path: str) -> dict[str, Any]:
 
 @mcp.tool()
 def list_available_skills() -> dict[str, Any]:
+    """List the governance skill plugins loaded from forge/skills/, with their contracts."""
     try: return {"ok": True, "skills": list(runtime.list_available_skills())}
     except (OSError, ValueError, json.JSONDecodeError) as exc: return _error("skill_loading_failed", str(exc))
 
 @mcp.tool()
 def run_skill(path: str, skill: str | None = None) -> dict[str, Any]:
+    """Run one governance skill (or all loaded skills if `skill` is omitted) against a repository.
+
+    A failing skill is isolated: it is recorded as "ERROR" in the per-module
+    applicability map with a limitation note, and does not stop other skills
+    or other modules from being evaluated.
+    """
     root = Path(path).expanduser()
     if not root.is_dir(): return _error("invalid_repository", f"repository path is not a directory: {path}")
     try: return {"ok": True, **runtime.run_skill(root, skill).to_dict()}
@@ -101,6 +145,10 @@ def run_skill(path: str, skill: str | None = None) -> dict[str, Any]:
 
 @mcp.tool()
 def repository_summary(path: str) -> dict[str, Any]:
+    """Get a quick, cheap overview of a repository (module counts by class, detected stacks).
+
+    Lighter-weight than audit_repository(): no hypotheses, findings, or sealing.
+    """
     root = Path(path).expanduser()
     if not root.is_dir(): return _error("invalid_repository", f"repository path is not a directory: {path}")
     try: return {"ok": True, **runtime.repository_summary(root)}
@@ -108,16 +156,31 @@ def repository_summary(path: str) -> dict[str, Any]:
 
 @mcp.tool()
 def generate_report(sealed_path: str, mode: str = "standard", output: str | None = None) -> dict[str, Any]:
+    """Render a self-contained HTML forensic report from a sealed verification manifest.
+
+    `mode` selects the report tier (e.g. "standard" or "summary"); `output`
+    defaults to a path next to `sealed_path` if not given.
+    """
     try: return {"ok": True, "path": str(runtime.generate_report(sealed_path, mode, output))}
     except (OSError, ValueError, json.JSONDecodeError) as exc: return _error("report_failed", str(exc))
 
 @mcp.tool()
 def seal_results(verification_path: str, output: str | None = None) -> dict[str, Any]:
+    """Seal an existing verification manifest into a SHA-256 tamper-evident hash chain.
+
+    `output` defaults to a path next to `verification_path` if not given.
+    """
     try: return {"ok": True, "path": str(runtime.seal_results(verification_path, output))}
     except (OSError, ValueError, KeyError, json.JSONDecodeError) as exc: return _error("seal_failed", str(exc))
 
 @mcp.tool()
 def review_patch(unified_diff: str, intent: str, before: str = "", after: str = "") -> dict[str, Any]:
+    """Review a single unified diff against a stated intent (not a repository scan).
+
+    Reports changed_lines, which functions/classes were touched, the ratio of
+    changed lines to touched-scope size (as an exact fraction), and flags when
+    the change falls outside any function/class or doesn't match the stated intent.
+    """
     try:
         result = asdict(review_patch_impl(unified_diff, intent, before, after))
         result["ratio"] = {"numerator": result["ratio"].numerator, "denominator": result["ratio"].denominator}
