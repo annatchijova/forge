@@ -128,7 +128,7 @@ def triage(root: str | os.PathLike[str]) -> TriageManifest:
         records.append(ModuleRecord(rel, LANG_EXT[p.suffix.lower()], cls, epoch, caller_count, import_count, keywords, tuple(ev)))
     summary = Counter(r.module_class.value for r in records)
     limitations = [] if git_ok else ["Git history unavailable; temporal classification is conservative."]
-    return TriageManifest("1.0", "0.1.0", str(base), now, detect_stack(base), tuple(sorted(records, key=lambda r: r.path)), dict(summary), tuple(limitations))
+    return TriageManifest("1.1", "0.1.0", str(base), now, detect_stack(base), tuple(sorted(records, key=lambda r: r.path)), dict(summary), tuple(limitations))
 
 
 def write_manifest(manifest: TriageManifest, destination: str | os.PathLike[str]) -> None:

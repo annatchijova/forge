@@ -72,6 +72,22 @@ These are structural proof obligations, not heuristics:
 
 ## Shared skills and future orchestration
 
+## TriageManifest schema_version bump (1.0 -> 1.1)
+
+The Archaeologist agent adds `deletion_judgments: dict[str, str]` to
+`TriageManifest`, with `default_factory=dict`. No loader in this codebase
+reconstructs a `TriageManifest` from a persisted JSON file today — the only
+disk consumer (`forge/report.py`) reads triage manifests as plain `dict` via
+`.get(...)`, so the new field is safe for anything reading old triage.json
+output. `schema_version` is bumped from `"1.0"` to `"1.1"` anyway
+(`forge/detector/stack.py`) because the value is not decorative in this
+pipeline: `forge/hypotheses.py` and `forge/verification.py` already chain it
+forward as `triage_schema_version` / `hypotheses_schema_version` to mark
+cross-stage compatibility. Bumping it now, before the Prompt 2 orchestrator
+introduces real cross-agent manifest persistence, keeps that chain honest per
+the same `versioned-schema-evolution` discipline the Integrity Inspector
+enforces on other code.
+
 The repository vendors the 20 shared policy documents from `skills-gpt/` under
 `skills-gpt/`. They are the common context for future specialized agents and an
 orchestrator. The current implementation does not claim that the orchestrator
