@@ -6,6 +6,7 @@ from forge.detector.stack import triage, write_manifest
 from forge.hypotheses import generate_hypotheses, write_hypotheses_manifest
 from forge.verification import verify_hypotheses, write_verification_manifest
 from forge.sealing import read_and_verify, write_sealed_manifest
+from forge.report import render_report
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="FORGE module 1: stack detector and triage")
@@ -15,6 +16,7 @@ def main() -> int:
     parser.add_argument("--verify", type=Path, help="also write the module 3 verification manifest")
     parser.add_argument("--seal", action="store_true", help="seal the verification manifest alongside it")
     parser.add_argument("--verify-seal", type=Path, help="verify a sealed verification manifest")
+    parser.add_argument("--report", action="store_true", help="write forge-report.html from generated manifests")
     args = parser.parse_args()
     if args.verify_seal:
         result = read_and_verify(args.verify_seal)
@@ -31,7 +33,10 @@ def main() -> int:
             verification = verify_hypotheses(hypotheses)
             write_verification_manifest(verification, args.verify)
             if args.seal:
-                write_sealed_manifest(verification, args.verify.with_suffix(args.verify.suffix + ".sealed.json"))
+                sealed_path = args.verify.with_suffix(args.verify.suffix + ".sealed.json")
+                write_sealed_manifest(verification, sealed_path)
+                if args.report:
+                    render_report(args.output, args.hypotheses, sealed_path, Path("forge-report.html"))
     print(args.output)
     return 0
 
