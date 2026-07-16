@@ -20,8 +20,17 @@ def float_calls_reaching_return(function: ast.FunctionDef | ast.AsyncFunctionDef
             float_lines = {node.lineno for node in ast.walk(value) if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "float"}
             referenced = {node.id for node in ast.walk(value) if isinstance(node, ast.Name)}
             sources = float_lines | set().union(*(tainted.get(ref, set()) for ref in referenced))
-            if sources and sources != tainted.get(name, set()):
-                tainted[name] = sources
+            current = tainted.get(name, set())
+            # Union into the existing taint set rather than overwriting it: a
+            # name reassigned more than once (a loop body, if/else branches)
+            # produces one (name, value) pair per assignment, all keyed by
+            # the same name. Overwriting made `sources != tainted[name]`
+            # permanently true whenever two assignments' float-call lines
+            # differed, so `changed` never settled to False - an infinite
+            # loop on any function reassigning a name with different float()
+            # calls in different branches (a common, ordinary pattern).
+            if not sources <= current:
+                tainted[name] = current | sources
                 changed = True
     flagged: set[int] = set()
     for node in ast.walk(function):
