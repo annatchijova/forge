@@ -55,6 +55,24 @@ full configuration and a measured cost example.
 
 ---
 
+## Proof: FORGE found a real bug in itself
+
+Dogfooding isn't a slide, it's a run. Auditing the maintainer's own
+`vigia-repo` (a repository FORGE had never seen) hung indefinitely instead of
+completing. Root cause: an infinite loop in FORGE's own Integrity Inspector,
+triggered by an entirely ordinary pattern — a variable reassigned with a
+different `float()` call in each branch of an `if`/`else`. Fixed, with a
+regression test; the same audit now completes in **~2.5 seconds instead of
+hanging past a 280-second timeout**, and surfaces real findings in the
+audited repository itself — including a probability returned as a raw
+`float()` from a model prediction inside a function literally named
+`calibrated_posterior()`.
+
+Full writeup and all three run artifacts (JSON + HTML) in
+[`annatchijova/forge-results`](https://github.com/annatchijova/forge-results#highlight-dogfooding-runs-that-found-a-real-forge-bug-2026-07-16).
+
+---
+
 ## 30-second architecture
 
 ```
