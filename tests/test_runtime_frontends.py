@@ -40,6 +40,14 @@ def test_python_api_cli_and_mcp_use_equivalent_runtime_findings(tmp_path, monkey
     assert len({canonical(item["finding_records"]) for item in (api, wrapper, cli, mcp)}) == 1
     assert api["connected_alive"] == wrapper["connected_alive"] == cli["connected_alive"] == mcp["connected_alive"]
 
+
+def test_verify_subcommand_checks_a_sealed_manifest_locally(tmp_path, monkeypatch, capsys):
+    result = Runtime().audit(tmp_path, tmp_path / "out")
+    monkeypatch.setattr("sys.argv", ["forge", "verify", result.artifacts["sealed"]])
+    assert cli_main() == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["ok"] is True
+
 def test_mcp_interactive_operations_delegate_to_runtime(tmp_path):
     put(tmp_path, "main.py", "import json\n")
     put(tmp_path, "loader.py", "import json\ndef load(raw):\n    return json.loads(raw)\n")

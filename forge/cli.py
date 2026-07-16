@@ -14,6 +14,13 @@ from forge.multi_agent import finalize_multi_agent_run
 
 def main() -> int:
     import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "verify":
+        verify_parser = argparse.ArgumentParser(description="Verify a sealed FORGE finding manifest locally")
+        verify_parser.add_argument("sealed", type=Path)
+        verify_args = verify_parser.parse_args(sys.argv[2:])
+        result = Runtime().verify_findings(verify_args.sealed)
+        print(json.dumps(result, indent=2, sort_keys=True))
+        return 0 if result.get("ok") else 1
     if len(sys.argv) > 1 and sys.argv[1] == "audit":
         audit_parser = argparse.ArgumentParser(description="Run the complete FORGE governance runtime")
         audit_parser.add_argument("repo", type=Path)
