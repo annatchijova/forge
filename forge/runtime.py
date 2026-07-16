@@ -6,6 +6,7 @@ governance execution live here. The engine is deliberately UI-agnostic.
 from __future__ import annotations
 import ast
 import json
+import resource
 import shutil
 import tempfile
 import time
@@ -34,6 +35,14 @@ from forge.verification import verify_hypotheses, write_verification_manifest
 from forge.git_refs import archive_ref, changed_files, resolve_ref
 from forge.attestation import attest_manifest, verify_manifest_attestation
 from forge.agent_protocol import mandatory_protocol, validate_protocols
+
+
+def _peak_rss_bytes() -> int | None:
+    try:
+        value = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        return int(value if __import__("sys").platform == "darwin" else value * 1024)
+    except (AttributeError, OSError, ValueError):
+        return None
 
 def _coverage(root: Path, families=(), discovered=None, analyzed_paths=()) -> CoverageReport:
     discovered = discovered if discovered is not None else discover_files(root, include_excluded=True)
@@ -176,6 +185,18 @@ class Runtime:
             for record in payload.get("records", ()):
                 cronos.discard_hypothesis(record.get("module_path", "unknown"), record.get("reason", "discarded"))
 
+    def _phase_start(self, trace: RuntimeTrace, cronos, phase: str) -> float:
+        started = time.monotonic()
+        self._event(trace, cronos, "phase_started", phase=phase, peak_rss_bytes=_peak_rss_bytes())
+        return started
+
+    def _phase_end(self, trace: RuntimeTrace, cronos, phase: str, started: float) -> None:
+        self._event(
+            trace, cronos, "phase_completed", phase=phase,
+            elapsed_seconds=str(round(time.monotonic() - started, 6)),
+            peak_rss_bytes=_peak_rss_bytes(),
+        )
+
     def triage_repository(self, repo: str | Path) -> TriageManifest:
         return self._triage_override(repo) if self._triage_override is not None else archaeologist.assess(repo)
 
@@ -221,19 +242,24 @@ class Runtime:
     def _audit(self, repo: str | Path, output_dir: str | Path, max_connected: int | None, trace: RuntimeTrace, cronos=None,
                ref_context: dict[str, Any] | None = None) -> AuditResult:
         root, out = Path(repo).resolve(), Path(output_dir)
+        started = time.monotonic(); self._event(trace, cronos, "run_started", repository=str(root), max_connected=self.max_connected if max_connected is None else max_connected, model_routing=self.model_routing.to_dict())
+        discovery_started = self._phase_start(trace, cronos, "discovery")
         discovered = discover_files(root, include_excluded=True)
         repository_snapshot_sha256 = snapshot_sha256(root, discovered)
         out.mkdir(parents=True, exist_ok=True)
-        started = time.monotonic(); self._event(trace, cronos, "run_started", repository=str(root), max_connected=self.max_connected if max_connected is None else max_connected, model_routing=self.model_routing.to_dict())
+        self._phase_end(trace, cronos, "discovery", discovery_started)
         if ref_context is not None:
             self._event(trace, cronos, "ref_resolved", **ref_context)
+        triage_started = self._phase_start(trace, cronos, "triage")
         triage_manifest = self.triage_repository(root)
         self._event(trace, cronos, "repository_discovered", modules=len(triage_manifest.modules), stacks=[item.name for item in triage_manifest.stacks])
         self._event(trace, cronos, "modules_classified", summary=triage_manifest.summary, deletion_judgments=triage_manifest.deletion_judgments)
+        self._phase_end(trace, cronos, "triage", triage_started)
         connected = triage_manifest.summary.get("CONNECTED_ALIVE", 0)
         limit = self.max_connected if max_connected is None else max_connected
         if connected > limit: raise ValueError(f"scope guard: {connected} CONNECTED_ALIVE modules exceeds max_connected={limit}")
         web_degraded: list[str] = []
+        web_started = self._phase_start(trace, cronos, "web_auditor")
         try:
             connected_paths = {module.path for module in triage_manifest.modules if module.module_class.value == "CONNECTED_ALIVE"}
             web_result, web_analyzed_paths = web_auditor.audit(root, connected_paths)
@@ -243,16 +269,24 @@ class Runtime:
             web_result, web_analyzed_paths = AgentScanResult((), {}, mandatory_protocol("web_auditor", (message,), ())), ()
             self._event(trace, cronos, "agent_degraded", agent="web_auditor", error=message)
         self._event(trace, cronos, "agent_completed", agent="web_auditor", findings=len(web_result.findings), examinations=web_result.examinations)
+        self._phase_end(trace, cronos, "web_auditor", web_started)
+        coverage_started = self._phase_start(trace, cronos, "coverage")
         coverage = _coverage(root, discovered=discovered, analyzed_paths=web_analyzed_paths)
         self._event(trace, cronos, "coverage_collected", discovered=coverage.files_discovered, analyzed=coverage.files_analyzed, skipped=coverage.files_skipped, skipped_reasons=coverage.skipped_reasons)
+        self._phase_end(trace, cronos, "coverage", coverage_started)
+        governance_started = self._phase_start(trace, cronos, "governance")
         governance = run_skills(triage_manifest, self.skills_root)
         self._event(trace, cronos, "domain_hypotheses_formed", hypotheses=governance.to_dict()["domain_hypotheses"])
         self._event(trace, cronos, "skill_applicability_evaluated", applicability=governance.applicability)
         self._event(trace, cronos, "skill_contracts_executed", findings=len(governance.findings), limitations=governance.limitations)
+        self._phase_end(trace, cronos, "governance", governance_started)
+        bug_started = self._phase_start(trace, cronos, "bug_investigator")
         bug = bug_investigator.investigate(triage_manifest, induce=True)
         self._event(trace, cronos, "hypotheses_generated", count=len(bug.hypotheses), modules=list(bug.manifest.audited_modules))
         self._event(trace, cronos, "hypotheses_verified", discarded=len(bug.verification.discarded), findings=len(bug.verification.findings))
+        self._phase_end(trace, cronos, "bug_investigator", bug_started)
         degraded_reasons: list[str] = list(web_degraded)
+        static_started = self._phase_start(trace, cronos, "static_agents")
         try:
             connected_paths = {module.path for module in triage_manifest.modules if module.module_class.value == "CONNECTED_ALIVE"}
             security_result = security_auditor.audit(root, connected_paths)
@@ -270,6 +304,8 @@ class Runtime:
             self._event(trace, cronos, "agent_degraded", agent="integrity_inspector", error=message)
         self._event(trace, cronos, "agent_completed", agent="security_auditor", findings=len(security_result.findings), examinations=security_result.examinations)
         self._event(trace, cronos, "agent_completed", agent="integrity_inspector", findings=len(integrity_result.findings), examinations=integrity_result.examinations)
+        self._phase_end(trace, cronos, "static_agents", static_started)
+        canonical_started = self._phase_start(trace, cronos, "canonicalization")
         findings = [_with_severity(Finding(f.category, f.epistemic_level, f.module_path, f.description, f.evidence, f.reasoning, "bug_investigator", f.outcome)) for f in bug.verification.findings]
         findings += [_with_severity(_agent_finding("security_auditor", item), family=item.family) for item in security_result.findings]
         findings += [_with_severity(_agent_finding("integrity_inspector", item), family=item.family) for item in integrity_result.findings]
@@ -304,6 +340,7 @@ class Runtime:
         for finding in findings:
             self._event(trace, cronos, "finding_emitted", agent=finding.agent, module_path=finding.module_path, category=finding.category, outcome=finding.outcome, description=finding.description, evidence=[asdict(item) for item in finding.evidence])
         self._event(trace, cronos, "hypotheses_discarded", count=len(bug.verification.discarded), records=bug.verification.discarded)
+        self._phase_end(trace, cronos, "canonicalization", canonical_started)
         verification = VerificationManifest("2.0", "0.1.0", bug.verification.hypotheses_schema_version, str(root), int(time.time()), tuple(findings), bug.verification.discarded, bug.verification.ast_verified_families, bug.verification.ast_unverified_families, bug.verification.induction, repository_snapshot_sha256)
         verification = replace(verification, source_attestation=attest_manifest(verification.to_dict()))
         coverage = CoverageReport(coverage.files_discovered, coverage.files_analyzed, coverage.files_skipped, coverage.skipped_reasons, verification.ast_verified_families, coverage.coverage_ratio)

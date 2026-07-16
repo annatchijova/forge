@@ -83,6 +83,24 @@ def collect_metrics(*, root: Path, discovered: list[Path], triage: Any, coverage
     outcomes = Counter(item.outcome for item in findings)
     applicability = Counter(state for states in governance.applicability.values() for state in states.values())
     event_kinds = Counter(event.kind for event in trace.events)
+    phase_events = {}
+    for event in trace.events:
+        phase = event.payload.get("phase")
+        if not phase:
+            continue
+        phase_events.setdefault(phase, {})[event.kind] = event.payload
+    phases = {}
+    for phase, events in sorted(phase_events.items()):
+        completed = events.get("phase_completed")
+        started = events.get("phase_started")
+        phases[phase] = {
+            "status": "COMPLETED" if completed else "IN_PROGRESS",
+            "elapsed_seconds": completed.get("elapsed_seconds") if completed else None,
+            "peak_rss_bytes": max(
+                (item.get("peak_rss_bytes") for item in (started, completed) if item and item.get("peak_rss_bytes") is not None),
+                default=None,
+            ),
+        }
     skipped = sum(coverage.skipped_reasons.values(), ())
     analyzed_modules = sum(item.module_class.value == ModuleClass.CONNECTED_ALIVE.value for item in triage.modules)
 
@@ -171,4 +189,4 @@ def collect_metrics(*, root: Path, discovered: list[Path], triage: Any, coverage
         "confidence_boundary": "scope-limited" if disposition.status.startswith("ABSTAIN") else "evidence-bounded",
         "note": "Self-assessment describes audit boundaries; it is not a repository quality score.",
     }
-    return {"metrics_schema_version": "1.0", "repository": repo, "scope": scope, "discovery": discovery, "domain_classification": {"modules_by_domain": dict(sorted(domains.items())), "hypothesis_confidence": [{"module_path": item.module_path, "domains": item.domains, "confidence": {"numerator": item.confidence.numerator, "denominator": item.confidence.denominator}, "alternatives": item.alternatives, "evidence_count": len(item.evidence)} for item in governance.hypotheses]}, "skill_runtime": skill_counts, "agents": agent, "evidence": evidence_metrics, "findings": finding_metrics, "contradictions": [item.to_dict() for item in contradiction_records], "audit_disposition": disposition.to_dict(), "self_assessment": self_assessment, "audit_trail": trace_metrics, "reproducibility": reproducibility, "honest_degradation": {"skipped_reasons": coverage.skipped_reasons, "limitations": limitations}, "quality": quality}
+    return {"metrics_schema_version": "1.0", "repository": repo, "scope": scope, "discovery": discovery, "runtime": {"phases": phases, "peak_rss_bytes": max((item.get("peak_rss_bytes") for item in phases.values() if item.get("peak_rss_bytes") is not None), default=None)}, "domain_classification": {"modules_by_domain": dict(sorted(domains.items())), "hypothesis_confidence": [{"module_path": item.module_path, "domains": item.domains, "confidence": {"numerator": item.confidence.numerator, "denominator": item.confidence.denominator}, "alternatives": item.alternatives, "evidence_count": len(item.evidence)} for item in governance.hypotheses]}, "skill_runtime": skill_counts, "agents": agent, "evidence": evidence_metrics, "findings": finding_metrics, "contradictions": [item.to_dict() for item in contradiction_records], "audit_disposition": disposition.to_dict(), "self_assessment": self_assessment, "audit_trail": trace_metrics, "reproducibility": reproducibility, "honest_degradation": {"skipped_reasons": coverage.skipped_reasons, "limitations": limitations}, "quality": quality}

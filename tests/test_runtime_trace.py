@@ -41,6 +41,19 @@ def test_model_routing_is_explicitly_recorded_without_faking_model_calls(tmp_pat
     assert result.artifacts["trace"].endswith("audit-trace.json")
 
 
+def test_runtime_trace_records_phase_timings_and_peak_rss(tmp_path):
+    (tmp_path / "main.py").write_text("x = 1\n")
+    result = Runtime().audit(tmp_path, tmp_path / "out")
+    trace = json.loads((tmp_path / "out" / "audit-trace.json").read_text())
+    started = {event["payload"]["phase"] for event in trace["events"] if event["kind"] == "phase_started"}
+    completed = {event["payload"]["phase"] for event in trace["events"] if event["kind"] == "phase_completed"}
+    assert {"discovery", "triage", "coverage", "canonicalization"} <= started
+    assert started == completed
+    metrics = json.loads((tmp_path / "out" / "metrics.json").read_text())
+    assert metrics["runtime"]["phases"]["triage"]["status"] == "COMPLETED"
+    assert "peak_rss_bytes" in metrics["runtime"]
+
+
 def test_cronos_trace_store_is_optional_and_records_the_runtime(tmp_path):
     (tmp_path / "main.py").write_text("x = 1\n")
     database = tmp_path.parent / f"{tmp_path.name}-cronos.sqlite3"
