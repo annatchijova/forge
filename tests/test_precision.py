@@ -45,8 +45,15 @@ def test_golden_corpus_has_three_positive_and_negative_cases_per_agent():
     #   (load_and_validate() returning validate_independent_results(...)'s
     #   already-versioned dict) - found via self-audits of forge/runtime.py
     #   and forge/agent_independence.py.
+    # - integrity_inspector negative-10: json.dumps(...) as a direct
+    #   .execute()/.executemany() parameter-tuple element - one column of
+    #   an already-versioned SQL row, found via a self-audit of
+    #   forge/cronos/store.py. Deliberately narrow (only a tuple passed
+    #   directly to execute/executemany, not any enclosing tuple): a
+    #   broader version of this check silently suppressed 31 real findings
+    #   elsewhere in the codebase.
     expected_positives = {"integrity_inspector": 4, "security_auditor": 5, "web_auditor": 3}
-    expected_negatives = {"integrity_inspector": 9, "security_auditor": 5, "web_auditor": 3}
+    expected_negatives = {"integrity_inspector": 10, "security_auditor": 5, "web_auditor": 3}
     assert result["case_count"] == sum(expected_positives.values()) + sum(expected_negatives.values())
     for agent in {row["agent"] for row in result["cases"]}:
         cases = [row for row in result["cases"] if row["agent"] == agent]

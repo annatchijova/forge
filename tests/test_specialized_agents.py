@@ -266,6 +266,34 @@ def test_integrity_trusts_json_dumps_wrapped_in_html_escape(tmp_path):
     ))
     assert not [x for x in inspect(tmp_path) if x.family == "unversioned-serialization"]
 
+def test_integrity_trusts_json_dumps_as_a_direct_sql_execute_parameter(tmp_path):
+    # forge/cronos/store.py's own convention: one column value in a
+    # parameterized SQL row (the row itself already carries its own version
+    # column, e.g. cronos_version), not a standalone JSON document. Found
+    # via a self-audit of forge/cronos/store.py itself.
+    write(tmp_path, "store.py", (
+        "import json\n"
+        "def save(conn, contradictions):\n"
+        "    conn.execute(\n"
+        "        'INSERT INTO traces (contradictions, cronos_version) VALUES (?, ?)',\n"
+        "        (json.dumps(contradictions or []), 1),\n"
+        "    )\n"
+    ))
+    assert not [x for x in inspect(tmp_path) if x.family == "unversioned-serialization"]
+
+def test_integrity_does_not_trust_json_dumps_in_an_unrelated_tuple(tmp_path):
+    # The SQL-parameter-binding trust is deliberately narrow: only a tuple
+    # passed *directly* to .execute()/.executemany(), not "any enclosing
+    # tuple" - a broader version of this check silently suppressed 31 real
+    # findings elsewhere, where a tuple happens to hold a genuine
+    # standalone JSON document (e.g. an Evidence/Finding field).
+    write(tmp_path, "evidence.py", (
+        "import json\n"
+        "def build(payload):\n"
+        "    return (payload, json.dumps(payload))\n"
+    ))
+    assert [x for x in inspect(tmp_path) if x.family == "unversioned-serialization"]
+
 def test_integrity_suppresses_decision_adjacent_float_for_ml_domain_paths(tmp_path):
     # Same code, same detector: whether it fires depends only on whether the
     # caller (runtime.py, via infer_domains) marked this path machine_learning.

@@ -193,7 +193,16 @@ Also pure AST scanning. Flags three families:
   is trusted the same as a literal dict assignment: `metrics =
   collect_metrics(...)` (`forge/runtime.py`) is versioned because
   `collect_metrics()` itself returns one, in a different file a literal
-  check could never see across.
+  check could never see across. A `json.dumps(...)` passed directly as one
+  element of the parameter tuple in a `.execute(...)`/`.executemany(...)`
+  call is also trusted — one column of an already-versioned SQL row (which
+  typically carries its own version column, as `forge/cronos/store.py`'s
+  `cronos_version` does), not a standalone JSON document. This is
+  deliberately narrow — only a tuple passed *directly* as a call argument,
+  never "any enclosing tuple" — because a broader version of this exact
+  check silently suppressed 31 real findings elsewhere in the codebase,
+  where a tuple happened to hold a genuine standalone JSON document (an
+  `Evidence`/`Finding` field).
 
 ## Patch Reviewer (`forge/agents/patch_reviewer.py`)
 

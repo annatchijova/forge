@@ -179,6 +179,29 @@ def _is_internal_serialization(call: ast.Call, parents: dict[ast.AST, ast.AST]) 
     return False
 
 
+def _is_sql_parameter_binding(call: ast.Call, parents: dict[ast.AST, ast.AST]) -> bool:
+    """A json.dumps(...) sitting directly in the parameter tuple of a
+    `.execute(sql, params)` / `.executemany(...)` call - one column value in
+    an already-versioned database row (a row typically carries its own
+    version column, as forge/cronos/store.py's `cronos_version` does), not a
+    standalone JSON document.
+
+    Deliberately narrow: only the tuple passed *directly* as a call
+    argument, not "any enclosing tuple" - an earlier, broader version of
+    this check (any ast.Tuple ancestor) silently suppressed 31 real
+    findings elsewhere in the codebase, where a tuple just happens to hold
+    an Evidence/Finding field that is a genuine standalone JSON document.
+    """
+    parent = parents.get(call)
+    if not isinstance(parent, ast.Tuple):
+        return False
+    grandparent = parents.get(parent)
+    return (
+        isinstance(grandparent, ast.Call) and isinstance(grandparent.func, ast.Attribute)
+        and grandparent.func.attr in {"execute", "executemany"} and parent in grandparent.args
+    )
+
+
 def _is_presentation_serialization(call: ast.Call, parents: dict[ast.AST, ast.AST]) -> bool:
     """Recognize serialization embedded in a presentation template structurally.
 
@@ -251,7 +274,8 @@ def inspect(root: str | os.PathLike[str], eligible: set[str] | None = None, ml_d
                 if (_is_internal_serialization(n, parents) or _is_presentation_serialization(n, parents)
                         or _serialization_has_version(n)
                         or (isinstance(n.args[0], ast.Name) and n.args[0].id in versioned_payload_names)
-                        or _is_trusted_versioning_name(_enclosing_function(n, parents))):
+                        or _is_trusted_versioning_name(_enclosing_function(n, parents))
+                        or _is_sql_parameter_binding(n, parents)):
                     continue
                 out.append(IntegrityFinding("unversioned-serialization", rel, n.lineno, "unversioned serialization"))
         examinations[rel]="examined_with_findings" if any(x.path == rel for x in out) else "examined_clean"
