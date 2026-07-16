@@ -156,6 +156,23 @@ false positive without an executed falsification test.
 7. Record the review dependency graph: which agents ran before the reviewer.
 8. Compare the same canonical finding set across historical runs.
 
+## Implementation status after this run
+
+Forge now provides the first enforcement layer for these requirements:
+
+- external agent validation requires a uniform 20-skill ledger for every role;
+- every hypothesis ID must contain abduction, deduction, and induction;
+- `finalize-multi-agent` rejects protocol-only or inconsistent agent outputs;
+- external and native findings can be represented as explicit source layers in
+  `canonical-findings.json`;
+- the canonical layered finding set can be sealed independently through
+  `verification-manifest.canonical.sealed.json`.
+
+The remaining integration work is to make report rendering, audit tracing, and
+historical comparison consume this canonical set automatically. Until that is
+connected, the canonical finalizer is a required handoff step rather than an
+implicit part of the ordinary `audit` command.
+
 ## Success criteria for the next run
 
 The next run is integrated only if:

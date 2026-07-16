@@ -19,6 +19,7 @@ from forge.sealing import verify_sealed
 from forge.agents.patch_reviewer import review as review_patch_impl
 from forge.comparison import compare_runs
 from forge.agent_independence import load_and_validate, write_validation_artifact, AgentIndependenceError
+from forge.multi_agent import finalize_multi_agent_run
 
 mcp = FastMCP("forge")
 runtime = Runtime()
@@ -157,6 +158,14 @@ def finalize_agent_results(results_dir: str, required_agents: list[str], output_
         return {"ok": True, **write_validation_artifact(results_dir, required_agents, output_path)}
     except (AgentIndependenceError, FileNotFoundError, OSError, ValueError, json.JSONDecodeError) as exc:
         return _error("independence_rejected", str(exc))
+
+@mcp.tool()
+def finalize_multi_agent_run_artifacts(run_dir: str, required_agents: list[str], external_findings_path: str | None = None, native_sealed_path: str | None = None) -> dict[str, Any]:
+    """Create one canonical finding set and seal it after independence validation."""
+    try:
+        return {"ok": True, **finalize_multi_agent_run(run_dir, required_agents, external_findings_path, native_sealed_path)}
+    except (AgentIndependenceError, FileNotFoundError, OSError, ValueError, json.JSONDecodeError) as exc:
+        return _error("canonicalization_rejected", str(exc))
 
 @mcp.tool()
 def triage_repository(path: str) -> dict[str, Any]:

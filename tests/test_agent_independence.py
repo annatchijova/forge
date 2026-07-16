@@ -24,6 +24,15 @@ def work(agent):
     }
 
 
+def with_skills(record):
+    from forge.agent_protocol import skills_catalog
+    record["skills"] = [
+        {"skill_name": name, "concrete_action": "reviewed the obligation", "evidence": [f"{source}:1"], "result": "APPLIED"}
+        for name, source, _text in skills_catalog()
+    ]
+    return record
+
+
 def test_independence_requires_real_work_product_not_protocol_only():
     protocol_only = {role: {"requested_role": role, "adi": [], "skills": [], "scope": []} for role in ROLES}
     with pytest.raises(AgentIndependenceError, match="protocol only"):
@@ -31,20 +40,20 @@ def test_independence_requires_real_work_product_not_protocol_only():
 
 
 def test_independence_rejects_duplicate_work_products():
-    records = {role: work(role) for role in ROLES}
+    records = {role: with_skills(work(role)) for role in ROLES}
     records["independent_reviewer"]["work_product"] = records["scope_triage"]["work_product"]
     with pytest.raises(AgentIndependenceError, match="duplicate"):
         validate_independent_results(records, ROLES)
 
 
 def test_independence_accepts_distinct_evidence_backed_products():
-    result = validate_independent_results({role: work(role) for role in ROLES}, ROLES)
+    result = validate_independent_results({role: with_skills(work(role)) for role in ROLES}, ROLES)
     assert result["status"] == "INDEPENDENCE_VERIFIED"
     assert result["unique_work_products"] == len(ROLES)
 
 
 def test_independence_requires_hypothesis_specific_adi():
-    records = {role: work(role) for role in ROLES}
+    records = {role: with_skills(work(role)) for role in ROLES}
     records["scope_triage"]["work_product"]["adi"] = []
     with pytest.raises(AgentIndependenceError, match="A-D-I"):
         validate_independent_results(records, ROLES)
@@ -55,7 +64,7 @@ def test_validation_writes_mandatory_closing_artifact(tmp_path):
     results_dir.mkdir()
     for role in ROLES:
         import json
-        (results_dir / f"{role}.json").write_text(json.dumps(work(role)))
+        (results_dir / f"{role}.json").write_text(json.dumps(with_skills(work(role))))
     summary = write_validation_artifact(results_dir, ROLES)
     assert summary["status"] == "INDEPENDENCE_VERIFIED"
     assert (results_dir / "agent-independence.json").exists()

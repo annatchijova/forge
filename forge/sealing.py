@@ -20,6 +20,12 @@ def _digest(payload: Any, previous: str) -> str:
 def seal_manifest(manifest: VerificationManifest, audit_trace: dict[str, Any] | None = None) -> dict[str, Any]:
     data = manifest.to_dict()
     findings = data.pop("findings")
+    return seal_findings(findings, data, audit_trace)
+
+
+def seal_findings(findings: list[dict[str, Any]], metadata: dict[str, Any] | None = None, audit_trace: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Seal an already canonicalized finding list without changing its schema."""
+    data = dict(metadata or {})
     trace_hash = hashlib.sha256(canonical_json(audit_trace).encode("utf-8")).hexdigest() if audit_trace is not None else ""
     if trace_hash: data["audit_trace_hash"] = trace_hash
     chain = []
@@ -91,6 +97,10 @@ def verify_sealed(data: dict[str, Any]) -> dict[str, Any]:
 
 def write_sealed_manifest(manifest: VerificationManifest, destination: str | Path, audit_trace: dict[str, Any] | None = None) -> None:
     Path(destination).write_text(json.dumps(seal_manifest(manifest, audit_trace), sort_keys=True, indent=2) + "\n", encoding="utf-8")
+
+
+def write_sealed_findings(findings: list[dict[str, Any]], metadata: dict[str, Any], destination: str | Path, audit_trace: dict[str, Any] | None = None) -> None:
+    Path(destination).write_text(json.dumps(seal_findings(findings, metadata, audit_trace), sort_keys=True, indent=2) + "\n", encoding="utf-8")
 
 
 def read_and_verify(destination: str | Path) -> dict[str, Any]:

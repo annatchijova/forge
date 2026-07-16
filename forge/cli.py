@@ -10,6 +10,7 @@ from forge.benchmark import run_benchmark
 from forge.comparison import compare_runs
 from forge.loop import run_loop
 from forge.agent_independence import load_and_validate, write_validation_artifact, AgentIndependenceError
+from forge.multi_agent import finalize_multi_agent_run
 
 def main() -> int:
     import sys
@@ -119,6 +120,19 @@ def main() -> int:
             return 0
         except (OSError, ValueError, json.JSONDecodeError) as exc:
             print(json.dumps({"status": "INDEPENDENCE_REJECTED", "error": str(exc)}, indent=2, sort_keys=True))
+            return 2
+    if len(sys.argv) > 1 and sys.argv[1] == "finalize-multi-agent":
+        parser = argparse.ArgumentParser(description="Canonicalize and seal external plus native multi-agent findings")
+        parser.add_argument("run_dir", type=Path)
+        parser.add_argument("--agent", action="append", required=True)
+        parser.add_argument("--external-findings", type=Path)
+        parser.add_argument("--native-sealed", type=Path)
+        args = parser.parse_args(sys.argv[2:])
+        try:
+            print(json.dumps(finalize_multi_agent_run(args.run_dir, args.agent, args.external_findings, args.native_sealed), indent=2, sort_keys=True))
+            return 0
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            print(json.dumps({"status": "CANONICALIZATION_REJECTED", "error": str(exc)}, indent=2, sort_keys=True))
             return 2
     if len(sys.argv) > 1 and sys.argv[1] == "compare-refs":
         refs_parser = argparse.ArgumentParser(description="Compare two committed Git refs through FORGE")

@@ -12,9 +12,12 @@ import json
 from pathlib import Path
 from typing import Any, Iterable
 
+from forge.agent_protocol import skills_catalog
+
 
 PROTOCOL_ONLY_KEYS = {"requested_role", "native_forge_role", "adi", "scope", "skills"}
 REQUIRED_WORK_FIELDS = ("observations", "hypotheses", "deductions", "evidence", "decision", "adi")
+REQUIRED_SKILL_FIELDS = ("skill_name", "concrete_action", "evidence", "result")
 
 
 class AgentIndependenceError(ValueError):
@@ -37,19 +40,52 @@ def _fingerprint(work: dict[str, Any]) -> str:
 def _validate_adi(agent: str, value: Any) -> None:
     if not isinstance(value, list) or not value:
         raise AgentIndependenceError(f"{agent} has no hypothesis-specific A-D-I ledger")
-    stages = set()
+    by_hypothesis: dict[str, set[str]] = {}
     for entry in value:
         if not isinstance(entry, dict):
             raise AgentIndependenceError(f"{agent} A-D-I entry is not an object")
-        stages.add(entry.get("stage"))
-        if not _text_items(entry.get("hypothesis_id")):
+        hypothesis_ids = _text_items(entry.get("hypothesis_id"))
+        if len(hypothesis_ids) != 1:
             raise AgentIndependenceError(f"{agent} A-D-I entry has no hypothesis_id")
+        by_hypothesis.setdefault(hypothesis_ids[0], set()).add(entry.get("stage"))
         if not _text_items(entry.get("statement")):
             raise AgentIndependenceError(f"{agent} A-D-I entry has no statement")
         if not _text_items(entry.get("evidence")):
             raise AgentIndependenceError(f"{agent} A-D-I entry has no evidence")
-    if stages != {"abduction", "deduction", "induction"}:
-        raise AgentIndependenceError(f"{agent} A-D-I stages are incomplete: {sorted(stages)}")
+    incomplete = {
+        hypothesis: sorted({"abduction", "deduction", "induction"} - stages)
+        for hypothesis, stages in by_hypothesis.items()
+        if stages != {"abduction", "deduction", "induction"}
+    }
+    if incomplete:
+        raise AgentIndependenceError(f"{agent} A-D-I stages are incomplete by hypothesis: {incomplete}")
+
+
+def _validate_skills(agent: str, value: Any) -> None:
+    if not isinstance(value, list):
+        raise AgentIndependenceError(f"{agent} skills ledger is not a list")
+    expected = {name for name, _source, _text in skills_catalog()}
+    actual: dict[str, dict[str, Any]] = {}
+    for item in value:
+        if not isinstance(item, dict):
+            raise AgentIndependenceError(f"{agent} skill entry is not an object")
+        missing = [field for field in REQUIRED_SKILL_FIELDS if field not in item]
+        if missing:
+            raise AgentIndependenceError(f"{agent} skill entry missing fields: {missing}")
+        name = str(item["skill_name"])
+        if name in actual:
+            raise AgentIndependenceError(f"{agent} has duplicate skill entry: {name}")
+        actual[name] = item
+        if not _text_items(item.get("concrete_action")):
+            raise AgentIndependenceError(f"{agent} skill {name} has no concrete_action")
+        if not _text_items(item.get("evidence")):
+            raise AgentIndependenceError(f"{agent} skill {name} has no evidence")
+        if item.get("result") not in {"APPLIED", "REJECTED", "UNDETERMINED"}:
+            raise AgentIndependenceError(f"{agent} skill {name} has invalid result")
+    missing = sorted(expected - set(actual))
+    extra = sorted(set(actual) - expected)
+    if missing or extra:
+        raise AgentIndependenceError(f"{agent} skills catalog mismatch; missing={missing}, extra={extra}")
 
 
 def validate_independent_results(
@@ -86,6 +122,7 @@ def validate_independent_results(
         if not _text_items(work.get("decision")):
             raise AgentIndependenceError(f"{agent} has no decision")
         _validate_adi(agent, work.get("adi"))
+        _validate_skills(agent, record.get("skills"))
         fingerprints[agent] = _fingerprint(work)
     duplicates: dict[str, list[str]] = {}
     for agent, digest in fingerprints.items():
