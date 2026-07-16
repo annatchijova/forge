@@ -37,17 +37,38 @@ def _deserialization(tree):
             if not safe: yield SecurityFinding("unsafe-deserialization", "", n.lineno, "yaml.load lacks Loader=yaml.SafeLoader")
 
 def _paths(tree):
-    functions = [f for f in ast.walk(tree) if isinstance(f, (ast.FunctionDef, ast.AsyncFunctionDef))]
-    params = {a.arg for f in functions for a in f.args.args}
-    normalized = {t.id for f in functions for n in ast.walk(f) if isinstance(n, ast.Assign)
-                  and isinstance(n.value, ast.Call) and isinstance(n.value.func, ast.Attribute)
-                  and n.value.func.attr in {"normpath", "realpath"}
-                  for t in n.targets if isinstance(t, ast.Name)}
-    for n in ast.walk(tree):
-        if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and isinstance(n.func.value, ast.Name) and n.func.value.id == "os" and n.func.attr == "path" and n.args and any(isinstance(x, ast.Name) and x.id in params and x.id not in normalized for x in n.args):
-            yield SecurityFinding("path-traversal", "", n.lineno, "parameter reaches os.path operation without proven normalization")
-        if isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id == "open" and n.args and any(isinstance(x, ast.Name) and x.id in params and x.id not in normalized for x in n.args):
-            yield SecurityFinding("path-traversal", "", n.lineno, "parameter reaches open() without proven normalization")
+    parents = {child: parent for parent in ast.walk(tree) for child in ast.iter_child_nodes(parent)}
+
+    def enclosing_function(node):
+        current = parents.get(node)
+        while current is not None:
+            if isinstance(current, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                return current
+            current = parents.get(current)
+        return None
+
+    for function in (node for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))):
+        params = {argument.arg for argument in (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs)}
+        normalized = {
+            target.id
+            for node in ast.walk(function)
+            if isinstance(node, ast.Assign)
+            and isinstance(node.value, ast.Call)
+            and isinstance(node.value.func, ast.Attribute)
+            and node.value.func.attr in {"normpath", "realpath"}
+            for target in node.targets
+            if isinstance(target, ast.Name)
+        }
+        for node in ast.walk(function):
+            if enclosing_function(node) is not function or not isinstance(node, ast.Call) or not node.args:
+                continue
+            reaches_parameter = any(isinstance(argument, ast.Name) and argument.id in params and argument.id not in normalized for argument in node.args)
+            if not reaches_parameter:
+                continue
+            if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == "os" and node.func.attr == "path":
+                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches os.path operation without proven normalization")
+            elif isinstance(node.func, ast.Name) and node.func.id == "open":
+                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches open() without proven normalization")
 
 def audit(root: str | os.PathLike[str], eligible: set[str] | None = None) -> tuple[SecurityFinding, ...]:
     base=Path(root)

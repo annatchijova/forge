@@ -28,6 +28,19 @@ def test_security_path_trigger_and_normalized_safe_context(tmp_path):
     write(tmp_path, "safe.py", "def read(path):\n    path = os.path.normpath(path)\n    return open(path)\n")
     assert [(x.path, x.family) for x in audit(tmp_path)] == [("bad.py", "path-traversal")]
 
+
+def test_security_path_normalization_is_scoped_to_each_function(tmp_path):
+    write(tmp_path, "mixed.py", """
+def safe(path):
+    path = os.path.normpath(path)
+    return open(path)
+
+def unsafe(path):
+    return open(path)
+""")
+    findings = audit(tmp_path)
+    assert [(item.family, item.line) for item in findings] == [("path-traversal", 7)]
+
 def test_pipeline_preserves_security_family_for_severity(tmp_path):
     write(tmp_path, "main.py", "import reader\n")
     write(tmp_path, "reader.py", "def read(path):\n    return open(path)\n")
