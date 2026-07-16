@@ -32,10 +32,28 @@ _PATTERNS = (
 )
 
 
-def _has_nearby_try(lines: list[str], line_number: int, radius: int = 8) -> bool:
-    start = max(0, line_number - radius - 1)
-    end = min(len(lines), line_number + radius)
-    return any(re.search(r"\btry\s*\{", line) for line in lines[start:end])
+def _has_enclosing_try(lines: list[str], line_number: int) -> bool:
+    """Recognize a nearby try block only when its braces enclose the call.
+
+    This is deliberately a bounded structural heuristic, not a JavaScript
+    parser. It prevents a try in an adjacent function from suppressing a
+    parser-boundary candidate while retaining support for common multiline
+    try/catch forms.
+    """
+    depth = 0
+    active: list[int] = []
+    for index, line in enumerate(lines, 1):
+        code = _mask_string_literals(line).split("//", 1)[0]
+        before = depth
+        opens = code.count("{")
+        closes = code.count("}")
+        if re.search(r"\btry\s*\{", code):
+            active.append(before + 1)
+        if index == line_number:
+            return any(required <= before or required <= before + opens for required in active)
+        depth = max(0, depth + opens - closes)
+        active = [required for required in active if required <= depth]
+    return False
 
 
 def _mask_string_literals(line: str) -> str:
@@ -113,7 +131,7 @@ def audit(root: str | Path, eligible: set[str] | None = None) -> tuple[AgentScan
             for family, pattern, description in _PATTERNS:
                 if pattern.search(code_line):
                     local.append(WebFinding(family, rel, number, description))
-            if re.search(r"\bJSON\.parse\s*\(", code_line) and not _has_nearby_try(lines, number):
+            if re.search(r"\bJSON\.parse\s*\(", code_line) and not _has_enclosing_try(lines, number):
                 local.append(WebFinding("parser-boundary", rel, number, "JSON.parse call has no nearby visible try/catch boundary"))
             if re.search(r"\b(?:readFile|readFileSync|writeFile|writeFileSync|unlink|rm)\s*\(", code_line):
                 names = set(re.findall(r"\b(?:user|request|input|path|file|name)\w*\b", code_line, re.I))

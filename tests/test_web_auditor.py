@@ -37,6 +37,20 @@ try {
     assert not result.findings
 
 
+def test_web_auditor_does_not_use_try_from_an_adjacent_function(tmp_path):
+    write(tmp_path, "adjacent.ts", """
+function safe(raw) {
+  try { return JSON.parse(raw); } catch (error) { return null; }
+}
+function unsafe(raw) {
+  return JSON.parse(raw);
+}
+""")
+    result, _ = audit(tmp_path)
+    parser_lines = [item.line for item in result.findings if item.family == "parser-boundary"]
+    assert parser_lines == [6]
+
+
 def test_web_auditor_handles_comments_as_non_executable_text(tmp_path):
     write(tmp_path, "notes.ts", "// eval(userInput)\nconst label = 'JSON.parse(raw)';\n")
     result, _ = audit(tmp_path)
