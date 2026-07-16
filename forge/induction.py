@@ -11,6 +11,7 @@ import ast
 import importlib.util
 import inspect
 import multiprocessing
+import sys
 from queue import Empty
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -58,15 +59,43 @@ def _synthetic_value(name: str) -> str:
     return "{not valid json"
 
 
-def _invoke_worker(module_path: str, function_name: str, queue: Any) -> None:
+def _module_name(root: Path, module_path: str) -> str | None:
+    """Return a package-qualified module name when the path has a package."""
+    path = Path(module_path)
+    parts = list(path.with_suffix("").parts)
+    if not parts or any(part == ".." for part in parts):
+        return None
+    package_parts: list[str] = []
+    for part in parts[:-1]:
+        package_parts.append(part)
+        if not (root.joinpath(*package_parts) / "__init__.py").is_file():
+            return None
+    return ".".join(parts)
+
+
+def _invoke_worker(root: str, module_path: str, function_name: str, queue: Any) -> None:
     try:
-        module_name = f"forge_induction_{abs(hash(module_path))}"
-        spec = importlib.util.spec_from_file_location(module_name, module_path)
-        if spec is None or spec.loader is None:
-            queue.put(("import-error", "module spec unavailable"))
-            return
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
+        root_path = Path(root)
+        qualified_name = _module_name(root_path, module_path)
+        if qualified_name:
+            sys.path.insert(0, str(root_path))
+            try:
+                module = importlib.import_module(qualified_name)
+            except BaseException as exc:
+                queue.put(("import-error", type(exc).__name__, str(exc)[:240]))
+                return
+        else:
+            module_name = f"forge_induction_{abs(hash(module_path))}"
+            spec = importlib.util.spec_from_file_location(module_name, root_path / module_path)
+            if spec is None or spec.loader is None:
+                queue.put(("import-error", "ModuleSpecError", "module spec unavailable"))
+                return
+            module = importlib.util.module_from_spec(spec)
+            try:
+                spec.loader.exec_module(module)
+            except BaseException as exc:
+                queue.put(("import-error", type(exc).__name__, str(exc)[:240]))
+                return
         function = getattr(module, function_name)
         signature = inspect.signature(function)
         args: list[str] = []
@@ -101,9 +130,21 @@ def induce_hypothesis(root: str | Path, module_path: str, line: int, description
     if function is None or isinstance(function, ast.AsyncFunctionDef):
         return InductionResult("UNDETERMINED", family, "No synchronous module-level function boundary was found.", f"{module_path}:{line}")
 
+    # Test the public detector boundary when the parser call is in a private
+    # helper. This avoids treating trusted lexicon loaders as user-input APIs.
+    function_name = function.name
+    if function_name.startswith("_"):
+        public_entrypoint = next(
+            (node for node in tree.body
+             if isinstance(node, ast.FunctionDef) and node.name == "analyze"),
+            None,
+        )
+        if public_entrypoint is not None:
+            function_name = public_entrypoint.name
+
     context = multiprocessing.get_context("spawn")
     queue = context.Queue()
-    process = context.Process(target=_invoke_worker, args=(str(path), function.name, queue))
+    process = context.Process(target=_invoke_worker, args=(str(root_path), module_path, function_name, queue))
     process.start()
     process.join(1.0)
     if process.is_alive():
@@ -114,6 +155,8 @@ def induce_hypothesis(root: str | Path, module_path: str, line: int, description
         result = queue.get(timeout=0.2)
     except Empty:
         return InductionResult("UNDETERMINED", family, f"Child exited without a result (exitcode={process.exitcode}).", f"{module_path}:{line}")
+    if result[0] == "import-error":
+        return InductionResult("UNDETERMINED", family, f"Target module could not be loaded in its package context: {result[1]}: {result[2]}", f"{module_path}:{line}")
     if result[0] == "exception":
         error_name, detail = result[1], result[2]
         if error_name in _NAMED_BOUNDARY_ERRORS:

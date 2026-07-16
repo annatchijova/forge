@@ -19,6 +19,9 @@ _NON_ARTIFACT_SERIALIZATION_MODULES = {
     # a versioned interchange artifact.
     "forge/report.py",
 }
+_SERIALIZATION_FUNCTION_NAMES = {
+    "as_dict", "serialize", "to_dict", "to_json", "jsonable_encoder",
+}
 
 
 def _serialization_has_version(call: ast.Call) -> bool:
@@ -123,6 +126,8 @@ def inspect(root: str | os.PathLike[str]) -> tuple[IntegrityFinding, ...]:
         parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
         versioned_payload_names = _versioned_payload_names(tree)
         for fn in (n for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))):
+            if fn.name in _SERIALIZATION_FUNCTION_NAMES:
+                continue
             for line in sorted(_float_calls_reaching_return(fn)):
                 out.append(IntegrityFinding("decision-adjacent-float", rel, line, "non-deterministic arithmetic in a decision-adjacent path"))
         for n in ast.walk(tree):

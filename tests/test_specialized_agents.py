@@ -48,6 +48,18 @@ def test_integrity_ignores_unrelated_float_telemetry_but_flags_return_value(tmp_
     hits = inspect(tmp_path)
     assert [(x.path, x.family) for x in hits] == [("genuine.py", "decision-adjacent-float")]
 
+
+def test_integrity_ignores_float_used_only_by_to_dict_serialization(tmp_path):
+    write(tmp_path, "result.py", """
+class Result:
+    def __init__(self, score):
+        self.score = score
+    def to_dict(self):
+        return {"score": float(self.score)}
+""")
+    assert not [x for x in inspect(tmp_path) if x.family == "decision-adjacent-float"]
+
+
 def test_integrity_safe_float_and_versioned_serialization(tmp_path):
     write(tmp_path, "safe.py", "def display(value):\n    return float(value)\njson.dump({'schema_version': 1}, out)\n")
     assert [(x.path, x.family) for x in inspect(tmp_path)] == [("safe.py", "decision-adjacent-float")]

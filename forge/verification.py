@@ -54,7 +54,24 @@ def _named_handler(tree: ast.AST, call: ast.AST, names: tuple[str, ...]) -> bool
 def _parser_benign(tree: ast.AST, line: int, function_name: str | None = None,
                    handler_names: tuple[str, ...] = ("JSONDecodeError", "ValueError", "YAMLError", "TomlDecodeError")) -> bool:
     call = _call_at(tree, line, function_name)
-    return bool(call and _named_handler(tree, call, handler_names))
+    if not call:
+        return False
+    if _named_handler(tree, call, handler_names):
+        return True
+    # Optional integrations often use a broad exception boundary because the
+    # concrete SDK/parser exception is not stable across supported versions.
+    # It is still a real boundary when the handler visibly returns a degraded
+    # result or raises a named error; do not call that opaque failure.
+    for parent in _ancestors(tree, call):
+        if not isinstance(parent, ast.Try):
+            continue
+        for handler in parent.handlers:
+            handler_type = ast.unparse(handler.type) if handler.type else ""
+            if handler_type not in {"Exception", "BaseException", ""}:
+                continue
+            if any(isinstance(node, (ast.Return, ast.Raise)) for node in ast.walk(handler)):
+                return True
+    return False
 
 _DANGEROUS_EVAL_CONTENT = re.compile(
     r"\b(os\.system|os\.popen|os\.exec\w*|os\.remove|os\.unlink|subprocess\.\w+|"

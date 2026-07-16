@@ -61,6 +61,17 @@ def _mask_string_literals(source: tuple[str, ...]) -> tuple[str, ...]:
     return tuple("".join(chars).splitlines())
 
 
+def _is_trusted_local_json_load(source: tuple[str, ...], line_number: int, code: str) -> bool:
+    """Do not treat repository-owned lexicon loads as user input."""
+    if not re.search(r"\bjson\.load\s*\(\s*[A-Za-z_]\w*\s*\)", code):
+        return False
+    context = source[max(0, line_number - 5):line_number]
+    joined = " ".join(context)
+    return any("open(" in item for item in context) and any(
+        marker in joined for marker in ("__file__", "_LEXICON_DIR", "Path(__file__)")
+    )
+
+
 def _candidates(module_path: str, source: tuple[str, ...], language: str) -> list[Hypothesis]:
     candidates: list[tuple[str, int, str]] = []
     matching_source = _mask_string_literals(source)
@@ -77,6 +88,8 @@ def _candidates(module_path: str, source: tuple[str, ...], language: str) -> lis
             if not any("try:" in source[i] for i in range(max(0, number - 4), number)):
                 candidates.append((f"The dynamic command invocation `{stripped}` at {module_path}:{number} may pass attacker-controlled arguments without an enclosing failure boundary.", number, f"Invoke this call with a harmless invalid executable and a shell metacharacter fixture; an explicit exception path with no command execution falsifies the hypothesis."))
         if re.search(r"\b(?:json|yaml|toml)\.loads?\s*\(|\bparse\s*\(", matching_stripped):
+            if _is_trusted_local_json_load(source, number, matching_stripped):
+                continue
             if not any("except" in source[i] for i in range(number, min(len(source), number + 5))):
                 candidates.append((f"The parser call `{stripped}` at {module_path}:{number} has no nearby exception handling, so malformed input may escape as an opaque failure.", number, f"Feed malformed input to the function containing line {number}; a named boundary error or explicit rejection falsifies the hypothesis."))
         if re.search(r"\b(?:score|verdict|classif\w*)\b.*(?:[<>]=?|==).*\d+\.\d+", matching_stripped):
@@ -96,7 +109,7 @@ def generate_hypotheses(triage: TriageManifest) -> HypothesesManifest:
     limitations: list[str] = ["Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only."]
     root = Path(triage.root)
     for module in sorted(triage.modules, key=lambda m: (m.module_class != ModuleClass.CONNECTED_ALIVE, m.path)):
-        if module.module_class is not ModuleClass.CONNECTED_ALIVE:
+        if module.module_class not in {ModuleClass.CONNECTED_ALIVE, ModuleClass.FOSSIL_HIGH_RISK}:
             continue
         path = root / module.path
         source = _lines(path)

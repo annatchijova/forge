@@ -37,6 +37,35 @@ def test_parser_known_handler_is_benign_but_generic_is_not(tmp_path):
     assert result.ast_verified_families == ("subprocess", "parser", "float comparison", "eval/exec")
     assert not result.findings
 
+
+def test_parser_broad_handler_with_explicit_degradation_is_benign(tmp_path):
+    (tmp_path / "main.py").write_text(
+        "import json\n"
+        "def analyze(raw):\n"
+        "    try:\n"
+        "        return json.loads(raw)\n"
+        "    except Exception:\n"
+        "        return {'error': 'invalid input'}\n"
+    )
+    result = verify_hypotheses(generate_hypotheses(triage(tmp_path)))
+    assert not result.findings
+
+
+def test_local_lexicon_load_is_not_treated_as_external_parser_input():
+    hypotheses, _ = _candidates(
+        "detector.py",
+        (
+            "from pathlib import Path\n",
+            "import json\n",
+            "_LEXICON_DIR = Path(__file__).parent / 'lexicon'\n",
+            "def _load():\n",
+            "    with open(_LEXICON_DIR / 'data.json') as f:\n",
+            "        return json.load(f)\n",
+        ),
+        "Python",
+    )
+    assert hypotheses == []
+
 def test_eval_literal_benign_and_variable_is_finding(tmp_path):
     (tmp_path / "main.py").write_text("def run(expr):\n    return eval(expr)\n")
     result = verify_hypotheses(generate_hypotheses(triage(tmp_path)))
@@ -96,3 +125,26 @@ def test_parser_induction_respects_named_boundary_handler(tmp_path):
     result = verify_hypotheses(generate_hypotheses(triage(tmp_path)), induce=True)
     assert not result.findings
     assert not result.induction
+
+
+def test_parser_induction_loads_relative_imports_as_a_package(tmp_path):
+    package = tmp_path / "detectors"
+    package.mkdir()
+    (package / "__init__.py").write_text("")
+    (package / "base.py").write_text("def marker(): return True\n")
+    (package / "sample.py").write_text(
+        "from .base import marker\n"
+        "import json\n"
+        "def parse(raw):\n"
+        "    return json.loads(raw)\n"
+        "def analyze(text):\n"
+        "    return parse('{not valid json')\n"
+    )
+    manifest = HypothesesManifest(
+        "1.0", "0.1.0", "1.0", str(tmp_path), 0,
+        (Hypothesis("detectors/sample.py", 4, "The parser call `json.loads(raw)` has no nearby exception handling.", (4,), "feed malformed input"),),
+        ("detectors/sample.py",),
+    )
+    result = verify_hypotheses(manifest, induce=True)
+    assert not result.findings
+    assert result.induction[0]["status"] == "FALSIFIED"
