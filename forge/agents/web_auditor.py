@@ -100,8 +100,11 @@ def audit(root: str | Path, eligible: set[str] | None = None) -> tuple[AgentScan
             continue
         try:
             source = path.read_text(encoding="utf-8")
-        except (OSError, UnicodeDecodeError):
-            examinations[rel] = "excluded_by_scope"
+        except UnicodeDecodeError:
+            examinations[rel] = "binary_or_unreadable"
+            continue
+        except OSError:
+            examinations[rel] = "binary_or_unreadable"
             continue
         analyzed.append(rel)
         lines = source.splitlines()

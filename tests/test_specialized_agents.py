@@ -189,6 +189,14 @@ def test_scope_policy_excludes_oversized_text_before_agent_reads(tmp_path):
     assert "generated/bundle.js" not in discovered
     assert result.examinations["generated/bundle.js"] == "excluded_by_policy"
 
+
+def test_agents_preserve_syntax_failure_status_instead_of_calling_it_scope_exclusion(tmp_path):
+    write(tmp_path, "broken.py", "def broken(:\n    return 1\n")
+    security = audit(tmp_path)
+    integrity = inspect(tmp_path)
+    assert security.examinations["broken.py"] == "syntax_error"
+    assert integrity.examinations["broken.py"] == "syntax_error"
+
 def test_archaeologist_adds_deletion_judgment(tmp_path):
     write(tmp_path, "dead.py", "x = 1\n")
     result = assess(tmp_path)

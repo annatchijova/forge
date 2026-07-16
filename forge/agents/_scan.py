@@ -26,8 +26,11 @@ def prepare_python_scan(root: str | os.PathLike[str], eligible: set[str]) -> Pyt
             continue
         try:
             tree = ast.parse(path.read_text())
-        except (SyntaxError, OSError, UnicodeDecodeError):
-            examinations[rel] = "excluded_by_scope"
+        except SyntaxError:
+            examinations[rel] = "syntax_error"
+            continue
+        except (OSError, UnicodeDecodeError):
+            examinations[rel] = "binary_or_unreadable"
             continue
         modules.append((rel, tree))
     return PythonScanSet(base, tuple(modules), examinations)
