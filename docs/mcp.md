@@ -6,6 +6,27 @@ Python API and the CLI. MCP transport is in `forge/mcp_server.py`. It exposes
 `recommend_changes`, and the standalone `review_patch` tool. It changes **how**
 FORGE is invoked, not **how** FORGE reasons.
 
+## Stale-process detection: `runtime_info()`
+
+Unlike the CLI, which re-imports from disk on every invocation, the MCP
+server is a long-running process: it keeps whatever was on disk at process
+start loaded in memory for its entire lifetime. A source fix applied after
+the server started is real on disk and invisible to that process until it
+restarts, with nothing in its responses distinguishing "the fix does not
+work" from "this process has not loaded it yet." Found via a real stress-test
+session where a fix appeared to have no effect through MCP, and turned out to
+be a server process that had been running since before the fix landed.
+
+Call `runtime_info()` to see what this server process actually has loaded
+(`runtime_fingerprint`, a hash of the mtime/size of every `.py` file under
+`forge/` at import time — not a manually maintained version string, so it
+changes automatically after any source change once the process restarts).
+The same fingerprint also travels inside every `audit_repository()` result,
+under `metrics.reproducibility.runtime_fingerprint` — compare it against a
+fresh CLI run over the same repository, or against `runtime_info()` again
+after a restart, to confirm a fix actually took effect. There is no hot
+reload; a changed fingerprint after a restart is the only way to tell.
+
 ## Running the MCP server
 
 With the Python MCP SDK installed, start the stdio server with:

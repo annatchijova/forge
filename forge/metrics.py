@@ -19,6 +19,7 @@ from forge.models import ModuleClass
 from forge.canonical import canonical_json
 from forge.severity import finding_family
 from forge.disposition import determine_disposition
+from forge.build_info import RUNTIME_FINGERPRINT, PROCESS_IMPORTED_AT_EPOCH
 
 
 def _ratio(covered: int, total: int) -> dict[str, int]:
@@ -160,7 +161,7 @@ def collect_metrics(*, root: Path, discovered: list[Path], triage: Any, coverage
     }
     finding_digest = hashlib.sha256(canonical_json([asdict(item) for item in findings]).encode("utf-8")).hexdigest()
     trace_metrics = {"runtime_events": len(trace.events), "events_hashed": len(trace.events), "events_verified": None, "artifacts_produced": None, "hash_chain_length": None, "chain_verification": None, "tampering_detected": None, "partial_trace": event_kinds.get("run_failed", 0) > 0}
-    reproducibility = {"runtime_deterministic": None, "seed_used": None, "environment": {"python": sys.version.split()[0], "os": platform.platform()}, "forge_version": "0.1.0", "skill_versions": {item["name"]: item["version"] for item in skills}, "schema_versions": {"triage": triage.schema_version}, "repository_snapshot_sha256": repository_snapshot_sha256, "artifact_hashes": None, "seal_verified": None}
+    reproducibility = {"runtime_deterministic": None, "seed_used": None, "environment": {"python": sys.version.split()[0], "os": platform.platform()}, "forge_version": "0.1.0", "runtime_fingerprint": RUNTIME_FINGERPRINT, "runtime_process_imported_at_epoch": PROCESS_IMPORTED_AT_EPOCH, "skill_versions": {item["name"]: item["version"] for item in skills}, "schema_versions": {"triage": triage.schema_version}, "repository_snapshot_sha256": repository_snapshot_sha256, "artifact_hashes": None, "seal_verified": None}
     finding_metrics["finding_digest"] = finding_digest
     executable_count = len(skills)
     quality = {"repository_coverage": _ratio(coverage.files_analyzed, coverage.files_discovered), "module_coverage": _ratio(analyzed_modules, len(triage.modules)), "contract_coverage": _ratio(applicability["APPLICABLE"], sum(applicability.values()) or 1), "contract_coverage_note": f"{executable_count} executable skill(s) loaded; this ratio measures applicability observations for executable skills only, not the documented skills catalog.", "evidence_completeness": None, "evidence_completeness_note": "Requires an explicit obligation ledger mapping each executed contract obligation to satisfied or missing Evidence items.", "verification_coverage": None, "verification_coverage_note": "Requires a count of planned checks versus checks actually executed, including skipped checks and their reasons."}

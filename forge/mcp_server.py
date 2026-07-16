@@ -20,12 +20,35 @@ from forge.agents.patch_reviewer import review as review_patch_impl
 from forge.comparison import compare_runs
 from forge.agent_independence import load_and_validate, write_validation_artifact, AgentIndependenceError
 from forge.multi_agent import finalize_multi_agent_run
+from forge.build_info import RUNTIME_FINGERPRINT, PROCESS_IMPORTED_AT_EPOCH
 
 mcp = FastMCP("forge")
 runtime = Runtime()
 
 def _error(code: str, message: str, **extra: Any) -> dict[str, Any]:
     return {"ok": False, "error": {"code": code, "message": message, **extra}}
+
+@mcp.tool()
+def runtime_info() -> dict[str, Any]:
+    """Report which FORGE source this server process actually has loaded.
+
+    Unlike the CLI (`python3 -m forge audit ...`), which re-imports from disk
+    on every invocation, this MCP server is a long-running process: it keeps
+    whatever was on disk at process start loaded in memory for its entire
+    lifetime. A source fix applied after this process started is real on
+    disk and invisible here until the process restarts, with no way to tell
+    "the fix does not work" from "this process has not loaded it yet" unless
+    that is checked explicitly - call this before trusting a fix's absence
+    from a result, or compare runtime_fingerprint against a fresh CLI run
+    over the same repository. The same fingerprint also travels inside every
+    audit_repository() result, under metrics.reproducibility.
+    """
+    return {
+        "ok": True,
+        "loaded_from": str(Path(__file__).resolve().parent),
+        "runtime_fingerprint": RUNTIME_FINGERPRINT,
+        "process_imported_at_epoch": PROCESS_IMPORTED_AT_EPOCH,
+    }
 
 @mcp.tool()
 def audit_repository(path: str, max_connected: int = 100, output_dir: str | None = None,

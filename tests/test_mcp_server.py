@@ -1,9 +1,20 @@
 import json
 from pathlib import Path
-from forge.mcp_server import audit_repository, get_findings, verify_seal, review_patch
+from forge.mcp_server import audit_repository, get_findings, verify_seal, review_patch, runtime_info
+from forge.build_info import RUNTIME_FINGERPRINT
 
 def put(root, name, text):
     p=root/name; p.parent.mkdir(parents=True, exist_ok=True); p.write_text(text); return p
+
+def test_mcp_runtime_info_reports_the_loaded_fingerprint():
+    result = runtime_info()
+    assert result["ok"] and result["runtime_fingerprint"] == RUNTIME_FINGERPRINT
+
+def test_mcp_audit_result_carries_the_same_fingerprint_as_runtime_info(tmp_path):
+    put(tmp_path, "main.py", "x = 1\n")
+    result = audit_repository(str(tmp_path))
+    metrics = json.loads(open(result["artifacts"]["metrics"]).read())
+    assert metrics["reproducibility"]["runtime_fingerprint"] == runtime_info()["runtime_fingerprint"]
 
 def test_mcp_audit_matches_direct_pipeline_shape(tmp_path):
     put(tmp_path, "main.py", "import security\n")
