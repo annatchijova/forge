@@ -177,6 +177,18 @@ def test_scope_policy_excludes_binary_files_without_decoding_them(tmp_path):
     assert "assets/image.bin" not in discovered
     assert result.examinations["assets/image.bin"] == "excluded_by_policy"
 
+
+def test_scope_policy_excludes_oversized_text_before_agent_reads(tmp_path):
+    write(tmp_path, "main.py", "VALUE = 1\n")
+    oversized = tmp_path / "generated" / "bundle.js"
+    oversized.parent.mkdir()
+    with oversized.open("wb") as handle:
+        handle.truncate(5 * 1024 * 1024 + 1)
+    discovered = {str(path.relative_to(tmp_path)) for path in discover_files(tmp_path)}
+    result = audit(tmp_path)
+    assert "generated/bundle.js" not in discovered
+    assert result.examinations["generated/bundle.js"] == "excluded_by_policy"
+
 def test_archaeologist_adds_deletion_judgment(tmp_path):
     write(tmp_path, "dead.py", "x = 1\n")
     result = assess(tmp_path)

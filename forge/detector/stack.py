@@ -36,6 +36,7 @@ BUILD_FILES = {"Makefile": "Make", "CMakeLists.txt": "CMake", "Dockerfile": "Doc
 CI_MARKERS = (".github/workflows", ".gitlab-ci.yml", "Jenkinsfile", ".circleci")
 GIT_PROBE_TIMEOUT_SECONDS = 5
 GIT_HISTORY_TIMEOUT_SECONDS = 30
+MAX_AUDIT_FILE_BYTES = 5 * 1024 * 1024
 
 
 def discover_files(root: str | os.PathLike[str], include_excluded: bool = False) -> list[Path]:
@@ -51,7 +52,20 @@ def discover_files(root: str | os.PathLike[str], include_excluded: bool = False)
 def is_excluded_by_policy(path: Path, root: Path) -> bool:
     """Return whether a path is outside the agent audit boundary."""
     relative = path.relative_to(root)
-    return path.name in SKIP_FILE_NAMES or any(part in SKIP_DIRS for part in relative.parts) or is_binary_file(path)
+    return (
+        path.name in SKIP_FILE_NAMES
+        or any(part in SKIP_DIRS for part in relative.parts)
+        or is_oversized_file(path)
+        or is_binary_file(path)
+    )
+
+
+def is_oversized_file(path: Path, limit: int = MAX_AUDIT_FILE_BYTES) -> bool:
+    """Keep very large artifacts out of all agents before content reads."""
+    try:
+        return path.stat().st_size > limit
+    except OSError:
+        return True
 
 
 def is_binary_file(path: Path, sample_size: int = 8192) -> bool:
