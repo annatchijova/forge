@@ -13,18 +13,6 @@ class IntegrityFinding:
     family: str; path: str; line: int; description: str
 
 
-_NON_ARTIFACT_SERIALIZATION_MODULES = {
-    "forge/cli.py", "forge/orchestrator.py", "forge/canonical.py",
-    "forge/cronos/chain.py", "forge/cronos/store.py", "forge/tiered_report.py",
-    # These are presentation serializers: JSON is embedded in HTML and is not
-    # a versioned interchange artifact.
-    "forge/report.py",
-}
-_SERIALIZATION_FUNCTION_NAMES = {
-    "as_dict", "serialize", "to_dict", "to_json", "jsonable_encoder",
-}
-
-
 def _serialization_has_version(call: ast.Call) -> bool:
     data = call.args[0] if call.args else None
     if isinstance(data, ast.Dict):
@@ -33,6 +21,8 @@ def _serialization_has_version(call: ast.Call) -> bool:
         return True
     if isinstance(data, ast.Call) and isinstance(data.func, ast.Name) and data.func.id in {"seal_manifest", "canonical_json"}:
         return True
+    if isinstance(data, ast.Call) and isinstance(data.func, ast.Name) and data.func.id == "dict":
+        return any(keyword.arg in {"schema_version", "version", "benchmark_schema_version"} for keyword in data.keywords)
     return False
 
 
@@ -56,7 +46,20 @@ def _versioned_payload_names(tree: ast.AST) -> set[str]:
 def _is_internal_serialization(call: ast.Call, parents: dict[ast.AST, ast.AST]) -> bool:
     current = parents.get(call)
     while current is not None:
-        if isinstance(current, ast.Call) and isinstance(current.func, ast.Name) and current.func.id == "print":
+        if isinstance(current, ast.Call) and (
+            (isinstance(current.func, ast.Name) and current.func.id == "print")
+            or (isinstance(current.func, ast.Attribute) and current.func.attr in {"debug", "info", "warning", "error", "exception", "critical"})
+        ):
+            return True
+        current = parents.get(current)
+    return False
+
+
+def _is_presentation_serialization(call: ast.Call, parents: dict[ast.AST, ast.AST]) -> bool:
+    """Recognize serialization embedded in a presentation template structurally."""
+    current = parents.get(call)
+    while current is not None:
+        if isinstance(current, ast.JoinedStr):
             return True
         current = parents.get(current)
     return False
@@ -127,16 +130,13 @@ def inspect(root: str | os.PathLike[str]) -> tuple[IntegrityFinding, ...]:
         parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
         versioned_payload_names = _versioned_payload_names(tree)
         for fn in (n for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))):
-            if fn.name in _SERIALIZATION_FUNCTION_NAMES:
-                continue
             for line in sorted(_float_calls_reaching_return(fn)):
                 out.append(IntegrityFinding("decision-adjacent-float", rel, line, "non-deterministic arithmetic in a decision-adjacent path"))
         for n in ast.walk(tree):
             if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr in {"dump", "dumps"} and isinstance(n.func.value, ast.Name) and n.func.value.id in {"json","pickle"}:
-                if (rel in _NON_ARTIFACT_SERIALIZATION_MODULES or _enclosing_function(n, parents) in {"_event", "_sha256_dict", "save"}
-                        or _is_internal_serialization(n, parents) or _serialization_has_version(n)
-                        or (isinstance(n.args[0], ast.Name) and n.args[0].id in versioned_payload_names)
-                        or (isinstance(n.args[0], ast.Name) and n.args[0].id in {"metrics", "coverage", "governance", "trace", "profile"})):
+                if (_is_internal_serialization(n, parents) or _is_presentation_serialization(n, parents)
+                        or _serialization_has_version(n)
+                        or (isinstance(n.args[0], ast.Name) and n.args[0].id in versioned_payload_names)):
                     continue
                 out.append(IntegrityFinding("unversioned-serialization", rel, n.lineno, "unversioned serialization"))
         examinations[rel]="examined_with_findings" if any(x.path == rel for x in out) else "examined_clean"

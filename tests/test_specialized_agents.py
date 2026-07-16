@@ -92,6 +92,12 @@ def test_integrity_ignores_json_embedded_in_presentation_html(tmp_path):
     write(tmp_path, "forge/report.py", "import json\ndef render(metrics):\n    return f'<pre>{json.dumps(metrics)}</pre>'\n")
     assert not [x for x in inspect(tmp_path) if x.family == "unversioned-serialization"]
 
+
+def test_integrity_does_not_trust_forge_specific_payload_names(tmp_path):
+    write(tmp_path, "unrelated.py", "import json\nmetrics = {'value': 1}\njson.dumps(metrics)\n")
+    hits = inspect(tmp_path)
+    assert [(item.family, item.path) for item in hits] == [("unversioned-serialization", "unrelated.py")]
+
 def test_shared_discovery_excludes_venv_from_security(tmp_path):
     write(tmp_path, "main.py", "x = 1\n")
     write(tmp_path, ".venv/site.py", "password = 'leaked'\n")
