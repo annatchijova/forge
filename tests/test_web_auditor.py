@@ -56,3 +56,9 @@ def test_web_auditor_excludes_generated_next_artifacts(tmp_path):
     result, analyzed = audit(tmp_path)
     assert analyzed == ("src/app.ts",)
     assert not result.findings
+
+
+def test_web_auditor_does_not_treat_path_namespace_as_user_input(tmp_path):
+    write(tmp_path, "config.js", 'fs.readFileSync(path.join(__dirname, "config.json"));\n')
+    result, _ = audit(tmp_path)
+    assert not [item for item in result.findings if item.family == "path-traversal"]

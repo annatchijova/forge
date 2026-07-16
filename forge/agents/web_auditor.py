@@ -117,6 +117,12 @@ def audit(root: str | Path, eligible: set[str] | None = None) -> tuple[AgentScan
                 local.append(WebFinding("parser-boundary", rel, number, "JSON.parse call has no nearby visible try/catch boundary"))
             if re.search(r"\b(?:readFile|readFileSync|writeFile|writeFileSync|unlink|rm)\s*\(", code_line):
                 names = set(re.findall(r"\b(?:user|request|input|path|file|name)\w*\b", code_line, re.I))
+                # ``path`` is commonly the imported path namespace (path.join,
+                # path.resolve), not an attacker-controlled value. Keep it only
+                # when it also appears as a bare argument; this preserves the
+                # positive case ``readFile(path)`` without flagging local joins.
+                if "path" in names and not re.search(r"\bpath\s*(?:[,)])", code_line):
+                    names.discard("path")
                 if names - sanitized_names and not re.search(r"\b(?:resolve|normalize|basename)\s*\(", code_line):
                     local.append(WebFinding("path-traversal", rel, number, "filesystem path reaches a file operation without visible normalization"))
         findings.extend(local)
