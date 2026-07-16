@@ -1,0 +1,23 @@
+{
+  "precision_schema_version": "1.0",
+  "cases": [
+    {"name": "security-positive-1", "agent": "security_auditor", "path": "security/positive-1", "expected_families": ["hardcoded-credential", "path-traversal", "unsafe-deserialization"]},
+    {"name": "security-positive-2", "agent": "security_auditor", "path": "security/positive-2", "expected_families": ["hardcoded-credential", "path-traversal", "unsafe-deserialization"]},
+    {"name": "security-positive-3", "agent": "security_auditor", "path": "security/positive-3", "expected_families": ["hardcoded-credential", "path-traversal", "unsafe-deserialization"]},
+    {"name": "security-negative-1", "agent": "security_auditor", "path": "security/negative-1", "expected_families": []},
+    {"name": "security-negative-2", "agent": "security_auditor", "path": "security/negative-2", "expected_families": []},
+    {"name": "security-negative-3", "agent": "security_auditor", "path": "security/negative-3", "expected_families": []},
+    {"name": "integrity-positive-1", "agent": "integrity_inspector", "path": "integrity/positive-1", "expected_families": ["decision-adjacent-float", "unversioned-serialization"]},
+    {"name": "integrity-positive-2", "agent": "integrity_inspector", "path": "integrity/positive-2", "expected_families": ["decision-adjacent-float", "unversioned-serialization"]},
+    {"name": "integrity-positive-3", "agent": "integrity_inspector", "path": "integrity/positive-3", "expected_families": ["decision-adjacent-float", "unversioned-serialization"]},
+    {"name": "integrity-negative-1", "agent": "integrity_inspector", "path": "integrity/negative-1", "expected_families": []},
+    {"name": "integrity-negative-2", "agent": "integrity_inspector", "path": "integrity/negative-2", "expected_families": []},
+    {"name": "integrity-negative-3", "agent": "integrity_inspector", "path": "integrity/negative-3", "expected_families": []},
+    {"name": "web-positive-1", "agent": "web_auditor", "path": "web/positive-1", "expected_families": ["dynamic-evaluation", "parser-boundary", "path-traversal", "subprocess"]},
+    {"name": "web-positive-2", "agent": "web_auditor", "path": "web/positive-2", "expected_families": ["dynamic-evaluation", "parser-boundary", "path-traversal", "subprocess"]},
+    {"name": "web-positive-3", "agent": "web_auditor", "path": "web/positive-3", "expected_families": ["dynamic-evaluation", "parser-boundary", "path-traversal", "subprocess"]},
+    {"name": "web-negative-1", "agent": "web_auditor", "path": "web/negative-1", "expected_families": []},
+    {"name": "web-negative-2", "agent": "web_auditor", "path": "web/negative-2", "expected_families": []},
+    {"name": "web-negative-3", "agent": "web_auditor", "path": "web/negative-3", "expected_families": []}
+  ]
+}

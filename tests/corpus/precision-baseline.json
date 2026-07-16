@@ -1,0 +1,253 @@
+{
+  "by_family": {
+    "decision-adjacent-float": {
+      "f1": 1.0,
+      "false_negative": 0,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "true_positive": 3
+    },
+    "dynamic-evaluation": {
+      "f1": 1.0,
+      "false_negative": 0,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "true_positive": 3
+    },
+    "hardcoded-credential": {
+      "f1": 1.0,
+      "false_negative": 0,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "true_positive": 3
+    },
+    "parser-boundary": {
+      "f1": 1.0,
+      "false_negative": 0,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "true_positive": 3
+    },
+    "path-traversal": {
+      "f1": 1.0,
+      "false_negative": 0,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "true_positive": 6
+    },
+    "subprocess": {
+      "f1": 1.0,
+      "false_negative": 0,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "true_positive": 3
+    },
+    "unsafe-deserialization": {
+      "f1": 1.0,
+      "false_negative": 0,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "true_positive": 3
+    },
+    "unversioned-serialization": {
+      "f1": 1.0,
+      "false_negative": 0,
+      "false_positive": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "true_positive": 3
+    }
+  },
+  "case_count": 18,
+  "cases": [
+    {
+      "actual_families": [
+        "hardcoded-credential",
+        "path-traversal",
+        "unsafe-deserialization"
+      ],
+      "agent": "security_auditor",
+      "case": "security-positive-1",
+      "expected_families": [
+        "hardcoded-credential",
+        "path-traversal",
+        "unsafe-deserialization"
+      ]
+    },
+    {
+      "actual_families": [
+        "hardcoded-credential",
+        "path-traversal",
+        "unsafe-deserialization"
+      ],
+      "agent": "security_auditor",
+      "case": "security-positive-2",
+      "expected_families": [
+        "hardcoded-credential",
+        "path-traversal",
+        "unsafe-deserialization"
+      ]
+    },
+    {
+      "actual_families": [
+        "hardcoded-credential",
+        "path-traversal",
+        "unsafe-deserialization"
+      ],
+      "agent": "security_auditor",
+      "case": "security-positive-3",
+      "expected_families": [
+        "hardcoded-credential",
+        "path-traversal",
+        "unsafe-deserialization"
+      ]
+    },
+    {
+      "actual_families": [],
+      "agent": "security_auditor",
+      "case": "security-negative-1",
+      "expected_families": []
+    },
+    {
+      "actual_families": [],
+      "agent": "security_auditor",
+      "case": "security-negative-2",
+      "expected_families": []
+    },
+    {
+      "actual_families": [],
+      "agent": "security_auditor",
+      "case": "security-negative-3",
+      "expected_families": []
+    },
+    {
+      "actual_families": [
+        "decision-adjacent-float",
+        "unversioned-serialization"
+      ],
+      "agent": "integrity_inspector",
+      "case": "integrity-positive-1",
+      "expected_families": [
+        "decision-adjacent-float",
+        "unversioned-serialization"
+      ]
+    },
+    {
+      "actual_families": [
+        "decision-adjacent-float",
+        "unversioned-serialization"
+      ],
+      "agent": "integrity_inspector",
+      "case": "integrity-positive-2",
+      "expected_families": [
+        "decision-adjacent-float",
+        "unversioned-serialization"
+      ]
+    },
+    {
+      "actual_families": [
+        "decision-adjacent-float",
+        "unversioned-serialization"
+      ],
+      "agent": "integrity_inspector",
+      "case": "integrity-positive-3",
+      "expected_families": [
+        "decision-adjacent-float",
+        "unversioned-serialization"
+      ]
+    },
+    {
+      "actual_families": [],
+      "agent": "integrity_inspector",
+      "case": "integrity-negative-1",
+      "expected_families": []
+    },
+    {
+      "actual_families": [],
+      "agent": "integrity_inspector",
+      "case": "integrity-negative-2",
+      "expected_families": []
+    },
+    {
+      "actual_families": [],
+      "agent": "integrity_inspector",
+      "case": "integrity-negative-3",
+      "expected_families": []
+    },
+    {
+      "actual_families": [
+        "dynamic-evaluation",
+        "parser-boundary",
+        "path-traversal",
+        "subprocess"
+      ],
+      "agent": "web_auditor",
+      "case": "web-positive-1",
+      "expected_families": [
+        "dynamic-evaluation",
+        "parser-boundary",
+        "path-traversal",
+        "subprocess"
+      ]
+    },
+    {
+      "actual_families": [
+        "dynamic-evaluation",
+        "parser-boundary",
+        "path-traversal",
+        "subprocess"
+      ],
+      "agent": "web_auditor",
+      "case": "web-positive-2",
+      "expected_families": [
+        "dynamic-evaluation",
+        "parser-boundary",
+        "path-traversal",
+        "subprocess"
+      ]
+    },
+    {
+      "actual_families": [
+        "dynamic-evaluation",
+        "parser-boundary",
+        "path-traversal",
+        "subprocess"
+      ],
+      "agent": "web_auditor",
+      "case": "web-positive-3",
+      "expected_families": [
+        "dynamic-evaluation",
+        "parser-boundary",
+        "path-traversal",
+        "subprocess"
+      ]
+    },
+    {
+      "actual_families": [],
+      "agent": "web_auditor",
+      "case": "web-negative-1",
+      "expected_families": []
+    },
+    {
+      "actual_families": [],
+      "agent": "web_auditor",
+      "case": "web-negative-2",
+      "expected_families": []
+    },
+    {
+      "actual_families": [],
+      "agent": "web_auditor",
+      "case": "web-negative-3",
+      "expected_families": []
+    }
+  ],
+  "corpus": "/home/labestiadevigia/forge/tests/corpus",
+  "precision_schema_version": "1.0"
+}
