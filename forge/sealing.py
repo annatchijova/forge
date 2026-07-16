@@ -105,3 +105,26 @@ def write_sealed_findings(findings: list[dict[str, Any]], metadata: dict[str, An
 
 def read_and_verify(destination: str | Path) -> dict[str, Any]:
     return verify_sealed(load_json(destination, f"sealed manifest {destination}"))
+
+
+FINDINGS_JSONL_SCHEMA_VERSION = "1.0"
+
+
+def write_findings_jsonl(sealed: dict[str, Any], destination: str | Path) -> None:
+    """Write one finding per line, self-describing and independent of context.
+
+    Each line stamps its own schema version so a single extracted line (via
+    grep, a diff of two runs, or a partial copy) stays interpretable without
+    the surrounding sealed manifest. index/hash mirror the sealed chain entry
+    so a line can be cross-referenced back to verification-manifest.sealed.json.
+    """
+    lines = []
+    for entry in sealed.get("chain", []):
+        record = {
+            "findings_jsonl_schema_version": FINDINGS_JSONL_SCHEMA_VERSION,
+            "index": entry["index"],
+            "hash": entry["hash"],
+            "finding": entry["finding"],
+        }
+        lines.append(json.dumps(record, sort_keys=True))
+    Path(destination).write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")

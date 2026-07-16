@@ -48,6 +48,18 @@ def test_verify_subcommand_checks_a_sealed_manifest_locally(tmp_path, monkeypatc
     payload = json.loads(capsys.readouterr().out)
     assert payload["ok"] is True
 
+def test_audit_writes_one_findings_jsonl_record_per_sealed_finding(tmp_path):
+    put(tmp_path, "main.py", "import security\n")
+    put(tmp_path, "security.py", "password = 'synthetic-secret'\n")
+    result = Runtime().audit(tmp_path, tmp_path / "out")
+    findings_jsonl_path = result.artifacts["findings_jsonl"]
+    lines = open(findings_jsonl_path, encoding="utf-8").read().splitlines()
+    assert len(lines) == len(result.finding_records) > 0
+    for line in lines:
+        record = json.loads(line)
+        assert record["findings_jsonl_schema_version"] == "1.0"
+        assert set(record) == {"findings_jsonl_schema_version", "index", "hash", "finding"}
+
 def test_mcp_interactive_operations_delegate_to_runtime(tmp_path):
     put(tmp_path, "main.py", "import json\n")
     put(tmp_path, "loader.py", "import json\ndef load(raw):\n    return json.loads(raw)\n")

@@ -1,7 +1,8 @@
 import copy
+import json
 
 from forge.models import Evidence, Finding, VerificationManifest
-from forge.sealing import seal_manifest, verify_sealed
+from forge.sealing import seal_manifest, verify_sealed, write_findings_jsonl
 
 
 def _manifest():
@@ -52,3 +53,24 @@ def test_finding_chain_hashes_are_reproducible_even_with_an_audit_trace():
         "audit traces - the trace (run_id/timestamp) is leaking into the finding hash"
     )
     assert verify_sealed(sealed_a)["ok"] and verify_sealed(sealed_b)["ok"]
+
+
+def test_findings_jsonl_has_one_versioned_self_describing_record_per_finding(tmp_path):
+    sealed = seal_manifest(_manifest())
+    destination = tmp_path / "findings.jsonl"
+    write_findings_jsonl(sealed, destination)
+    lines = destination.read_text(encoding="utf-8").splitlines()
+    assert len(lines) == len(sealed["chain"])
+    for line, entry in zip(lines, sealed["chain"]):
+        record = json.loads(line)
+        assert record["findings_jsonl_schema_version"] == "1.0"
+        assert record["index"] == entry["index"]
+        assert record["hash"] == entry["hash"]
+        assert record["finding"] == json.loads(json.dumps(entry["finding"], sort_keys=True))
+
+
+def test_findings_jsonl_is_empty_but_valid_for_a_clean_manifest(tmp_path):
+    sealed = seal_manifest(VerificationManifest("1.0", "0.1.0", "1.0", ".", 0, (), (), ()))
+    destination = tmp_path / "findings.jsonl"
+    write_findings_jsonl(sealed, destination)
+    assert destination.read_text(encoding="utf-8") == ""
