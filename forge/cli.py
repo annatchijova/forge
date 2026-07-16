@@ -9,7 +9,7 @@ from forge.models import ModelRouting
 from forge.benchmark import run_benchmark
 from forge.comparison import compare_runs
 from forge.loop import run_loop
-from forge.agent_independence import load_and_validate, AgentIndependenceError
+from forge.agent_independence import load_and_validate, write_validation_artifact, AgentIndependenceError
 
 def main() -> int:
     import sys
@@ -104,6 +104,18 @@ def main() -> int:
         agent_args = agent_parser.parse_args(sys.argv[2:])
         try:
             print(json.dumps(load_and_validate(agent_args.results_dir, agent_args.agent), indent=2, sort_keys=True))
+            return 0
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            print(json.dumps({"status": "INDEPENDENCE_REJECTED", "error": str(exc)}, indent=2, sort_keys=True))
+            return 2
+    if len(sys.argv) > 1 and sys.argv[1] == "finalize-agents":
+        agent_parser = argparse.ArgumentParser(description="Validate and close an external FORGE multi-agent run")
+        agent_parser.add_argument("results_dir", type=Path)
+        agent_parser.add_argument("--agent", action="append", required=True, help="required agent role; repeatable")
+        agent_parser.add_argument("--output", type=Path, help="closing artifact path; defaults to results_dir/agent-independence.json")
+        agent_args = agent_parser.parse_args(sys.argv[2:])
+        try:
+            print(json.dumps(write_validation_artifact(agent_args.results_dir, agent_args.agent, agent_args.output), indent=2, sort_keys=True))
             return 0
         except (OSError, ValueError, json.JSONDecodeError) as exc:
             print(json.dumps({"status": "INDEPENDENCE_REJECTED", "error": str(exc)}, indent=2, sort_keys=True))

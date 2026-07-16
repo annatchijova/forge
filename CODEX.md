@@ -50,9 +50,11 @@ Coverage may enumerate excluded paths solely to report the boundary.
 An A-D-I protocol or a skills catalog is not evidence that an agent performed
 independent work. External orchestrators must provide a `work_product` for
 every role with concrete observations, hypotheses, falsifiable deductions,
-evidence references, and a decision. `forge.agent_independence` rejects
-protocol-only, incomplete, or duplicate work products. A run may be described
-as multi-agent only after that validator returns `INDEPENDENCE_VERIFIED`.
+evidence references, a decision, and a hypothesis-specific A-D-I ledger with
+all three stages. `forge.agent_independence` rejects protocol-only, incomplete,
+or duplicate work products. A run may be described as multi-agent only after
+`finalize-agents` writes `agent-independence.json` with
+`INDEPENDENCE_VERIFIED`.
 
 Every new `phylo` run is stored under `resultados/phylo/<run-id>/`. The prior
 `resultados/phylo-demo/` directory is retained as a legacy baseline and must

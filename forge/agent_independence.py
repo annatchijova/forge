@@ -14,7 +14,7 @@ from typing import Any, Iterable
 
 
 PROTOCOL_ONLY_KEYS = {"requested_role", "native_forge_role", "adi", "scope", "skills"}
-REQUIRED_WORK_FIELDS = ("observations", "hypotheses", "deductions", "evidence", "decision")
+REQUIRED_WORK_FIELDS = ("observations", "hypotheses", "deductions", "evidence", "decision", "adi")
 
 
 class AgentIndependenceError(ValueError):
@@ -32,6 +32,24 @@ def _text_items(value: Any) -> tuple[str, ...]:
 def _fingerprint(work: dict[str, Any]) -> str:
     payload = json.dumps(work, sort_keys=True, separators=(",", ":"), default=str)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _validate_adi(agent: str, value: Any) -> None:
+    if not isinstance(value, list) or not value:
+        raise AgentIndependenceError(f"{agent} has no hypothesis-specific A-D-I ledger")
+    stages = set()
+    for entry in value:
+        if not isinstance(entry, dict):
+            raise AgentIndependenceError(f"{agent} A-D-I entry is not an object")
+        stages.add(entry.get("stage"))
+        if not _text_items(entry.get("hypothesis_id")):
+            raise AgentIndependenceError(f"{agent} A-D-I entry has no hypothesis_id")
+        if not _text_items(entry.get("statement")):
+            raise AgentIndependenceError(f"{agent} A-D-I entry has no statement")
+        if not _text_items(entry.get("evidence")):
+            raise AgentIndependenceError(f"{agent} A-D-I entry has no evidence")
+    if stages != {"abduction", "deduction", "induction"}:
+        raise AgentIndependenceError(f"{agent} A-D-I stages are incomplete: {sorted(stages)}")
 
 
 def validate_independent_results(
@@ -67,6 +85,7 @@ def validate_independent_results(
             raise AgentIndependenceError(f"{agent} has no evidence references")
         if not _text_items(work.get("decision")):
             raise AgentIndependenceError(f"{agent} has no decision")
+        _validate_adi(agent, work.get("adi"))
         fingerprints[agent] = _fingerprint(work)
     duplicates: dict[str, list[str]] = {}
     for agent, digest in fingerprints.items():
@@ -96,4 +115,13 @@ def load_and_validate(directory: str | Path, required_agents: Iterable[str]) -> 
     return validate_independent_results(results, required_agents)
 
 
-__all__ = ("AgentIndependenceError", "load_and_validate", "validate_independent_results")
+def write_validation_artifact(directory: str | Path, required_agents: Iterable[str], destination: str | Path | None = None) -> dict[str, Any]:
+    """Validate results and persist the mandatory multi-agent closing artifact."""
+    summary = load_and_validate(directory, required_agents)
+    target = Path(destination) if destination is not None else Path(directory) / "agent-independence.json"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return {**summary, "artifact": str(target)}
+
+
+__all__ = ("AgentIndependenceError", "load_and_validate", "validate_independent_results", "write_validation_artifact")

@@ -1,6 +1,6 @@
 import pytest
 
-from forge.agent_independence import AgentIndependenceError, validate_independent_results
+from forge.agent_independence import AgentIndependenceError, validate_independent_results, write_validation_artifact
 
 
 ROLES = ("scope_triage", "python_security", "independent_reviewer")
@@ -14,7 +14,12 @@ def work(agent):
             "hypotheses": [f"{agent} hypothesis"],
             "deductions": [f"{agent} falsifier"],
             "evidence": [f"{agent}.json:1"],
-            "decision": ["UNDETERMINED"],
+        "decision": ["UNDETERMINED"],
+        "adi": [
+            {"hypothesis_id": f"{agent}-h1", "stage": "abduction", "statement": "candidate", "evidence": [f"{agent}.json:1"]},
+            {"hypothesis_id": f"{agent}-h1", "stage": "deduction", "statement": "falsifier", "evidence": [f"{agent}.json:2"]},
+            {"hypothesis_id": f"{agent}-h1", "stage": "induction", "statement": "undetermined", "evidence": [f"{agent}.json:3"]},
+        ],
         },
     }
 
@@ -36,3 +41,21 @@ def test_independence_accepts_distinct_evidence_backed_products():
     result = validate_independent_results({role: work(role) for role in ROLES}, ROLES)
     assert result["status"] == "INDEPENDENCE_VERIFIED"
     assert result["unique_work_products"] == len(ROLES)
+
+
+def test_independence_requires_hypothesis_specific_adi():
+    records = {role: work(role) for role in ROLES}
+    records["scope_triage"]["work_product"]["adi"] = []
+    with pytest.raises(AgentIndependenceError, match="A-D-I"):
+        validate_independent_results(records, ROLES)
+
+
+def test_validation_writes_mandatory_closing_artifact(tmp_path):
+    results_dir = tmp_path / "agents"
+    results_dir.mkdir()
+    for role in ROLES:
+        import json
+        (results_dir / f"{role}.json").write_text(json.dumps(work(role)))
+    summary = write_validation_artifact(results_dir, ROLES)
+    assert summary["status"] == "INDEPENDENCE_VERIFIED"
+    assert (results_dir / "agent-independence.json").exists()

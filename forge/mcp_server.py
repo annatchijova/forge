@@ -18,7 +18,7 @@ from forge.models import ModelRouting
 from forge.sealing import verify_sealed
 from forge.agents.patch_reviewer import review as review_patch_impl
 from forge.comparison import compare_runs
-from forge.agent_independence import load_and_validate, AgentIndependenceError
+from forge.agent_independence import load_and_validate, write_validation_artifact, AgentIndependenceError
 
 mcp = FastMCP("forge")
 runtime = Runtime()
@@ -147,6 +147,14 @@ def validate_agent_results(results_dir: str, required_agents: list[str]) -> dict
     """Fail closed unless external agent files contain distinct evidence-backed work products."""
     try:
         return {"ok": True, **load_and_validate(results_dir, required_agents)}
+    except (AgentIndependenceError, FileNotFoundError, OSError, ValueError, json.JSONDecodeError) as exc:
+        return _error("independence_rejected", str(exc))
+
+@mcp.tool()
+def finalize_agent_results(results_dir: str, required_agents: list[str], output_path: str | None = None) -> dict[str, Any]:
+    """Validate external work products and write the mandatory closing artifact."""
+    try:
+        return {"ok": True, **write_validation_artifact(results_dir, required_agents, output_path)}
     except (AgentIndependenceError, FileNotFoundError, OSError, ValueError, json.JSONDecodeError) as exc:
         return _error("independence_rejected", str(exc))
 
