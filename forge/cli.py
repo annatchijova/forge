@@ -9,6 +9,7 @@ from forge.models import ModelRouting
 from forge.benchmark import run_benchmark
 from forge.comparison import compare_runs
 from forge.loop import run_loop
+from forge.agent_independence import load_and_validate, AgentIndependenceError
 
 def main() -> int:
     import sys
@@ -96,6 +97,17 @@ def main() -> int:
         compare_args = compare_parser.parse_args(sys.argv[2:])
         print(json.dumps(compare_runs(compare_args.previous, compare_args.current), indent=2, sort_keys=True))
         return 0
+    if len(sys.argv) > 1 and sys.argv[1] == "validate-agents":
+        agent_parser = argparse.ArgumentParser(description="Validate independent external FORGE agent work products")
+        agent_parser.add_argument("results_dir", type=Path)
+        agent_parser.add_argument("--agent", action="append", required=True, help="required agent role; repeatable")
+        agent_args = agent_parser.parse_args(sys.argv[2:])
+        try:
+            print(json.dumps(load_and_validate(agent_args.results_dir, agent_args.agent), indent=2, sort_keys=True))
+            return 0
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            print(json.dumps({"status": "INDEPENDENCE_REJECTED", "error": str(exc)}, indent=2, sort_keys=True))
+            return 2
     if len(sys.argv) > 1 and sys.argv[1] == "compare-refs":
         refs_parser = argparse.ArgumentParser(description="Compare two committed Git refs through FORGE")
         refs_parser.add_argument("repo", type=Path)

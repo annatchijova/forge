@@ -45,6 +45,15 @@ Project manifests such as `package.json` and `requirements.txt` remain in
 discovery because they are evidence about the stack, not dependency source.
 Coverage may enumerate excluded paths solely to report the boundary.
 
+### Multi-agent independence
+
+An A-D-I protocol or a skills catalog is not evidence that an agent performed
+independent work. External orchestrators must provide a `work_product` for
+every role with concrete observations, hypotheses, falsifiable deductions,
+evidence references, and a decision. `forge.agent_independence` rejects
+protocol-only, incomplete, or duplicate work products. A run may be described
+as multi-agent only after that validator returns `INDEPENDENCE_VERIFIED`.
+
 Every new `phylo` run is stored under `resultados/phylo/<run-id>/`. The prior
 `resultados/phylo-demo/` directory is retained as a legacy baseline and must
 not be overwritten; comparisons belong in `resultados/phylo/history.md`.

@@ -18,6 +18,7 @@ from forge.models import ModelRouting
 from forge.sealing import verify_sealed
 from forge.agents.patch_reviewer import review as review_patch_impl
 from forge.comparison import compare_runs
+from forge.agent_independence import load_and_validate, AgentIndependenceError
 
 mcp = FastMCP("forge")
 runtime = Runtime()
@@ -140,6 +141,14 @@ def compare_audits(previous_run_dir: str, current_run_dir: str) -> dict[str, Any
         return {"ok": True, **compare_runs(previous_run_dir, current_run_dir)}
     except (FileNotFoundError, OSError, ValueError, json.JSONDecodeError) as exc:
         return _error("comparison_failed", str(exc))
+
+@mcp.tool()
+def validate_agent_results(results_dir: str, required_agents: list[str]) -> dict[str, Any]:
+    """Fail closed unless external agent files contain distinct evidence-backed work products."""
+    try:
+        return {"ok": True, **load_and_validate(results_dir, required_agents)}
+    except (AgentIndependenceError, FileNotFoundError, OSError, ValueError, json.JSONDecodeError) as exc:
+        return _error("independence_rejected", str(exc))
 
 @mcp.tool()
 def triage_repository(path: str) -> dict[str, Any]:

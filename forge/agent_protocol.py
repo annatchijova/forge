@@ -113,7 +113,7 @@ def mandatory_protocol(
         SkillApplication(
             name=name,
             source=source,
-            status="APPLIED",
+            status="LOADED_ONLY",
             evidence=(f"{agent} received the mandatory policy catalog entry {name} before producing its result.",),
             limitation="Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
         )
