@@ -62,8 +62,30 @@ def _function_for_line(tree: ast.AST, line: int) -> ast.FunctionDef | ast.AsyncF
     return min(candidates, key=lambda node: getattr(node, "end_lineno", node.lineno) - node.lineno, default=None)
 
 
-def _synthetic_value(name: str) -> str:
-    return "{not valid json"
+_MALFORMED_TEXT = "{not valid json"
+
+
+def _synthetic_value(name: str, annotation: Any) -> Any:
+    """Synthesize a malformed argument shaped like the parameter's own type.
+
+    A parser hypothesis claims a specific content-parsing failure (bad JSON,
+    bad YAML, a syntax error) escapes uncaught. Passing the same raw string
+    regardless of the parameter's annotation used to conflate two different
+    things: a `path: Path` parameter fed a plain `str` raises AttributeError
+    from a type mismatch (`'str' object has no attribute 'read_text'`) before
+    the function's own parsing/exception-handling code ever runs - that is
+    not evidence the hypothesized parsing failure is unhandled, it is an
+    artifact of the harness attacking the wrong argument type entirely. A
+    Path-annotated parameter gets a real Path to a real file containing the
+    malformed text instead, so the function's own read + parse + exception
+    handling actually executes and induction tests what the hypothesis
+    claims, not a TypeError the harness invented.
+    """
+    if "Path" in str(annotation):
+        target = Path(f"forge-induction-argument-{name}.txt")
+        target.write_text(_MALFORMED_TEXT, encoding="utf-8")
+        return target
+    return _MALFORMED_TEXT
 
 
 def _module_name(root: Path, module_path: str) -> str | None:
@@ -130,7 +152,7 @@ def _invoke_worker(root: str, module_path: str, function_name: str, target_line:
                     continue
                 if parameter.default is not parameter.empty and parameter.kind is not parameter.KEYWORD_ONLY:
                     continue
-                args.append(_synthetic_value(parameter.name))
+                args.append(_synthetic_value(parameter.name, parameter.annotation))
             result = function(*args)
             queue.put(("returned", type(result).__name__))
     except BaseException as exc:  # child boundary: never leak target exceptions to the audit process
