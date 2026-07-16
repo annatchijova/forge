@@ -27,7 +27,7 @@ class WebFinding:
 
 _PATTERNS = (
     ("dynamic-evaluation", re.compile(r"\beval\s*\(|\bnew\s+Function\s*\("), "dynamic code evaluation crosses a data-to-code boundary"),
-    ("subprocess", re.compile(r"\b(?:child_process\.)?(?:exec|execSync|spawn|spawnSync)\s*\("), "process execution call requires an explicit command boundary"),
+    ("subprocess", re.compile(r"\bchild_process\.(?:exec|execSync|spawn|spawnSync)\s*\("), "child_process execution call requires an explicit command boundary"),
 )
 
 
@@ -38,8 +38,29 @@ def _has_nearby_try(lines: list[str], line_number: int, radius: int = 8) -> bool
 
 
 def _mask_string_literals(line: str) -> str:
-    """Preserve line shape while removing quoted data from code matching."""
-    return re.sub(r"(['\"`])(?:\\.|(?!\1).)*\1", lambda match: " " * len(match.group(0)), line)
+    """Preserve line shape while removing quoted data in linear time.
+
+    A regex with a repeated negative lookahead can catastrophically backtrack
+    on minified input or an unterminated template literal. This scanner has a
+    strict O(n) bound and masks the remainder of an unterminated literal.
+    """
+    chars = list(line)
+    quote: str | None = None
+    escaped = False
+    for index, char in enumerate(line):
+        if quote is None:
+            if char in {"'", '"', "`"}:
+                quote = char
+                chars[index] = " "
+            continue
+        chars[index] = " "
+        if escaped:
+            escaped = False
+        elif char == "\\":
+            escaped = True
+        elif char == quote:
+            quote = None
+    return "".join(chars)
 
 
 def audit(root: str | Path) -> tuple[AgentScanResult, tuple[str, ...]]:

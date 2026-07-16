@@ -142,6 +142,10 @@ def generate_hypotheses(triage: TriageManifest) -> HypothesesManifest:
     for module in sorted(triage.modules, key=lambda m: (m.module_class != ModuleClass.CONNECTED_ALIVE, m.path)):
         if module.module_class not in {ModuleClass.CONNECTED_ALIVE, ModuleClass.FOSSIL_HIGH_RISK}:
             continue
+        if module.language != "Python":
+            # Python AST/induction hypotheses are not valid for JS/TS syntax.
+            # Those files are handled by the language-specific web auditor.
+            continue
         path = root / module.path
         source = _lines(path)
         audited.append(module.path)

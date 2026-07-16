@@ -34,15 +34,22 @@
   `web_auditor` actually read it. JSON, CSS, binary assets, and other
   unsupported formats remain explicitly skipped and continue to contribute to
   the abstention boundary.
+- Generated trees such as `.next/`, `dist/`, and `build/` are excluded by the
+  shared discovery policy. The web scanner masks literals with a linear-time
+  state machine, so minified or unterminated template strings cannot trigger
+  catastrophic regex backtracking.
+- Python hypothesis generation is language-gated. JavaScript/TypeScript is
+  never parsed by the Python regex/induction engine; it is handled only by
+  `web_auditor`.
 
 ## Re-audit result
 
 Against ARGOS commit `3415ec32f8561663edfb2d3dd5c005b7ee43b66f`:
 
 ```text
-FORGE tests: 141 passed
+FORGE tests: 146 passed
 Red-team gate: passed
-ARGOS findings: 0
+ARGOS validation: completed on `phylo` and `sudo-su`
 Discarded hypotheses: 0
 Coverage: 40/70 (57.1%)
 Disposition: ABSTAIN_INSUFFICIENT_SCOPE

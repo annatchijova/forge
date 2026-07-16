@@ -68,3 +68,22 @@ def test_web_language_scope_is_not_counted_as_unanalyzed_when_scanned(tmp_path):
     coverage = result.coverage
     assert "frontend.ts" not in coverage["skipped_reasons"].get("non_python_not_analyzed", ())
     assert coverage["files_analyzed"] == 2
+
+
+def test_generated_build_output_cannot_expand_the_audit_scope(tmp_path):
+    (tmp_path / ".next").mkdir()
+    (tmp_path / ".next" / "chunk.js").write_text("eval(userInput);\n")
+    (tmp_path / "main.py").write_text("x = 1\n")
+    result = Runtime().audit(tmp_path, tmp_path / "out")
+    assert result.coverage["files_analyzed"] == 1
+    assert ".next/chunk.js" in result.coverage["skipped_reasons"]["excluded_by_policy"]
+    assert result.findings == 0
+
+
+def test_python_hypothesis_engine_does_not_parse_typescript_as_python(tmp_path):
+    (tmp_path / "main.py").write_text("import frontend\n")
+    (tmp_path / "frontend.ts").write_text("export const x = eval(userInput);\n")
+    result = Runtime().audit(tmp_path, tmp_path / "out")
+    sealed = json.loads((tmp_path / "out" / "verification-manifest.json").read_text())
+    assert not [item for item in sealed["findings"] if item.get("agent") == "bug_investigator"]
+    assert [item for item in sealed["findings"] if item.get("agent") == "web_auditor"]
