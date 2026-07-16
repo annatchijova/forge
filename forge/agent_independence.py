@@ -141,8 +141,13 @@ def validate_independent_results(
 def load_and_validate(directory: str | Path, required_agents: Iterable[str]) -> dict[str, Any]:
     """Load ``*.json`` agent records from a directory and validate them."""
     root = Path(directory)
+    if not root.is_dir():
+        raise AgentIndependenceError(f"agent results directory does not exist: {root}; expected one JSON file per required role")
+    files = sorted(root.glob("*.json"))
+    if not files:
+        raise AgentIndependenceError(f"agent results directory is empty: {root}; expected one JSON file per required role")
     results: dict[str, dict[str, Any]] = {}
-    for path in sorted(root.glob("*.json")):
+    for path in files:
         record = json.loads(path.read_text(encoding="utf-8"))
         if not isinstance(record, dict):
             continue

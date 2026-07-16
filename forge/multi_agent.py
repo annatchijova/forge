@@ -43,10 +43,11 @@ def build_canonical_findings(external: list[dict[str, Any]], native: list[dict[s
     return records
 
 
-def finalize_multi_agent_run(run_dir: str | Path, required_agents: list[str], external_findings_path: str | Path | None = None, native_sealed_path: str | Path | None = None) -> dict[str, Any]:
+def finalize_multi_agent_run(run_dir: str | Path, required_agents: list[str], external_findings_path: str | Path | None = None, native_sealed_path: str | Path | None = None, agent_results_dir: str | Path | None = None) -> dict[str, Any]:
     """Validate independence, canonicalize both layers, and seal the result."""
     root = Path(run_dir)
-    validated = load_and_validate(root / "agent-results", required_agents)
+    results_root = Path(agent_results_dir) if agent_results_dir is not None else root / "agent-results"
+    validated = load_and_validate(results_root, required_agents)
     independence_path = root / "agent-independence.json"
     independence_path.write_text(json.dumps(validated, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     external_path = Path(external_findings_path) if external_findings_path else root / "findings.json"

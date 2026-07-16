@@ -127,9 +127,10 @@ def main() -> int:
         parser.add_argument("--agent", action="append", required=True)
         parser.add_argument("--external-findings", type=Path)
         parser.add_argument("--native-sealed", type=Path)
+        parser.add_argument("--agent-results-dir", type=Path, help="directory containing one JSON work product per required agent")
         args = parser.parse_args(sys.argv[2:])
         try:
-            print(json.dumps(finalize_multi_agent_run(args.run_dir, args.agent, args.external_findings, args.native_sealed), indent=2, sort_keys=True))
+            print(json.dumps(finalize_multi_agent_run(args.run_dir, args.agent, args.external_findings, args.native_sealed, args.agent_results_dir), indent=2, sort_keys=True))
             return 0
         except (OSError, ValueError, json.JSONDecodeError) as exc:
             print(json.dumps({"status": "CANONICALIZATION_REJECTED", "error": str(exc)}, indent=2, sort_keys=True))

@@ -160,10 +160,10 @@ def finalize_agent_results(results_dir: str, required_agents: list[str], output_
         return _error("independence_rejected", str(exc))
 
 @mcp.tool()
-def finalize_multi_agent_run_artifacts(run_dir: str, required_agents: list[str], external_findings_path: str | None = None, native_sealed_path: str | None = None) -> dict[str, Any]:
+def finalize_multi_agent_run_artifacts(run_dir: str, required_agents: list[str], external_findings_path: str | None = None, native_sealed_path: str | None = None, agent_results_dir: str | None = None) -> dict[str, Any]:
     """Create one canonical finding set and seal it after independence validation."""
     try:
-        return {"ok": True, **finalize_multi_agent_run(run_dir, required_agents, external_findings_path, native_sealed_path)}
+        return {"ok": True, **finalize_multi_agent_run(run_dir, required_agents, external_findings_path, native_sealed_path, agent_results_dir)}
     except (AgentIndependenceError, FileNotFoundError, OSError, ValueError, json.JSONDecodeError) as exc:
         return _error("canonicalization_rejected", str(exc))
 
