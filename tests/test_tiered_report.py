@@ -38,6 +38,18 @@ def test_summary_renderer_escapes_script_text(tmp_path):
     assert "<script>" not in html
     assert "&lt;script&gt;" in html
 
+
+def test_tiered_report_marks_partial_disposition_non_green(tmp_path):
+    manifest = VerificationManifest("2.0", "0.1.0", "1.0", str(tmp_path), 0, (), ())
+    sealed = tmp_path / "sealed.json"
+    write_sealed_manifest(manifest, sealed)
+    (tmp_path / "metrics.json").write_text(json.dumps({"audit_disposition": {"status": "PARTIAL_SHARDED"}}))
+    output = render_tiered_report(sealed, "summary", tmp_path / "summary.html")
+    report = output.read_text()
+    assert "status-partial" in report
+    assert "PARTIAL_SHARDED" in report
+    assert "<p class='status-ok'>" not in report
+
 def test_invalid_finding_outcome_is_rejected():
     import pytest
     with pytest.raises(ValueError, match="invalid finding outcome"):

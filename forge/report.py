@@ -107,6 +107,18 @@ def _bar_rows(values: Any) -> str:
     return "".join(rows)
 
 
+def _status_tone(status: Any) -> str:
+    """Return a presentation tone without conflating seal integrity and outcome."""
+    normalized = str(status or "UNSPECIFIED").upper()
+    if normalized.startswith("ABSTAIN") or normalized.startswith("PARTIAL"):
+        return "partial"
+    if normalized in {"FAILED", "BLOCKED"}:
+        return "fail"
+    if normalized.startswith("COMPLETE") or normalized in {"PASSED", "VERIFIED"}:
+        return "ok"
+    return "neutral"
+
+
 def _finding_card(finding: dict[str, Any], hypotheses: list[dict[str, Any]], root: str) -> str:
     evidence = finding.get("evidence", [])
     source = next((item for item in evidence if item.get("kind") == "source"), evidence[0] if evidence else {})
@@ -283,11 +295,12 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
     findings_metrics = metrics.get("findings", {})
     disposition = metrics.get("audit_disposition", {})
     disposition_status = disposition.get("status", "UNSPECIFIED")
+    disposition_tone = _status_tone(disposition_status)
     self_assessment = metrics.get("self_assessment", {})
     contradictions = metrics.get("contradictions", [])
     dashboard_html = f"""
 <section id="dashboard" class="dashboard">
-  <div class="dashboard-heading"><div><p class="eyebrow">AUDIT PULSE</p><h2>Repository intelligence</h2><p class="section-lede">A visual readout of the sealed run: scope, evidence, findings, governance and reproducibility.</p></div><span class="dashboard-status">{_e('SEALED · ' + disposition_status + ' · ' + integrity_text)}</span></div>
+  <div class="dashboard-heading"><div><p class="eyebrow">AUDIT PULSE</p><h2>Repository intelligence</h2><p class="section-lede">A visual readout of the sealed run: scope, evidence, findings, governance and reproducibility.</p></div><span class="dashboard-status {disposition_tone}">{_e(disposition_status + ' · ' + integrity_text)}</span></div>
   <div class="dashboard-grid">
     <div class="coverage-dial" style="--coverage:{(100 * (coverage_summary[0].get('coverage_ratio', {}).get('numerator', 0) / (coverage_summary[0].get('coverage_ratio', {}).get('denominator', 1) or 1))) if coverage_summary else 0:.2f}%"><div><strong>{_e(coverage_summary[1].split(' ')[0] if coverage_summary else '—')}</strong><span>coverage</span></div></div>
     <div class="dashboard-panel"><h3>Findings by agent</h3>{_bar_rows(findings_metrics.get('by_agent', {}))}</div>
@@ -297,7 +310,7 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
   <div class="dashboard-panel"><h3>Audit disposition</h3><p><strong>{_e(disposition_status)}</strong> — {_e(disposition.get('reason', 'No disposition recorded.'))}</p><p class="section-lede">Action: {_e(disposition.get('action_required', 'Review the run contract.'))}</p></div>
   <div class="dashboard-panel"><h3>FORGE self assessment</h3><p><strong>{_e(self_assessment.get('specialized_agents', {}).get('available', '—'))}/{_e(self_assessment.get('specialized_agents', {}).get('total', '—'))}</strong> specialized agents · <strong>{_e(len(contradictions))}</strong> contradictions · <strong>{_e(self_assessment.get('limitations', '—'))}</strong> limitations</p><p class="section-lede">Confidence boundary: {_e(self_assessment.get('confidence_boundary', 'not recorded'))}</p></div>
   <div class="metric-strip"><div><strong>{_e(repository_metrics.get('functions', 0))}</strong><span>functions</span></div><div><strong>{_e(repository_metrics.get('loc', {}).get('code', 0))}</strong><span>lines of code</span></div><div><strong>{_e(repository_metrics.get('tests', 0))}</strong><span>tests</span></div><div><strong>{_e(skill_runtime.get('contracts_executed', 0))}</strong><span>contracts executed</span></div><div><strong>{_e(metrics.get('evidence', {}).get('primary_evidence', 0))}</strong><span>primary evidence</span></div>{f'<div class="cost-tile"><strong>{_e(cost.get("credits_consumed"))}</strong><span>credits observed</span></div>' if cost else ''}</div>
-  <details class="metrics-details"><summary>Full metrics and audit telemetry</summary><div class="detail-grid"><div><h3>Quality</h3><pre>{_e(json.dumps(metrics.get('quality', {}), indent=2, sort_keys=True))}</pre></div><div><h3>Reproducibility</h3><pre>{_e(json.dumps(metrics.get('reproducibility', {}), indent=2, sort_keys=True))}</pre></div><div><h3>Audit trail</h3><pre>{_e(json.dumps(metrics.get('audit_trail', {}), indent=2, sort_keys=True))}</pre></div><div><h3>Raw metrics</h3><pre>{_e(json.dumps(metrics, indent=2, sort_keys=True))}</pre></div></div></details>
+  <details class="metrics-details"><summary>Full metrics and audit telemetry</summary><p>Complete machine-readable telemetry is kept in <a href="metrics.json">metrics.json</a>; this report intentionally avoids embedding a second copy of the artifact.</p><div class="detail-grid"><div><h3>Quality</h3><pre>{_e(json.dumps(metrics.get('quality', {}), indent=2, sort_keys=True))}</pre></div><div><h3>Reproducibility</h3><pre>{_e(json.dumps(metrics.get('reproducibility', {}), indent=2, sort_keys=True))}</pre></div></div></details>
 </section>"""
     document = f"""<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>FORGE report</title>
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />
@@ -377,7 +390,7 @@ table.data-table td:first-child{{ font-family:var(--mono); font-size:12.5px; whi
 .dashboard-heading{{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }}
 .eyebrow{{ color:var(--accent); font:11px var(--mono); letter-spacing:.14em; margin:0 0 4px; }}
 .dashboard-heading h2{{ margin-top:0; }}
-.dashboard-status{{ border:1px solid #A9C9B0; background:#EDF7EF; color:#2A5A3C; border-radius:999px; padding:7px 12px; font:11px var(--mono); white-space:nowrap; }}
+.dashboard-status{{ border:1px solid var(--rule-strong); background:var(--bg-sunken); color:var(--ink-muted); border-radius:999px; padding:7px 12px; font:11px var(--mono); white-space:nowrap; }} .dashboard-status.ok{{ border-color:#A9C9B0; background:#EDF7EF; color:#2A5A3C; }} .dashboard-status.partial{{ border-color:#D89A70; background:#FFF4E9; color:#7A3A14; }} .dashboard-status.fail{{ border-color:#D39A9A; background:#F8E5E5; color:#8B2F2F; }}
 .dashboard-grid{{ display:grid; grid-template-columns:150px repeat(3,minmax(0,1fr)); gap:14px; align-items:stretch; }}
 .coverage-dial{{ width:128px; height:128px; margin:8px auto; border-radius:50%; display:grid; place-items:center; background:conic-gradient(var(--accent) var(--coverage),#F1DADA 0); position:relative; }}
 .coverage-dial::after{{ content:""; position:absolute; inset:10px; border-radius:50%; background:var(--bg-elevated); }}

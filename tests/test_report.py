@@ -71,3 +71,23 @@ def test_report_escapes_hostile_content_in_findings_and_module_paths(tmp_path):
     report = output.read_text()
     assert "<script>alert(document.cookie)</script>" not in report
     assert "&lt;script&gt;alert(document.cookie)&lt;/script&gt;" in report
+
+
+def test_report_does_not_style_abstention_as_green_and_links_metrics(tmp_path):
+    triage_path = tmp_path / "triage.json"
+    triage_path.write_text(json.dumps({"root": str(tmp_path), "modules": []}))
+    hypotheses_path = tmp_path / "hypotheses.json"
+    hypotheses_path.write_text(json.dumps({"audited_modules": [], "hypotheses": []}))
+    sealed_path = tmp_path / "verification.sealed.json"
+    sealed_path.write_text(json.dumps(seal_manifest(VerificationManifest("1.0", "0.1.0", "1.0", str(tmp_path), 0, (), ()))))
+    output = tmp_path / "forge-report.html"
+    render_report(
+        triage_path, hypotheses_path, sealed_path, output,
+        metrics={"audit_disposition": {"status": "ABSTAIN_DEGRADED", "reason": "bounded scope"}},
+    )
+    report = output.read_text()
+    assert "dashboard-status partial" in report
+    assert "ABSTAIN_DEGRADED" in report
+    assert "dashboard-status ok" not in report
+    assert 'href="metrics.json"' in report
+    assert 'Raw metrics' not in report
