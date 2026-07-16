@@ -1,0 +1,253 @@
+{
+  "ast_unverified_families": [],
+  "ast_verified_families": [
+    "subprocess",
+    "parser",
+    "float comparison",
+    "eval/exec"
+  ],
+  "discarded": [],
+  "findings": [
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "description": "The parser call `return json.load(f)` at detectors/aristotle.py:22 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "CONFIRMED BY INDUCTION",
+      "evidence": [
+        {
+          "detail": "return json.load(f)",
+          "kind": "source",
+          "role": "primary",
+          "source": "detectors/aristotle.py:22"
+        }
+      ],
+      "module_path": "detectors/aristotle.py",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "REPRODUCED"
+      ],
+      "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/aristotle.py:22: ImportError: attempted relative import with no known parent package",
+      "severity": "HIGH"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "description": "The parser call `return json.load(f)` at detectors/foucault.py:21 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "CONFIRMED BY INDUCTION",
+      "evidence": [
+        {
+          "detail": "return json.load(f)",
+          "kind": "source",
+          "role": "primary",
+          "source": "detectors/foucault.py:21"
+        }
+      ],
+      "module_path": "detectors/foucault.py",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "REPRODUCED"
+      ],
+      "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/foucault.py:21: ImportError: attempted relative import with no known parent package",
+      "severity": "HIGH"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "description": "The parser call `data = json.loads(raw_text)` at detectors/gemini.py:158 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "CONFIRMED BY INDUCTION",
+      "evidence": [
+        {
+          "detail": "data = json.loads(raw_text)",
+          "kind": "source",
+          "role": "primary",
+          "source": "detectors/gemini.py:158"
+        }
+      ],
+      "module_path": "detectors/gemini.py",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "REPRODUCED"
+      ],
+      "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/gemini.py:158: ImportError: attempted relative import with no known parent package",
+      "severity": "HIGH"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "description": "The parser call `return json.load(f)` at detectors/goffman.py:24 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "CONFIRMED BY INDUCTION",
+      "evidence": [
+        {
+          "detail": "return json.load(f)",
+          "kind": "source",
+          "role": "primary",
+          "source": "detectors/goffman.py:24"
+        }
+      ],
+      "module_path": "detectors/goffman.py",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "REPRODUCED"
+      ],
+      "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/goffman.py:24: ImportError: attempted relative import with no known parent package",
+      "severity": "HIGH"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "description": "The parser call `return json.load(f)` at detectors/lakoff.py:26 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "CONFIRMED BY INDUCTION",
+      "evidence": [
+        {
+          "detail": "return json.load(f)",
+          "kind": "source",
+          "role": "primary",
+          "source": "detectors/lakoff.py:26"
+        }
+      ],
+      "module_path": "detectors/lakoff.py",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "REPRODUCED"
+      ],
+      "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/lakoff.py:26: ImportError: attempted relative import with no known parent package",
+      "severity": "HIGH"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "description": "The parser call `return json.load(f)` at detectors/searle.py:34 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "CONFIRMED BY INDUCTION",
+      "evidence": [
+        {
+          "detail": "return json.load(f)",
+          "kind": "source",
+          "role": "primary",
+          "source": "detectors/searle.py:34"
+        }
+      ],
+      "module_path": "detectors/searle.py",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "REPRODUCED"
+      ],
+      "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/searle.py:34: ImportError: attempted relative import with no known parent package",
+      "severity": "HIGH"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "description": "The parser call `return json.load(f)` at detectors/toulmin.py:26 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "CONFIRMED BY INDUCTION",
+      "evidence": [
+        {
+          "detail": "return json.load(f)",
+          "kind": "source",
+          "role": "primary",
+          "source": "detectors/toulmin.py:26"
+        }
+      ],
+      "module_path": "detectors/toulmin.py",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "REPRODUCED"
+      ],
+      "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/toulmin.py:26: ImportError: attempted relative import with no known parent package",
+      "severity": "HIGH"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "description": "non-deterministic arithmetic in a decision-adjacent path",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "non-deterministic arithmetic in a decision-adjacent path",
+          "kind": "source",
+          "role": "primary",
+          "source": "scoring.py:32"
+        }
+      ],
+      "module_path": "scoring.py",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED"
+      ],
+      "reasoning": "AST detector emitted this observation: decision-adjacent-float.",
+      "severity": "MEDIUM"
+    }
+  ],
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784160016,
+  "hypotheses_schema_version": "1.0",
+  "induction": [
+    {
+      "detail": "Malformed input raised opaque ImportError.",
+      "evidence": "detectors/aristotle.py:22: ImportError: attempted relative import with no known parent package",
+      "family": "parser",
+      "line": "22",
+      "module_path": "detectors/aristotle.py",
+      "status": "CONFIRMED BY INDUCTION"
+    },
+    {
+      "detail": "Malformed input raised opaque ImportError.",
+      "evidence": "detectors/foucault.py:21: ImportError: attempted relative import with no known parent package",
+      "family": "parser",
+      "line": "21",
+      "module_path": "detectors/foucault.py",
+      "status": "CONFIRMED BY INDUCTION"
+    },
+    {
+      "detail": "Malformed input raised opaque ImportError.",
+      "evidence": "detectors/gemini.py:158: ImportError: attempted relative import with no known parent package",
+      "family": "parser",
+      "line": "158",
+      "module_path": "detectors/gemini.py",
+      "status": "CONFIRMED BY INDUCTION"
+    },
+    {
+      "detail": "Malformed input raised opaque ImportError.",
+      "evidence": "detectors/goffman.py:24: ImportError: attempted relative import with no known parent package",
+      "family": "parser",
+      "line": "24",
+      "module_path": "detectors/goffman.py",
+      "status": "CONFIRMED BY INDUCTION"
+    },
+    {
+      "detail": "Malformed input raised opaque ImportError.",
+      "evidence": "detectors/lakoff.py:26: ImportError: attempted relative import with no known parent package",
+      "family": "parser",
+      "line": "26",
+      "module_path": "detectors/lakoff.py",
+      "status": "CONFIRMED BY INDUCTION"
+    },
+    {
+      "detail": "Malformed input raised opaque ImportError.",
+      "evidence": "detectors/searle.py:34: ImportError: attempted relative import with no known parent package",
+      "family": "parser",
+      "line": "34",
+      "module_path": "detectors/searle.py",
+      "status": "CONFIRMED BY INDUCTION"
+    },
+    {
+      "detail": "Malformed input raised opaque ImportError.",
+      "evidence": "detectors/toulmin.py:26: ImportError: attempted relative import with no known parent package",
+      "family": "parser",
+      "line": "26",
+      "module_path": "detectors/toulmin.py",
+      "status": "CONFIRMED BY INDUCTION"
+    }
+  ],
+  "repository_snapshot_sha256": "550c2024b6558c581748de24f163d09161a9d2eca8accc713f866faee538275f",
+  "root": "/tmp/forge-ref-_nxxs02h",
+  "schema_version": "2.0",
+  "source_attestation": "a82033006b53b4f3d05d526cb372e208917babfe92b53a79c505553c45f18a91"
+}

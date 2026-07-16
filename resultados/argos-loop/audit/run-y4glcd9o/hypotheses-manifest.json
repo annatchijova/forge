@@ -1,0 +1,93 @@
+{
+  "audited_modules": [
+    "detectors/aristotle.py",
+    "detectors/bakhtin.py",
+    "detectors/base.py",
+    "detectors/carnegie.py",
+    "detectors/foucault.py",
+    "detectors/gemini.py",
+    "detectors/goffman.py",
+    "detectors/habermas.py",
+    "detectors/kant.py",
+    "detectors/lakoff.py",
+    "detectors/orwell.py",
+    "detectors/searle.py",
+    "detectors/toulmin.py",
+    "frontend/src/hooks/useAnalysis.ts",
+    "main.py",
+    "scoring.py"
+  ],
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784160246,
+  "hypotheses": [
+    {
+      "description": "The parser call `return json.load(f)` at detectors/aristotle.py:22 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 22; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        22
+      ],
+      "module_path": "detectors/aristotle.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `return json.load(f)` at detectors/foucault.py:21 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 21; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        21
+      ],
+      "module_path": "detectors/foucault.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `data = json.loads(raw_text)` at detectors/gemini.py:158 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 158; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        158
+      ],
+      "module_path": "detectors/gemini.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `return json.load(f)` at detectors/goffman.py:24 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 24; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        24
+      ],
+      "module_path": "detectors/goffman.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `return json.load(f)` at detectors/lakoff.py:26 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 26; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        26
+      ],
+      "module_path": "detectors/lakoff.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `return json.load(f)` at detectors/searle.py:34 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 34; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        34
+      ],
+      "module_path": "detectors/searle.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `return json.load(f)` at detectors/toulmin.py:26 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 26; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        26
+      ],
+      "module_path": "detectors/toulmin.py",
+      "rank": 1
+    }
+  ],
+  "limitations": [
+    "Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only."
+  ],
+  "root": "/tmp/forge-ref-y5bl3x0d",
+  "schema_version": "1.0",
+  "triage_schema_version": "1.1"
+}

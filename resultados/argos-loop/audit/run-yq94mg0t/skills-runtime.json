@@ -1,0 +1,507 @@
+{
+  "applicability": {
+    "api/index.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "detectors/__init__.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "detectors/aristotle.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "detectors/bakhtin.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "detectors/base.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "detectors/carnegie.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "detectors/foucault.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "detectors/gemini.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "detectors/goffman.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "detectors/habermas.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "detectors/kant.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "detectors/lakoff.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "detectors/orwell.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "detectors/searle.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "detectors/toulmin.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "frontend/postcss.config.js": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "frontend/src/hooks/useAnalysis.ts": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "frontend/src/types/index.ts": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "frontend/src/utils/translations.ts": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "frontend/src/vite-env.d.ts": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "frontend/tailwind.config.js": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "frontend/vite.config.ts": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "main.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "scoring.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "tests/__init__.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "tests/test_carnegie.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "tests/test_habermas.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "tests/test_kant.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "tests/test_orwell.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "tests/test_scoring.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    }
+  },
+  "domain_hypotheses": [
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "api/index.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "detectors/__init__.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "detectors/aristotle.py"
+        }
+      ],
+      "module_path": "detectors/aristotle.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "detectors/bakhtin.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "detectors/base.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "detectors/carnegie.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "detectors/foucault.py"
+        }
+      ],
+      "module_path": "detectors/foucault.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "detectors/gemini.py"
+        }
+      ],
+      "module_path": "detectors/gemini.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "detectors/goffman.py"
+        }
+      ],
+      "module_path": "detectors/goffman.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "detectors/habermas.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "detectors/kant.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "detectors/lakoff.py"
+        }
+      ],
+      "module_path": "detectors/lakoff.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "detectors/orwell.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "detectors/searle.py"
+        }
+      ],
+      "module_path": "detectors/searle.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "detectors/toulmin.py"
+        }
+      ],
+      "module_path": "detectors/toulmin.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "frontend/postcss.config.js"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "frontend/src/hooks/useAnalysis.ts"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "frontend/src/types/index.ts"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "frontend/src/utils/translations.ts"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "frontend/src/vite-env.d.ts"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "frontend/tailwind.config.js"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "frontend/vite.config.ts"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "main.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "scoring.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "tests/__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "tests/test_carnegie.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "tests/test_habermas.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "tests/test_kant.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "tests/test_orwell.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "tests/test_scoring.py"
+    }
+  ],
+  "findings": [],
+  "limitations": []
+}

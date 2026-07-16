@@ -1,0 +1,18 @@
+[
+  {
+    "sequence": 0,
+    "state": "AUDITED",
+    "timestamp": 1784160259.7833776,
+    "ref": "3415ec32f8561663edfb2d3dd5c005b7ee43b66f",
+    "commit": "3415ec32f8561663edfb2d3dd5c005b7ee43b66f",
+    "findings": 8,
+    "sealed": "/home/labestiadevigia/forge/resultados/argos-loop/loop/initial/verification-manifest.sealed.json"
+  },
+  {
+    "sequence": 1,
+    "state": "ABSTAIN_NO_PROPOSAL",
+    "timestamp": 1784160259.8621037,
+    "iteration": 1,
+    "reason": "no deterministic or human patch proposal supplied"
+  }
+]

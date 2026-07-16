@@ -1,0 +1,2331 @@
+{
+  "audit_trace": {
+    "events": [
+      {
+        "kind": "run_started",
+        "payload": {
+          "max_connected": 100,
+          "model_routing": {
+            "agents": {},
+            "orchestrator": null
+          },
+          "repository": "/tmp/forge-ref-y5bl3x0d"
+        },
+        "sequence": 0,
+        "timestamp": "2026-07-16T00:04:06.313873+00:00"
+      },
+      {
+        "kind": "ref_resolved",
+        "payload": {
+          "commit": "3415ec32f8561663edfb2d3dd5c005b7ee43b66f",
+          "ref": "3415ec32f8561663edfb2d3dd5c005b7ee43b66f"
+        },
+        "sequence": 1,
+        "timestamp": "2026-07-16T00:04:06.313889+00:00"
+      },
+      {
+        "kind": "repository_discovered",
+        "payload": {
+          "modules": 30,
+          "stacks": [
+            "Python",
+            "TypeScript",
+            "JavaScript"
+          ]
+        },
+        "sequence": 2,
+        "timestamp": "2026-07-16T00:04:06.333091+00:00"
+      },
+      {
+        "kind": "modules_classified",
+        "payload": {
+          "deletion_judgments": {
+            "api/index.py": "deleting would remove unreachable code",
+            "detectors/__init__.py": "deleting would remove unreachable code",
+            "frontend/postcss.config.js": "deleting would remove unreachable code",
+            "frontend/src/types/index.ts": "deleting would remove unreachable code",
+            "frontend/src/utils/translations.ts": "deleting would remove unreachable code",
+            "frontend/src/vite-env.d.ts": "deleting would remove unreachable code",
+            "frontend/tailwind.config.js": "deleting would remove unreachable code",
+            "frontend/vite.config.ts": "deleting would remove unreachable code",
+            "tests/__init__.py": "deleting would remove unreachable code",
+            "tests/test_carnegie.py": "deleting would remove unreachable code",
+            "tests/test_habermas.py": "deleting would remove unreachable code",
+            "tests/test_kant.py": "deleting would remove unreachable code",
+            "tests/test_orwell.py": "deleting would remove unreachable code",
+            "tests/test_scoring.py": "deleting would remove unreachable code"
+          },
+          "summary": {
+            "CONNECTED_ALIVE": 16,
+            "DEAD_WEIGHT": 7,
+            "FOSSIL_HIGH_RISK": 7
+          }
+        },
+        "sequence": 3,
+        "timestamp": "2026-07-16T00:04:06.333101+00:00"
+      },
+      {
+        "kind": "coverage_collected",
+        "payload": {
+          "analyzed": 23,
+          "discovered": 70,
+          "skipped": 47,
+          "skipped_reasons": {
+            "binary_or_unreadable": [
+              "frontend/public/icons/1.png",
+              "frontend/public/icons/10.png",
+              "frontend/public/icons/11.png",
+              "frontend/public/icons/2.png",
+              "frontend/public/icons/3.png",
+              "frontend/public/icons/4.png",
+              "frontend/public/icons/5.png",
+              "frontend/public/icons/6.png",
+              "frontend/public/icons/7.png",
+              "frontend/public/icons/8.png",
+              "frontend/public/icons/9.png",
+              "frontend/public/logo.png",
+              "logo.png"
+            ],
+            "non_python_not_analyzed": [
+              ".gitignore",
+              "LICENSE",
+              "README.md",
+              "frontend/index.html",
+              "frontend/package-lock.json",
+              "frontend/package.json",
+              "frontend/postcss.config.js",
+              "frontend/src/App.tsx",
+              "frontend/src/components/AnalysisDemo.tsx",
+              "frontend/src/components/Features.tsx",
+              "frontend/src/components/Footer.tsx",
+              "frontend/src/components/Header.tsx",
+              "frontend/src/components/Hero.tsx",
+              "frontend/src/components/ResultsPanel.tsx",
+              "frontend/src/components/Stats.tsx",
+              "frontend/src/hooks/useAnalysis.ts",
+              "frontend/src/hooks/useLanguage.tsx",
+              "frontend/src/index.css",
+              "frontend/src/main.tsx",
+              "frontend/src/types/index.ts",
+              "frontend/src/utils/translations.ts",
+              "frontend/src/vite-env.d.ts",
+              "frontend/tailwind.config.js",
+              "frontend/tsconfig.json",
+              "frontend/tsconfig.node.json",
+              "frontend/vite.config.ts",
+              "lexicon/argumentation.json",
+              "lexicon/framing.json",
+              "lexicon/metaphors.json",
+              "lexicon/pathos.json",
+              "lexicon/performatives.json",
+              "lexicon/power.json",
+              "requirements.txt",
+              "vercel.json"
+            ]
+          }
+        },
+        "sequence": 4,
+        "timestamp": "2026-07-16T00:04:06.352592+00:00"
+      },
+      {
+        "kind": "domain_hypotheses_formed",
+        "payload": {
+          "hypotheses": [
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "api/index.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "detectors/__init__.py"
+            },
+            {
+              "alternatives": [],
+              "confidence": {
+                "denominator": 3,
+                "numerator": 1
+              },
+              "domains": [
+                "input_boundary"
+              ],
+              "evidence": [
+                {
+                  "detail": "input or parser boundary call",
+                  "kind": "source_pattern",
+                  "role": "primary",
+                  "source": "detectors/aristotle.py"
+                }
+              ],
+              "module_path": "detectors/aristotle.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "detectors/bakhtin.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "detectors/base.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "detectors/carnegie.py"
+            },
+            {
+              "alternatives": [],
+              "confidence": {
+                "denominator": 3,
+                "numerator": 1
+              },
+              "domains": [
+                "input_boundary"
+              ],
+              "evidence": [
+                {
+                  "detail": "input or parser boundary call",
+                  "kind": "source_pattern",
+                  "role": "primary",
+                  "source": "detectors/foucault.py"
+                }
+              ],
+              "module_path": "detectors/foucault.py"
+            },
+            {
+              "alternatives": [],
+              "confidence": {
+                "denominator": 3,
+                "numerator": 1
+              },
+              "domains": [
+                "input_boundary"
+              ],
+              "evidence": [
+                {
+                  "detail": "input or parser boundary call",
+                  "kind": "source_pattern",
+                  "role": "primary",
+                  "source": "detectors/gemini.py"
+                }
+              ],
+              "module_path": "detectors/gemini.py"
+            },
+            {
+              "alternatives": [],
+              "confidence": {
+                "denominator": 3,
+                "numerator": 1
+              },
+              "domains": [
+                "input_boundary"
+              ],
+              "evidence": [
+                {
+                  "detail": "input or parser boundary call",
+                  "kind": "source_pattern",
+                  "role": "primary",
+                  "source": "detectors/goffman.py"
+                }
+              ],
+              "module_path": "detectors/goffman.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "detectors/habermas.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "detectors/kant.py"
+            },
+            {
+              "alternatives": [],
+              "confidence": {
+                "denominator": 3,
+                "numerator": 1
+              },
+              "domains": [
+                "input_boundary"
+              ],
+              "evidence": [
+                {
+                  "detail": "input or parser boundary call",
+                  "kind": "source_pattern",
+                  "role": "primary",
+                  "source": "detectors/lakoff.py"
+                }
+              ],
+              "module_path": "detectors/lakoff.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "detectors/orwell.py"
+            },
+            {
+              "alternatives": [],
+              "confidence": {
+                "denominator": 3,
+                "numerator": 1
+              },
+              "domains": [
+                "input_boundary"
+              ],
+              "evidence": [
+                {
+                  "detail": "input or parser boundary call",
+                  "kind": "source_pattern",
+                  "role": "primary",
+                  "source": "detectors/searle.py"
+                }
+              ],
+              "module_path": "detectors/searle.py"
+            },
+            {
+              "alternatives": [],
+              "confidence": {
+                "denominator": 3,
+                "numerator": 1
+              },
+              "domains": [
+                "input_boundary"
+              ],
+              "evidence": [
+                {
+                  "detail": "input or parser boundary call",
+                  "kind": "source_pattern",
+                  "role": "primary",
+                  "source": "detectors/toulmin.py"
+                }
+              ],
+              "module_path": "detectors/toulmin.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "frontend/postcss.config.js"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "frontend/src/hooks/useAnalysis.ts"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "frontend/src/types/index.ts"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "frontend/src/utils/translations.ts"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "frontend/src/vite-env.d.ts"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "frontend/tailwind.config.js"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "frontend/vite.config.ts"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "main.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "scoring.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "tests/__init__.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "tests/test_carnegie.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "tests/test_habermas.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "tests/test_kant.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "tests/test_orwell.py"
+            },
+            {
+              "alternatives": [
+                "mixed_or_unknown"
+              ],
+              "confidence": {
+                "denominator": 1,
+                "numerator": 0
+              },
+              "domains": [],
+              "evidence": [],
+              "module_path": "tests/test_scoring.py"
+            }
+          ]
+        },
+        "sequence": 5,
+        "timestamp": "2026-07-16T00:04:06.369321+00:00"
+      },
+      {
+        "kind": "skill_applicability_evaluated",
+        "payload": {
+          "applicability": {
+            "api/index.py": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "detectors/__init__.py": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "detectors/aristotle.py": {
+              "validate-at-the-boundary": "APPLICABLE"
+            },
+            "detectors/bakhtin.py": {
+              "validate-at-the-boundary": "UNDETERMINED"
+            },
+            "detectors/base.py": {
+              "validate-at-the-boundary": "UNDETERMINED"
+            },
+            "detectors/carnegie.py": {
+              "validate-at-the-boundary": "UNDETERMINED"
+            },
+            "detectors/foucault.py": {
+              "validate-at-the-boundary": "APPLICABLE"
+            },
+            "detectors/gemini.py": {
+              "validate-at-the-boundary": "APPLICABLE"
+            },
+            "detectors/goffman.py": {
+              "validate-at-the-boundary": "APPLICABLE"
+            },
+            "detectors/habermas.py": {
+              "validate-at-the-boundary": "UNDETERMINED"
+            },
+            "detectors/kant.py": {
+              "validate-at-the-boundary": "UNDETERMINED"
+            },
+            "detectors/lakoff.py": {
+              "validate-at-the-boundary": "APPLICABLE"
+            },
+            "detectors/orwell.py": {
+              "validate-at-the-boundary": "UNDETERMINED"
+            },
+            "detectors/searle.py": {
+              "validate-at-the-boundary": "APPLICABLE"
+            },
+            "detectors/toulmin.py": {
+              "validate-at-the-boundary": "APPLICABLE"
+            },
+            "frontend/postcss.config.js": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "frontend/src/hooks/useAnalysis.ts": {
+              "validate-at-the-boundary": "UNDETERMINED"
+            },
+            "frontend/src/types/index.ts": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "frontend/src/utils/translations.ts": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "frontend/src/vite-env.d.ts": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "frontend/tailwind.config.js": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "frontend/vite.config.ts": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "main.py": {
+              "validate-at-the-boundary": "UNDETERMINED"
+            },
+            "scoring.py": {
+              "validate-at-the-boundary": "UNDETERMINED"
+            },
+            "tests/__init__.py": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "tests/test_carnegie.py": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "tests/test_habermas.py": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "tests/test_kant.py": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "tests/test_orwell.py": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            },
+            "tests/test_scoring.py": {
+              "validate-at-the-boundary": "NOT_APPLICABLE"
+            }
+          }
+        },
+        "sequence": 6,
+        "timestamp": "2026-07-16T00:04:06.369335+00:00"
+      },
+      {
+        "kind": "skill_contracts_executed",
+        "payload": {
+          "findings": 0,
+          "limitations": []
+        },
+        "sequence": 7,
+        "timestamp": "2026-07-16T00:04:06.369339+00:00"
+      },
+      {
+        "kind": "hypotheses_generated",
+        "payload": {
+          "count": 7,
+          "modules": [
+            "detectors/aristotle.py",
+            "detectors/bakhtin.py",
+            "detectors/base.py",
+            "detectors/carnegie.py",
+            "detectors/foucault.py",
+            "detectors/gemini.py",
+            "detectors/goffman.py",
+            "detectors/habermas.py",
+            "detectors/kant.py",
+            "detectors/lakoff.py",
+            "detectors/orwell.py",
+            "detectors/searle.py",
+            "detectors/toulmin.py",
+            "frontend/src/hooks/useAnalysis.ts",
+            "main.py",
+            "scoring.py"
+          ]
+        },
+        "sequence": 8,
+        "timestamp": "2026-07-16T00:04:09.656897+00:00"
+      },
+      {
+        "kind": "hypotheses_verified",
+        "payload": {
+          "discarded": 0,
+          "findings": 7
+        },
+        "sequence": 9,
+        "timestamp": "2026-07-16T00:04:09.656911+00:00"
+      },
+      {
+        "kind": "agent_completed",
+        "payload": {
+          "agent": "security_auditor",
+          "examinations": {
+            ".gitignore": "excluded_by_scope",
+            "LICENSE": "excluded_by_scope",
+            "README.md": "excluded_by_scope",
+            "api/index.py": "examined_clean",
+            "detectors/__init__.py": "examined_clean",
+            "detectors/__pycache__/aristotle.cpython-312.pyc": "excluded_by_policy",
+            "detectors/__pycache__/foucault.cpython-312.pyc": "excluded_by_policy",
+            "detectors/__pycache__/gemini.cpython-312.pyc": "excluded_by_policy",
+            "detectors/__pycache__/goffman.cpython-312.pyc": "excluded_by_policy",
+            "detectors/__pycache__/lakoff.cpython-312.pyc": "excluded_by_policy",
+            "detectors/__pycache__/searle.cpython-312.pyc": "excluded_by_policy",
+            "detectors/__pycache__/toulmin.cpython-312.pyc": "excluded_by_policy",
+            "detectors/aristotle.py": "examined_clean",
+            "detectors/bakhtin.py": "examined_clean",
+            "detectors/base.py": "examined_clean",
+            "detectors/carnegie.py": "examined_clean",
+            "detectors/foucault.py": "examined_clean",
+            "detectors/gemini.py": "examined_clean",
+            "detectors/goffman.py": "examined_clean",
+            "detectors/habermas.py": "examined_clean",
+            "detectors/kant.py": "examined_clean",
+            "detectors/lakoff.py": "examined_clean",
+            "detectors/orwell.py": "examined_clean",
+            "detectors/searle.py": "examined_clean",
+            "detectors/toulmin.py": "examined_clean",
+            "frontend/index.html": "excluded_by_scope",
+            "frontend/package-lock.json": "excluded_by_scope",
+            "frontend/package.json": "excluded_by_scope",
+            "frontend/postcss.config.js": "excluded_by_scope",
+            "frontend/public/icons/1.png": "excluded_by_scope",
+            "frontend/public/icons/10.png": "excluded_by_scope",
+            "frontend/public/icons/11.png": "excluded_by_scope",
+            "frontend/public/icons/2.png": "excluded_by_scope",
+            "frontend/public/icons/3.png": "excluded_by_scope",
+            "frontend/public/icons/4.png": "excluded_by_scope",
+            "frontend/public/icons/5.png": "excluded_by_scope",
+            "frontend/public/icons/6.png": "excluded_by_scope",
+            "frontend/public/icons/7.png": "excluded_by_scope",
+            "frontend/public/icons/8.png": "excluded_by_scope",
+            "frontend/public/icons/9.png": "excluded_by_scope",
+            "frontend/public/logo.png": "excluded_by_scope",
+            "frontend/src/App.tsx": "excluded_by_scope",
+            "frontend/src/components/AnalysisDemo.tsx": "excluded_by_scope",
+            "frontend/src/components/Features.tsx": "excluded_by_scope",
+            "frontend/src/components/Footer.tsx": "excluded_by_scope",
+            "frontend/src/components/Header.tsx": "excluded_by_scope",
+            "frontend/src/components/Hero.tsx": "excluded_by_scope",
+            "frontend/src/components/ResultsPanel.tsx": "excluded_by_scope",
+            "frontend/src/components/Stats.tsx": "excluded_by_scope",
+            "frontend/src/hooks/useAnalysis.ts": "excluded_by_scope",
+            "frontend/src/hooks/useLanguage.tsx": "excluded_by_scope",
+            "frontend/src/index.css": "excluded_by_scope",
+            "frontend/src/main.tsx": "excluded_by_scope",
+            "frontend/src/types/index.ts": "excluded_by_scope",
+            "frontend/src/utils/translations.ts": "excluded_by_scope",
+            "frontend/src/vite-env.d.ts": "excluded_by_scope",
+            "frontend/tailwind.config.js": "excluded_by_scope",
+            "frontend/tsconfig.json": "excluded_by_scope",
+            "frontend/tsconfig.node.json": "excluded_by_scope",
+            "frontend/vite.config.ts": "excluded_by_scope",
+            "lexicon/argumentation.json": "excluded_by_scope",
+            "lexicon/framing.json": "excluded_by_scope",
+            "lexicon/metaphors.json": "excluded_by_scope",
+            "lexicon/pathos.json": "excluded_by_scope",
+            "lexicon/performatives.json": "excluded_by_scope",
+            "lexicon/power.json": "excluded_by_scope",
+            "logo.png": "excluded_by_scope",
+            "main.py": "examined_clean",
+            "requirements.txt": "excluded_by_scope",
+            "scoring.py": "examined_clean",
+            "tests/__init__.py": "examined_clean",
+            "tests/test_carnegie.py": "examined_clean",
+            "tests/test_habermas.py": "examined_clean",
+            "tests/test_kant.py": "examined_clean",
+            "tests/test_orwell.py": "examined_clean",
+            "tests/test_scoring.py": "examined_clean",
+            "vercel.json": "excluded_by_scope"
+          },
+          "findings": 0
+        },
+        "sequence": 10,
+        "timestamp": "2026-07-16T00:04:09.789297+00:00"
+      },
+      {
+        "kind": "agent_completed",
+        "payload": {
+          "agent": "integrity_inspector",
+          "examinations": {
+            ".gitignore": "excluded_by_scope",
+            "LICENSE": "excluded_by_scope",
+            "README.md": "excluded_by_scope",
+            "api/index.py": "excluded_by_scope",
+            "detectors/__init__.py": "excluded_by_scope",
+            "detectors/__pycache__/aristotle.cpython-312.pyc": "excluded_by_policy",
+            "detectors/__pycache__/foucault.cpython-312.pyc": "excluded_by_policy",
+            "detectors/__pycache__/gemini.cpython-312.pyc": "excluded_by_policy",
+            "detectors/__pycache__/goffman.cpython-312.pyc": "excluded_by_policy",
+            "detectors/__pycache__/lakoff.cpython-312.pyc": "excluded_by_policy",
+            "detectors/__pycache__/searle.cpython-312.pyc": "excluded_by_policy",
+            "detectors/__pycache__/toulmin.cpython-312.pyc": "excluded_by_policy",
+            "detectors/aristotle.py": "examined_clean",
+            "detectors/bakhtin.py": "examined_clean",
+            "detectors/base.py": "examined_clean",
+            "detectors/carnegie.py": "examined_clean",
+            "detectors/foucault.py": "examined_clean",
+            "detectors/gemini.py": "examined_clean",
+            "detectors/goffman.py": "examined_clean",
+            "detectors/habermas.py": "examined_clean",
+            "detectors/kant.py": "examined_clean",
+            "detectors/lakoff.py": "examined_clean",
+            "detectors/orwell.py": "examined_clean",
+            "detectors/searle.py": "examined_clean",
+            "detectors/toulmin.py": "examined_clean",
+            "frontend/index.html": "excluded_by_scope",
+            "frontend/package-lock.json": "excluded_by_scope",
+            "frontend/package.json": "excluded_by_scope",
+            "frontend/postcss.config.js": "excluded_by_scope",
+            "frontend/public/icons/1.png": "excluded_by_scope",
+            "frontend/public/icons/10.png": "excluded_by_scope",
+            "frontend/public/icons/11.png": "excluded_by_scope",
+            "frontend/public/icons/2.png": "excluded_by_scope",
+            "frontend/public/icons/3.png": "excluded_by_scope",
+            "frontend/public/icons/4.png": "excluded_by_scope",
+            "frontend/public/icons/5.png": "excluded_by_scope",
+            "frontend/public/icons/6.png": "excluded_by_scope",
+            "frontend/public/icons/7.png": "excluded_by_scope",
+            "frontend/public/icons/8.png": "excluded_by_scope",
+            "frontend/public/icons/9.png": "excluded_by_scope",
+            "frontend/public/logo.png": "excluded_by_scope",
+            "frontend/src/App.tsx": "excluded_by_scope",
+            "frontend/src/components/AnalysisDemo.tsx": "excluded_by_scope",
+            "frontend/src/components/Features.tsx": "excluded_by_scope",
+            "frontend/src/components/Footer.tsx": "excluded_by_scope",
+            "frontend/src/components/Header.tsx": "excluded_by_scope",
+            "frontend/src/components/Hero.tsx": "excluded_by_scope",
+            "frontend/src/components/ResultsPanel.tsx": "excluded_by_scope",
+            "frontend/src/components/Stats.tsx": "excluded_by_scope",
+            "frontend/src/hooks/useAnalysis.ts": "excluded_by_scope",
+            "frontend/src/hooks/useLanguage.tsx": "excluded_by_scope",
+            "frontend/src/index.css": "excluded_by_scope",
+            "frontend/src/main.tsx": "excluded_by_scope",
+            "frontend/src/types/index.ts": "excluded_by_scope",
+            "frontend/src/utils/translations.ts": "excluded_by_scope",
+            "frontend/src/vite-env.d.ts": "excluded_by_scope",
+            "frontend/tailwind.config.js": "excluded_by_scope",
+            "frontend/tsconfig.json": "excluded_by_scope",
+            "frontend/tsconfig.node.json": "excluded_by_scope",
+            "frontend/vite.config.ts": "excluded_by_scope",
+            "lexicon/argumentation.json": "excluded_by_scope",
+            "lexicon/framing.json": "excluded_by_scope",
+            "lexicon/metaphors.json": "excluded_by_scope",
+            "lexicon/pathos.json": "excluded_by_scope",
+            "lexicon/performatives.json": "excluded_by_scope",
+            "lexicon/power.json": "excluded_by_scope",
+            "logo.png": "excluded_by_scope",
+            "main.py": "examined_clean",
+            "requirements.txt": "excluded_by_scope",
+            "scoring.py": "examined_with_findings",
+            "tests/__init__.py": "excluded_by_scope",
+            "tests/test_carnegie.py": "excluded_by_scope",
+            "tests/test_habermas.py": "excluded_by_scope",
+            "tests/test_kant.py": "excluded_by_scope",
+            "tests/test_orwell.py": "excluded_by_scope",
+            "tests/test_scoring.py": "excluded_by_scope",
+            "vercel.json": "excluded_by_scope"
+          },
+          "findings": 1
+        },
+        "sequence": 11,
+        "timestamp": "2026-07-16T00:04:09.789311+00:00"
+      },
+      {
+        "kind": "finding_emitted",
+        "payload": {
+          "agent": "bug_investigator",
+          "category": "INFERRED",
+          "description": "The parser call `return json.load(f)` at detectors/aristotle.py:22 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+          "evidence": [
+            {
+              "detail": "return json.load(f)",
+              "kind": "source",
+              "role": "primary",
+              "source": "detectors/aristotle.py:22"
+            }
+          ],
+          "module_path": "detectors/aristotle.py",
+          "outcome": "OBSERVED"
+        },
+        "sequence": 12,
+        "timestamp": "2026-07-16T00:04:09.789436+00:00"
+      },
+      {
+        "kind": "finding_emitted",
+        "payload": {
+          "agent": "bug_investigator",
+          "category": "INFERRED",
+          "description": "The parser call `return json.load(f)` at detectors/foucault.py:21 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+          "evidence": [
+            {
+              "detail": "return json.load(f)",
+              "kind": "source",
+              "role": "primary",
+              "source": "detectors/foucault.py:21"
+            }
+          ],
+          "module_path": "detectors/foucault.py",
+          "outcome": "OBSERVED"
+        },
+        "sequence": 13,
+        "timestamp": "2026-07-16T00:04:09.789444+00:00"
+      },
+      {
+        "kind": "finding_emitted",
+        "payload": {
+          "agent": "bug_investigator",
+          "category": "INFERRED",
+          "description": "The parser call `data = json.loads(raw_text)` at detectors/gemini.py:158 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+          "evidence": [
+            {
+              "detail": "data = json.loads(raw_text)",
+              "kind": "source",
+              "role": "primary",
+              "source": "detectors/gemini.py:158"
+            }
+          ],
+          "module_path": "detectors/gemini.py",
+          "outcome": "OBSERVED"
+        },
+        "sequence": 14,
+        "timestamp": "2026-07-16T00:04:09.789450+00:00"
+      },
+      {
+        "kind": "finding_emitted",
+        "payload": {
+          "agent": "bug_investigator",
+          "category": "INFERRED",
+          "description": "The parser call `return json.load(f)` at detectors/goffman.py:24 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+          "evidence": [
+            {
+              "detail": "return json.load(f)",
+              "kind": "source",
+              "role": "primary",
+              "source": "detectors/goffman.py:24"
+            }
+          ],
+          "module_path": "detectors/goffman.py",
+          "outcome": "OBSERVED"
+        },
+        "sequence": 15,
+        "timestamp": "2026-07-16T00:04:09.789454+00:00"
+      },
+      {
+        "kind": "finding_emitted",
+        "payload": {
+          "agent": "bug_investigator",
+          "category": "INFERRED",
+          "description": "The parser call `return json.load(f)` at detectors/lakoff.py:26 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+          "evidence": [
+            {
+              "detail": "return json.load(f)",
+              "kind": "source",
+              "role": "primary",
+              "source": "detectors/lakoff.py:26"
+            }
+          ],
+          "module_path": "detectors/lakoff.py",
+          "outcome": "OBSERVED"
+        },
+        "sequence": 16,
+        "timestamp": "2026-07-16T00:04:09.789459+00:00"
+      },
+      {
+        "kind": "finding_emitted",
+        "payload": {
+          "agent": "bug_investigator",
+          "category": "INFERRED",
+          "description": "The parser call `return json.load(f)` at detectors/searle.py:34 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+          "evidence": [
+            {
+              "detail": "return json.load(f)",
+              "kind": "source",
+              "role": "primary",
+              "source": "detectors/searle.py:34"
+            }
+          ],
+          "module_path": "detectors/searle.py",
+          "outcome": "OBSERVED"
+        },
+        "sequence": 17,
+        "timestamp": "2026-07-16T00:04:09.789463+00:00"
+      },
+      {
+        "kind": "finding_emitted",
+        "payload": {
+          "agent": "bug_investigator",
+          "category": "INFERRED",
+          "description": "The parser call `return json.load(f)` at detectors/toulmin.py:26 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+          "evidence": [
+            {
+              "detail": "return json.load(f)",
+              "kind": "source",
+              "role": "primary",
+              "source": "detectors/toulmin.py:26"
+            }
+          ],
+          "module_path": "detectors/toulmin.py",
+          "outcome": "OBSERVED"
+        },
+        "sequence": 18,
+        "timestamp": "2026-07-16T00:04:09.789467+00:00"
+      },
+      {
+        "kind": "finding_emitted",
+        "payload": {
+          "agent": "integrity_inspector",
+          "category": "OBSERVED",
+          "description": "non-deterministic arithmetic in a decision-adjacent path",
+          "evidence": [
+            {
+              "detail": "non-deterministic arithmetic in a decision-adjacent path",
+              "kind": "source",
+              "role": "primary",
+              "source": "scoring.py:32"
+            }
+          ],
+          "module_path": "scoring.py",
+          "outcome": "OBSERVED"
+        },
+        "sequence": 19,
+        "timestamp": "2026-07-16T00:04:09.789472+00:00"
+      },
+      {
+        "kind": "hypotheses_discarded",
+        "payload": {
+          "count": 0,
+          "records": []
+        },
+        "sequence": 20,
+        "timestamp": "2026-07-16T00:04:09.789475+00:00"
+      },
+      {
+        "kind": "metrics_computed",
+        "payload": {
+          "metrics": {
+            "agent_metrics": {
+              "archaeologist": {
+                "elapsed_seconds": "3.477628",
+                "modules_classified": 30
+              },
+              "bug_investigator": {
+                "discarded": 0,
+                "examinations": {
+                  "api/index.py": "excluded_by_scope",
+                  "detectors/__init__.py": "excluded_by_scope",
+                  "detectors/aristotle.py": "examined_with_findings",
+                  "detectors/bakhtin.py": "no_hypothesis_generated",
+                  "detectors/base.py": "no_hypothesis_generated",
+                  "detectors/carnegie.py": "no_hypothesis_generated",
+                  "detectors/foucault.py": "examined_with_findings",
+                  "detectors/gemini.py": "examined_with_findings",
+                  "detectors/goffman.py": "examined_with_findings",
+                  "detectors/habermas.py": "no_hypothesis_generated",
+                  "detectors/kant.py": "no_hypothesis_generated",
+                  "detectors/lakoff.py": "examined_with_findings",
+                  "detectors/orwell.py": "no_hypothesis_generated",
+                  "detectors/searle.py": "examined_with_findings",
+                  "detectors/toulmin.py": "examined_with_findings",
+                  "frontend/postcss.config.js": "excluded_by_scope",
+                  "frontend/src/hooks/useAnalysis.ts": "no_hypothesis_generated",
+                  "frontend/src/types/index.ts": "excluded_by_scope",
+                  "frontend/src/utils/translations.ts": "excluded_by_scope",
+                  "frontend/src/vite-env.d.ts": "excluded_by_scope",
+                  "frontend/tailwind.config.js": "excluded_by_scope",
+                  "frontend/vite.config.ts": "excluded_by_scope",
+                  "main.py": "no_hypothesis_generated",
+                  "scoring.py": "no_hypothesis_generated",
+                  "tests/__init__.py": "excluded_by_scope",
+                  "tests/test_carnegie.py": "excluded_by_scope",
+                  "tests/test_habermas.py": "excluded_by_scope",
+                  "tests/test_kant.py": "excluded_by_scope",
+                  "tests/test_orwell.py": "excluded_by_scope",
+                  "tests/test_scoring.py": "excluded_by_scope"
+                },
+                "hypotheses_generated": 7,
+                "survived": 7
+              },
+              "governance_skills": {
+                "applicability_counts": {
+                  "APPLICABLE": 7,
+                  "NOT_APPLICABLE": 14,
+                  "UNDETERMINED": 9
+                },
+                "findings": 0,
+                "loaded": [
+                  "validate-at-the-boundary"
+                ]
+              },
+              "integrity_inspector": {
+                "examinations": {
+                  ".gitignore": "excluded_by_scope",
+                  "LICENSE": "excluded_by_scope",
+                  "README.md": "excluded_by_scope",
+                  "api/index.py": "excluded_by_scope",
+                  "detectors/__init__.py": "excluded_by_scope",
+                  "detectors/__pycache__/aristotle.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/__pycache__/foucault.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/__pycache__/gemini.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/__pycache__/goffman.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/__pycache__/lakoff.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/__pycache__/searle.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/__pycache__/toulmin.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/aristotle.py": "examined_clean",
+                  "detectors/bakhtin.py": "examined_clean",
+                  "detectors/base.py": "examined_clean",
+                  "detectors/carnegie.py": "examined_clean",
+                  "detectors/foucault.py": "examined_clean",
+                  "detectors/gemini.py": "examined_clean",
+                  "detectors/goffman.py": "examined_clean",
+                  "detectors/habermas.py": "examined_clean",
+                  "detectors/kant.py": "examined_clean",
+                  "detectors/lakoff.py": "examined_clean",
+                  "detectors/orwell.py": "examined_clean",
+                  "detectors/searle.py": "examined_clean",
+                  "detectors/toulmin.py": "examined_clean",
+                  "frontend/index.html": "excluded_by_scope",
+                  "frontend/package-lock.json": "excluded_by_scope",
+                  "frontend/package.json": "excluded_by_scope",
+                  "frontend/postcss.config.js": "excluded_by_scope",
+                  "frontend/public/icons/1.png": "excluded_by_scope",
+                  "frontend/public/icons/10.png": "excluded_by_scope",
+                  "frontend/public/icons/11.png": "excluded_by_scope",
+                  "frontend/public/icons/2.png": "excluded_by_scope",
+                  "frontend/public/icons/3.png": "excluded_by_scope",
+                  "frontend/public/icons/4.png": "excluded_by_scope",
+                  "frontend/public/icons/5.png": "excluded_by_scope",
+                  "frontend/public/icons/6.png": "excluded_by_scope",
+                  "frontend/public/icons/7.png": "excluded_by_scope",
+                  "frontend/public/icons/8.png": "excluded_by_scope",
+                  "frontend/public/icons/9.png": "excluded_by_scope",
+                  "frontend/public/logo.png": "excluded_by_scope",
+                  "frontend/src/App.tsx": "excluded_by_scope",
+                  "frontend/src/components/AnalysisDemo.tsx": "excluded_by_scope",
+                  "frontend/src/components/Features.tsx": "excluded_by_scope",
+                  "frontend/src/components/Footer.tsx": "excluded_by_scope",
+                  "frontend/src/components/Header.tsx": "excluded_by_scope",
+                  "frontend/src/components/Hero.tsx": "excluded_by_scope",
+                  "frontend/src/components/ResultsPanel.tsx": "excluded_by_scope",
+                  "frontend/src/components/Stats.tsx": "excluded_by_scope",
+                  "frontend/src/hooks/useAnalysis.ts": "excluded_by_scope",
+                  "frontend/src/hooks/useLanguage.tsx": "excluded_by_scope",
+                  "frontend/src/index.css": "excluded_by_scope",
+                  "frontend/src/main.tsx": "excluded_by_scope",
+                  "frontend/src/types/index.ts": "excluded_by_scope",
+                  "frontend/src/utils/translations.ts": "excluded_by_scope",
+                  "frontend/src/vite-env.d.ts": "excluded_by_scope",
+                  "frontend/tailwind.config.js": "excluded_by_scope",
+                  "frontend/tsconfig.json": "excluded_by_scope",
+                  "frontend/tsconfig.node.json": "excluded_by_scope",
+                  "frontend/vite.config.ts": "excluded_by_scope",
+                  "lexicon/argumentation.json": "excluded_by_scope",
+                  "lexicon/framing.json": "excluded_by_scope",
+                  "lexicon/metaphors.json": "excluded_by_scope",
+                  "lexicon/pathos.json": "excluded_by_scope",
+                  "lexicon/performatives.json": "excluded_by_scope",
+                  "lexicon/power.json": "excluded_by_scope",
+                  "logo.png": "excluded_by_scope",
+                  "main.py": "examined_clean",
+                  "requirements.txt": "excluded_by_scope",
+                  "scoring.py": "examined_with_findings",
+                  "tests/__init__.py": "excluded_by_scope",
+                  "tests/test_carnegie.py": "excluded_by_scope",
+                  "tests/test_habermas.py": "excluded_by_scope",
+                  "tests/test_kant.py": "excluded_by_scope",
+                  "tests/test_orwell.py": "excluded_by_scope",
+                  "tests/test_scoring.py": "excluded_by_scope",
+                  "vercel.json": "excluded_by_scope"
+                },
+                "findings_per_family": {
+                  "decision-adjacent-float": 1,
+                  "unversioned-serialization": 0
+                }
+              },
+              "security_auditor": {
+                "examinations": {
+                  ".gitignore": "excluded_by_scope",
+                  "LICENSE": "excluded_by_scope",
+                  "README.md": "excluded_by_scope",
+                  "api/index.py": "examined_clean",
+                  "detectors/__init__.py": "examined_clean",
+                  "detectors/__pycache__/aristotle.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/__pycache__/foucault.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/__pycache__/gemini.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/__pycache__/goffman.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/__pycache__/lakoff.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/__pycache__/searle.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/__pycache__/toulmin.cpython-312.pyc": "excluded_by_policy",
+                  "detectors/aristotle.py": "examined_clean",
+                  "detectors/bakhtin.py": "examined_clean",
+                  "detectors/base.py": "examined_clean",
+                  "detectors/carnegie.py": "examined_clean",
+                  "detectors/foucault.py": "examined_clean",
+                  "detectors/gemini.py": "examined_clean",
+                  "detectors/goffman.py": "examined_clean",
+                  "detectors/habermas.py": "examined_clean",
+                  "detectors/kant.py": "examined_clean",
+                  "detectors/lakoff.py": "examined_clean",
+                  "detectors/orwell.py": "examined_clean",
+                  "detectors/searle.py": "examined_clean",
+                  "detectors/toulmin.py": "examined_clean",
+                  "frontend/index.html": "excluded_by_scope",
+                  "frontend/package-lock.json": "excluded_by_scope",
+                  "frontend/package.json": "excluded_by_scope",
+                  "frontend/postcss.config.js": "excluded_by_scope",
+                  "frontend/public/icons/1.png": "excluded_by_scope",
+                  "frontend/public/icons/10.png": "excluded_by_scope",
+                  "frontend/public/icons/11.png": "excluded_by_scope",
+                  "frontend/public/icons/2.png": "excluded_by_scope",
+                  "frontend/public/icons/3.png": "excluded_by_scope",
+                  "frontend/public/icons/4.png": "excluded_by_scope",
+                  "frontend/public/icons/5.png": "excluded_by_scope",
+                  "frontend/public/icons/6.png": "excluded_by_scope",
+                  "frontend/public/icons/7.png": "excluded_by_scope",
+                  "frontend/public/icons/8.png": "excluded_by_scope",
+                  "frontend/public/icons/9.png": "excluded_by_scope",
+                  "frontend/public/logo.png": "excluded_by_scope",
+                  "frontend/src/App.tsx": "excluded_by_scope",
+                  "frontend/src/components/AnalysisDemo.tsx": "excluded_by_scope",
+                  "frontend/src/components/Features.tsx": "excluded_by_scope",
+                  "frontend/src/components/Footer.tsx": "excluded_by_scope",
+                  "frontend/src/components/Header.tsx": "excluded_by_scope",
+                  "frontend/src/components/Hero.tsx": "excluded_by_scope",
+                  "frontend/src/components/ResultsPanel.tsx": "excluded_by_scope",
+                  "frontend/src/components/Stats.tsx": "excluded_by_scope",
+                  "frontend/src/hooks/useAnalysis.ts": "excluded_by_scope",
+                  "frontend/src/hooks/useLanguage.tsx": "excluded_by_scope",
+                  "frontend/src/index.css": "excluded_by_scope",
+                  "frontend/src/main.tsx": "excluded_by_scope",
+                  "frontend/src/types/index.ts": "excluded_by_scope",
+                  "frontend/src/utils/translations.ts": "excluded_by_scope",
+                  "frontend/src/vite-env.d.ts": "excluded_by_scope",
+                  "frontend/tailwind.config.js": "excluded_by_scope",
+                  "frontend/tsconfig.json": "excluded_by_scope",
+                  "frontend/tsconfig.node.json": "excluded_by_scope",
+                  "frontend/vite.config.ts": "excluded_by_scope",
+                  "lexicon/argumentation.json": "excluded_by_scope",
+                  "lexicon/framing.json": "excluded_by_scope",
+                  "lexicon/metaphors.json": "excluded_by_scope",
+                  "lexicon/pathos.json": "excluded_by_scope",
+                  "lexicon/performatives.json": "excluded_by_scope",
+                  "lexicon/power.json": "excluded_by_scope",
+                  "logo.png": "excluded_by_scope",
+                  "main.py": "examined_clean",
+                  "requirements.txt": "excluded_by_scope",
+                  "scoring.py": "examined_clean",
+                  "tests/__init__.py": "examined_clean",
+                  "tests/test_carnegie.py": "examined_clean",
+                  "tests/test_habermas.py": "examined_clean",
+                  "tests/test_kant.py": "examined_clean",
+                  "tests/test_orwell.py": "examined_clean",
+                  "tests/test_scoring.py": "examined_clean",
+                  "vercel.json": "excluded_by_scope"
+                },
+                "findings_per_family": {
+                  "hardcoded-credential": 0,
+                  "path-traversal": 0,
+                  "unsafe-deserialization": 0
+                }
+              }
+            },
+            "agents": {
+              "abduction": {
+                "average_evidence_per_hypothesis": null,
+                "hypotheses_discarded": 0,
+                "hypotheses_generated": 1,
+                "hypotheses_merged": null,
+                "patterns_observed": 7
+              },
+              "integrity_inspector": {
+                "applicable": 7,
+                "contracts_evaluated": 7,
+                "design_inconsistencies": 0,
+                "not_applicable": 14,
+                "protocol_gaps": 0,
+                "undetermined": 9
+              },
+              "verification": {
+                "benign_explanations_accepted": 0,
+                "benign_explanations_rejected": 0,
+                "checks_executed": 7,
+                "checks_failed": 0,
+                "checks_note": "Surviving hypotheses are unresolved candidates, not failed tests; dynamic induction is required before calling them defects.",
+                "checks_passed": 0,
+                "checks_unresolved": 7,
+                "structural_proofs_found": 0
+              }
+            },
+            "audit_disposition": {
+              "action_required": "Inspect skipped files and rerun with complete source coverage.",
+              "evidence_boundary": [
+                "binary_or_unreadable: 13 file(s)",
+                "out_of_scope_modules: 14 module(s)",
+                "skill_applicability: 9 undetermined result(s)",
+                "unsupported_source_language: JavaScript (2 file(s))",
+                "unsupported_source_language: TypeScript (15 file(s))"
+              ],
+              "reason": "The run found evidence, but one or more source boundaries were not verified.",
+              "reason_code": "UNVERIFIED_SOURCE_BOUNDARY",
+              "status": "ABSTAIN_INSUFFICIENT_SCOPE"
+            },
+            "audit_trail": {
+              "artifacts_produced": null,
+              "chain_verification": null,
+              "events_hashed": 21,
+              "events_verified": null,
+              "hash_chain_length": null,
+              "partial_trace": false,
+              "runtime_events": 21,
+              "tampering_detected": null
+            },
+            "contradictions": [],
+            "discovery": {
+              "CONNECTED_ALIVE": 16,
+              "DEAD_WEIGHT": 7,
+              "DUPLICATE": 0,
+              "FOSSIL_HIGH_RISK": 7,
+              "FOSSIL_LOW_RISK": 0,
+              "UNKNOWN": 0,
+              "average_dependency_degree": null,
+              "dependency_graph_size": null,
+              "mixed_domain_modules": 0
+            },
+            "domain_classification": {
+              "hypothesis_confidence": [
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "api/index.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "detectors/__init__.py"
+                },
+                {
+                  "alternatives": [],
+                  "confidence": {
+                    "denominator": 3,
+                    "numerator": 1
+                  },
+                  "domains": [
+                    "input_boundary"
+                  ],
+                  "evidence_count": 1,
+                  "module_path": "detectors/aristotle.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "detectors/bakhtin.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "detectors/base.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "detectors/carnegie.py"
+                },
+                {
+                  "alternatives": [],
+                  "confidence": {
+                    "denominator": 3,
+                    "numerator": 1
+                  },
+                  "domains": [
+                    "input_boundary"
+                  ],
+                  "evidence_count": 1,
+                  "module_path": "detectors/foucault.py"
+                },
+                {
+                  "alternatives": [],
+                  "confidence": {
+                    "denominator": 3,
+                    "numerator": 1
+                  },
+                  "domains": [
+                    "input_boundary"
+                  ],
+                  "evidence_count": 1,
+                  "module_path": "detectors/gemini.py"
+                },
+                {
+                  "alternatives": [],
+                  "confidence": {
+                    "denominator": 3,
+                    "numerator": 1
+                  },
+                  "domains": [
+                    "input_boundary"
+                  ],
+                  "evidence_count": 1,
+                  "module_path": "detectors/goffman.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "detectors/habermas.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "detectors/kant.py"
+                },
+                {
+                  "alternatives": [],
+                  "confidence": {
+                    "denominator": 3,
+                    "numerator": 1
+                  },
+                  "domains": [
+                    "input_boundary"
+                  ],
+                  "evidence_count": 1,
+                  "module_path": "detectors/lakoff.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "detectors/orwell.py"
+                },
+                {
+                  "alternatives": [],
+                  "confidence": {
+                    "denominator": 3,
+                    "numerator": 1
+                  },
+                  "domains": [
+                    "input_boundary"
+                  ],
+                  "evidence_count": 1,
+                  "module_path": "detectors/searle.py"
+                },
+                {
+                  "alternatives": [],
+                  "confidence": {
+                    "denominator": 3,
+                    "numerator": 1
+                  },
+                  "domains": [
+                    "input_boundary"
+                  ],
+                  "evidence_count": 1,
+                  "module_path": "detectors/toulmin.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "frontend/postcss.config.js"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "frontend/src/hooks/useAnalysis.ts"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "frontend/src/types/index.ts"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "frontend/src/utils/translations.ts"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "frontend/src/vite-env.d.ts"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "frontend/tailwind.config.js"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "frontend/vite.config.ts"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "main.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "scoring.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "tests/__init__.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "tests/test_carnegie.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "tests/test_habermas.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "tests/test_kant.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "tests/test_orwell.py"
+                },
+                {
+                  "alternatives": [
+                    "mixed_or_unknown"
+                  ],
+                  "confidence": {
+                    "denominator": 1,
+                    "numerator": 0
+                  },
+                  "domains": [],
+                  "evidence_count": 0,
+                  "module_path": "tests/test_scoring.py"
+                }
+              ],
+              "modules_by_domain": {
+                "input_boundary": 7
+              }
+            },
+            "evidence": {
+              "by_kind": {
+                "source": 8
+              },
+              "derived_evidence": 0,
+              "evidence_conflicts": 0,
+              "evidence_items": 8,
+              "evidence_reused": null,
+              "primary_evidence": 8,
+              "recommendation_evidence": 0,
+              "secondary_evidence": 0
+            },
+            "findings": {
+              "by_agent": {
+                "bug_investigator": 7,
+                "integrity_inspector": 1
+              },
+              "by_epistemic_level": {
+                "CODE FACT": 1,
+                "CONFIRMED BY INDUCTION": 7
+              },
+              "by_family": {
+                "other": 1,
+                "parser-boundary": 7
+              },
+              "by_module": {
+                "detectors/aristotle.py": 1,
+                "detectors/foucault.py": 1,
+                "detectors/gemini.py": 1,
+                "detectors/goffman.py": 1,
+                "detectors/lakoff.py": 1,
+                "detectors/searle.py": 1,
+                "detectors/toulmin.py": 1,
+                "scoring.py": 1
+              },
+              "by_outcome": {
+                "DESIGN_INCONSISTENCY": 0,
+                "NOT_APPLICABLE": 0,
+                "OBSERVED": 8,
+                "PROTOCOL_GAP": 0,
+                "UNDETERMINED": 0
+              },
+              "by_severity": {
+                "HIGH": 7,
+                "MEDIUM": 1
+              },
+              "discarded_hypotheses": 0,
+              "finding_digest": "e8c851b557aefd3612228a205221062270d1e81acdceff1179bbdc9d9cc64a89",
+              "induction": {
+                "confirmed": 7,
+                "falsified": 0,
+                "undetermined": 0
+              }
+            },
+            "honest_degradation": {
+              "limitations": [
+                "Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only.",
+                "47 discovered file(s) were skipped; see skipped_reasons for the exact paths and policy categories.",
+                "14 triaged module(s) were outside CONNECTED_ALIVE audit scope.",
+                "9 skill applicability result(s) were UNDETERMINED; no conclusion was inferred for them.",
+                "7 hypothesis/hypotheses survived structural verification without dynamic induction; they remain plausible hypotheses, not confirmed defects."
+              ],
+              "skipped_reasons": {
+                "binary_or_unreadable": [
+                  "frontend/public/icons/1.png",
+                  "frontend/public/icons/10.png",
+                  "frontend/public/icons/11.png",
+                  "frontend/public/icons/2.png",
+                  "frontend/public/icons/3.png",
+                  "frontend/public/icons/4.png",
+                  "frontend/public/icons/5.png",
+                  "frontend/public/icons/6.png",
+                  "frontend/public/icons/7.png",
+                  "frontend/public/icons/8.png",
+                  "frontend/public/icons/9.png",
+                  "frontend/public/logo.png",
+                  "logo.png"
+                ],
+                "non_python_not_analyzed": [
+                  ".gitignore",
+                  "LICENSE",
+                  "README.md",
+                  "frontend/index.html",
+                  "frontend/package-lock.json",
+                  "frontend/package.json",
+                  "frontend/postcss.config.js",
+                  "frontend/src/App.tsx",
+                  "frontend/src/components/AnalysisDemo.tsx",
+                  "frontend/src/components/Features.tsx",
+                  "frontend/src/components/Footer.tsx",
+                  "frontend/src/components/Header.tsx",
+                  "frontend/src/components/Hero.tsx",
+                  "frontend/src/components/ResultsPanel.tsx",
+                  "frontend/src/components/Stats.tsx",
+                  "frontend/src/hooks/useAnalysis.ts",
+                  "frontend/src/hooks/useLanguage.tsx",
+                  "frontend/src/index.css",
+                  "frontend/src/main.tsx",
+                  "frontend/src/types/index.ts",
+                  "frontend/src/utils/translations.ts",
+                  "frontend/src/vite-env.d.ts",
+                  "frontend/tailwind.config.js",
+                  "frontend/tsconfig.json",
+                  "frontend/tsconfig.node.json",
+                  "frontend/vite.config.ts",
+                  "lexicon/argumentation.json",
+                  "lexicon/framing.json",
+                  "lexicon/metaphors.json",
+                  "lexicon/pathos.json",
+                  "lexicon/performatives.json",
+                  "lexicon/power.json",
+                  "requirements.txt",
+                  "vercel.json"
+                ]
+              }
+            },
+            "metrics_schema_version": "1.0",
+            "quality": {
+              "contract_coverage": {
+                "covered": 7,
+                "total": 30
+              },
+              "contract_coverage_note": "1 executable skill(s) loaded; this ratio measures applicability observations for executable skills only, not the documented skills catalog.",
+              "evidence_completeness": null,
+              "evidence_completeness_note": "Requires an explicit obligation ledger mapping each executed contract obligation to satisfied or missing Evidence items.",
+              "module_coverage": {
+                "covered": 16,
+                "total": 30
+              },
+              "repository_coverage": {
+                "covered": 23,
+                "total": 70
+              },
+              "verification_coverage": null,
+              "verification_coverage_note": "Requires a count of planned checks versus checks actually executed, including skipped checks and their reasons."
+            },
+            "repository": {
+              "branches_inspected": null,
+              "classes": 3,
+              "configuration_files": 2,
+              "directories": 13,
+              "documentation_files": 2,
+              "files_by_language": {
+                "JavaScript/TypeScript": 17,
+                "Other": 30,
+                "Python": 23
+              },
+              "files_discovered": 70,
+              "functions": 83,
+              "git_commits_analyzed": null,
+              "loc": {
+                "blank": 557,
+                "code": 8283,
+                "comment": 114,
+                "total": 8954
+              },
+              "methods": 3,
+              "modules": 30,
+              "tags_inspected": null,
+              "tests": 6
+            },
+            "reproducibility": {
+              "artifact_hashes": null,
+              "environment": {
+                "os": "Linux-6.14.0-37-generic-x86_64-with-glibc2.39",
+                "python": "3.12.3"
+              },
+              "forge_version": "0.1.0",
+              "repository_snapshot_sha256": "550c2024b6558c581748de24f163d09161a9d2eca8accc713f866faee538275f",
+              "runtime_deterministic": null,
+              "schema_versions": {
+                "triage": "1.1"
+              },
+              "seal_verified": null,
+              "seed_used": null,
+              "skill_versions": {
+                "validate-at-the-boundary": "1.0"
+              }
+            },
+            "scope": {
+              "asts_built": 23,
+              "coverage": {
+                "denominator": 70,
+                "numerator": 23
+              },
+              "files_analyzed": 23,
+              "files_skipped": 47,
+              "functions_analyzed": 83,
+              "lines_analyzed": 2409,
+              "modules_excluded": 14,
+              "out_of_scope_modules": [
+                "api/index.py",
+                "detectors/__init__.py",
+                "frontend/postcss.config.js",
+                "frontend/src/types/index.ts",
+                "frontend/src/utils/translations.ts",
+                "frontend/src/vite-env.d.ts",
+                "frontend/tailwind.config.js",
+                "frontend/vite.config.ts",
+                "tests/__init__.py",
+                "tests/test_carnegie.py",
+                "tests/test_habermas.py",
+                "tests/test_kant.py",
+                "tests/test_orwell.py",
+                "tests/test_scoring.py"
+              ],
+              "repositories_chained": 1
+            },
+            "self_assessment": {
+              "abstentions": 1,
+              "confidence_boundary": "scope-limited",
+              "contradictions": 0,
+              "coverage": {
+                "covered": 23,
+                "total": 70
+              },
+              "limitations": 5,
+              "note": "Self-assessment describes audit boundaries; it is not a repository quality score.",
+              "specialized_agents": {
+                "available": 4,
+                "total": 4
+              }
+            },
+            "skill_runtime": {
+              "contract_failures": 0,
+              "contracts_executed": 7,
+              "contracts_skipped": 14,
+              "evidence_obligations_missing": null,
+              "evidence_obligations_satisfied": null,
+              "limitations_emitted": 0,
+              "skills_activated": 7,
+              "skills_loaded": 1,
+              "skills_not_applicable": 14,
+              "undetermined_skills": 9
+            }
+          }
+        },
+        "sequence": 21,
+        "timestamp": "2026-07-16T00:04:09.829371+00:00"
+      },
+      {
+        "kind": "artifact_written",
+        "payload": {
+          "artifact": "triage",
+          "path": "/home/labestiadevigia/forge/resultados/argos-loop/audit/run-y4glcd9o/triage-manifest.json"
+        },
+        "sequence": 22,
+        "timestamp": "2026-07-16T00:04:09.829392+00:00"
+      },
+      {
+        "kind": "artifact_written",
+        "payload": {
+          "artifact": "hypotheses",
+          "path": "/home/labestiadevigia/forge/resultados/argos-loop/audit/run-y4glcd9o/hypotheses-manifest.json"
+        },
+        "sequence": 23,
+        "timestamp": "2026-07-16T00:04:09.829402+00:00"
+      },
+      {
+        "kind": "artifact_written",
+        "payload": {
+          "artifact": "verification",
+          "path": "/home/labestiadevigia/forge/resultados/argos-loop/audit/run-y4glcd9o/verification-manifest.json"
+        },
+        "sequence": 24,
+        "timestamp": "2026-07-16T00:04:09.829409+00:00"
+      },
+      {
+        "kind": "artifact_written",
+        "payload": {
+          "artifact": "coverage",
+          "path": "/home/labestiadevigia/forge/resultados/argos-loop/audit/run-y4glcd9o/coverage-report.json"
+        },
+        "sequence": 25,
+        "timestamp": "2026-07-16T00:04:09.829412+00:00"
+      },
+      {
+        "kind": "artifact_written",
+        "payload": {
+          "artifact": "skills",
+          "path": "/home/labestiadevigia/forge/resultados/argos-loop/audit/run-y4glcd9o/skills-runtime.json"
+        },
+        "sequence": 26,
+        "timestamp": "2026-07-16T00:04:09.829415+00:00"
+      },
+      {
+        "kind": "artifact_written",
+        "payload": {
+          "artifact": "metrics",
+          "path": "/home/labestiadevigia/forge/resultados/argos-loop/audit/run-y4glcd9o/metrics.json"
+        },
+        "sequence": 27,
+        "timestamp": "2026-07-16T00:04:09.829417+00:00"
+      },
+      {
+        "kind": "artifact_written",
+        "payload": {
+          "artifact": "profile",
+          "path": "/home/labestiadevigia/forge/resultados/argos-loop/audit/run-y4glcd9o/repository-profile.json"
+        },
+        "sequence": 28,
+        "timestamp": "2026-07-16T00:04:09.829424+00:00"
+      },
+      {
+        "kind": "artifact_written",
+        "payload": {
+          "artifact": "report",
+          "path": "/home/labestiadevigia/forge/resultados/argos-loop/audit/run-y4glcd9o/forge-report.html"
+        },
+        "sequence": 29,
+        "timestamp": "2026-07-16T00:04:09.829431+00:00"
+      },
+      {
+        "kind": "seal_created",
+        "payload": {
+          "artifact": "sealed",
+          "findings": 8
+        },
+        "sequence": 30,
+        "timestamp": "2026-07-16T00:04:09.829433+00:00"
+      },
+      {
+        "kind": "run_completed",
+        "payload": {
+          "elapsed_seconds": "3.515578",
+          "findings": 8
+        },
+        "sequence": 31,
+        "timestamp": "2026-07-16T00:04:09.829438+00:00"
+      }
+    ],
+    "run_id": "22ccc0e6-9e33-425e-93d6-60ca2f04532c",
+    "started_at": "2026-07-16T00:04:06.291971+00:00",
+    "trace_version": "1"
+  },
+  "canonicalize_version": "1",
+  "chain": [
+    {
+      "finding": {
+        "agent": "bug_investigator",
+        "category": "INFERRED",
+        "description": "The parser call `return json.load(f)` at detectors/aristotle.py:22 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+        "epistemic_level": "CONFIRMED BY INDUCTION",
+        "evidence": [
+          {
+            "detail": "return json.load(f)",
+            "kind": "source",
+            "role": "primary",
+            "source": "detectors/aristotle.py:22"
+          }
+        ],
+        "module_path": "detectors/aristotle.py",
+        "outcome": "OBSERVED",
+        "provenance": [
+          "AST",
+          "REPRODUCED"
+        ],
+        "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/aristotle.py:22: ImportError: attempted relative import with no known parent package",
+        "severity": "HIGH"
+      },
+      "hash": "baf5e869ba9dec740e720d9f2197cfe923ecd21069307a371a59eeebda8d24e6",
+      "index": 0,
+      "prev_hash": "b9105d1912cfaa4da89ac751875ea77a2c560edb21faf730ad0d4114e0f7dee0"
+    },
+    {
+      "finding": {
+        "agent": "bug_investigator",
+        "category": "INFERRED",
+        "description": "The parser call `return json.load(f)` at detectors/foucault.py:21 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+        "epistemic_level": "CONFIRMED BY INDUCTION",
+        "evidence": [
+          {
+            "detail": "return json.load(f)",
+            "kind": "source",
+            "role": "primary",
+            "source": "detectors/foucault.py:21"
+          }
+        ],
+        "module_path": "detectors/foucault.py",
+        "outcome": "OBSERVED",
+        "provenance": [
+          "AST",
+          "REPRODUCED"
+        ],
+        "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/foucault.py:21: ImportError: attempted relative import with no known parent package",
+        "severity": "HIGH"
+      },
+      "hash": "dd4c3786d52e894eeebc48952cd88835566d48611d63aac28c865cd3d06184f8",
+      "index": 1,
+      "prev_hash": "baf5e869ba9dec740e720d9f2197cfe923ecd21069307a371a59eeebda8d24e6"
+    },
+    {
+      "finding": {
+        "agent": "bug_investigator",
+        "category": "INFERRED",
+        "description": "The parser call `data = json.loads(raw_text)` at detectors/gemini.py:158 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+        "epistemic_level": "CONFIRMED BY INDUCTION",
+        "evidence": [
+          {
+            "detail": "data = json.loads(raw_text)",
+            "kind": "source",
+            "role": "primary",
+            "source": "detectors/gemini.py:158"
+          }
+        ],
+        "module_path": "detectors/gemini.py",
+        "outcome": "OBSERVED",
+        "provenance": [
+          "AST",
+          "REPRODUCED"
+        ],
+        "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/gemini.py:158: ImportError: attempted relative import with no known parent package",
+        "severity": "HIGH"
+      },
+      "hash": "552f266582950d6d442ccf401fe8ccd705b23bec09c88b3daa56b6b607352dd6",
+      "index": 2,
+      "prev_hash": "dd4c3786d52e894eeebc48952cd88835566d48611d63aac28c865cd3d06184f8"
+    },
+    {
+      "finding": {
+        "agent": "bug_investigator",
+        "category": "INFERRED",
+        "description": "The parser call `return json.load(f)` at detectors/goffman.py:24 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+        "epistemic_level": "CONFIRMED BY INDUCTION",
+        "evidence": [
+          {
+            "detail": "return json.load(f)",
+            "kind": "source",
+            "role": "primary",
+            "source": "detectors/goffman.py:24"
+          }
+        ],
+        "module_path": "detectors/goffman.py",
+        "outcome": "OBSERVED",
+        "provenance": [
+          "AST",
+          "REPRODUCED"
+        ],
+        "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/goffman.py:24: ImportError: attempted relative import with no known parent package",
+        "severity": "HIGH"
+      },
+      "hash": "117e95c46badba843b27df66aa2b75a3aae59ec5b61b6d029c0ee9395f88826c",
+      "index": 3,
+      "prev_hash": "552f266582950d6d442ccf401fe8ccd705b23bec09c88b3daa56b6b607352dd6"
+    },
+    {
+      "finding": {
+        "agent": "bug_investigator",
+        "category": "INFERRED",
+        "description": "The parser call `return json.load(f)` at detectors/lakoff.py:26 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+        "epistemic_level": "CONFIRMED BY INDUCTION",
+        "evidence": [
+          {
+            "detail": "return json.load(f)",
+            "kind": "source",
+            "role": "primary",
+            "source": "detectors/lakoff.py:26"
+          }
+        ],
+        "module_path": "detectors/lakoff.py",
+        "outcome": "OBSERVED",
+        "provenance": [
+          "AST",
+          "REPRODUCED"
+        ],
+        "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/lakoff.py:26: ImportError: attempted relative import with no known parent package",
+        "severity": "HIGH"
+      },
+      "hash": "e75cd43c8e84ea1033f17bb69885e178e7bb71fb519e3c440342606d2a7f7032",
+      "index": 4,
+      "prev_hash": "117e95c46badba843b27df66aa2b75a3aae59ec5b61b6d029c0ee9395f88826c"
+    },
+    {
+      "finding": {
+        "agent": "bug_investigator",
+        "category": "INFERRED",
+        "description": "The parser call `return json.load(f)` at detectors/searle.py:34 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+        "epistemic_level": "CONFIRMED BY INDUCTION",
+        "evidence": [
+          {
+            "detail": "return json.load(f)",
+            "kind": "source",
+            "role": "primary",
+            "source": "detectors/searle.py:34"
+          }
+        ],
+        "module_path": "detectors/searle.py",
+        "outcome": "OBSERVED",
+        "provenance": [
+          "AST",
+          "REPRODUCED"
+        ],
+        "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/searle.py:34: ImportError: attempted relative import with no known parent package",
+        "severity": "HIGH"
+      },
+      "hash": "037aad26ddda9c305d14ebcb8375e2fac1169c6cc4d6dc3e1142cf13fa593392",
+      "index": 5,
+      "prev_hash": "e75cd43c8e84ea1033f17bb69885e178e7bb71fb519e3c440342606d2a7f7032"
+    },
+    {
+      "finding": {
+        "agent": "bug_investigator",
+        "category": "INFERRED",
+        "description": "The parser call `return json.load(f)` at detectors/toulmin.py:26 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+        "epistemic_level": "CONFIRMED BY INDUCTION",
+        "evidence": [
+          {
+            "detail": "return json.load(f)",
+            "kind": "source",
+            "role": "primary",
+            "source": "detectors/toulmin.py:26"
+          }
+        ],
+        "module_path": "detectors/toulmin.py",
+        "outcome": "OBSERVED",
+        "provenance": [
+          "AST",
+          "REPRODUCED"
+        ],
+        "reasoning": "Malformed input raised opaque ImportError. Evidence: detectors/toulmin.py:26: ImportError: attempted relative import with no known parent package",
+        "severity": "HIGH"
+      },
+      "hash": "2e375902296b9b95ccc9bd5261d09b02935c8efa8e0051d49f8e35b1e8b69170",
+      "index": 6,
+      "prev_hash": "037aad26ddda9c305d14ebcb8375e2fac1169c6cc4d6dc3e1142cf13fa593392"
+    },
+    {
+      "finding": {
+        "agent": "integrity_inspector",
+        "category": "OBSERVED",
+        "description": "non-deterministic arithmetic in a decision-adjacent path",
+        "epistemic_level": "CODE FACT",
+        "evidence": [
+          {
+            "detail": "non-deterministic arithmetic in a decision-adjacent path",
+            "kind": "source",
+            "role": "primary",
+            "source": "scoring.py:32"
+          }
+        ],
+        "module_path": "scoring.py",
+        "outcome": "OBSERVED",
+        "provenance": [
+          "AST",
+          "RUNTIME_NOT_EXECUTED"
+        ],
+        "reasoning": "AST detector emitted this observation: decision-adjacent-float.",
+        "severity": "MEDIUM"
+      },
+      "hash": "8c49c3fe141a2f59da1e7b2115d1a57234f01fabeb968488a0300d7316537bfc",
+      "index": 7,
+      "prev_hash": "2e375902296b9b95ccc9bd5261d09b02935c8efa8e0051d49f8e35b1e8b69170"
+    }
+  ],
+  "limitations": [
+    "The seal proves findings were not altered after sealing.",
+    "The seal does not prove findings are correct.",
+    "A full-access attacker can forge a consistent replacement chain from scratch."
+  ],
+  "manifest": {
+    "ast_unverified_families": [],
+    "ast_verified_families": [
+      "subprocess",
+      "parser",
+      "float comparison",
+      "eval/exec"
+    ],
+    "audit_trace_hash": "a3fc2cfa276d078b2439efabd61891ac2cbaa7a44337735723760669f2ac3195",
+    "discarded": [],
+    "forge_version": "0.1.0",
+    "generated_at_epoch": 1784160249,
+    "hypotheses_schema_version": "1.0",
+    "induction": [
+      {
+        "detail": "Malformed input raised opaque ImportError.",
+        "evidence": "detectors/aristotle.py:22: ImportError: attempted relative import with no known parent package",
+        "family": "parser",
+        "line": "22",
+        "module_path": "detectors/aristotle.py",
+        "status": "CONFIRMED BY INDUCTION"
+      },
+      {
+        "detail": "Malformed input raised opaque ImportError.",
+        "evidence": "detectors/foucault.py:21: ImportError: attempted relative import with no known parent package",
+        "family": "parser",
+        "line": "21",
+        "module_path": "detectors/foucault.py",
+        "status": "CONFIRMED BY INDUCTION"
+      },
+      {
+        "detail": "Malformed input raised opaque ImportError.",
+        "evidence": "detectors/gemini.py:158: ImportError: attempted relative import with no known parent package",
+        "family": "parser",
+        "line": "158",
+        "module_path": "detectors/gemini.py",
+        "status": "CONFIRMED BY INDUCTION"
+      },
+      {
+        "detail": "Malformed input raised opaque ImportError.",
+        "evidence": "detectors/goffman.py:24: ImportError: attempted relative import with no known parent package",
+        "family": "parser",
+        "line": "24",
+        "module_path": "detectors/goffman.py",
+        "status": "CONFIRMED BY INDUCTION"
+      },
+      {
+        "detail": "Malformed input raised opaque ImportError.",
+        "evidence": "detectors/lakoff.py:26: ImportError: attempted relative import with no known parent package",
+        "family": "parser",
+        "line": "26",
+        "module_path": "detectors/lakoff.py",
+        "status": "CONFIRMED BY INDUCTION"
+      },
+      {
+        "detail": "Malformed input raised opaque ImportError.",
+        "evidence": "detectors/searle.py:34: ImportError: attempted relative import with no known parent package",
+        "family": "parser",
+        "line": "34",
+        "module_path": "detectors/searle.py",
+        "status": "CONFIRMED BY INDUCTION"
+      },
+      {
+        "detail": "Malformed input raised opaque ImportError.",
+        "evidence": "detectors/toulmin.py:26: ImportError: attempted relative import with no known parent package",
+        "family": "parser",
+        "line": "26",
+        "module_path": "detectors/toulmin.py",
+        "status": "CONFIRMED BY INDUCTION"
+      }
+    ],
+    "repository_snapshot_sha256": "550c2024b6558c581748de24f163d09161a9d2eca8accc713f866faee538275f",
+    "root": "/tmp/forge-ref-y5bl3x0d",
+    "schema_version": "2.0",
+    "source_attestation": "9c42ac5a2fe00f3f726a29484c6a3f049f1ccb5c5beaae9d79d78c986bfff47a"
+  },
+  "reported_chain_length": 8,
+  "seal_version": "1"
+}
