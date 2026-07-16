@@ -1,0 +1,210 @@
+{
+  "requested_role": "integrity_numeric",
+  "native_forge_role": "integrity_numeric",
+  "scope": {
+    "target": "phylo",
+    "forge": "forge",
+    "focus": [
+      "serialization",
+      "numeric precision",
+      "thresholds",
+      "decision boundaries",
+      "models",
+      "provenance",
+      "integrity controls"
+    ],
+    "constraints": [
+      "static audit only",
+      "target code not modified",
+      "target code not executed",
+      "excluded generated/dependency artifacts"
+    ]
+  },
+  "work_product": {
+    "observations": [
+      "Bundle master hash covers identity fields and three sub-hashes, but not winner_gene, engine, mutation counters, generation metadata, or strategies_tried (tools/evolution_bundle.py:503; tools/verify_bundle.py:329).",
+      "Verifier parses decimal fractions through binary float conversion and round-to-8-decimal scaling (tools/verify_bundle.py:99).",
+      "Bundle factory converts winner speedup through float division before Fraction reduction (tools/evolution_bundle.py:612).",
+      "LLM provider/model are resolved and returned, but EvolutionBundle serialization contains no provider/model provenance fields (lib/llm.ts:33; tools/evolution_bundle.py:379).",
+      "Production fitness uses a configurable 0.95 correctness gate while EBS verdict verification uses a fixed 0.90 gate (lib/fitness.ts:34; tools/verify_bundle.py:82)."
+    ],
+    "hypotheses": [
+      {
+        "hypothesis_id": "H1",
+        "statement": "A validly hashed bundle can have decision-relevant provenance fields altered without invalidating verification.",
+        "basis": "Hash coverage omits winner_gene and several serialized metadata fields.",
+        "status": "undetermined"
+      },
+      {
+        "hypothesis_id": "H2",
+        "statement": "Malformed extreme numeric strings can cause verifier failure before fail-closed validation completes.",
+        "basis": "_parse_fraction catches ValueError but not OverflowError from float conversion and integer rounding.",
+        "status": "undetermined"
+      },
+      {
+        "hypothesis_id": "H3",
+        "statement": "Near-threshold speedups may classify differently across paths because one path uses float division before Fraction reduction.",
+        "basis": "Winner speedup construction uses baseline_ms / winner_ms as a float before denominator limiting.",
+        "status": "undetermined"
+      },
+      {
+        "hypothesis_id": "H4",
+        "statement": "A sealed bundle cannot independently establish which model/provider generated mutations.",
+        "basis": "Model/provider exist in LLM results but are absent from EvolutionBundle.to_dict().",
+        "status": "undetermined"
+      }
+    ],
+    "deductions": [
+      "Integrity is partial rather than complete: hash_bundle authenticates the hashes and selected identity fields, while hash_fitness authenticates measurements/verdict and hash_genes authenticates gene records; omitted fields remain mutable under the verifier acceptance predicate.",
+      "Numeric threshold determinism is weaker than documented: exact Fraction verdict computation is undermined at the ingestion boundary by float-based decimal parsing and winner-ratio conversion.",
+      "The 0.95 demo gate can reject a gene in production evolution while a 0.90 EBS verifier gate can accept the corresponding declared verdict, creating policy drift.",
+      "Model provenance is not part of the evidence or integrity hash inputs, so a buyer cannot reconstruct or authenticate the mutation model from the bundle alone."
+    ],
+    "evidence": [
+      "tools/evolution_bundle.py:379",
+      "tools/evolution_bundle.py:503",
+      "tools/verify_bundle.py:329",
+      "tools/verify_bundle.py:99",
+      "tools/verify_bundle.py:378",
+      "tools/evolution_bundle.py:612",
+      "lib/llm.ts:33",
+      "lib/llm.ts:128",
+      "tools/evolution_bundle.py:395",
+      "lib/fitness.ts:34",
+      "tools/verify_bundle.py:82"
+    ],
+    "decision": "Conditional fail for integrity_numeric scope: static review found material integrity coverage, numeric-boundary, and provenance gaps. No vulnerability is marked confirmed because execution and mutation were prohibited; these require isolated adversarial tests and remediation before claiming complete tamper evidence or numeric determinism.",
+    "adi": [
+      {
+        "hypothesis_id": "H1",
+        "stage": "abduction",
+        "statement": "The observed hash construction suggests omitted serialized fields could be changed while preserving all verifier recomputations.",
+        "evidence": "tools/evolution_bundle.py:379; tools/evolution_bundle.py:503; tools/verify_bundle.py:329",
+        "status": "undetermined"
+      },
+      {
+        "hypothesis_id": "H2",
+        "stage": "deduction",
+        "statement": "If float conversion of an attacker-controlled numeric string raises OverflowError, verifier_bundle can terminate before returning a structured fail-closed result.",
+        "evidence": "tools/verify_bundle.py:99; tools/verify_bundle.py:355",
+        "status": "undetermined"
+      },
+      {
+        "hypothesis_id": "H3",
+        "stage": "induction",
+        "statement": "The codebase consistently guarantees exact threshold behavior across all bundle construction paths.",
+        "evidence": "tools/evolution_bundle.py:237; tools/evolution_bundle.py:612",
+        "status": "undetermined"
+      },
+      {
+        "hypothesis_id": "H4",
+        "stage": "deduction",
+        "statement": "The serialized EBS record lacks authenticated provider/model provenance even though the LLM layer returns those values.",
+        "evidence": "lib/llm.ts:33; lib/llm.ts:128; tools/evolution_bundle.py:379",
+        "status": "undetermined"
+      }
+    ]
+  },
+  "skills": [
+    {
+      "name": "abductive-engineering",
+      "status": "APPLIED",
+      "reason": "Structured hypotheses from observed integrity and numeric gaps."
+    },
+    {
+      "name": "atomic-state-mutation",
+      "status": "REJECTED",
+      "reason": "No state mutation or patch was authorized."
+    },
+    {
+      "name": "audit-before-patch",
+      "status": "APPLIED",
+      "reason": "Completed evidence review without modifying the target."
+    },
+    {
+      "name": "claim-provenance-discipline",
+      "status": "APPLIED",
+      "reason": "Separated static observations from unconfirmed vulnerability claims."
+    },
+    {
+      "name": "codebase-health-assessment",
+      "status": "UNDETERMINED",
+      "reason": "Broad maintainability assessment was outside scope."
+    },
+    {
+      "name": "daubert-defensible-writing",
+      "status": "APPLIED",
+      "reason": "Used traceable relative path:line evidence and conservative statuses."
+    },
+    {
+      "name": "deterministic-core",
+      "status": "APPLIED",
+      "reason": "Compared Fraction and float computation paths at decision boundaries."
+    },
+    {
+      "name": "diagnosing-bugs",
+      "status": "APPLIED",
+      "reason": "Traced serialization and verifier control flow for failure modes."
+    },
+    {
+      "name": "git-discipline",
+      "status": "REJECTED",
+      "reason": "No repository mutation or history operation was needed."
+    },
+    {
+      "name": "honest-degradation",
+      "status": "APPLIED",
+      "reason": "Reported undetermined status where execution was prohibited."
+    },
+    {
+      "name": "llm-out-of-the-loop",
+      "status": "APPLIED",
+      "reason": "Reviewed model provenance and treated model output as untrusted evidence."
+    },
+    {
+      "name": "red-team-auditing",
+      "status": "APPLIED",
+      "reason": "Examined attacker-controlled bundle fields and fail-closed validation."
+    },
+    {
+      "name": "reverse-engineering",
+      "status": "APPLIED",
+      "reason": "Reconstructed bundle construction and independent verification contracts."
+    },
+    {
+      "name": "secure-by-construction",
+      "status": "APPLIED",
+      "reason": "Evaluated whether integrity and numeric controls cover all decision inputs."
+    },
+    {
+      "name": "software-archaeology",
+      "status": "APPLIED",
+      "reason": "Compared documented guarantees with current implementation paths."
+    },
+    {
+      "name": "sql-aggregation-not-materialization",
+      "status": "REJECTED",
+      "reason": "No SQL aggregation or materialization issue was in scope."
+    },
+    {
+      "name": "surgical-patcher",
+      "status": "REJECTED",
+      "reason": "User prohibited target modification."
+    },
+    {
+      "name": "tamper-evident-audit-chain",
+      "status": "APPLIED",
+      "reason": "Audited hash-chain coverage and omitted fields."
+    },
+    {
+      "name": "validate-at-the-boundary",
+      "status": "APPLIED",
+      "reason": "Reviewed numeric parsing, measurement, and threshold input validation."
+    },
+    {
+      "name": "versioned-schema-evolution",
+      "status": "APPLIED",
+      "reason": "Checked EBS v1 schema fields and authenticated serialization coverage."
+    }
+  ]
+}

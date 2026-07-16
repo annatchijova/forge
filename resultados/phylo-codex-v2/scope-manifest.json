@@ -1,0 +1,12 @@
+{
+  "repository": "/home/labestiadevigia/phylo",
+  "git_revision": "26cfd2d22c0d22b5a1a883922909989476579804",
+  "detected_languages": ["TypeScript", "JavaScript", "Python", "SQL", "CSS", "YAML", "MJS"],
+  "effectively_analyzed_languages": ["Python", "bounded JavaScript/TypeScript lexical review"],
+  "detected_but_not_audited_languages": ["SQL", "CSS", "YAML", "MJS"],
+  "connected_modules": 24,
+  "static_scope_files": 47,
+  "max_connected_modules": 100,
+  "module_classes": {"CONNECTED_ALIVE": 24, "DEAD_WEIGHT": 6, "FOSSIL_HIGH_RISK": 3},
+  "exclusions": [".git", ".gitignore", "node_modules", "vendor", "dependencies", "site-packages", ".venv", "venv", ".tox", ".nox", "caches", ".next", ".turbo", "dist", "build", "target", "binaries", "generated code", "minified files", "large artifacts"]
+}
