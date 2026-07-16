@@ -11,7 +11,10 @@ import ast
 import importlib.util
 import inspect
 import multiprocessing
+import os
+import resource
 import sys
+import tempfile
 import traceback
 from queue import Empty
 from dataclasses import asdict, dataclass
@@ -20,6 +23,9 @@ from typing import Any
 
 
 _NAMED_BOUNDARY_ERRORS = {"JSONDecodeError", "ValueError", "YAMLError", "TomlDecodeError", "ForgeArtifactError"}
+INDUCTION_TIMEOUT_SECONDS = 1.0
+INDUCTION_MEMORY_BYTES = 512 * 1024 * 1024
+INDUCTION_FILE_DESCRIPTORS = 64
 
 
 @dataclass(frozen=True)
@@ -74,42 +80,59 @@ def _module_name(root: Path, module_path: str) -> str | None:
     return ".".join(parts)
 
 
+def _apply_worker_limits() -> None:
+    """Apply best-effort child limits; unsupported limits remain explicit."""
+    limits = (
+        (resource.RLIMIT_CPU, (1, 1)),
+        (resource.RLIMIT_AS, (INDUCTION_MEMORY_BYTES, INDUCTION_MEMORY_BYTES)),
+        (resource.RLIMIT_NOFILE, (INDUCTION_FILE_DESCRIPTORS, INDUCTION_FILE_DESCRIPTORS)),
+    )
+    for limit, values in limits:
+        try:
+            resource.setrlimit(limit, values)
+        except (OSError, ValueError, AttributeError):
+            continue
+
+
 def _invoke_worker(root: str, module_path: str, function_name: str, target_line: int, queue: Any) -> None:
     try:
         root_path = Path(root)
-        qualified_name = _module_name(root_path, module_path)
-        if qualified_name:
-            sys.path.insert(0, str(root_path))
-            try:
-                module = importlib.import_module(qualified_name)
-            except BaseException as exc:
-                queue.put(("import-error", type(exc).__name__, str(exc)[:240]))
-                return
-        else:
-            module_name = f"forge_induction_{abs(hash(module_path))}"
-            spec = importlib.util.spec_from_file_location(module_name, root_path / module_path)
-            if spec is None or spec.loader is None:
-                queue.put(("import-error", "ModuleSpecError", "module spec unavailable"))
-                return
-            module = importlib.util.module_from_spec(spec)
-            try:
-                spec.loader.exec_module(module)
-            except BaseException as exc:
-                queue.put(("import-error", type(exc).__name__, str(exc)[:240]))
-                return
-        function = getattr(module, function_name)
-        signature = inspect.signature(function)
-        args: list[str] = []
-        for parameter in signature.parameters.values():
-            if parameter.kind in (parameter.VAR_POSITIONAL, parameter.VAR_KEYWORD):
-                continue
-            if parameter.kind is parameter.KEYWORD_ONLY and parameter.default is not parameter.empty:
-                continue
-            if parameter.default is not parameter.empty and parameter.kind is not parameter.KEYWORD_ONLY:
-                continue
-            args.append(_synthetic_value(parameter.name))
-        result = function(*args)
-        queue.put(("returned", type(result).__name__))
+        with tempfile.TemporaryDirectory(prefix="forge-induction-") as sandbox:
+            os.chdir(sandbox)
+            _apply_worker_limits()
+            qualified_name = _module_name(root_path, module_path)
+            if qualified_name:
+                sys.path.insert(0, str(root_path))
+                try:
+                    module = importlib.import_module(qualified_name)
+                except BaseException as exc:
+                    queue.put(("import-error", type(exc).__name__, str(exc)[:240]))
+                    return
+            else:
+                module_name = f"forge_induction_{abs(hash(module_path))}"
+                spec = importlib.util.spec_from_file_location(module_name, root_path / module_path)
+                if spec is None or spec.loader is None:
+                    queue.put(("import-error", "ModuleSpecError", "module spec unavailable"))
+                    return
+                module = importlib.util.module_from_spec(spec)
+                try:
+                    spec.loader.exec_module(module)
+                except BaseException as exc:
+                    queue.put(("import-error", type(exc).__name__, str(exc)[:240]))
+                    return
+            function = getattr(module, function_name)
+            signature = inspect.signature(function)
+            args: list[str] = []
+            for parameter in signature.parameters.values():
+                if parameter.kind in (parameter.VAR_POSITIONAL, parameter.VAR_KEYWORD):
+                    continue
+                if parameter.kind is parameter.KEYWORD_ONLY and parameter.default is not parameter.empty:
+                    continue
+                if parameter.default is not parameter.empty and parameter.kind is not parameter.KEYWORD_ONLY:
+                    continue
+                args.append(_synthetic_value(parameter.name))
+            result = function(*args)
+            queue.put(("returned", type(result).__name__))
     except BaseException as exc:  # child boundary: never leak target exceptions to the audit process
         target_file = str((Path(root) / module_path).resolve())
         frames = traceback.extract_tb(exc.__traceback__)
@@ -152,11 +175,11 @@ def induce_hypothesis(root: str | Path, module_path: str, line: int, description
     queue = context.Queue()
     process = context.Process(target=_invoke_worker, args=(str(root_path), module_path, function_name, line, queue))
     process.start()
-    process.join(1.0)
+    process.join(INDUCTION_TIMEOUT_SECONDS)
     if process.is_alive():
         process.terminate()
         process.join(0.5)
-        return InductionResult("UNDETERMINED", family, "Induction timed out after 1.0s; child process was terminated.", f"{module_path}:{line}")
+        return InductionResult("UNDETERMINED", family, f"Induction timed out after {INDUCTION_TIMEOUT_SECONDS}s; child process was terminated.", f"{module_path}:{line}")
     try:
         result = queue.get(timeout=0.2)
     except Empty:

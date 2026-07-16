@@ -161,7 +161,8 @@ class Runtime:
     def __init__(self, skills_root: str | Path | None = None, max_connected: int = 100,
                  triage_override: Callable | None = None,
                  model_routing: ModelRouting | None = None,
-                 cronos_db: str | Path | None = None):
+                 cronos_db: str | Path | None = None,
+                 induction: bool = True):
         """Create a runtime.
 
         By default triage uses Archaeologist's enriched path, including
@@ -175,6 +176,7 @@ class Runtime:
         self._triage_override = triage_override
         self.model_routing = model_routing or ModelRouting()
         self.cronos_db = Path(cronos_db) if cronos_db is not None else None
+        self.induction = induction
 
     @staticmethod
     def _event(trace: RuntimeTrace, cronos, kind: str, **payload: Any) -> None:
@@ -291,7 +293,7 @@ class Runtime:
         self._event(trace, cronos, "skill_contracts_executed", findings=len(governance.findings), limitations=governance.limitations)
         self._phase_end(trace, cronos, "governance", governance_started)
         bug_started = self._phase_start(trace, cronos, "bug_investigator")
-        bug = bug_investigator.investigate(triage_manifest, induce=True)
+        bug = bug_investigator.investigate(triage_manifest, induce=self.induction)
         self._event(trace, cronos, "hypotheses_generated", count=len(bug.hypotheses), modules=list(bug.manifest.audited_modules))
         self._event(trace, cronos, "hypotheses_verified", discarded=len(bug.verification.discarded), findings=len(bug.verification.findings))
         self._phase_end(trace, cronos, "bug_investigator", bug_started)
@@ -441,6 +443,7 @@ class Runtime:
                 max_connected=max_connected,
                 triage_override=lambda _repo, manifest=shard_manifest: manifest,
                 model_routing=self.model_routing,
+                induction=self.induction,
             )
             try:
                 result = shard_runtime.audit(root, shard_output, max_connected=max_connected)
