@@ -1,4 +1,22 @@
 import json
+
+from forge.runtime import _deduplicate_findings
+from forge.models import Evidence, Finding
+
+
+def test_dedup_merges_same_evidence_across_agents_and_preserves_provenance():
+    evidence = (Evidence("source", "app.py:7", "  path reaches   open()  "),)
+    first = Finding("OBSERVED", "CODE FACT", "app.py", "path reaches open()", evidence, "first", "security_auditor")
+    second = Finding("OBSERVED", "CODE FACT", "app.py", "path reaches open()", evidence, "second", "bug_investigator")
+    result = _deduplicate_findings([first, second])
+    assert len(result) == 1
+    assert "MULTIPLE_AGENTS" in result[0].provenance
+
+
+def test_dedup_does_not_merge_same_line_with_different_evidence():
+    first = Finding("OBSERVED", "CODE FACT", "app.py", "path reaches open()", (Evidence("source", "app.py:7", "first"),), "first", "security_auditor")
+    second = Finding("OBSERVED", "CODE FACT", "app.py", "path reaches open()", (Evidence("source", "app.py:7", "second"),), "second", "security_auditor")
+    assert len(_deduplicate_findings([first, second])) == 2
 from forge import Runtime
 from forge.cli import main as cli_main
 from forge.mcp_server import audit_repository

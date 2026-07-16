@@ -21,7 +21,7 @@ from forge.evidence_package import build_repository_profile, write_markdown_repo
 from forge.governance.runtime import infer_domains, load_skills, run_skills
 from forge.hypotheses import generate_hypotheses, write_hypotheses_manifest
 from forge.io import load_json
-from forge.severity import severity_for
+from forge.severity import finding_family, severity_for
 from forge.models import AgentScanResult, CoverageReport, Evidence, Finding, ModelRouting, TriageManifest, VerificationManifest
 from forge.metrics import collect_metrics
 from forge.contradictions import find_contradictions
@@ -67,6 +67,41 @@ def _with_severity(finding: Finding, family: str | None = None) -> Finding:
                    finding.agent, finding.outcome,
                    severity_for(finding.module_path, finding.epistemic_level, finding.description, finding.agent, family=family),
                    finding.provenance)
+
+
+def _finding_identity(finding: Finding) -> tuple[str, str, int, tuple[tuple[str, str, str], ...]]:
+    """Build the stable identity used to merge genuinely duplicate findings."""
+    line = 0
+    for item in finding.evidence:
+        match = __import__("re").search(r":(\d+)(?::\d+)?$", item.source)
+        if match:
+            line = int(match.group(1))
+            break
+    evidence = tuple(sorted(
+        (item.kind, item.source, " ".join(item.detail.split()))
+        for item in finding.evidence
+    ))
+    return finding_family(finding.description), finding.module_path, line, evidence
+
+
+def _deduplicate_findings(findings: list[Finding]) -> list[Finding]:
+    """Collapse exact evidence duplicates while preserving cross-agent provenance."""
+    merged: dict[tuple[str, str, int, tuple[tuple[str, str, str], ...]], Finding] = {}
+    agents: dict[tuple[str, str, int, tuple[tuple[str, str, str], ...]], set[str]] = {}
+    for finding in findings:
+        identity = _finding_identity(finding)
+        if identity not in merged:
+            merged[identity] = finding
+            agents[identity] = {finding.agent}
+            continue
+        agents[identity].add(finding.agent)
+    result: list[Finding] = []
+    for identity, finding in merged.items():
+        provenance = list(finding.provenance)
+        if len(agents[identity]) > 1:
+            provenance.append("MULTIPLE_AGENTS")
+        result.append(replace(finding, provenance=tuple(dict.fromkeys(provenance))))
+    return result
 
 
 def _attach_provenance(findings: list[Finding]) -> list[Finding]:
@@ -240,7 +275,7 @@ class Runtime:
         findings += [_with_severity(_agent_finding("integrity_inspector", item), family=item.family) for item in integrity_result.findings]
         findings += [_with_severity(_agent_finding("web_auditor", item), family=item.family) for item in web_result.findings]
         findings += [_with_severity(item) for item in governance.findings]
-        findings = _attach_provenance(findings)
+        findings = _attach_provenance(_deduplicate_findings(findings))
         from forge.agents import patch_reviewer, recommendation_agent, report_composer
         protocols = {
             "archaeologist": triage_manifest.protocol or mandatory_protocol(
