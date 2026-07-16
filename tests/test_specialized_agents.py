@@ -155,6 +155,17 @@ def test_scope_policy_excludes_dependencies_virtualenv_and_gitignore_but_keeps_m
     for excluded in (".gitignore", ".venv/lib/python3.12/site.py", "node_modules/pkg/index.js", "vendor/pkg.py"):
         assert result.examinations[excluded] == "excluded_by_policy"
 
+
+def test_scope_policy_excludes_prior_audit_output_from_all_agents(tmp_path):
+    write(tmp_path, "main.py", "VALUE = 1\n")
+    for directory in ("resultados", "results", "artifacts", ".forge-results"):
+        write(tmp_path, f"{directory}/prior.json", '{"findings": [{"severity": "CRITICAL"}]}\n')
+    discovered = {str(path.relative_to(tmp_path)) for path in discover_files(tmp_path)}
+    result = audit(tmp_path)
+    assert {f"{directory}/prior.json" for directory in ("resultados", "results", "artifacts", ".forge-results")}.isdisjoint(discovered)
+    for directory in ("resultados", "results", "artifacts", ".forge-results"):
+        assert result.examinations[f"{directory}/prior.json"] == "excluded_by_policy"
+
 def test_archaeologist_adds_deletion_judgment(tmp_path):
     write(tmp_path, "dead.py", "x = 1\n")
     result = assess(tmp_path)

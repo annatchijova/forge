@@ -24,6 +24,7 @@ SKIP_DIRS = {
     "node_modules", "vendor", "third_party", "dependencies", "dependency",
     "__pycache__", ".mypy_cache", ".pytest_cache", ".next", ".turbo",
     ".yarn", ".pnpm-store", "dist", "build", "target", "reportes",
+    "resultados", "results", "artifacts", ".forge-results",
 }
 SKIP_FILE_NAMES = {".gitignore"}
 LANG_EXT = {".py": "Python", ".js": "JavaScript", ".ts": "TypeScript", ".rs": "Rust", ".go": "Go", ".java": "Java", ".rb": "Ruby", ".c": "C", ".cpp": "C++", ".cs": "C#"}
