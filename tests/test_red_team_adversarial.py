@@ -80,6 +80,16 @@ def test_generated_build_output_cannot_expand_the_audit_scope(tmp_path):
     assert result.findings == 0
 
 
+def test_generated_rust_target_output_cannot_expand_the_audit_scope(tmp_path):
+    (tmp_path / "target" / "release").mkdir(parents=True)
+    (tmp_path / "target" / "release" / "generated.js").write_text("eval(userInput);\n")
+    (tmp_path / "main.py").write_text("x = 1\n")
+    result = Runtime().audit(tmp_path, tmp_path / "out")
+    assert result.coverage["files_analyzed"] == 1
+    assert "target/release/generated.js" in result.coverage["skipped_reasons"]["excluded_by_policy"]
+    assert result.findings == 0
+
+
 def test_python_hypothesis_engine_does_not_parse_typescript_as_python(tmp_path):
     (tmp_path / "main.py").write_text("import frontend\n")
     (tmp_path / "frontend.ts").write_text("export const x = eval(userInput);\n")
