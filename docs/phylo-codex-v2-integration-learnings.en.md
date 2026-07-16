@@ -168,10 +168,12 @@ Forge now provides the first enforcement layer for these requirements:
 - the canonical layered finding set can be sealed independently through
   `verification-manifest.canonical.sealed.json`.
 
-The remaining integration work is to make report rendering, audit tracing, and
-historical comparison consume this canonical set automatically. Until that is
-connected, the canonical finalizer is a required handoff step rather than an
-implicit part of the ordinary `audit` command.
+The canonical finalizer now also rewrites the English `report.md` and
+`report.json`, appends external-agent validation and canonical-set events to
+`audit-trace.json`, and emits a canonical seal containing that updated trace.
+Historical comparison prefers the canonical seal when it exists. The ordinary
+`audit` command remains the native deterministic path; external Codex runs
+must call `finalize-multi-agent` as their explicit closing handoff.
 
 ## Success criteria for the next run
 

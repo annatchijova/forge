@@ -23,7 +23,9 @@ def _finding_key(finding: dict[str, Any]) -> str:
 
 
 def _findings(run: Path) -> dict[str, dict[str, Any]]:
-    sealed = load_json(run / "verification-manifest.sealed.json", f"sealed manifest in {run}")
+    canonical = run / "verification-manifest.canonical.sealed.json"
+    sealed_path = canonical if canonical.is_file() else run / "verification-manifest.sealed.json"
+    sealed = load_json(sealed_path, f"sealed manifest in {run}")
     verification = verify_sealed(sealed)
     if not verification["ok"]:
         raise ValueError(f"cannot compare unverified run {run}: {verification['issues']}")
@@ -43,7 +45,7 @@ def compare_runs(previous: str | Path, current: str | Path) -> dict[str, Any]:
     old_keys, new_keys = set(old), set(new)
     delta = _coverage(after) - _coverage(before)
     return {
-        "comparison_schema_version": "1.0",
+        "comparison_schema_version": "1.1",
         "previous_run": str(before),
         "current_run": str(after),
         "previous_findings": len(old),
@@ -54,6 +56,10 @@ def compare_runs(previous: str | Path, current: str | Path) -> dict[str, Any]:
         "coverage_delta": {"numerator": delta.numerator, "denominator": delta.denominator},
         "previous_coverage": {"numerator": _coverage(before).numerator, "denominator": _coverage(before).denominator},
         "current_coverage": {"numerator": _coverage(after).numerator, "denominator": _coverage(after).denominator},
+        "finding_set": {
+            "previous": "canonical" if (before / "verification-manifest.canonical.sealed.json").is_file() else "native",
+            "current": "canonical" if (after / "verification-manifest.canonical.sealed.json").is_file() else "native",
+        },
     }
 
 
