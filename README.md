@@ -22,18 +22,28 @@ They are considerably less disciplined at explaining **why** something is a
 defect, distinguishing evidence from speculation, documenting discarded
 hypotheses, or proving what was actually inspected.
 
-FORGE addresses that gap. Rather than behaving like another autonomous coding
-agent, FORGE behaves like a forensic engineering team:
+FORGE addresses that gap.
 
-* observes before concluding,
-* generates competing hypotheses,
-* actively attempts to falsify them,
-* reports both findings and discarded explanations,
-* seals the complete audit trail.
+> FORGE behaves like a forensic engineering team.
 
-The objective is not simply finding more bugs. The objective is producing
-findings that another engineer can independently reproduce, challenge, or
-verify.
+```
+Observe
+   │
+   ▼
+Hypothesize
+   │
+   ▼
+Falsify
+   │
+   ▼
+Verify
+   │
+   ▼
+Seal
+```
+
+The objective is not to produce more findings. It is to produce findings that
+can be independently verified.
 
 FORGE's normal audit path also keeps the decision mechanism out of the LLM
 loop: discovery, AST parsing, structural detectors, hypothesis handling,
@@ -42,19 +52,6 @@ cost scales with repository work, not with tokens sent to a model. Model
 routing is explicit and recorded honestly rather than presented as evidence
 that a model ran. See [`docs/model-routing.md`](docs/model-routing.md) for the
 full configuration and a measured cost example.
-
----
-
-## Why is FORGE different?
-
-| Traditional AI auditor | FORGE |
-|---|---|
-| Pattern matching | Evidence |
-| Hidden reasoning | Explicit reasoning stages |
-| One report | Typed, separable artifacts |
-| Confidence | Evidence boundaries |
-| Black box | Deterministic pipeline |
-| Trust the AI | Verify the audit |
 
 ---
 
@@ -73,11 +70,16 @@ Specialized agents  (Bug Investigator · Security Auditor · Integrity Inspector
 Evidence
    │
    ▼
-Seal (SHA-256)
+Canonical Manifest
    │
    ▼
-HTML report
+SHA-256 Seal
+   │
+   ▼
+Reports
 ```
+
+![FORGE verification report dashboard](docs/images/dashboard.png)
 
 FORGE is not a single script that scans a repository and prints findings. It
 is a small set of layers, each with one job, composed by one runtime:
@@ -100,6 +102,12 @@ diagram in [`docs/agents.md`](docs/agents.md).
 ---
 
 ## Quick start
+
+```text
+Deterministic
+Read-only
+Reproducible
+```
 
 ```bash
 python3 -m forge audit /path/to/repository -o forge-run --max-connected 100
@@ -134,6 +142,19 @@ Outputs:
 
 Details on why artifacts are split rather than nested into one blob, and on
 what the seal does and does not prove, in [`docs/artifacts.md`](docs/artifacts.md).
+
+---
+
+## Why is FORGE different?
+
+| Traditional AI auditor | FORGE |
+|---|---|
+| Pattern matching | Evidence-backed findings |
+| Hidden reasoning | Explicit reasoning stages |
+| Monolithic report | Typed forensic artifacts |
+| Confidence score | Evidence boundaries |
+| Opaque execution | Deterministic runtime |
+| Trust the AI | Verify the evidence |
 
 ---
 
@@ -198,15 +219,24 @@ FORGE intentionally does **not**:
 
 ## Documentation
 
-* [`docs/agents.md`](docs/agents.md) — full agent-by-agent breakdown
+**Architecture**
 * [`docs/runtime.md`](docs/runtime.md) — frontends, demo mode, benchmark corpus
+* [`docs/agents.md`](docs/agents.md) — full agent-by-agent breakdown
+
+**Evidence**
 * [`docs/artifacts.md`](docs/artifacts.md) — output artifacts and sealing
 * [`docs/model-routing.md`](docs/model-routing.md) — model routing and the measured cost advantage
-* [`docs/philosophy.md`](docs/philosophy.md) — the Peircean reasoning loop and design principles
+
+**Governance**
 * [`docs/skills.md`](docs/skills.md) — governance skill catalog and extensibility
 * [`docs/cronos.md`](docs/cronos.md) — the internal CRONOS tracing engine
+* [`docs/philosophy.md`](docs/philosophy.md) — the Peircean reasoning loop and design principles
+
+**Build**
 * [`docs/mcp.md`](docs/mcp.md) — MCP tools and Claude Code integration
 * [`docs/hackathon.md`](docs/hackathon.md) — build notes and Codex session evidence
+
+**Reference**
 * [`DECISIONS.md`](DECISIONS.md) — recorded architectural decisions and their boundaries
 * [`agents/README.md`](agents/README.md) — agent role contracts
 
@@ -219,9 +249,9 @@ results.
 
 ## Vision
 
-FORGE treats repository governance as an engineering discipline rather than a
-prompt engineering exercise. Its goal is not to generate convincing
-explanations — it is to produce findings that survive independent scrutiny.
+> FORGE is not an AI auditor.
+>
+> It is a governance runtime for reproducible software audits.
 
 The differentiator is not the detector. "FORGE finds bugs with AI" describes
 a script. What FORGE actually is: a governance runtime for reproducible
