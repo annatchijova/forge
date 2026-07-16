@@ -1,0 +1,5 @@
+{
+  "pytest_command": "python3 -m pytest -q tests",
+  "result": "150 passed in 4.41s",
+  "exit_code": 0
+}

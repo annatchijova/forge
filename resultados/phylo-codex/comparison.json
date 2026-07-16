@@ -1,0 +1,14 @@
+{
+  "comparison_schema_version": "1.0",
+  "baseline": "/home/labestiadevigia/forge/resultados/phylo/run-20260716T010234Z",
+  "current": "/home/labestiadevigia/forge/resultados/phylo-codex",
+  "previous_findings": 7,
+  "current_findings": 7,
+  "new": [],
+  "resolved": [],
+  "unchanged_count": 7,
+  "coverage_delta": {
+    "numerator": 0,
+    "denominator": 1
+  }
+}

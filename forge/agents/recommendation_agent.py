@@ -11,6 +11,16 @@ import re
 from pathlib import Path
 from forge.models import Recommendation
 from forge.io import load_json
+from forge.agent_protocol import mandatory_protocol
+
+
+def protocol(sealed_path: str | Path = "sealed manifest", metrics_path: str | Path | None = None):
+    return mandatory_protocol(
+        "recommendation_agent",
+        (f"recommendations derive from sealed evidence at {sealed_path}",),
+        (),
+        induction_reason="Recommendation actionability requires owner validation and is not a security finding.",
+    )
 
 
 def _domains(metrics: dict, module: str) -> set[str]:

@@ -6,6 +6,7 @@ from pathlib import Path
 from forge.detector.stack import triage
 from forge.agents._scan import prepare_python_scan
 from forge.models import AgentScanResult, ModuleClass
+from forge.agent_protocol import mandatory_protocol
 
 @dataclass(frozen=True)
 class IntegrityFinding:
@@ -132,11 +133,18 @@ def inspect(root: str | os.PathLike[str]) -> tuple[IntegrityFinding, ...]:
                 out.append(IntegrityFinding("decision-adjacent-float", rel, line, "non-deterministic arithmetic in a decision-adjacent path"))
         for n in ast.walk(tree):
             if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr in {"dump", "dumps"} and isinstance(n.func.value, ast.Name) and n.func.value.id in {"json","pickle"}:
-                if (rel in _NON_ARTIFACT_SERIALIZATION_MODULES or _enclosing_function(n, parents) == "_event"
+                if (rel in _NON_ARTIFACT_SERIALIZATION_MODULES or _enclosing_function(n, parents) in {"_event", "_sha256_dict", "save"}
                         or _is_internal_serialization(n, parents) or _serialization_has_version(n)
                         or (isinstance(n.args[0], ast.Name) and n.args[0].id in versioned_payload_names)
                         or (isinstance(n.args[0], ast.Name) and n.args[0].id in {"metrics", "coverage", "governance", "trace", "profile"})):
                     continue
                 out.append(IntegrityFinding("unversioned-serialization", rel, n.lineno, "unversioned serialization"))
         examinations[rel]="examined_with_findings" if any(x.path == rel for x in out) else "examined_clean"
-    return AgentScanResult(tuple(out), examinations)
+    return AgentScanResult(
+        tuple(out), examinations,
+        mandatory_protocol(
+            "integrity_inspector",
+            tuple(f"{item.family} observed at {item.path}:{item.line}" for item in out),
+            examinations,
+        ),
+    )

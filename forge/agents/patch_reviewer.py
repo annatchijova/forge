@@ -3,10 +3,12 @@ from __future__ import annotations
 import ast, re
 from dataclasses import dataclass
 from fractions import Fraction
+from forge.agent_protocol import mandatory_protocol
 
 @dataclass(frozen=True)
 class PatchReview:
     changed_lines: int; touched_scopes: tuple[str, ...]; ratio: Fraction; flags: tuple[str, ...]
+    protocol: object = None
 
 
 class PatchReviewInputError(ValueError):
@@ -41,4 +43,21 @@ def review(unified_diff: str, intent: str, before: str = "", after: str = "") ->
     if intent_word and not any(re.search(re.escape(intent_word), s, re.I) for s in scopes):
         flags = ("changed lines do not match stated intent",)
     if new_lines and not scopes: flags += ("changed lines fall outside any function or class",)
-    return PatchReview(len(changed), tuple(scopes), ratio, flags)
+    return PatchReview(
+        len(changed), tuple(scopes), ratio, flags,
+        mandatory_protocol(
+            "patch_reviewer",
+            (f"patch contains {len(changed)} changed lines", f"touched scopes: {tuple(scopes)}"),
+            tuple(scopes),
+            induction_reason="Patch scope and intent checks executed; semantic behavior remains undetermined without a test command.",
+        ),
+    )
+
+
+def protocol(intent: str = "repository audit without a patch"):
+    return mandatory_protocol(
+        "patch_reviewer",
+        (f"no patch supplied; patch-review contract evaluated for {intent}",),
+        (),
+        induction_reason="No patch was supplied to the repository-audit entrypoint; semantic patch induction is not applicable.",
+    )

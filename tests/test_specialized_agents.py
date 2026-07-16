@@ -29,6 +29,7 @@ def test_security_path_trigger_and_normalized_safe_context(tmp_path):
     assert [(x.path, x.family) for x in audit(tmp_path)] == [("bad.py", "path-traversal")]
 
 def test_pipeline_preserves_security_family_for_severity(tmp_path):
+    write(tmp_path, "main.py", "import reader\n")
     write(tmp_path, "reader.py", "def read(path):\n    return open(path)\n")
     run_specialized_pipeline(tmp_path, tmp_path / "out")
     sealed = json.loads((tmp_path / "out/verification-manifest.sealed.json").read_text())
@@ -109,6 +110,25 @@ def test_all_agents_share_exact_skip_directory_policy(tmp_path):
         assert hidden not in discovered
         assert security.examinations[hidden] == "excluded_by_policy"
         assert integrity.examinations[hidden] == "excluded_by_policy"
+
+def test_scope_policy_excludes_dependencies_virtualenv_and_gitignore_but_keeps_manifests(tmp_path):
+    write(tmp_path, "main.py", "import live\n")
+    write(tmp_path, "live.py", "VALUE = 1\n")
+    write(tmp_path, ".gitignore", "*.secret\n")
+    write(tmp_path, ".venv/lib/python3.12/site.py", "password = 'secret'\n")
+    write(tmp_path, "node_modules/pkg/index.js", "password = 'secret'\n")
+    write(tmp_path, "vendor/pkg.py", "password = 'secret'\n")
+    write(tmp_path, "package.json", "{}\n")
+    write(tmp_path, "requirements.txt", "pytest\n")
+    discovered = {str(p.relative_to(tmp_path)) for p in discover_files(tmp_path)}
+    all_files = {str(p.relative_to(tmp_path)) for p in discover_files(tmp_path, include_excluded=True)}
+    assert ".gitignore" not in discovered
+    assert {".venv/lib/python3.12/site.py", "node_modules/pkg/index.js", "vendor/pkg.py"}.isdisjoint(discovered)
+    assert {".gitignore", ".venv/lib/python3.12/site.py", "node_modules/pkg/index.js", "vendor/pkg.py"} <= all_files
+    assert {"package.json", "requirements.txt"} <= discovered
+    result = audit(tmp_path)
+    for excluded in (".gitignore", ".venv/lib/python3.12/site.py", "node_modules/pkg/index.js", "vendor/pkg.py"):
+        assert result.examinations[excluded] == "excluded_by_policy"
 
 def test_archaeologist_adds_deletion_judgment(tmp_path):
     write(tmp_path, "dead.py", "x = 1\n")

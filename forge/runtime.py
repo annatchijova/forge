@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from forge.agents import archaeologist, bug_investigator, integrity_inspector, report_composer, security_auditor, web_auditor
-from forge.detector.stack import SKIP_DIRS, discover_files, write_manifest
+from forge.detector.stack import discover_files, is_excluded_by_policy, write_manifest
 from forge.evidence_package import build_repository_profile, write_markdown_report, write_repository_profile
 from forge.governance.runtime import infer_domains, load_skills, run_skills
 from forge.hypotheses import generate_hypotheses, write_hypotheses_manifest
@@ -33,6 +33,7 @@ from forge.tracing import RuntimeTrace
 from forge.verification import verify_hypotheses, write_verification_manifest
 from forge.git_refs import archive_ref, changed_files, resolve_ref
 from forge.attestation import attest_manifest, verify_manifest_attestation
+from forge.agent_protocol import mandatory_protocol, validate_protocols
 
 def _coverage(root: Path, families=(), discovered=None, analyzed_paths=()) -> CoverageReport:
     discovered = discovered if discovered is not None else discover_files(root, include_excluded=True)
@@ -41,7 +42,7 @@ def _coverage(root: Path, families=(), discovered=None, analyzed_paths=()) -> Co
     analyzed_paths = set(analyzed_paths)
     for path in discovered:
         rel = str(path.relative_to(root))
-        if any(part in SKIP_DIRS for part in path.relative_to(root).parts): skipped["excluded_by_policy"].append(rel); continue
+        if is_excluded_by_policy(path, root): skipped["excluded_by_policy"].append(rel); continue
         try: source = path.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError): skipped["binary_or_unreadable"].append(rel); continue
         if rel in analyzed_paths:
@@ -199,11 +200,12 @@ class Runtime:
         if connected > limit: raise ValueError(f"scope guard: {connected} CONNECTED_ALIVE modules exceeds max_connected={limit}")
         web_degraded: list[str] = []
         try:
-            web_result, web_analyzed_paths = web_auditor.audit(root)
+            connected_paths = {module.path for module in triage_manifest.modules if module.module_class.value == "CONNECTED_ALIVE"}
+            web_result, web_analyzed_paths = web_auditor.audit(root, connected_paths)
         except Exception as exc:
             message = f"web_auditor unavailable: {type(exc).__name__}: {exc}"
             web_degraded.append(message)
-            web_result, web_analyzed_paths = AgentScanResult((), {}), ()
+            web_result, web_analyzed_paths = AgentScanResult((), {}, mandatory_protocol("web_auditor", (message,), ())), ()
             self._event(trace, cronos, "agent_degraded", agent="web_auditor", error=message)
         self._event(trace, cronos, "agent_completed", agent="web_auditor", findings=len(web_result.findings), examinations=web_result.examinations)
         coverage = _coverage(root, discovered=discovered, analyzed_paths=web_analyzed_paths)
@@ -217,18 +219,19 @@ class Runtime:
         self._event(trace, cronos, "hypotheses_verified", discarded=len(bug.verification.discarded), findings=len(bug.verification.findings))
         degraded_reasons: list[str] = list(web_degraded)
         try:
-            security_result = security_auditor.audit(root)
+            connected_paths = {module.path for module in triage_manifest.modules if module.module_class.value == "CONNECTED_ALIVE"}
+            security_result = security_auditor.audit(root, connected_paths)
         except Exception as exc:
             message = f"security_auditor unavailable: {type(exc).__name__}: {exc}"
             degraded_reasons.append(message)
-            security_result = AgentScanResult((), {"*": "agent_unavailable"})
+            security_result = AgentScanResult((), {"*": "agent_unavailable"}, mandatory_protocol("security_auditor", (message,), ()))
             self._event(trace, cronos, "agent_degraded", agent="security_auditor", error=message)
         try:
             integrity_result = integrity_inspector.inspect(root)
         except Exception as exc:
             message = f"integrity_inspector unavailable: {type(exc).__name__}: {exc}"
             degraded_reasons.append(message)
-            integrity_result = AgentScanResult((), {"*": "agent_unavailable"})
+            integrity_result = AgentScanResult((), {"*": "agent_unavailable"}, mandatory_protocol("integrity_inspector", (message,), ()))
             self._event(trace, cronos, "agent_degraded", agent="integrity_inspector", error=message)
         self._event(trace, cronos, "agent_completed", agent="security_auditor", findings=len(security_result.findings), examinations=security_result.examinations)
         self._event(trace, cronos, "agent_completed", agent="integrity_inspector", findings=len(integrity_result.findings), examinations=integrity_result.examinations)
@@ -238,6 +241,28 @@ class Runtime:
         findings += [_with_severity(_agent_finding("web_auditor", item), family=item.family) for item in web_result.findings]
         findings += [_with_severity(item) for item in governance.findings]
         findings = _attach_provenance(findings)
+        from forge.agents import patch_reviewer, recommendation_agent, report_composer
+        protocols = {
+            "archaeologist": triage_manifest.protocol or mandatory_protocol(
+                "archaeologist",
+                (f"classified {len(triage_manifest.modules)} modules and recorded triage evidence",),
+                (module.path for module in triage_manifest.modules),
+            ),
+            "bug_investigator": bug.protocol,
+            "security_auditor": security_result.protocol,
+            "integrity_inspector": integrity_result.protocol,
+            "web_auditor": web_result.protocol,
+            "patch_reviewer": patch_reviewer.protocol(),
+            "recommendation_agent": recommendation_agent.protocol(),
+            "report_composer": report_composer.protocol(),
+        }
+        validate_protocols(protocols)
+        self._event(
+            trace, cronos, "agent_protocols_validated",
+            agents=sorted(protocols),
+            skills=sorted({skill.name for protocol in protocols.values() for skill in protocol.skills}),
+            adi_stages=["abduction", "deduction", "induction"],
+        )
         contradictions = find_contradictions(findings, bug.verification.discarded)
         if contradictions:
             self._event(trace, cronos, "contradictions_detected", contradictions=[item.to_dict() for item in contradictions])
@@ -271,6 +296,7 @@ class Runtime:
         }
         metrics = collect_metrics(root=root, discovered=discovered, triage=triage_manifest, coverage=coverage, governance=governance, findings=findings, discarded=verification.discarded, trace=trace, skills=self.list_available_skills(), hypothesis_limitations=bug.manifest.limitations, degraded_reasons=degraded_reasons, contradiction_records=contradictions, repository_snapshot_sha256=repository_snapshot_sha256)
         metrics["agent_metrics"] = agent_metrics
+        metrics["agent_protocols"] = {name: protocol.to_dict() for name, protocol in protocols.items()}
         metrics_path.write_text(json.dumps(metrics, indent=2, sort_keys=True) + "\n")
         profile = build_repository_profile(root=str(root), triage=triage_manifest, governance=governance, coverage=coverage, metrics=metrics, findings=findings, elapsed_seconds=time.monotonic() - started)
         write_repository_profile(profile, profile_path)
@@ -279,13 +305,22 @@ class Runtime:
             self._event(trace, cronos, "artifact_written", artifact=name, path=str(path))
         self._event(trace, cronos, "artifact_written", artifact="report", path=str(report_path))
         self._event(trace, cronos, "seal_created", artifact="sealed", findings=len(findings))
+        # A provisional seal gives the post-audit agents a verified input.  It
+        # is replaced below after every agent/event has completed.
+        write_sealed_manifest(verification, sealed_path, trace.to_dict())
+        rendered_reports = render_dashboard(out)
+        recommendations = recommendation_agent.recommend(sealed_path, metrics_path)
+        recommendations_path = out / "recommendations.json"
+        recommendations_path.write_text(json.dumps([item.__dict__ for item in recommendations], indent=2, sort_keys=True, default=str) + "\n")
+        self._event(trace, cronos, "artifact_written", artifact="recommendations", path=str(recommendations_path), count=len(recommendations))
+        report_composer.compose(triage_path, hypotheses_path, sealed_path, report_path, coverage_path, metrics)
+        self._event(trace, cronos, "agent_completed", agent="report_composer", adi_stages=["abduction", "deduction", "induction"])
+        write_markdown_report(sealed=load_json(sealed_path, f"sealed manifest {sealed_path}"), metrics=metrics, profile=profile, destination=markdown_path)
         self._event(trace, cronos, "run_completed", findings=len(findings), elapsed_seconds=str(round(time.monotonic() - started, 6)))
         trace_path = out / "audit-trace.json"
         trace_path.write_text(json.dumps(trace.to_dict(), indent=2, sort_keys=True) + "\n")
         write_sealed_manifest(verification, sealed_path, trace.to_dict())
-        rendered_reports = render_dashboard(out)
-        write_markdown_report(sealed=load_json(sealed_path, f"sealed manifest {sealed_path}"), metrics=metrics, profile=profile, destination=markdown_path)
-        artifacts = {"triage": str(triage_path), "hypotheses": str(hypotheses_path), "verification": str(verification_path), "sealed": str(sealed_path), "coverage": str(coverage_path), "skills": str(skills_path), "metrics": str(metrics_path), "profile": str(profile_path), "report": str(report_path), "markdown": str(markdown_path), "trace": str(trace_path), **{key: value for key, value in rendered_reports.items() if key != "report"}}
+        artifacts = {"triage": str(triage_path), "hypotheses": str(hypotheses_path), "verification": str(verification_path), "sealed": str(sealed_path), "coverage": str(coverage_path), "skills": str(skills_path), "metrics": str(metrics_path), "profile": str(profile_path), "report": str(report_path), "markdown": str(markdown_path), "trace": str(trace_path), "recommendations": str(recommendations_path), **{key: value for key, value in rendered_reports.items() if key != "report"}}
         if self.cronos_db is not None:
             artifacts["cronos_db"] = str(self.cronos_db)
         return AuditResult(str(root), connected, len(findings), len(verification.discarded), tuple(findings), coverage.to_dict(), artifacts)

@@ -4,7 +4,7 @@ import ast
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from forge.detector.stack import SKIP_DIRS, discover_files
+from forge.detector.stack import discover_files, is_excluded_by_policy
 
 @dataclass(frozen=True)
 class PythonScanSet:
@@ -18,7 +18,7 @@ def prepare_python_scan(root: str | os.PathLike[str], eligible: set[str]) -> Pyt
     modules: list[tuple[str, ast.AST]] = []
     for path in discover_files(base, include_excluded=True):
         rel = str(path.relative_to(base))
-        if any(part in SKIP_DIRS for part in path.relative_to(base).parts):
+        if is_excluded_by_policy(path, base):
             examinations[rel] = "excluded_by_policy"
             continue
         if rel not in eligible or path.suffix != ".py":

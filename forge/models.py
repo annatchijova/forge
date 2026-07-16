@@ -107,6 +107,7 @@ class CoverageReport:
 class AgentScanResult:
     findings: tuple
     examinations: dict[str, str]
+    protocol: Any = None
 
     def __iter__(self):
         return iter(self.findings)
@@ -150,6 +151,7 @@ class TriageManifest:
     summary: dict[str, int]
     limitations: tuple[str, ...] = ()
     deletion_judgments: dict[str, str] = field(default_factory=dict)
+    protocol: Any = None
 
     def to_dict(self) -> dict[str, Any]:
         data = asdict(self)

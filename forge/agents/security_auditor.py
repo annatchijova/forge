@@ -6,6 +6,7 @@ from pathlib import Path
 from forge.detector.stack import triage
 from forge.agents._scan import prepare_python_scan
 from forge.models import AgentScanResult, ModuleClass
+from forge.agent_protocol import mandatory_protocol
 
 @dataclass(frozen=True)
 class SecurityFinding:
@@ -48,10 +49,18 @@ def _paths(tree):
         if isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id == "open" and n.args and any(isinstance(x, ast.Name) and x.id in params and x.id not in normalized for x in n.args):
             yield SecurityFinding("path-traversal", "", n.lineno, "parameter reaches open() without proven normalization")
 
-def audit(root: str | os.PathLike[str]) -> tuple[SecurityFinding, ...]:
-    base=Path(root); eligible={m.path for m in triage(base).modules if m.module_class in {ModuleClass.CONNECTED_ALIVE, ModuleClass.FOSSIL_HIGH_RISK, ModuleClass.DEAD_WEIGHT}}
-    scan=prepare_python_scan(base, eligible); out=[]; examinations=dict(scan.examinations)
+def audit(root: str | os.PathLike[str], eligible: set[str] | None = None) -> tuple[SecurityFinding, ...]:
+    base=Path(root)
+    scope = set(eligible) if eligible is not None else {m.path for m in triage(base).modules if m.module_class in {ModuleClass.CONNECTED_ALIVE, ModuleClass.FOSSIL_HIGH_RISK, ModuleClass.DEAD_WEIGHT}}
+    scan=prepare_python_scan(base, scope); out=[]; examinations=dict(scan.examinations)
     for rel, tree in scan.modules:
         for f in (*_assigned(tree), *_deserialization(tree), *_paths(tree)): out.append(SecurityFinding(f.family, rel, f.line, f.description))
         examinations[rel]="examined_with_findings" if any(x.path == rel for x in out) else "examined_clean"
-    return AgentScanResult(tuple(out), examinations)
+    return AgentScanResult(
+        tuple(out), examinations,
+        mandatory_protocol(
+            "security_auditor",
+            tuple(f"{item.family} observed at {item.path}:{item.line}" for item in out),
+            examinations,
+        ),
+    )

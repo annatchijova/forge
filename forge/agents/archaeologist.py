@@ -1,6 +1,7 @@
 """Archaeologist agent: the existing triage assessment plus deletion judgments."""
 from forge.detector.stack import triage
 from forge.models import TriageManifest
+from forge.agent_protocol import mandatory_protocol
 
 def assess(root: str) -> TriageManifest:
     manifest = triage(root)
@@ -14,6 +15,14 @@ def assess(root: str) -> TriageManifest:
             )
     # Preserve the established manifest contract while exposing the new output.
     from dataclasses import replace
-    return replace(manifest, deletion_judgments=judgments)
+    return replace(
+        manifest,
+        deletion_judgments=judgments,
+        protocol=mandatory_protocol(
+            "archaeologist",
+            (f"classified {len(manifest.modules)} modules and recorded caller/Git evidence",),
+            (module.path for module in manifest.modules),
+        ),
+    )
 
 archaeologize = assess

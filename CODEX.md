@@ -34,6 +34,21 @@ evidence; it never promotes a plausible pattern by rhetoric alone.
 - If evidence is missing, tooling is unavailable, or scope is too broad,
   degrade honestly and stop rather than filling the gap with assumptions.
 
+### Audit scope policy (architectural)
+
+All agents consume the same filesystem policy from `forge.detector.stack`.
+Dependency trees (`node_modules`, `vendor`, `site-packages`, `dependencies`),
+virtual environments (`.venv`, `venv`, `.tox`, `.nox`), generated/build output,
+caches, and VCS metadata are `excluded_by_policy`; they are never audited as
+authored application modules. `.gitignore` is also excluded as a control file.
+Project manifests such as `package.json` and `requirements.txt` remain in
+discovery because they are evidence about the stack, not dependency source.
+Coverage may enumerate excluded paths solely to report the boundary.
+
+Every new `phylo` run is stored under `resultados/phylo/<run-id>/`. The prior
+`resultados/phylo-demo/` directory is retained as a legacy baseline and must
+not be overwritten; comparisons belong in `resultados/phylo/history.md`.
+
 ## Current operating model
 
 The current orchestrator is sequential orchestration of specialized-responsibility

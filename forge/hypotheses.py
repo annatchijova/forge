@@ -134,13 +134,14 @@ def _candidates(module_path: str, source: tuple[str, ...], language: str) -> lis
     return hypotheses, omitted
 
 
-def generate_hypotheses(triage: TriageManifest) -> HypothesesManifest:
+def generate_hypotheses(triage: TriageManifest, include_fossil_high_risk: bool = False) -> HypothesesManifest:
     hypotheses: list[Hypothesis] = []
     audited: list[str] = []
     limitations: list[str] = ["Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only."]
     root = Path(triage.root)
     for module in sorted(triage.modules, key=lambda m: (m.module_class != ModuleClass.CONNECTED_ALIVE, m.path)):
-        if module.module_class not in {ModuleClass.CONNECTED_ALIVE, ModuleClass.FOSSIL_HIGH_RISK}:
+        allowed = {ModuleClass.CONNECTED_ALIVE, ModuleClass.FOSSIL_HIGH_RISK} if include_fossil_high_risk else {ModuleClass.CONNECTED_ALIVE}
+        if module.module_class not in allowed:
             continue
         if module.language != "Python":
             # Python AST/induction hypotheses are not valid for JS/TS syntax.

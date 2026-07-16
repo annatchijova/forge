@@ -13,7 +13,17 @@ from typing import Iterable
 
 from forge.models import Evidence, ModuleClass, ModuleRecord, StackFingerprint, TriageManifest
 
-SKIP_DIRS = {".git", ".venv", "venv", "node_modules", "__pycache__", ".mypy_cache", ".pytest_cache", ".next", ".turbo", "dist", "build", "target", "reportes"}
+# Repository policy: agents audit authored application/source files only.
+# Dependency trees, virtual environments, generated/build output, caches, and
+# VCS metadata are never an audit scope. Manifests such as package.json and
+# requirements.txt remain eligible because they describe the project.
+SKIP_DIRS = {
+    ".git", ".venv", "venv", ".tox", ".nox", ".eggs", "site-packages",
+    "node_modules", "vendor", "third_party", "dependencies", "dependency",
+    "__pycache__", ".mypy_cache", ".pytest_cache", ".next", ".turbo",
+    ".yarn", ".pnpm-store", "dist", "build", "target", "reportes",
+}
+SKIP_FILE_NAMES = {".gitignore"}
 LANG_EXT = {".py": "Python", ".js": "JavaScript", ".ts": "TypeScript", ".rs": "Rust", ".go": "Go", ".java": "Java", ".rb": "Ruby", ".c": "C", ".cpp": "C++", ".cs": "C#"}
 MANIFESTS = {
     "pyproject.toml": "Python", "setup.py": "Python", "requirements.txt": "Python", "Pipfile": "Python",
@@ -32,7 +42,13 @@ def discover_files(root: str | os.PathLike[str], include_excluded: bool = False)
     policy exclusions rather than silently losing them.
     """
     base = Path(root)
-    return [p for p in base.rglob("*") if p.is_file() and (include_excluded or not any(part in SKIP_DIRS for part in p.relative_to(base).parts))]
+    return [p for p in base.rglob("*") if p.is_file() and (include_excluded or not is_excluded_by_policy(p, base))]
+
+
+def is_excluded_by_policy(path: Path, root: Path) -> bool:
+    """Return whether a path is outside the agent audit boundary."""
+    relative = path.relative_to(root)
+    return path.name in SKIP_FILE_NAMES or any(part in SKIP_DIRS for part in relative.parts)
 
 def _files(root: Path) -> list[Path]:
     return discover_files(root)

@@ -1,0 +1,255 @@
+{
+  "requested_role": "python_security",
+  "native_forge_role": "connected Python security",
+  "adi": [
+    {
+      "stage": "abduction",
+      "status": "PLAUSIBLE_HYPOTHESIS",
+      "statement": "Observed evidence may explain the candidate; rivals remain live.",
+      "evidence": [
+        "verification-manifest.json"
+      ]
+    },
+    {
+      "stage": "deduction",
+      "status": "PREDICTION_REQUIRED",
+      "statement": "A safe discriminating harness would test the candidate against a benign explanation.",
+      "evidence": [
+        "verification-manifest.json"
+      ]
+    },
+    {
+      "stage": "induction",
+      "status": "UNDETERMINED",
+      "statement": "Target application code was not executed; unrun candidates remain undetermined.",
+      "evidence": [
+        "audit-trace.json"
+      ]
+    }
+  ],
+  "scope": [
+    "connected Python security"
+  ],
+  "skills": [
+    {
+      "skill_name": "abductive-engineering",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "atomic-state-mutation",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "audit-before-patch",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "claim-provenance-discipline",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "codebase-health-assessment",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "daubert-defensible-writing",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "deterministic-core",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "diagnosing-bugs",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "git-discipline",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/git-discipline.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "honest-degradation",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "llm-out-of-the-loop",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "red-team-auditing",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "reverse-engineering",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "secure-by-construction",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "software-archaeology",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "sql-aggregation-not-materialization",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "surgical-patcher",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "tamper-evident-audit-chain",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "validate-at-the-boundary",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    },
+    {
+      "skill_name": "versioned-schema-evolution",
+      "responsible_agent": "python_security",
+      "affected_adi_stage": "abduction/deduction/induction",
+      "concrete_action": "Loaded Markdown governance policy and recorded its application in this protocol.",
+      "evidence": [
+        "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md"
+      ],
+      "result": "APPLIED",
+      "abstention_reason": "Semantic enforcement is limited to executable Forge contracts; target execution was not authorized."
+    }
+  ]
+}

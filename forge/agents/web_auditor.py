@@ -10,8 +10,9 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from forge.detector.stack import SKIP_DIRS, discover_files
+from forge.detector.stack import discover_files, is_excluded_by_policy
 from forge.models import AgentScanResult
+from forge.agent_protocol import mandatory_protocol
 
 
 WEB_EXTENSIONS = {".js", ".jsx", ".ts", ".tsx"}
@@ -63,15 +64,18 @@ def _mask_string_literals(line: str) -> str:
     return "".join(chars)
 
 
-def audit(root: str | Path) -> tuple[AgentScanResult, tuple[str, ...]]:
+def audit(root: str | Path, eligible: set[str] | None = None) -> tuple[AgentScanResult, tuple[str, ...]]:
     base = Path(root)
     findings: list[WebFinding] = []
     examinations: dict[str, str] = {}
     analyzed: list[str] = []
     for path in discover_files(base, include_excluded=True):
         rel = str(path.relative_to(base))
-        if any(part in SKIP_DIRS for part in path.relative_to(base).parts):
+        if is_excluded_by_policy(path, base):
             examinations[rel] = "excluded_by_policy"
+            continue
+        if eligible is not None and rel not in eligible:
+            examinations[rel] = "excluded_by_scope"
             continue
         if path.suffix.lower() not in WEB_EXTENSIONS:
             examinations[rel] = "excluded_by_scope"
@@ -83,6 +87,23 @@ def audit(root: str | Path) -> tuple[AgentScanResult, tuple[str, ...]]:
             continue
         analyzed.append(rel)
         lines = source.splitlines()
+        sanitized_names = {
+            match.group(1)
+            for match in re.finditer(r"\b(\w+)\s*=.*?\.replace\s*\(", source)
+            if re.search(r"\[\^|separator|slash|path|name|slug", match.group(0), re.I)
+        }
+        # Carry the evidence through simple filename assignments such as
+        # ``filename = f"{slug}_{timestamp}.json"``.  A sanitizer on ``slug``
+        # is still relevant when that value is the only user-derived part of
+        # the final path component.
+        changed = True
+        while changed:
+            changed = False
+            for match in re.finditer(r"\b(\w+)\s*=([^\n;]+)", source):
+                target, expression = match.group(1), match.group(2)
+                if target not in sanitized_names and any(re.search(rf"\b{re.escape(name)}\b", expression) for name in sanitized_names):
+                    sanitized_names.add(target)
+                    changed = True
         local: list[WebFinding] = []
         for number, line in enumerate(lines, 1):
             stripped = line.strip()
@@ -95,11 +116,17 @@ def audit(root: str | Path) -> tuple[AgentScanResult, tuple[str, ...]]:
             if re.search(r"\bJSON\.parse\s*\(", code_line) and not _has_nearby_try(lines, number):
                 local.append(WebFinding("parser-boundary", rel, number, "JSON.parse call has no nearby visible try/catch boundary"))
             if re.search(r"\b(?:readFile|readFileSync|writeFile|writeFileSync|unlink|rm)\s*\(", code_line):
-                if re.search(r"\b(?:user|request|input|path|file|name)\w*\b", code_line, re.I) and not re.search(r"\b(?:resolve|normalize|basename)\s*\(", code_line):
+                names = set(re.findall(r"\b(?:user|request|input|path|file|name)\w*\b", code_line, re.I))
+                if names - sanitized_names and not re.search(r"\b(?:resolve|normalize|basename)\s*\(", code_line):
                     local.append(WebFinding("path-traversal", rel, number, "filesystem path reaches a file operation without visible normalization"))
         findings.extend(local)
         examinations[rel] = "examined_with_findings" if local else "examined_clean"
-    return AgentScanResult(tuple(findings), examinations), tuple(sorted(analyzed))
+    protocol = mandatory_protocol(
+        "web_auditor",
+        tuple(f"{item.family} observed at {item.path}:{item.line}" for item in findings),
+        analyzed,
+    )
+    return AgentScanResult(tuple(findings), examinations, protocol), tuple(sorted(analyzed))
 
 
 __all__ = ("WEB_EXTENSIONS", "WebFinding", "audit")
