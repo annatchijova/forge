@@ -1,0 +1,1301 @@
+{
+  "deletion_judgments": {
+    "lib/dynamo.ts": "deleting would remove unreachable code",
+    "lib/evolution-client.ts": "deleting would remove unreachable code",
+    "lib/run-history.js": "deleting would remove unreachable code",
+    "next-env.d.ts": "deleting would remove unreachable code",
+    "tests/llm_test.ts": "deleting would remove unreachable code",
+    "tests/sandbox_test.ts": "deleting would remove unreachable code",
+    "tools/adaptive_gene_pool.py": "deleting would remove unreachable code",
+    "tools/verify_bundle.py": "deleting would remove unreachable code",
+    "types/index.ts": "deleting would remove unreachable code"
+  },
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784168399,
+  "limitations": [],
+  "modules": [
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/billing/checkout/route.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/billing/checkout/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782999493",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/billing/checkout/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782999493,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/billing/checkout/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/billing/webhook/route.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/billing/webhook/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782999493",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/billing/webhook/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782999493,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/billing/webhook/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "Validate"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/bounties/route.ts"
+        },
+        {
+          "detail": "decision keywords: ['Validate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/bounties/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782998482",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/bounties/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782998482,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/bounties/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/ci/route.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/ci/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782998482",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/ci/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782998482,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/ci/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "Validate"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/claude/route.ts"
+        },
+        {
+          "detail": "decision keywords: ['Validate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/claude/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782999493",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/claude/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782999493,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/claude/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "Validate"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/evolve/route.ts"
+        },
+        {
+          "detail": "decision keywords: ['Validate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/evolve/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1783134048",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/evolve/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1783134048,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/evolve/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/generate-tests/route.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/generate-tests/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782999493",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/generate-tests/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782999493,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/generate-tests/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/health/route.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/health/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782996172",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/health/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782996172,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/health/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/keys/route.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/keys/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1781935534",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/keys/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1781935534,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/keys/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/sandbox/javascript/route.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/sandbox/javascript/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782998482",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/sandbox/javascript/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782998482,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/sandbox/javascript/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/sandbox/python/route.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/sandbox/python/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1783134048",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/sandbox/python/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1783134048,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/sandbox/python/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/sandbox/sql/route.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/sandbox/sql/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1783134048",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/sandbox/sql/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1783134048,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/sandbox/sql/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/save-run/route.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/save-run/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782998482",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/save-run/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782998482,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/save-run/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/seal-bundle/route.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/seal-bundle/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782999493",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/seal-bundle/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782999493,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/seal-bundle/route.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "app/api/usage/route.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "app/api/usage/route.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782998482",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "app/api/usage/route.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782998482,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "app/api/usage/route.ts"
+    },
+    {
+      "caller_count": 7,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "7 caller(s), 7 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "lib/auth.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "lib/auth.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782998482",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "lib/auth.ts"
+        }
+      ],
+      "import_count": 7,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782998482,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "lib/auth.ts"
+    },
+    {
+      "caller_count": 11,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "11 caller(s), 11 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "lib/dsql.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "lib/dsql.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1783134048",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "lib/dsql.ts"
+        }
+      ],
+      "import_count": 11,
+      "language": "TypeScript",
+      "last_commit_epoch": 1783134048,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "lib/dsql.ts"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "lib/dynamo.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "lib/dynamo.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1781965341",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "lib/dynamo.ts"
+        }
+      ],
+      "import_count": 0,
+      "language": "TypeScript",
+      "last_commit_epoch": 1781965341,
+      "module_class": "DEAD_WEIGHT",
+      "path": "lib/dynamo.ts"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "Verdict",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "lib/ebs.js"
+        },
+        {
+          "detail": "decision keywords: ['Verdict', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "lib/ebs.js"
+        },
+        {
+          "detail": "last logic-touch epoch 1782999493",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "lib/ebs.js"
+        }
+      ],
+      "import_count": 1,
+      "language": "JavaScript",
+      "last_commit_epoch": 1782999493,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "lib/ebs.js"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "gate"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "lib/escrow.ts"
+        },
+        {
+          "detail": "decision keywords: ['gate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "lib/escrow.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782998482",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "lib/escrow.ts"
+        }
+      ],
+      "import_count": 3,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782998482,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "lib/escrow.ts"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "lib/evolution-client.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "lib/evolution-client.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1781965341",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "lib/evolution-client.ts"
+        }
+      ],
+      "import_count": 0,
+      "language": "TypeScript",
+      "last_commit_epoch": 1781965341,
+      "module_class": "DEAD_WEIGHT",
+      "path": "lib/evolution-client.ts"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "Score",
+        "gate",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "lib/fitness.ts"
+        },
+        {
+          "detail": "decision keywords: ['Score', 'gate', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "lib/fitness.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1783134048",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "lib/fitness.ts"
+        }
+      ],
+      "import_count": 1,
+      "language": "TypeScript",
+      "last_commit_epoch": 1783134048,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "lib/fitness.ts"
+    },
+    {
+      "caller_count": 5,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "5 caller(s), 5 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "lib/llm.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "lib/llm.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782996172",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "lib/llm.ts"
+        }
+      ],
+      "import_count": 5,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782996172,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "lib/llm.ts"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "lib/mutator.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "lib/mutator.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782996172",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "lib/mutator.ts"
+        }
+      ],
+      "import_count": 1,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782996172,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "lib/mutator.ts"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "lib/rate-limit.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "lib/rate-limit.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782999493",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "lib/rate-limit.ts"
+        }
+      ],
+      "import_count": 2,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782999493,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "lib/rate-limit.ts"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "lib/run-history.js"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "lib/run-history.js"
+        },
+        {
+          "detail": "last logic-touch epoch 1782998482",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "lib/run-history.js"
+        }
+      ],
+      "import_count": 0,
+      "language": "JavaScript",
+      "last_commit_epoch": 1782998482,
+      "module_class": "DEAD_WEIGHT",
+      "path": "lib/run-history.js"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "next-env.d.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "next-env.d.ts"
+        }
+      ],
+      "import_count": 0,
+      "language": "TypeScript",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "next-env.d.ts"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/llm_test.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/llm_test.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1782996172",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/llm_test.ts"
+        }
+      ],
+      "import_count": 0,
+      "language": "TypeScript",
+      "last_commit_epoch": 1782996172,
+      "module_class": "DEAD_WEIGHT",
+      "path": "tests/llm_test.ts"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/sandbox_test.ts"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/sandbox_test.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1783134048",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/sandbox_test.ts"
+        }
+      ],
+      "import_count": 0,
+      "language": "TypeScript",
+      "last_commit_epoch": 1783134048,
+      "module_class": "DEAD_WEIGHT",
+      "path": "tests/sandbox_test.ts"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "SCORE",
+        "Score",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tools/adaptive_gene_pool.py"
+        },
+        {
+          "detail": "decision keywords: ['SCORE', 'Score', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tools/adaptive_gene_pool.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783134048",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tools/adaptive_gene_pool.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1783134048,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "tools/adaptive_gene_pool.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "VERDICT",
+        "Verdict",
+        "classification",
+        "decision",
+        "gate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tools/evolution_bundle.py"
+        },
+        {
+          "detail": "decision keywords: ['VERDICT', 'Verdict', 'classification', 'decision', 'gate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tools/evolution_bundle.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1781965341",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tools/evolution_bundle.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1781965341,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "tools/evolution_bundle.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Validate",
+        "Verdict",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tools/verify_bundle.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate', 'Verdict', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tools/verify_bundle.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1781965341",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tools/verify_bundle.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1781965341,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "tools/verify_bundle.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "types/index.ts"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "types/index.ts"
+        },
+        {
+          "detail": "last logic-touch epoch 1781231385",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "types/index.ts"
+        }
+      ],
+      "import_count": 0,
+      "language": "TypeScript",
+      "last_commit_epoch": 1781231385,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "types/index.ts"
+    }
+  ],
+  "protocol": {
+    "adi": [
+      {
+        "evidence": [
+          "classified 33 modules and recorded caller/Git evidence"
+        ],
+        "stage": "abduction",
+        "statement": "Observed evidence may be explained by: classified 33 modules and recorded caller/Git evidence.",
+        "status": "PLAUSIBLE_HYPOTHESIS"
+      },
+      {
+        "evidence": [
+          "classified 33 modules and recorded caller/Git evidence"
+        ],
+        "stage": "deduction",
+        "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+        "status": "PREDICTION_REQUIRED"
+      },
+      {
+        "evidence": [
+          "classified 33 modules and recorded caller/Git evidence"
+        ],
+        "stage": "induction",
+        "statement": "No language-specific induction harness was registered for this observation.",
+        "status": "UNDETERMINED"
+      }
+    ],
+    "agent": "archaeologist",
+    "scope": [
+      "app/api/billing/checkout/route.ts",
+      "app/api/billing/webhook/route.ts",
+      "app/api/bounties/route.ts",
+      "app/api/ci/route.ts",
+      "app/api/claude/route.ts",
+      "app/api/evolve/route.ts",
+      "app/api/generate-tests/route.ts",
+      "app/api/health/route.ts",
+      "app/api/keys/route.ts",
+      "app/api/sandbox/javascript/route.ts",
+      "app/api/sandbox/python/route.ts",
+      "app/api/sandbox/sql/route.ts",
+      "app/api/save-run/route.ts",
+      "app/api/seal-bundle/route.ts",
+      "app/api/usage/route.ts",
+      "lib/auth.ts",
+      "lib/dsql.ts",
+      "lib/dynamo.ts",
+      "lib/ebs.js",
+      "lib/escrow.ts",
+      "lib/evolution-client.ts",
+      "lib/fitness.ts",
+      "lib/llm.ts",
+      "lib/mutator.ts",
+      "lib/rate-limit.ts",
+      "lib/run-history.js",
+      "next-env.d.ts",
+      "tests/llm_test.ts",
+      "tests/sandbox_test.ts",
+      "tools/adaptive_gene_pool.py",
+      "tools/evolution_bundle.py",
+      "tools/verify_bundle.py",
+      "types/index.ts"
+    ],
+    "skills": [
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry abductive-engineering before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "abductive-engineering",
+        "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry atomic-state-mutation before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "atomic-state-mutation",
+        "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry audit-before-patch before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "audit-before-patch",
+        "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry claim-provenance-discipline before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "claim-provenance-discipline",
+        "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry codebase-health-assessment before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "codebase-health-assessment",
+        "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry daubert-defensible-writing before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "daubert-defensible-writing",
+        "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry deterministic-core before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "deterministic-core",
+        "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry diagnosing-bugs before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "diagnosing-bugs",
+        "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry git-discipline before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "git-discipline",
+        "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry honest-degradation before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "honest-degradation",
+        "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry llm-out-of-the-loop before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "llm-out-of-the-loop",
+        "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry red-team-auditing before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "red-team-auditing",
+        "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry reverse-engineering before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "reverse-engineering",
+        "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry secure-by-construction before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "secure-by-construction",
+        "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry software-archaeology before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "software-archaeology",
+        "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry sql-aggregation-not-materialization before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "sql-aggregation-not-materialization",
+        "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry surgical-patcher before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "surgical-patcher",
+        "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry tamper-evident-audit-chain before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "tamper-evident-audit-chain",
+        "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry validate-at-the-boundary before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "validate-at-the-boundary",
+        "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "versioned-schema-evolution",
+        "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+        "status": "LOADED_ONLY"
+      }
+    ]
+  },
+  "root": "/home/labestiadevigia/phylo",
+  "schema_version": "1.1",
+  "stacks": [
+    {
+      "confidence": {
+        "denominator": 15,
+        "numerator": 7
+      },
+      "evidence": [
+        {
+          "detail": "TypeScript: 28 files with extension",
+          "kind": "file_count",
+          "role": "primary",
+          "source": "filesystem"
+        }
+      ],
+      "name": "TypeScript"
+    },
+    {
+      "confidence": {
+        "denominator": 20,
+        "numerator": 1
+      },
+      "evidence": [
+        {
+          "detail": "Python: 3 files with extension",
+          "kind": "file_count",
+          "role": "primary",
+          "source": "filesystem"
+        }
+      ],
+      "name": "Python"
+    },
+    {
+      "confidence": {
+        "denominator": 30,
+        "numerator": 1
+      },
+      "evidence": [
+        {
+          "detail": "JavaScript: 2 files with extension",
+          "kind": "file_count",
+          "role": "primary",
+          "source": "filesystem"
+        }
+      ],
+      "name": "JavaScript"
+    }
+  ],
+  "summary": {
+    "CONNECTED_ALIVE": 24,
+    "DEAD_WEIGHT": 6,
+    "FOSSIL_HIGH_RISK": 3
+  }
+}

@@ -1,0 +1,1 @@
+{"agents":["coordinator","scope_triage","python_security","web_security","integrity_numeric","abduction_hypotheses","adversarial_redteam","independent_reviewer"],"skill_records_per_agent":20,"adi_entries_per_hypothesis":3,"source":"agent-results/*.json"}

@@ -1,0 +1,183 @@
+{
+  "ast_unverified_families": [],
+  "ast_verified_families": [
+    "subprocess",
+    "parser",
+    "float comparison",
+    "eval/exec"
+  ],
+  "discarded": [],
+  "findings": [
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "description": "The parser call `return json.loads(Path(path).read_text(encoding=\"utf-8\"))` at tools/evolution_bundle.py:548 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "return json.loads(Path(path).read_text(encoding=\"utf-8\"))",
+          "kind": "source",
+          "role": "primary",
+          "source": "tools/evolution_bundle.py:548"
+        }
+      ],
+      "module_path": "tools/evolution_bundle.py",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: Target module could not be loaded in its package context: AttributeError: 'NoneType' object has no attribute '__dict__'",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "web_auditor",
+      "category": "OBSERVED",
+      "description": "JSON.parse call has no nearby visible try/catch boundary",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "JSON.parse call has no nearby visible try/catch boundary",
+          "kind": "source",
+          "role": "primary",
+          "source": "app/api/ci/route.ts:167"
+        }
+      ],
+      "module_path": "app/api/ci/route.ts",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED"
+      ],
+      "reasoning": "AST detector emitted this observation: parser-boundary.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "web_auditor",
+      "category": "OBSERVED",
+      "description": "filesystem path reaches a file operation without visible normalization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "filesystem path reaches a file operation without visible normalization",
+          "kind": "source",
+          "role": "primary",
+          "source": "app/api/save-run/route.ts:107"
+        }
+      ],
+      "module_path": "app/api/save-run/route.ts",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED"
+      ],
+      "reasoning": "AST detector emitted this observation: path-traversal.",
+      "severity": "CRITICAL"
+    },
+    {
+      "agent": "web_auditor",
+      "category": "OBSERVED",
+      "description": "JSON.parse call has no nearby visible try/catch boundary",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "JSON.parse call has no nearby visible try/catch boundary",
+          "kind": "source",
+          "role": "primary",
+          "source": "app/api/save-run/route.ts:110"
+        }
+      ],
+      "module_path": "app/api/save-run/route.ts",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED"
+      ],
+      "reasoning": "AST detector emitted this observation: parser-boundary.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "web_auditor",
+      "category": "OBSERVED",
+      "description": "dynamic code evaluation crosses a data-to-code boundary",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "dynamic code evaluation crosses a data-to-code boundary",
+          "kind": "source",
+          "role": "primary",
+          "source": "app/api/sandbox/javascript/route.ts:163"
+        }
+      ],
+      "module_path": "app/api/sandbox/javascript/route.ts",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED"
+      ],
+      "reasoning": "AST detector emitted this observation: dynamic-evaluation.",
+      "severity": "CRITICAL"
+    },
+    {
+      "agent": "web_auditor",
+      "category": "OBSERVED",
+      "description": "dynamic code evaluation crosses a data-to-code boundary",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "dynamic code evaluation crosses a data-to-code boundary",
+          "kind": "source",
+          "role": "primary",
+          "source": "app/api/sandbox/javascript/route.ts:170"
+        }
+      ],
+      "module_path": "app/api/sandbox/javascript/route.ts",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED"
+      ],
+      "reasoning": "AST detector emitted this observation: dynamic-evaluation.",
+      "severity": "CRITICAL"
+    },
+    {
+      "agent": "web_auditor",
+      "category": "OBSERVED",
+      "description": "JSON.parse call has no nearby visible try/catch boundary",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "JSON.parse call has no nearby visible try/catch boundary",
+          "kind": "source",
+          "role": "primary",
+          "source": "app/api/sandbox/python/route.ts:226"
+        }
+      ],
+      "module_path": "app/api/sandbox/python/route.ts",
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED"
+      ],
+      "reasoning": "AST detector emitted this observation: parser-boundary.",
+      "severity": "MEDIUM"
+    }
+  ],
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784168406,
+  "hypotheses_schema_version": "1.0",
+  "induction": [
+    {
+      "detail": "Target module could not be loaded in its package context: AttributeError: 'NoneType' object has no attribute '__dict__'",
+      "evidence": "tools/evolution_bundle.py:548",
+      "family": "parser",
+      "line": "548",
+      "module_path": "tools/evolution_bundle.py",
+      "status": "UNDETERMINED"
+    }
+  ],
+  "repository_snapshot_sha256": "6576700de9e634e50a72cd0d7c08e639f9e6eb40bede9e5ae5a8979471654ead",
+  "root": "/home/labestiadevigia/phylo",
+  "schema_version": "2.0",
+  "source_attestation": "38b5b951bb76b80d9eef7d10f022fedc28cfda6c4743f672441ec52e8720040e"
+}

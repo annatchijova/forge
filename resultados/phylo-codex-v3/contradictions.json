@@ -1,0 +1,1 @@
+{"contradictions":[{"topic":"sandbox isolation","resolution":"Comments and reduced contexts are not treated as proof; reviewer downgraded the claim pending execution."},{"topic":"integrity versus authorization","resolution":"Bundle/escrow integrity controls do not prove authorization or tenant ownership."}],"confirmed_contradictions":0}
