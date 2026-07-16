@@ -38,18 +38,21 @@ class SkillRun:
 def default_skills_root() -> Path:
     return Path(__file__).resolve().parents[1] / "skills"
 
-def load_skills(skills_root: str | Path | None = None) -> tuple[LoadedSkill, ...]:
+def load_skills(skills_root: str | Path | None = None, failures: list[str] | None = None) -> tuple[LoadedSkill, ...]:
+    """Discover and load skill plugins under `skills_root`.
+
+    A broken optional plugin must not prevent the core audit from running,
+    so it is excluded from the active skill set rather than raising. That
+    must not mean it vanishes without a trace, though: pass a `failures`
+    list to have each load failure (bad manifest, missing entrypoint,
+    manifest/contract mismatch, broken import) appended to it as a
+    human-readable note. `run_skills()` passes one through and folds it
+    into `SkillRun.limitations`, so a broken plugin is at least visible in
+    the audit's own output, not just silently absent from the active set.
+    """
     root = Path(skills_root) if skills_root else default_skills_root()
     loaded=[]
     for manifest_path in sorted(root.glob("*/manifest.json")):
-        # A broken optional plugin must not prevent the core audit from
-        # running. It is excluded from the active skill set; callers that need
-        # a detailed plugin-load diagnostic should validate manifests before
-        # deployment. The runtime still records execution failures for loaded
-        # skills in SkillRun.limitations. This covers the whole per-skill load
-        # (manifest parse, entrypoint import, contract check), not just JSON
-        # parsing - a missing entrypoint file or a manifest/contract mismatch
-        # must be isolated exactly the same way as a malformed manifest.json.
         try:
             manifest=json.loads(manifest_path.read_text(encoding="utf-8"))
             module_path=manifest_path.parent / manifest["entrypoint"]
@@ -59,7 +62,9 @@ def load_skills(skills_root: str | Path | None = None) -> tuple[LoadedSkill, ...
             implementation=getattr(module, manifest["class_name"])()
             if implementation.contract.name != manifest["name"] or implementation.contract.version != manifest["version"]:
                 raise ValueError(f"skill manifest/contract mismatch: {manifest_path}")
-        except (OSError, UnicodeDecodeError, json.JSONDecodeError, ValueError, KeyError, AttributeError, ImportError):
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError, ValueError, KeyError, AttributeError, ImportError) as exc:
+            if failures is not None:
+                failures.append(f"Skill at {manifest_path} failed to load: {type(exc).__name__}: {exc}")
             continue
         loaded.append(LoadedSkill(implementation.contract, implementation, str(manifest_path)))
     return tuple(loaded)
@@ -83,8 +88,9 @@ def infer_domains(triage: TriageManifest) -> tuple[ModuleDomainHypothesis, ...]:
     return tuple(out)
 
 def run_skills(triage: TriageManifest, skills_root: str | Path | None = None) -> SkillRun:
-    skills=load_skills(skills_root); hypotheses=infer_domains(triage); by_path={h.module_path: h for h in hypotheses}
-    findings=[]; applicability={}; limitations=[]; root=Path(triage.root)
+    load_failures: list[str] = []
+    skills=load_skills(skills_root, failures=load_failures); hypotheses=infer_domains(triage); by_path={h.module_path: h for h in hypotheses}
+    findings=[]; applicability={}; limitations=list(load_failures); root=Path(triage.root)
     for module in triage.modules:
         try: source=(root/module.path).read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError):

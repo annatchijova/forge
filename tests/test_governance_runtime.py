@@ -40,3 +40,23 @@ def test_run_skills_survives_a_skill_that_raises(tmp_path):
     result=run_skills(triage(repo), tmp_path)
     assert result.applicability["main.py"]["broken-skill"] == "ERROR"
     assert any("broken-skill" in note and "boom" in note for note in result.limitations)
+
+def test_a_skill_with_a_missing_entrypoint_is_visible_in_limitations_not_silently_dropped(tmp_path):
+    plugin=tmp_path/"missing_entrypoint"; plugin.mkdir()
+    (plugin/"manifest.json").write_text(json.dumps({"name":"ghost-skill","version":"1.0","entrypoint":"does_not_exist.py","class_name":"GhostSkill"}))
+    failures: list[str] = []
+    loaded=load_skills(tmp_path, failures=failures)
+    assert loaded == ()
+    assert any("does_not_exist.py" in note or "missing_entrypoint" in note for note in failures), failures
+    repo=tmp_path/"repo"; repo.mkdir(); (repo/"main.py").write_text("x = 1\n")
+    result=run_skills(triage(repo), tmp_path)
+    assert result.applicability == {"main.py": {}}
+    assert any("missing_entrypoint" in note or "does_not_exist.py" in note for note in result.limitations), result.limitations
+
+def test_a_skill_with_invalid_manifest_json_is_visible_in_limitations(tmp_path):
+    plugin=tmp_path/"broken_manifest"; plugin.mkdir()
+    (plugin/"manifest.json").write_text("{not valid json")
+    failures: list[str] = []
+    loaded=load_skills(tmp_path, failures=failures)
+    assert loaded == ()
+    assert any("broken_manifest" in note for note in failures), failures
