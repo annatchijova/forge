@@ -36,6 +36,21 @@ def fixture_repo(tmp_path):
     return repo
 
 
+def test_resolve_ref_does_not_parse_a_flag_shaped_ref_as_an_option(tmp_path):
+    # A ref value shaped like a git flag (e.g. "--upload-pack=...", a real
+    # git-archive option that names an arbitrary program to run in a
+    # --remote invocation) must be rejected as an unknown revision, never
+    # parsed as an actual option - found via a self-audit of
+    # forge/git_refs.py, where resolve_ref()/archive_ref() lacked the "--"
+    # end-of-options guard that merge_base()/changed_files() already had.
+    from forge.git_refs import archive_ref, resolve_ref
+    repo = fixture_repo(tmp_path)
+    with pytest.raises(ValueError, match="git ref not found"):
+        resolve_ref(repo, "--upload-pack=/bin/false")
+    with pytest.raises(ValueError, match="could not archive git ref"):
+        archive_ref(repo, "--upload-pack=/bin/false", tmp_path / "out")
+
+
 def test_audit_ref_reads_committed_tree_without_mutating_repository(tmp_path):
     repo = fixture_repo(tmp_path)
     original_branch = git(repo, "rev-parse", "--abbrev-ref", "HEAD")

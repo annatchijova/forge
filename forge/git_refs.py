@@ -20,7 +20,12 @@ def resolve_ref(repo: str | Path, ref: str) -> str:
     """Resolve a Git ref to an object id without changing repository state."""
     if not ref or not ref.strip():
         raise ValueError("git ref must not be empty")
-    result = _git(repo, "rev-parse", "--verify", f"{ref}^{{commit}}")
+    # Trailing "--" marks end-of-options so a ref value shaped like a git
+    # flag (e.g. "--upload-pack=...") is never parsed as one - matching
+    # merge_base()/changed_files() below, which already guard with "--".
+    # ("git rev-parse --verify" only accepts it after the revision, not
+    # before, unlike merge-base/diff.)
+    result = _git(repo, "rev-parse", "--verify", f"{ref}^{{commit}}", "--")
     if result.returncode != 0:
         detail = result.stderr.decode("utf-8", "replace").strip()
         raise ValueError(f"git ref not found: {ref}" + (f" ({detail})" if detail else ""))
@@ -48,7 +53,12 @@ def archive_ref(repo: str | Path, ref: str, destination: str | Path) -> None:
     """Extract a committed ref tree into destination using ``git archive``."""
     target = Path(destination)
     target.mkdir(parents=True, exist_ok=True)
-    result = _git(repo, "archive", ref, stdout=subprocess.PIPE)
+    # Trailing "--" marks end-of-options: `git archive` accepts flags like
+    # --remote/--upload-pack that would run an arbitrary program in a
+    # --remote invocation. `ref` reaches here from public entry points
+    # (audit_ref/compare_refs), so a value shaped like a flag must never be
+    # parsed as one, even though `-C <repo>` already keeps this local-only.
+    result = _git(repo, "archive", ref, "--", stdout=subprocess.PIPE)
     if result.returncode != 0:
         detail = result.stderr.decode("utf-8", "replace").strip()
         raise ValueError(f"could not archive git ref: {ref}" + (f" ({detail})" if detail else ""))
