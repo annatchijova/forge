@@ -1,0 +1,2967 @@
+{
+  "agent_metrics": {
+    "archaeologist": {
+      "elapsed_seconds": "2.701369",
+      "modules_classified": 33
+    },
+    "bug_investigator": {
+      "discarded": 3,
+      "examinations": {
+        "__init__.py": "excluded_by_scope",
+        "abductive_intent_engine.py": "no_hypothesis_generated",
+        "adversarial_mutation_suite.py": "excluded_by_scope",
+        "adversarial_nlp.py": "examined_with_findings",
+        "adversarial_robustness.py": "excluded_by_scope",
+        "build_calibration_dataset.py": "excluded_by_scope",
+        "caie.py": "no_hypothesis_generated",
+        "document_integrity.py": "examined_with_findings",
+        "eml_gci.py": "no_hypothesis_generated",
+        "eml_symbolic.py": "excluded_by_scope",
+        "entanglement.py": "no_hypothesis_generated",
+        "entropy_kernel.py": "no_hypothesis_generated",
+        "entropy_locality.py": "excluded_by_scope",
+        "forensic_db.py": "hypothesis_discarded_benign",
+        "generate_calibration.py": "excluded_by_scope",
+        "geopolitical.py": "excluded_by_scope",
+        "init_patterns_db.py": "excluded_by_scope",
+        "metabolic_profiler.py": "no_hypothesis_generated",
+        "mitre_clustering.py": "excluded_by_scope",
+        "mitre_mapping.py": "no_hypothesis_generated",
+        "nlp_constants.py": "no_hypothesis_generated",
+        "pattern_detector.py": "excluded_by_scope",
+        "picerl_mapping.py": "excluded_by_scope",
+        "sanitize_judicial.py": "excluded_by_scope",
+        "signal_adapter.py": "excluded_by_scope",
+        "signal_contract.py": "no_hypothesis_generated",
+        "temporal_drift.py": "excluded_by_scope",
+        "vigia_adversarial_nlp.py": "no_hypothesis_generated",
+        "vigia_case_adapter.py": "excluded_by_scope",
+        "vigia_entanglement.py": "no_hypothesis_generated",
+        "vigia_planner.py": "examined_with_findings",
+        "visible_variables.py": "excluded_by_scope",
+        "vision_audit.py": "no_hypothesis_generated"
+      },
+      "hypotheses_generated": 10,
+      "survived": 7
+    },
+    "governance_skills": {
+      "applicability_counts": {
+        "APPLICABLE": 5,
+        "NOT_APPLICABLE": 17,
+        "UNDETERMINED": 11
+      },
+      "findings": 6,
+      "loaded": [
+        "validate-at-the-boundary"
+      ]
+    },
+    "integrity_inspector": {
+      "examinations": {
+        "__init__.py": "excluded_by_scope",
+        "__pycache__/__init__.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/abductive_intent_engine.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/adversarial_nlp.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/adversarial_robustness.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/caie.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/document_integrity.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/eml_gci.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/eml_symbolic.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/entanglement.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/entropy_kernel.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/forensic_db.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/metabolic_profiler.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/mitre_clustering.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/mitre_mapping.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/nlp_constants.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/picerl_mapping.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/signal_adapter.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/signal_contract.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/temporal_drift.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/vigia_adversarial_nlp.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/vigia_entanglement.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/visible_variables.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/vision_audit.cpython-312.pyc": "excluded_by_policy",
+        "abductive_intent_engine.py": "examined_clean",
+        "adversarial_mutation_suite.py": "excluded_by_scope",
+        "adversarial_nlp.py": "examined_with_findings",
+        "adversarial_robustness.py": "excluded_by_scope",
+        "build_calibration_dataset.py": "excluded_by_scope",
+        "caie.py": "examined_with_findings",
+        "caie.py.bak": "excluded_by_scope",
+        "document_integrity.py": "examined_clean",
+        "eml_gci.py": "examined_clean",
+        "eml_symbolic.py": "excluded_by_scope",
+        "entanglement.py": "examined_clean",
+        "entropy_kernel.py": "examined_with_findings",
+        "entropy_locality.py": "excluded_by_scope",
+        "forensic_db.py": "examined_with_findings",
+        "forensic_patterns.sqlite": "excluded_by_scope",
+        "generate_calibration.py": "excluded_by_scope",
+        "geopolitical.py": "excluded_by_scope",
+        "init_patterns_db.py": "excluded_by_scope",
+        "metabolic_profiler.py": "examined_clean",
+        "mitre_clustering.py": "excluded_by_scope",
+        "mitre_clustering.py.bak": "excluded_by_scope",
+        "mitre_mapping.py": "examined_with_findings",
+        "nlp_constants.py": "examined_clean",
+        "pattern_detector.py": "excluded_by_scope",
+        "picerl_mapping.py": "excluded_by_scope",
+        "sanitize_judicial.py": "excluded_by_scope",
+        "signal_adapter.py": "excluded_by_scope",
+        "signal_contract.py": "examined_with_findings",
+        "temporal_drift.py": "excluded_by_scope",
+        "vigia_adversarial_nlp.py": "examined_clean",
+        "vigia_case_adapter.py": "excluded_by_scope",
+        "vigia_entanglement.py": "examined_clean",
+        "vigia_planner.py": "examined_with_findings",
+        "visible_variables.py": "excluded_by_scope",
+        "vision_audit.py": "examined_clean"
+      },
+      "findings_per_family": {
+        "decision-adjacent-float": 5,
+        "unversioned-serialization": 17
+      }
+    },
+    "security_auditor": {
+      "examinations": {
+        "__init__.py": "excluded_by_scope",
+        "__pycache__/__init__.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/abductive_intent_engine.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/adversarial_nlp.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/adversarial_robustness.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/caie.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/document_integrity.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/eml_gci.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/eml_symbolic.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/entanglement.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/entropy_kernel.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/forensic_db.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/metabolic_profiler.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/mitre_clustering.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/mitre_mapping.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/nlp_constants.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/picerl_mapping.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/signal_adapter.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/signal_contract.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/temporal_drift.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/vigia_adversarial_nlp.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/vigia_entanglement.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/visible_variables.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/vision_audit.cpython-312.pyc": "excluded_by_policy",
+        "abductive_intent_engine.py": "examined_clean",
+        "adversarial_mutation_suite.py": "excluded_by_scope",
+        "adversarial_nlp.py": "examined_clean",
+        "adversarial_robustness.py": "excluded_by_scope",
+        "build_calibration_dataset.py": "excluded_by_scope",
+        "caie.py": "examined_clean",
+        "caie.py.bak": "excluded_by_scope",
+        "document_integrity.py": "examined_with_findings",
+        "eml_gci.py": "examined_clean",
+        "eml_symbolic.py": "excluded_by_scope",
+        "entanglement.py": "examined_clean",
+        "entropy_kernel.py": "examined_clean",
+        "entropy_locality.py": "excluded_by_scope",
+        "forensic_db.py": "examined_clean",
+        "forensic_patterns.sqlite": "excluded_by_scope",
+        "generate_calibration.py": "excluded_by_scope",
+        "geopolitical.py": "excluded_by_scope",
+        "init_patterns_db.py": "excluded_by_scope",
+        "metabolic_profiler.py": "examined_with_findings",
+        "mitre_clustering.py": "excluded_by_scope",
+        "mitre_clustering.py.bak": "excluded_by_scope",
+        "mitre_mapping.py": "examined_with_findings",
+        "nlp_constants.py": "examined_clean",
+        "pattern_detector.py": "excluded_by_scope",
+        "picerl_mapping.py": "excluded_by_scope",
+        "sanitize_judicial.py": "excluded_by_scope",
+        "signal_adapter.py": "excluded_by_scope",
+        "signal_contract.py": "examined_clean",
+        "temporal_drift.py": "excluded_by_scope",
+        "vigia_adversarial_nlp.py": "examined_clean",
+        "vigia_case_adapter.py": "excluded_by_scope",
+        "vigia_entanglement.py": "examined_clean",
+        "vigia_planner.py": "examined_clean",
+        "visible_variables.py": "excluded_by_scope",
+        "vision_audit.py": "examined_clean"
+      },
+      "findings_per_family": {
+        "hardcoded-credential": 1,
+        "path-traversal": 7,
+        "unsafe-deserialization": 0
+      }
+    },
+    "web_auditor": {
+      "examinations": {
+        "__init__.py": "excluded_by_scope",
+        "__pycache__/__init__.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/abductive_intent_engine.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/adversarial_nlp.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/adversarial_robustness.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/caie.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/document_integrity.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/eml_gci.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/eml_symbolic.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/entanglement.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/entropy_kernel.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/forensic_db.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/metabolic_profiler.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/mitre_clustering.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/mitre_mapping.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/nlp_constants.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/picerl_mapping.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/signal_adapter.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/signal_contract.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/temporal_drift.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/vigia_adversarial_nlp.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/vigia_entanglement.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/visible_variables.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/vision_audit.cpython-312.pyc": "excluded_by_policy",
+        "abductive_intent_engine.py": "excluded_by_scope",
+        "adversarial_mutation_suite.py": "excluded_by_scope",
+        "adversarial_nlp.py": "excluded_by_scope",
+        "adversarial_robustness.py": "excluded_by_scope",
+        "build_calibration_dataset.py": "excluded_by_scope",
+        "caie.py": "excluded_by_scope",
+        "caie.py.bak": "excluded_by_scope",
+        "document_integrity.py": "excluded_by_scope",
+        "eml_gci.py": "excluded_by_scope",
+        "eml_symbolic.py": "excluded_by_scope",
+        "entanglement.py": "excluded_by_scope",
+        "entropy_kernel.py": "excluded_by_scope",
+        "entropy_locality.py": "excluded_by_scope",
+        "forensic_db.py": "excluded_by_scope",
+        "forensic_patterns.sqlite": "excluded_by_scope",
+        "generate_calibration.py": "excluded_by_scope",
+        "geopolitical.py": "excluded_by_scope",
+        "init_patterns_db.py": "excluded_by_scope",
+        "metabolic_profiler.py": "excluded_by_scope",
+        "mitre_clustering.py": "excluded_by_scope",
+        "mitre_clustering.py.bak": "excluded_by_scope",
+        "mitre_mapping.py": "excluded_by_scope",
+        "nlp_constants.py": "excluded_by_scope",
+        "pattern_detector.py": "excluded_by_scope",
+        "picerl_mapping.py": "excluded_by_scope",
+        "sanitize_judicial.py": "excluded_by_scope",
+        "signal_adapter.py": "excluded_by_scope",
+        "signal_contract.py": "excluded_by_scope",
+        "temporal_drift.py": "excluded_by_scope",
+        "vigia_adversarial_nlp.py": "excluded_by_scope",
+        "vigia_case_adapter.py": "excluded_by_scope",
+        "vigia_entanglement.py": "excluded_by_scope",
+        "vigia_planner.py": "excluded_by_scope",
+        "visible_variables.py": "excluded_by_scope",
+        "vision_audit.py": "excluded_by_scope"
+      },
+      "findings_per_family": {
+        "dynamic-evaluation": 0,
+        "parser-boundary": 0,
+        "path-traversal": 0,
+        "subprocess": 0
+      }
+    }
+  },
+  "agent_protocols": {
+    "archaeologist": {
+      "adi": [
+        {
+          "evidence": [
+            "classified 33 modules and recorded caller/Git evidence"
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: classified 33 modules and recorded caller/Git evidence.",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "classified 33 modules and recorded caller/Git evidence"
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "classified 33 modules and recorded caller/Git evidence"
+          ],
+          "stage": "induction",
+          "statement": "No language-specific induction harness was registered for this observation.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "archaeologist",
+      "scope": [
+        "__init__.py",
+        "abductive_intent_engine.py",
+        "adversarial_mutation_suite.py",
+        "adversarial_nlp.py",
+        "adversarial_robustness.py",
+        "build_calibration_dataset.py",
+        "caie.py",
+        "document_integrity.py",
+        "eml_gci.py",
+        "eml_symbolic.py",
+        "entanglement.py",
+        "entropy_kernel.py",
+        "entropy_locality.py",
+        "forensic_db.py",
+        "generate_calibration.py",
+        "geopolitical.py",
+        "init_patterns_db.py",
+        "metabolic_profiler.py",
+        "mitre_clustering.py",
+        "mitre_mapping.py",
+        "nlp_constants.py",
+        "pattern_detector.py",
+        "picerl_mapping.py",
+        "sanitize_judicial.py",
+        "signal_adapter.py",
+        "signal_contract.py",
+        "temporal_drift.py",
+        "vigia_adversarial_nlp.py",
+        "vigia_case_adapter.py",
+        "vigia_entanglement.py",
+        "vigia_planner.py",
+        "visible_variables.py",
+        "vision_audit.py"
+      ],
+      "skills": [
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry abductive-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry atomic-state-mutation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry audit-before-patch before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry claim-provenance-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry codebase-health-assessment before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry daubert-defensible-writing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry deterministic-core before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry diagnosing-bugs before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry git-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry honest-degradation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry llm-out-of-the-loop before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry red-team-auditing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry reverse-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry secure-by-construction before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry software-archaeology before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry sql-aggregation-not-materialization before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry surgical-patcher before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry tamper-evident-audit-chain before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry validate-at-the-boundary before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "bug_investigator": {
+      "adi": [
+        {
+          "evidence": [
+            "The parser call `return json.load(f)` at adversarial_nlp.py:177 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The decision comparison `verdict    = \"FABRICADO\" if mcp >= 4.0 else \"SOSPECHOSO\" if mcp >= 2.5 else \"AUT\u00c9NTICO\"` at adversarial_nlp.py:1130 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The parser call `_PHONETIC_CACHE = json.load(fh)` at document_integrity.py:70 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The decision comparison `if score >= 0.7:` at document_integrity.py:81 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The decision comparison `if score >= 0.4:` at document_integrity.py:83 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The parser call `data = json.loads(raw)` at forensic_db.py:268 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `hist = json.loads(raw)` at forensic_db.py:367 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The decision comparison `f\"CLIP visual_malice_score={score:.3f} > 0.4. \"` at vigia_planner.py:343 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The decision comparison `if score >= 0.5:` at vigia_planner.py:796 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The decision comparison `elif score >= 0.2:` at vigia_planner.py:798 uses a binary float threshold, so rounding at the boundary may flip the result."
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: The parser call `return json.load(f)` at adversarial_nlp.py:177 has no nearby exception handling, so malformed input may escape as an opaque failure.; The decision comparison `verdict    = \"FABRICADO\" if mcp >= 4.0 else \"SOSPECHOSO\" if mcp >= 2.5 else \"AUT\u00c9NTICO\"` at adversarial_nlp.py:1130 uses a binary float threshold, so rounding at the boundary may flip the result.; The parser call `_PHONETIC_CACHE = json.load(fh)` at document_integrity.py:70 has no nearby exception handling, so malformed input may escape as an opaque failure.; The decision comparison `if score >= 0.7:` at document_integrity.py:81 uses a binary float threshold, so rounding at the boundary may flip the result.; The decision comparison `if score >= 0.4:` at document_integrity.py:83 uses a binary float threshold, so rounding at the boundary may flip the result..",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "The parser call `return json.load(f)` at adversarial_nlp.py:177 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The decision comparison `verdict    = \"FABRICADO\" if mcp >= 4.0 else \"SOSPECHOSO\" if mcp >= 2.5 else \"AUT\u00c9NTICO\"` at adversarial_nlp.py:1130 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The parser call `_PHONETIC_CACHE = json.load(fh)` at document_integrity.py:70 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The decision comparison `if score >= 0.7:` at document_integrity.py:81 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The decision comparison `if score >= 0.4:` at document_integrity.py:83 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The parser call `data = json.loads(raw)` at forensic_db.py:268 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `hist = json.loads(raw)` at forensic_db.py:367 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The decision comparison `f\"CLIP visual_malice_score={score:.3f} > 0.4. \"` at vigia_planner.py:343 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The decision comparison `if score >= 0.5:` at vigia_planner.py:796 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The decision comparison `elif score >= 0.2:` at vigia_planner.py:798 uses a binary float threshold, so rounding at the boundary may flip the result."
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "The parser call `return json.load(f)` at adversarial_nlp.py:177 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The decision comparison `verdict    = \"FABRICADO\" if mcp >= 4.0 else \"SOSPECHOSO\" if mcp >= 2.5 else \"AUT\u00c9NTICO\"` at adversarial_nlp.py:1130 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The parser call `_PHONETIC_CACHE = json.load(fh)` at document_integrity.py:70 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The decision comparison `if score >= 0.7:` at document_integrity.py:81 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The decision comparison `if score >= 0.4:` at document_integrity.py:83 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The parser call `data = json.loads(raw)` at forensic_db.py:268 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `hist = json.loads(raw)` at forensic_db.py:367 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The decision comparison `f\"CLIP visual_malice_score={score:.3f} > 0.4. \"` at vigia_planner.py:343 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The decision comparison `if score >= 0.5:` at vigia_planner.py:796 uses a binary float threshold, so rounding at the boundary may flip the result.",
+            "The decision comparison `elif score >= 0.2:` at vigia_planner.py:798 uses a binary float threshold, so rounding at the boundary may flip the result."
+          ],
+          "stage": "induction",
+          "statement": "Module 3 verification executed; each unsupported family remains explicitly UNDETERMINED.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "bug_investigator",
+      "scope": [
+        "abductive_intent_engine.py",
+        "adversarial_nlp.py",
+        "caie.py",
+        "document_integrity.py",
+        "eml_gci.py",
+        "entanglement.py",
+        "entropy_kernel.py",
+        "forensic_db.py",
+        "metabolic_profiler.py",
+        "mitre_mapping.py",
+        "nlp_constants.py",
+        "signal_contract.py",
+        "vigia_adversarial_nlp.py",
+        "vigia_entanglement.py",
+        "vigia_planner.py",
+        "vision_audit.py"
+      ],
+      "skills": [
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry abductive-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry atomic-state-mutation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry audit-before-patch before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry claim-provenance-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry codebase-health-assessment before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry daubert-defensible-writing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry deterministic-core before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry diagnosing-bugs before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry git-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry honest-degradation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry llm-out-of-the-loop before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry red-team-auditing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry reverse-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry secure-by-construction before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry software-archaeology before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry sql-aggregation-not-materialization before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry surgical-patcher before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry tamper-evident-audit-chain before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry validate-at-the-boundary before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "integrity_inspector": {
+      "adi": [
+        {
+          "evidence": [
+            "decision-adjacent-float observed at signal_contract.py:77",
+            "decision-adjacent-float observed at vigia_planner.py:2069",
+            "unversioned-serialization observed at vigia_planner.py:877",
+            "unversioned-serialization observed at vigia_planner.py:908",
+            "unversioned-serialization observed at vigia_planner.py:1196",
+            "unversioned-serialization observed at vigia_planner.py:2266",
+            "unversioned-serialization observed at vigia_planner.py:1701",
+            "unversioned-serialization observed at vigia_planner.py:1706",
+            "unversioned-serialization observed at vigia_planner.py:1739",
+            "decision-adjacent-float observed at entropy_kernel.py:153",
+            "decision-adjacent-float observed at entropy_kernel.py:215",
+            "unversioned-serialization observed at adversarial_nlp.py:236",
+            "unversioned-serialization observed at mitre_mapping.py:776",
+            "unversioned-serialization observed at mitre_mapping.py:701",
+            "unversioned-serialization observed at forensic_db.py:318",
+            "unversioned-serialization observed at forensic_db.py:319",
+            "unversioned-serialization observed at forensic_db.py:320",
+            "unversioned-serialization observed at forensic_db.py:334",
+            "unversioned-serialization observed at forensic_db.py:335",
+            "unversioned-serialization observed at forensic_db.py:336",
+            "decision-adjacent-float observed at caie.py:665",
+            "unversioned-serialization observed at caie.py:2682"
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: decision-adjacent-float observed at signal_contract.py:77; decision-adjacent-float observed at vigia_planner.py:2069; unversioned-serialization observed at vigia_planner.py:877; unversioned-serialization observed at vigia_planner.py:908; unversioned-serialization observed at vigia_planner.py:1196.",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "decision-adjacent-float observed at signal_contract.py:77",
+            "decision-adjacent-float observed at vigia_planner.py:2069",
+            "unversioned-serialization observed at vigia_planner.py:877",
+            "unversioned-serialization observed at vigia_planner.py:908",
+            "unversioned-serialization observed at vigia_planner.py:1196",
+            "unversioned-serialization observed at vigia_planner.py:2266",
+            "unversioned-serialization observed at vigia_planner.py:1701",
+            "unversioned-serialization observed at vigia_planner.py:1706",
+            "unversioned-serialization observed at vigia_planner.py:1739",
+            "decision-adjacent-float observed at entropy_kernel.py:153",
+            "decision-adjacent-float observed at entropy_kernel.py:215",
+            "unversioned-serialization observed at adversarial_nlp.py:236",
+            "unversioned-serialization observed at mitre_mapping.py:776",
+            "unversioned-serialization observed at mitre_mapping.py:701",
+            "unversioned-serialization observed at forensic_db.py:318",
+            "unversioned-serialization observed at forensic_db.py:319",
+            "unversioned-serialization observed at forensic_db.py:320",
+            "unversioned-serialization observed at forensic_db.py:334",
+            "unversioned-serialization observed at forensic_db.py:335",
+            "unversioned-serialization observed at forensic_db.py:336",
+            "decision-adjacent-float observed at caie.py:665",
+            "unversioned-serialization observed at caie.py:2682"
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "decision-adjacent-float observed at signal_contract.py:77",
+            "decision-adjacent-float observed at vigia_planner.py:2069",
+            "unversioned-serialization observed at vigia_planner.py:877",
+            "unversioned-serialization observed at vigia_planner.py:908",
+            "unversioned-serialization observed at vigia_planner.py:1196",
+            "unversioned-serialization observed at vigia_planner.py:2266",
+            "unversioned-serialization observed at vigia_planner.py:1701",
+            "unversioned-serialization observed at vigia_planner.py:1706",
+            "unversioned-serialization observed at vigia_planner.py:1739",
+            "decision-adjacent-float observed at entropy_kernel.py:153",
+            "decision-adjacent-float observed at entropy_kernel.py:215",
+            "unversioned-serialization observed at adversarial_nlp.py:236",
+            "unversioned-serialization observed at mitre_mapping.py:776",
+            "unversioned-serialization observed at mitre_mapping.py:701",
+            "unversioned-serialization observed at forensic_db.py:318",
+            "unversioned-serialization observed at forensic_db.py:319",
+            "unversioned-serialization observed at forensic_db.py:320",
+            "unversioned-serialization observed at forensic_db.py:334",
+            "unversioned-serialization observed at forensic_db.py:335",
+            "unversioned-serialization observed at forensic_db.py:336",
+            "decision-adjacent-float observed at caie.py:665",
+            "unversioned-serialization observed at caie.py:2682"
+          ],
+          "stage": "induction",
+          "statement": "No language-specific induction harness was registered for this observation.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "integrity_inspector",
+      "scope": [
+        "adversarial_mutation_suite.py",
+        "caie.py.bak",
+        "mitre_clustering.py",
+        "__init__.py",
+        "mitre_clustering.py.bak",
+        "entropy_locality.py",
+        "eml_symbolic.py",
+        "geopolitical.py",
+        "init_patterns_db.py",
+        "temporal_drift.py",
+        "sanitize_judicial.py",
+        "build_calibration_dataset.py",
+        "generate_calibration.py",
+        "visible_variables.py",
+        "vigia_case_adapter.py",
+        "picerl_mapping.py",
+        "signal_adapter.py",
+        "pattern_detector.py",
+        "forensic_patterns.sqlite",
+        "adversarial_robustness.py",
+        "__pycache__/metabolic_profiler.cpython-312.pyc",
+        "__pycache__/visible_variables.cpython-312.pyc",
+        "__pycache__/nlp_constants.cpython-312.pyc",
+        "__pycache__/vision_audit.cpython-312.pyc",
+        "__pycache__/abductive_intent_engine.cpython-312.pyc",
+        "__pycache__/document_integrity.cpython-312.pyc",
+        "__pycache__/vigia_adversarial_nlp.cpython-312.pyc",
+        "__pycache__/vigia_entanglement.cpython-312.pyc",
+        "__pycache__/adversarial_nlp.cpython-312.pyc",
+        "__pycache__/mitre_clustering.cpython-312.pyc",
+        "__pycache__/__init__.cpython-312.pyc",
+        "__pycache__/mitre_mapping.cpython-312.pyc",
+        "__pycache__/signal_adapter.cpython-312.pyc",
+        "__pycache__/caie.cpython-312.pyc",
+        "__pycache__/temporal_drift.cpython-312.pyc",
+        "__pycache__/entanglement.cpython-312.pyc",
+        "__pycache__/entropy_kernel.cpython-312.pyc",
+        "__pycache__/forensic_db.cpython-312.pyc",
+        "__pycache__/signal_contract.cpython-312.pyc",
+        "__pycache__/eml_gci.cpython-312.pyc",
+        "__pycache__/adversarial_robustness.cpython-312.pyc",
+        "__pycache__/picerl_mapping.cpython-312.pyc",
+        "__pycache__/eml_symbolic.cpython-312.pyc",
+        "vigia_adversarial_nlp.py",
+        "nlp_constants.py",
+        "signal_contract.py",
+        "vision_audit.py",
+        "vigia_planner.py",
+        "vigia_entanglement.py",
+        "entanglement.py",
+        "entropy_kernel.py",
+        "adversarial_nlp.py",
+        "mitre_mapping.py",
+        "document_integrity.py",
+        "eml_gci.py",
+        "forensic_db.py",
+        "caie.py",
+        "metabolic_profiler.py",
+        "abductive_intent_engine.py"
+      ],
+      "skills": [
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry abductive-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry atomic-state-mutation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry audit-before-patch before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry claim-provenance-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry codebase-health-assessment before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry daubert-defensible-writing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry deterministic-core before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry diagnosing-bugs before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry git-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry honest-degradation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry llm-out-of-the-loop before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry red-team-auditing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry reverse-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry secure-by-construction before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry software-archaeology before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry sql-aggregation-not-materialization before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry surgical-patcher before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry tamper-evident-audit-chain before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry validate-at-the-boundary before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "patch_reviewer": {
+      "adi": [
+        {
+          "evidence": [
+            "no patch supplied; patch-review contract evaluated for repository audit without a patch"
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: no patch supplied; patch-review contract evaluated for repository audit without a patch.",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "no patch supplied; patch-review contract evaluated for repository audit without a patch"
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "no patch supplied; patch-review contract evaluated for repository audit without a patch"
+          ],
+          "stage": "induction",
+          "statement": "No patch was supplied to the repository-audit entrypoint; semantic patch induction is not applicable.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "patch_reviewer",
+      "scope": [],
+      "skills": [
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry abductive-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry atomic-state-mutation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry audit-before-patch before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry claim-provenance-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry codebase-health-assessment before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry daubert-defensible-writing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry deterministic-core before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry diagnosing-bugs before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry git-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry honest-degradation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry llm-out-of-the-loop before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry red-team-auditing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry reverse-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry secure-by-construction before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry software-archaeology before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry sql-aggregation-not-materialization before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry surgical-patcher before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry tamper-evident-audit-chain before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry validate-at-the-boundary before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "recommendation_agent": {
+      "adi": [
+        {
+          "evidence": [
+            "recommendations derive from sealed evidence at sealed manifest"
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: recommendations derive from sealed evidence at sealed manifest.",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "recommendations derive from sealed evidence at sealed manifest"
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "recommendations derive from sealed evidence at sealed manifest"
+          ],
+          "stage": "induction",
+          "statement": "Recommendation actionability requires owner validation and is not a security finding.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "recommendation_agent",
+      "scope": [],
+      "skills": [
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry abductive-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry atomic-state-mutation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry audit-before-patch before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry claim-provenance-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry codebase-health-assessment before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry daubert-defensible-writing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry deterministic-core before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry diagnosing-bugs before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry git-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry honest-degradation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry llm-out-of-the-loop before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry red-team-auditing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry reverse-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry secure-by-construction before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry software-archaeology before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry sql-aggregation-not-materialization before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry surgical-patcher before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry tamper-evident-audit-chain before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry validate-at-the-boundary before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "report_composer": {
+      "adi": [
+        {
+          "evidence": [
+            "report composition target: report"
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: report composition target: report.",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "report composition target: report"
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "report composition target: report"
+          ],
+          "stage": "induction",
+          "statement": "Report rendering is deterministic; reader interpretation and finding correctness remain separate questions.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "report_composer",
+      "scope": [],
+      "skills": [
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry abductive-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry atomic-state-mutation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry audit-before-patch before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry claim-provenance-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry codebase-health-assessment before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry daubert-defensible-writing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry deterministic-core before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry diagnosing-bugs before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry git-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry honest-degradation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry llm-out-of-the-loop before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry red-team-auditing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry reverse-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry secure-by-construction before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry software-archaeology before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry sql-aggregation-not-materialization before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry surgical-patcher before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry tamper-evident-audit-chain before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry validate-at-the-boundary before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "security_auditor": {
+      "adi": [
+        {
+          "evidence": [
+            "hardcoded-credential observed at mitre_mapping.py:65",
+            "path-traversal observed at document_integrity.py:128",
+            "path-traversal observed at document_integrity.py:797",
+            "path-traversal observed at metabolic_profiler.py:401",
+            "path-traversal observed at metabolic_profiler.py:554",
+            "path-traversal observed at metabolic_profiler.py:596",
+            "path-traversal observed at metabolic_profiler.py:575",
+            "path-traversal observed at metabolic_profiler.py:634"
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: hardcoded-credential observed at mitre_mapping.py:65; path-traversal observed at document_integrity.py:128; path-traversal observed at document_integrity.py:797; path-traversal observed at metabolic_profiler.py:401; path-traversal observed at metabolic_profiler.py:554.",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "hardcoded-credential observed at mitre_mapping.py:65",
+            "path-traversal observed at document_integrity.py:128",
+            "path-traversal observed at document_integrity.py:797",
+            "path-traversal observed at metabolic_profiler.py:401",
+            "path-traversal observed at metabolic_profiler.py:554",
+            "path-traversal observed at metabolic_profiler.py:596",
+            "path-traversal observed at metabolic_profiler.py:575",
+            "path-traversal observed at metabolic_profiler.py:634"
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "hardcoded-credential observed at mitre_mapping.py:65",
+            "path-traversal observed at document_integrity.py:128",
+            "path-traversal observed at document_integrity.py:797",
+            "path-traversal observed at metabolic_profiler.py:401",
+            "path-traversal observed at metabolic_profiler.py:554",
+            "path-traversal observed at metabolic_profiler.py:596",
+            "path-traversal observed at metabolic_profiler.py:575",
+            "path-traversal observed at metabolic_profiler.py:634"
+          ],
+          "stage": "induction",
+          "statement": "No language-specific induction harness was registered for this observation.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "security_auditor",
+      "scope": [
+        "adversarial_mutation_suite.py",
+        "caie.py.bak",
+        "mitre_clustering.py",
+        "__init__.py",
+        "mitre_clustering.py.bak",
+        "entropy_locality.py",
+        "eml_symbolic.py",
+        "geopolitical.py",
+        "init_patterns_db.py",
+        "temporal_drift.py",
+        "sanitize_judicial.py",
+        "build_calibration_dataset.py",
+        "generate_calibration.py",
+        "visible_variables.py",
+        "vigia_case_adapter.py",
+        "picerl_mapping.py",
+        "signal_adapter.py",
+        "pattern_detector.py",
+        "forensic_patterns.sqlite",
+        "adversarial_robustness.py",
+        "__pycache__/metabolic_profiler.cpython-312.pyc",
+        "__pycache__/visible_variables.cpython-312.pyc",
+        "__pycache__/nlp_constants.cpython-312.pyc",
+        "__pycache__/vision_audit.cpython-312.pyc",
+        "__pycache__/abductive_intent_engine.cpython-312.pyc",
+        "__pycache__/document_integrity.cpython-312.pyc",
+        "__pycache__/vigia_adversarial_nlp.cpython-312.pyc",
+        "__pycache__/vigia_entanglement.cpython-312.pyc",
+        "__pycache__/adversarial_nlp.cpython-312.pyc",
+        "__pycache__/mitre_clustering.cpython-312.pyc",
+        "__pycache__/__init__.cpython-312.pyc",
+        "__pycache__/mitre_mapping.cpython-312.pyc",
+        "__pycache__/signal_adapter.cpython-312.pyc",
+        "__pycache__/caie.cpython-312.pyc",
+        "__pycache__/temporal_drift.cpython-312.pyc",
+        "__pycache__/entanglement.cpython-312.pyc",
+        "__pycache__/entropy_kernel.cpython-312.pyc",
+        "__pycache__/forensic_db.cpython-312.pyc",
+        "__pycache__/signal_contract.cpython-312.pyc",
+        "__pycache__/eml_gci.cpython-312.pyc",
+        "__pycache__/adversarial_robustness.cpython-312.pyc",
+        "__pycache__/picerl_mapping.cpython-312.pyc",
+        "__pycache__/eml_symbolic.cpython-312.pyc",
+        "vigia_adversarial_nlp.py",
+        "nlp_constants.py",
+        "signal_contract.py",
+        "vision_audit.py",
+        "vigia_planner.py",
+        "vigia_entanglement.py",
+        "entanglement.py",
+        "entropy_kernel.py",
+        "adversarial_nlp.py",
+        "mitre_mapping.py",
+        "document_integrity.py",
+        "eml_gci.py",
+        "forensic_db.py",
+        "caie.py",
+        "metabolic_profiler.py",
+        "abductive_intent_engine.py"
+      ],
+      "skills": [
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry abductive-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry atomic-state-mutation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry audit-before-patch before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry claim-provenance-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry codebase-health-assessment before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry daubert-defensible-writing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry deterministic-core before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry diagnosing-bugs before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry git-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry honest-degradation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry llm-out-of-the-loop before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry red-team-auditing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry reverse-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry secure-by-construction before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry software-archaeology before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry sql-aggregation-not-materialization before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry surgical-patcher before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry tamper-evident-audit-chain before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry validate-at-the-boundary before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "web_auditor": {
+      "adi": [
+        {
+          "evidence": [
+            "No actionable observation was emitted in the examined scope."
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: No actionable observation was emitted in the examined scope..",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "No actionable observation was emitted in the examined scope."
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "No actionable observation was emitted in the examined scope."
+          ],
+          "stage": "induction",
+          "statement": "No language-specific induction harness was registered for this observation.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "web_auditor",
+      "scope": [],
+      "skills": [
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry abductive-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry atomic-state-mutation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry audit-before-patch before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry claim-provenance-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry codebase-health-assessment before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry daubert-defensible-writing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry deterministic-core before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry diagnosing-bugs before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry git-discipline before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry honest-degradation before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry llm-out-of-the-loop before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry red-team-auditing before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry reverse-engineering before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry secure-by-construction before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry software-archaeology before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry sql-aggregation-not-materialization before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry surgical-patcher before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry tamper-evident-audit-chain before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry validate-at-the-boundary before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "LOADED_ONLY"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    }
+  },
+  "agents": {
+    "abduction": {
+      "average_evidence_per_hypothesis": null,
+      "hypotheses_discarded": 3,
+      "hypotheses_generated": 1,
+      "hypotheses_merged": null,
+      "patterns_observed": 10
+    },
+    "integrity_inspector": {
+      "applicable": 5,
+      "contracts_evaluated": 5,
+      "design_inconsistencies": 0,
+      "not_applicable": 17,
+      "protocol_gaps": 6,
+      "undetermined": 11
+    },
+    "verification": {
+      "benign_explanations_accepted": 3,
+      "benign_explanations_rejected": 0,
+      "checks_executed": 10,
+      "checks_failed": 0,
+      "checks_note": "Surviving hypotheses are unresolved candidates, not failed tests; dynamic induction is required before calling them defects.",
+      "checks_passed": 3,
+      "checks_unresolved": 7,
+      "structural_proofs_found": 3
+    }
+  },
+  "audit_disposition": {
+    "action_required": "Inspect skipped files and rerun with complete source coverage.",
+    "evidence_boundary": [
+      "binary_or_unreadable: 1 file(s)",
+      "excluded_by_policy: 23 file(s)",
+      "out_of_scope_modules: 17 module(s)",
+      "skill_applicability: 11 undetermined result(s)"
+    ],
+    "reason": "The run found evidence, but one or more source boundaries were not verified.",
+    "reason_code": "UNVERIFIED_SOURCE_BOUNDARY",
+    "status": "ABSTAIN_INSUFFICIENT_SCOPE"
+  },
+  "audit_trail": {
+    "artifacts_produced": null,
+    "chain_verification": null,
+    "events_hashed": 57,
+    "events_verified": null,
+    "hash_chain_length": null,
+    "partial_trace": false,
+    "runtime_events": 57,
+    "tampering_detected": null
+  },
+  "contradictions": [],
+  "discovery": {
+    "CONNECTED_ALIVE": 16,
+    "DEAD_WEIGHT": 8,
+    "DUPLICATE": 0,
+    "FOSSIL_HIGH_RISK": 9,
+    "FOSSIL_LOW_RISK": 0,
+    "UNKNOWN": 0,
+    "average_dependency_degree": null,
+    "dependency_graph_size": null,
+    "mixed_domain_modules": 10
+  },
+  "domain_classification": {
+    "hypothesis_confidence": [
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "__init__.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "abductive_intent_engine.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 2
+        },
+        "domains": [
+          "cryptographic",
+          "machine_learning"
+        ],
+        "evidence_count": 2,
+        "module_path": "adversarial_mutation_suite.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "cryptographic",
+          "input_boundary",
+          "machine_learning"
+        ],
+        "evidence_count": 3,
+        "module_path": "adversarial_nlp.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "adversarial_robustness.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 2
+        },
+        "domains": [
+          "cryptographic",
+          "input_boundary"
+        ],
+        "evidence_count": 2,
+        "module_path": "build_calibration_dataset.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "cryptographic"
+        ],
+        "evidence_count": 1,
+        "module_path": "caie.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "cryptographic",
+          "input_boundary",
+          "machine_learning"
+        ],
+        "evidence_count": 3,
+        "module_path": "document_integrity.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "cryptographic"
+        ],
+        "evidence_count": 1,
+        "module_path": "eml_gci.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 2
+        },
+        "domains": [
+          "cryptographic",
+          "machine_learning"
+        ],
+        "evidence_count": 2,
+        "module_path": "eml_symbolic.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "entanglement.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "machine_learning"
+        ],
+        "evidence_count": 1,
+        "module_path": "entropy_kernel.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "input_boundary"
+        ],
+        "evidence_count": 1,
+        "module_path": "entropy_locality.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 2
+        },
+        "domains": [
+          "cryptographic",
+          "input_boundary"
+        ],
+        "evidence_count": 2,
+        "module_path": "forensic_db.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 2
+        },
+        "domains": [
+          "cryptographic",
+          "input_boundary"
+        ],
+        "evidence_count": 2,
+        "module_path": "generate_calibration.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "geopolitical.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "init_patterns_db.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 2
+        },
+        "domains": [
+          "cryptographic",
+          "input_boundary"
+        ],
+        "evidence_count": 2,
+        "module_path": "metabolic_profiler.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "mitre_clustering.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "cryptographic"
+        ],
+        "evidence_count": 1,
+        "module_path": "mitre_mapping.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "nlp_constants.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "pattern_detector.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "cryptographic"
+        ],
+        "evidence_count": 1,
+        "module_path": "picerl_mapping.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 2
+        },
+        "domains": [
+          "cryptographic",
+          "input_boundary"
+        ],
+        "evidence_count": 2,
+        "module_path": "sanitize_judicial.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "cryptographic"
+        ],
+        "evidence_count": 1,
+        "module_path": "signal_adapter.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "signal_contract.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "input_boundary"
+        ],
+        "evidence_count": 1,
+        "module_path": "temporal_drift.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "vigia_adversarial_nlp.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "input_boundary"
+        ],
+        "evidence_count": 1,
+        "module_path": "vigia_case_adapter.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "vigia_entanglement.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "cryptographic",
+          "input_boundary",
+          "machine_learning"
+        ],
+        "evidence_count": 3,
+        "module_path": "vigia_planner.py"
+      },
+      {
+        "alternatives": [],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 1
+        },
+        "domains": [
+          "cryptographic"
+        ],
+        "evidence_count": 1,
+        "module_path": "visible_variables.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "vision_audit.py"
+      }
+    ],
+    "modules_by_domain": {
+      "cryptographic": 16,
+      "input_boundary": 11,
+      "machine_learning": 6
+    }
+  },
+  "evidence": {
+    "by_kind": {
+      "source": 43
+    },
+    "derived_evidence": 0,
+    "evidence_conflicts": 0,
+    "evidence_items": 43,
+    "evidence_reused": null,
+    "primary_evidence": 43,
+    "recommendation_evidence": 0,
+    "secondary_evidence": 0
+  },
+  "findings": {
+    "by_agent": {
+      "bug_investigator": 7,
+      "integrity_inspector": 22,
+      "security_auditor": 8,
+      "validate-at-the-boundary": 6
+    },
+    "by_epistemic_level": {
+      "CODE FACT": 30,
+      "PLAUSIBLE HYPOTHESIS": 7,
+      "PROTOCOL_GAP": 6
+    },
+    "by_family": {
+      "credential": 1,
+      "numeric-boundary": 6,
+      "other": 18,
+      "parser-boundary": 1,
+      "unversioned-serialization": 17
+    },
+    "by_module": {
+      "adversarial_nlp.py": 3,
+      "caie.py": 2,
+      "document_integrity.py": 5,
+      "entropy_kernel.py": 2,
+      "forensic_db.py": 6,
+      "metabolic_profiler.py": 10,
+      "mitre_mapping.py": 3,
+      "signal_contract.py": 1,
+      "vigia_planner.py": 11
+    },
+    "by_outcome": {
+      "DESIGN_INCONSISTENCY": 0,
+      "NOT_APPLICABLE": 0,
+      "OBSERVED": 37,
+      "PROTOCOL_GAP": 6,
+      "UNDETERMINED": 0
+    },
+    "by_severity": {
+      "CRITICAL": 7,
+      "MEDIUM": 36
+    },
+    "discarded_hypotheses": 3,
+    "finding_digest": "8dc8866ebdbff3bc58d756687b79859afa48c2b136deefb4c97fa5253a4ec9c6",
+    "induction": {
+      "confirmed": 0,
+      "falsified": 0,
+      "undetermined": 7
+    }
+  },
+  "honest_degradation": {
+    "limitations": [
+      "Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only.",
+      "26 discovered file(s) were skipped; see skipped_reasons for the exact paths and policy categories.",
+      "17 triaged module(s) were outside CONNECTED_ALIVE audit scope.",
+      "11 skill applicability result(s) were UNDETERMINED; no conclusion was inferred for them.",
+      "7 hypothesis/hypotheses survived structural verification without dynamic induction; they remain plausible hypotheses, not confirmed defects."
+    ],
+    "skipped_reasons": {
+      "binary_or_unreadable": [
+        "forensic_patterns.sqlite"
+      ],
+      "excluded_by_policy": [
+        "__pycache__/__init__.cpython-312.pyc",
+        "__pycache__/abductive_intent_engine.cpython-312.pyc",
+        "__pycache__/adversarial_nlp.cpython-312.pyc",
+        "__pycache__/adversarial_robustness.cpython-312.pyc",
+        "__pycache__/caie.cpython-312.pyc",
+        "__pycache__/document_integrity.cpython-312.pyc",
+        "__pycache__/eml_gci.cpython-312.pyc",
+        "__pycache__/eml_symbolic.cpython-312.pyc",
+        "__pycache__/entanglement.cpython-312.pyc",
+        "__pycache__/entropy_kernel.cpython-312.pyc",
+        "__pycache__/forensic_db.cpython-312.pyc",
+        "__pycache__/metabolic_profiler.cpython-312.pyc",
+        "__pycache__/mitre_clustering.cpython-312.pyc",
+        "__pycache__/mitre_mapping.cpython-312.pyc",
+        "__pycache__/nlp_constants.cpython-312.pyc",
+        "__pycache__/picerl_mapping.cpython-312.pyc",
+        "__pycache__/signal_adapter.cpython-312.pyc",
+        "__pycache__/signal_contract.cpython-312.pyc",
+        "__pycache__/temporal_drift.cpython-312.pyc",
+        "__pycache__/vigia_adversarial_nlp.cpython-312.pyc",
+        "__pycache__/vigia_entanglement.cpython-312.pyc",
+        "__pycache__/visible_variables.cpython-312.pyc",
+        "__pycache__/vision_audit.cpython-312.pyc"
+      ],
+      "non_python_not_analyzed": [
+        "caie.py.bak",
+        "mitre_clustering.py.bak"
+      ]
+    }
+  },
+  "metrics_schema_version": "1.0",
+  "quality": {
+    "contract_coverage": {
+      "covered": 5,
+      "total": 33
+    },
+    "contract_coverage_note": "1 executable skill(s) loaded; this ratio measures applicability observations for executable skills only, not the documented skills catalog.",
+    "evidence_completeness": null,
+    "evidence_completeness_note": "Requires an explicit obligation ledger mapping each executed contract obligation to satisfied or missing Evidence items.",
+    "module_coverage": {
+      "covered": 16,
+      "total": 33
+    },
+    "repository_coverage": {
+      "covered": 33,
+      "total": 59
+    },
+    "verification_coverage": null,
+    "verification_coverage_note": "Requires a count of planned checks versus checks actually executed, including skipped checks and their reasons."
+  },
+  "repository": {
+    "branches_inspected": null,
+    "classes": 78,
+    "configuration_files": 0,
+    "directories": 2,
+    "documentation_files": 0,
+    "files_by_language": {
+      "Other": 26,
+      "Python": 33
+    },
+    "files_discovered": 59,
+    "functions": 365,
+    "git_commits_analyzed": null,
+    "loc": {
+      "blank": 2790,
+      "code": 17216,
+      "comment": 2257,
+      "total": 22263
+    },
+    "methods": 240,
+    "modules": 33,
+    "tags_inspected": null,
+    "tests": 0
+  },
+  "reproducibility": {
+    "artifact_hashes": null,
+    "environment": {
+      "os": "Linux-6.14.0-37-generic-x86_64-with-glibc2.39",
+      "python": "3.12.3"
+    },
+    "forge_version": "0.1.0",
+    "repository_snapshot_sha256": "49c19073a36faae4e45d42a3499e75a67d4475222a39db5b4f7b50a6eb85dbc2",
+    "runtime_deterministic": null,
+    "schema_versions": {
+      "triage": "1.1"
+    },
+    "seal_verified": null,
+    "seed_used": null,
+    "skill_versions": {
+      "validate-at-the-boundary": "1.0"
+    }
+  },
+  "scope": {
+    "asts_built": 33,
+    "coverage": {
+      "denominator": 59,
+      "numerator": 33
+    },
+    "files_analyzed": 33,
+    "files_skipped": 26,
+    "functions_analyzed": 365,
+    "lines_analyzed": 19270,
+    "modules_excluded": 17,
+    "out_of_scope_modules": [
+      "__init__.py",
+      "adversarial_mutation_suite.py",
+      "adversarial_robustness.py",
+      "build_calibration_dataset.py",
+      "eml_symbolic.py",
+      "entropy_locality.py",
+      "generate_calibration.py",
+      "geopolitical.py",
+      "init_patterns_db.py",
+      "mitre_clustering.py",
+      "pattern_detector.py",
+      "picerl_mapping.py",
+      "sanitize_judicial.py",
+      "signal_adapter.py",
+      "temporal_drift.py",
+      "vigia_case_adapter.py",
+      "visible_variables.py"
+    ],
+    "repositories_chained": 1
+  },
+  "self_assessment": {
+    "abstentions": 1,
+    "confidence_boundary": "scope-limited",
+    "contradictions": 0,
+    "coverage": {
+      "covered": 33,
+      "total": 59
+    },
+    "limitations": 5,
+    "note": "Self-assessment describes audit boundaries; it is not a repository quality score.",
+    "specialized_agents": {
+      "available": 5,
+      "total": 5
+    }
+  },
+  "skill_runtime": {
+    "contract_failures": 0,
+    "contracts_executed": 5,
+    "contracts_skipped": 17,
+    "evidence_obligations_missing": null,
+    "evidence_obligations_satisfied": null,
+    "limitations_emitted": 0,
+    "skills_activated": 5,
+    "skills_loaded": 1,
+    "skills_not_applicable": 17,
+    "undetermined_skills": 11
+  }
+}

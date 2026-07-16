@@ -1,0 +1,108 @@
+{
+  "audit_duration_seconds": 2.909736,
+  "confidence": {
+    "discarded_hypotheses": 3,
+    "limitations": 5
+  },
+  "connected_modules": 16,
+  "coverage": {
+    "ast_verified_families": [
+      "subprocess",
+      "parser",
+      "float comparison",
+      "eval/exec"
+    ],
+    "coverage_ratio": {
+      "denominator": 59,
+      "numerator": 33
+    },
+    "files_analyzed": 33,
+    "files_discovered": 59,
+    "files_skipped": 26,
+    "skipped_reasons": {
+      "binary_or_unreadable": [
+        "forensic_patterns.sqlite"
+      ],
+      "excluded_by_policy": [
+        "__pycache__/__init__.cpython-312.pyc",
+        "__pycache__/abductive_intent_engine.cpython-312.pyc",
+        "__pycache__/adversarial_nlp.cpython-312.pyc",
+        "__pycache__/adversarial_robustness.cpython-312.pyc",
+        "__pycache__/caie.cpython-312.pyc",
+        "__pycache__/document_integrity.cpython-312.pyc",
+        "__pycache__/eml_gci.cpython-312.pyc",
+        "__pycache__/eml_symbolic.cpython-312.pyc",
+        "__pycache__/entanglement.cpython-312.pyc",
+        "__pycache__/entropy_kernel.cpython-312.pyc",
+        "__pycache__/forensic_db.cpython-312.pyc",
+        "__pycache__/metabolic_profiler.cpython-312.pyc",
+        "__pycache__/mitre_clustering.cpython-312.pyc",
+        "__pycache__/mitre_mapping.cpython-312.pyc",
+        "__pycache__/nlp_constants.cpython-312.pyc",
+        "__pycache__/picerl_mapping.cpython-312.pyc",
+        "__pycache__/signal_adapter.cpython-312.pyc",
+        "__pycache__/signal_contract.cpython-312.pyc",
+        "__pycache__/temporal_drift.cpython-312.pyc",
+        "__pycache__/vigia_adversarial_nlp.cpython-312.pyc",
+        "__pycache__/vigia_entanglement.cpython-312.pyc",
+        "__pycache__/visible_variables.cpython-312.pyc",
+        "__pycache__/vision_audit.cpython-312.pyc"
+      ],
+      "non_python_not_analyzed": [
+        "caie.py.bak",
+        "mitre_clustering.py.bak"
+      ]
+    }
+  },
+  "domains": [
+    "cryptographic",
+    "input_boundary",
+    "machine_learning"
+  ],
+  "findings": {
+    "by_agent": {
+      "bug_investigator": 7,
+      "integrity_inspector": 22,
+      "security_auditor": 8,
+      "validate-at-the-boundary": 6
+    },
+    "by_severity": {
+      "CRITICAL": 7,
+      "MEDIUM": 36
+    },
+    "total": 43
+  },
+  "languages": [
+    {
+      "confidence": {
+        "denominator": 20,
+        "numerator": 11
+      },
+      "evidence": [
+        {
+          "detail": "Python: 33 files with extension",
+          "kind": "file_count",
+          "role": "primary",
+          "source": "filesystem"
+        }
+      ],
+      "name": "Python"
+    }
+  ],
+  "module_summary": {
+    "CONNECTED_ALIVE": 16,
+    "DEAD_WEIGHT": 8,
+    "FOSSIL_HIGH_RISK": 9
+  },
+  "modules": 33,
+  "note": "Profile summarizes observed audit artifacts; it is not an invented repository quality score.",
+  "profile_schema_version": "1.0",
+  "repository": "/home/labestiadevigia/vigia-repo/vigia/tools",
+  "skills": {
+    "activated": 5,
+    "loaded": [
+      "validate-at-the-boundary"
+    ],
+    "undetermined": 11
+  }
+}

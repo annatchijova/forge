@@ -1,0 +1,49 @@
+{
+  "ast_verified_families": [
+    "subprocess",
+    "parser",
+    "float comparison",
+    "eval/exec"
+  ],
+  "coverage_ratio": {
+    "denominator": 59,
+    "numerator": 33
+  },
+  "files_analyzed": 33,
+  "files_discovered": 59,
+  "files_skipped": 26,
+  "skipped_reasons": {
+    "binary_or_unreadable": [
+      "forensic_patterns.sqlite"
+    ],
+    "excluded_by_policy": [
+      "__pycache__/__init__.cpython-312.pyc",
+      "__pycache__/abductive_intent_engine.cpython-312.pyc",
+      "__pycache__/adversarial_nlp.cpython-312.pyc",
+      "__pycache__/adversarial_robustness.cpython-312.pyc",
+      "__pycache__/caie.cpython-312.pyc",
+      "__pycache__/document_integrity.cpython-312.pyc",
+      "__pycache__/eml_gci.cpython-312.pyc",
+      "__pycache__/eml_symbolic.cpython-312.pyc",
+      "__pycache__/entanglement.cpython-312.pyc",
+      "__pycache__/entropy_kernel.cpython-312.pyc",
+      "__pycache__/forensic_db.cpython-312.pyc",
+      "__pycache__/metabolic_profiler.cpython-312.pyc",
+      "__pycache__/mitre_clustering.cpython-312.pyc",
+      "__pycache__/mitre_mapping.cpython-312.pyc",
+      "__pycache__/nlp_constants.cpython-312.pyc",
+      "__pycache__/picerl_mapping.cpython-312.pyc",
+      "__pycache__/signal_adapter.cpython-312.pyc",
+      "__pycache__/signal_contract.cpython-312.pyc",
+      "__pycache__/temporal_drift.cpython-312.pyc",
+      "__pycache__/vigia_adversarial_nlp.cpython-312.pyc",
+      "__pycache__/vigia_entanglement.cpython-312.pyc",
+      "__pycache__/visible_variables.cpython-312.pyc",
+      "__pycache__/vision_audit.cpython-312.pyc"
+    ],
+    "non_python_not_analyzed": [
+      "caie.py.bak",
+      "mitre_clustering.py.bak"
+    ]
+  }
+}

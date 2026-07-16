@@ -1,0 +1,869 @@
+{
+  "applicability": {
+    "__init__.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "abductive_intent_engine.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "adversarial_mutation_suite.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "adversarial_nlp.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "adversarial_robustness.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "build_calibration_dataset.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "caie.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "document_integrity.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "eml_gci.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "eml_symbolic.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "entanglement.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "entropy_kernel.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "entropy_locality.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "forensic_db.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "generate_calibration.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "geopolitical.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "init_patterns_db.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "metabolic_profiler.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "mitre_clustering.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "mitre_mapping.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "nlp_constants.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "pattern_detector.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "picerl_mapping.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "sanitize_judicial.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "signal_adapter.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "signal_contract.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "temporal_drift.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "vigia_adversarial_nlp.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "vigia_case_adapter.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "vigia_entanglement.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "vigia_planner.py": {
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "visible_variables.py": {
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "vision_audit.py": {
+      "validate-at-the-boundary": "UNDETERMINED"
+    }
+  },
+  "domain_hypotheses": [
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "abductive_intent_engine.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "cryptographic",
+        "machine_learning"
+      ],
+      "evidence": [
+        {
+          "detail": "ML framework import or reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "adversarial_mutation_suite.py"
+        },
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "adversarial_mutation_suite.py"
+        }
+      ],
+      "module_path": "adversarial_mutation_suite.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 1
+      },
+      "domains": [
+        "cryptographic",
+        "input_boundary",
+        "machine_learning"
+      ],
+      "evidence": [
+        {
+          "detail": "ML framework import or reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "adversarial_nlp.py"
+        },
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "adversarial_nlp.py"
+        },
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "adversarial_nlp.py"
+        }
+      ],
+      "module_path": "adversarial_nlp.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "adversarial_robustness.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "cryptographic",
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "build_calibration_dataset.py"
+        },
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "build_calibration_dataset.py"
+        }
+      ],
+      "module_path": "build_calibration_dataset.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "cryptographic"
+      ],
+      "evidence": [
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "caie.py"
+        }
+      ],
+      "module_path": "caie.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 1
+      },
+      "domains": [
+        "cryptographic",
+        "input_boundary",
+        "machine_learning"
+      ],
+      "evidence": [
+        {
+          "detail": "ML framework import or reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "document_integrity.py"
+        },
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "document_integrity.py"
+        },
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "document_integrity.py"
+        }
+      ],
+      "module_path": "document_integrity.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "cryptographic"
+      ],
+      "evidence": [
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "eml_gci.py"
+        }
+      ],
+      "module_path": "eml_gci.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "cryptographic",
+        "machine_learning"
+      ],
+      "evidence": [
+        {
+          "detail": "ML framework import or reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "eml_symbolic.py"
+        },
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "eml_symbolic.py"
+        }
+      ],
+      "module_path": "eml_symbolic.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "entanglement.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "machine_learning"
+      ],
+      "evidence": [
+        {
+          "detail": "ML framework import or reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "entropy_kernel.py"
+        }
+      ],
+      "module_path": "entropy_kernel.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "entropy_locality.py"
+        }
+      ],
+      "module_path": "entropy_locality.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "cryptographic",
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "forensic_db.py"
+        },
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "forensic_db.py"
+        }
+      ],
+      "module_path": "forensic_db.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "cryptographic",
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "generate_calibration.py"
+        },
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "generate_calibration.py"
+        }
+      ],
+      "module_path": "generate_calibration.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "geopolitical.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "init_patterns_db.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "cryptographic",
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "metabolic_profiler.py"
+        },
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "metabolic_profiler.py"
+        }
+      ],
+      "module_path": "metabolic_profiler.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "mitre_clustering.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "cryptographic"
+      ],
+      "evidence": [
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "mitre_mapping.py"
+        }
+      ],
+      "module_path": "mitre_mapping.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "nlp_constants.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "pattern_detector.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "cryptographic"
+      ],
+      "evidence": [
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "picerl_mapping.py"
+        }
+      ],
+      "module_path": "picerl_mapping.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "cryptographic",
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "sanitize_judicial.py"
+        },
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "sanitize_judicial.py"
+        }
+      ],
+      "module_path": "sanitize_judicial.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "cryptographic"
+      ],
+      "evidence": [
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "signal_adapter.py"
+        }
+      ],
+      "module_path": "signal_adapter.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "signal_contract.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "temporal_drift.py"
+        }
+      ],
+      "module_path": "temporal_drift.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "vigia_adversarial_nlp.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "vigia_case_adapter.py"
+        }
+      ],
+      "module_path": "vigia_case_adapter.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "vigia_entanglement.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 1
+      },
+      "domains": [
+        "cryptographic",
+        "input_boundary",
+        "machine_learning"
+      ],
+      "evidence": [
+        {
+          "detail": "ML framework import or reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "vigia_planner.py"
+        },
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "vigia_planner.py"
+        },
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "vigia_planner.py"
+        }
+      ],
+      "module_path": "vigia_planner.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "cryptographic"
+      ],
+      "evidence": [
+        {
+          "detail": "cryptographic library reference",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "visible_variables.py"
+        }
+      ],
+      "module_path": "visible_variables.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "vision_audit.py"
+    }
+  ],
+  "findings": [
+    {
+      "agent": "validate-at-the-boundary",
+      "category": "INFERRED",
+      "description": "parameter `path` reaches a sensitive boundary call without an explicit raising validation",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "parameter `path` reaches a sensitive boundary call without an explicit raising validation",
+          "kind": "source",
+          "role": "primary",
+          "source": "document_integrity.py:797"
+        }
+      ],
+      "module_path": "document_integrity.py",
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [],
+      "reasoning": "validate-at-the-boundary applies because direct external input reaches a parser or filesystem call.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "validate-at-the-boundary",
+      "category": "INFERRED",
+      "description": "parameter `path` reaches a sensitive boundary call without an explicit raising validation",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "parameter `path` reaches a sensitive boundary call without an explicit raising validation",
+          "kind": "source",
+          "role": "primary",
+          "source": "metabolic_profiler.py:401"
+        }
+      ],
+      "module_path": "metabolic_profiler.py",
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [],
+      "reasoning": "validate-at-the-boundary applies because direct external input reaches a parser or filesystem call.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "validate-at-the-boundary",
+      "category": "INFERRED",
+      "description": "parameter `path` reaches a sensitive boundary call without an explicit raising validation",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "parameter `path` reaches a sensitive boundary call without an explicit raising validation",
+          "kind": "source",
+          "role": "primary",
+          "source": "metabolic_profiler.py:554"
+        }
+      ],
+      "module_path": "metabolic_profiler.py",
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [],
+      "reasoning": "validate-at-the-boundary applies because direct external input reaches a parser or filesystem call.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "validate-at-the-boundary",
+      "category": "INFERRED",
+      "description": "parameter `path` reaches a sensitive boundary call without an explicit raising validation",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "parameter `path` reaches a sensitive boundary call without an explicit raising validation",
+          "kind": "source",
+          "role": "primary",
+          "source": "metabolic_profiler.py:575"
+        }
+      ],
+      "module_path": "metabolic_profiler.py",
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [],
+      "reasoning": "validate-at-the-boundary applies because direct external input reaches a parser or filesystem call.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "validate-at-the-boundary",
+      "category": "INFERRED",
+      "description": "parameter `path` reaches a sensitive boundary call without an explicit raising validation",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "parameter `path` reaches a sensitive boundary call without an explicit raising validation",
+          "kind": "source",
+          "role": "primary",
+          "source": "metabolic_profiler.py:596"
+        }
+      ],
+      "module_path": "metabolic_profiler.py",
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [],
+      "reasoning": "validate-at-the-boundary applies because direct external input reaches a parser or filesystem call.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "validate-at-the-boundary",
+      "category": "INFERRED",
+      "description": "parameter `path` reaches a sensitive boundary call without an explicit raising validation",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "parameter `path` reaches a sensitive boundary call without an explicit raising validation",
+          "kind": "source",
+          "role": "primary",
+          "source": "metabolic_profiler.py:634"
+        }
+      ],
+      "module_path": "metabolic_profiler.py",
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [],
+      "reasoning": "validate-at-the-boundary applies because direct external input reaches a parser or filesystem call.",
+      "severity": "MEDIUM"
+    }
+  ],
+  "limitations": []
+}

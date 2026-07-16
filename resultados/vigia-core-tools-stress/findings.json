@@ -1,0 +1,1 @@
+{"status":"BLOCKED","scope_core":null,"scope_tools":{"native_findings":43,"native_artifact":"scope-tools/run-x3k53kz2/verification-manifest.sealed.json"},"combined_bounded_scope":null,"reason":"No combined finding set is emitted when one bounded MCP audit times out"}

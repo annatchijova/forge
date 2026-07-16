@@ -1,0 +1,1 @@
+{"agent":"adversarial_redteam","status":"NOT_RUN","observations":[],"hypotheses":[],"deductions":[],"evidence":["Blocked before multi-agent stage because core Forge MCP audit timed out twice"],"decision":"ABSTAIN","skills":[],"adi":[],"reason":"No valid agent work product is claimed; finalization was not run."}

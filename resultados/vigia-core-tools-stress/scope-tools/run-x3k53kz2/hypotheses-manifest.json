@@ -1,0 +1,120 @@
+{
+  "audited_modules": [
+    "abductive_intent_engine.py",
+    "adversarial_nlp.py",
+    "caie.py",
+    "document_integrity.py",
+    "eml_gci.py",
+    "entanglement.py",
+    "entropy_kernel.py",
+    "forensic_db.py",
+    "metabolic_profiler.py",
+    "mitre_mapping.py",
+    "nlp_constants.py",
+    "signal_contract.py",
+    "vigia_adversarial_nlp.py",
+    "vigia_entanglement.py",
+    "vigia_planner.py",
+    "vision_audit.py"
+  ],
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784169414,
+  "hypotheses": [
+    {
+      "description": "The parser call `return json.load(f)` at adversarial_nlp.py:177 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 177; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        177
+      ],
+      "module_path": "adversarial_nlp.py",
+      "rank": 1
+    },
+    {
+      "description": "The decision comparison `verdict    = \"FABRICADO\" if mcp >= 4.0 else \"SOSPECHOSO\" if mcp >= 2.5 else \"AUT\u00c9NTICO\"` at adversarial_nlp.py:1130 uses a binary float threshold, so rounding at the boundary may flip the result.",
+      "falsification_test": "Run inputs immediately below, exactly at, and above the threshold using exact decimal values; stable, documented boundary behavior falsifies the hypothesis.",
+      "file_lines": [
+        1130
+      ],
+      "module_path": "adversarial_nlp.py",
+      "rank": 2
+    },
+    {
+      "description": "The parser call `_PHONETIC_CACHE = json.load(fh)` at document_integrity.py:70 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 70; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        70
+      ],
+      "module_path": "document_integrity.py",
+      "rank": 1
+    },
+    {
+      "description": "The decision comparison `if score >= 0.7:` at document_integrity.py:81 uses a binary float threshold, so rounding at the boundary may flip the result.",
+      "falsification_test": "Run inputs immediately below, exactly at, and above the threshold using exact decimal values; stable, documented boundary behavior falsifies the hypothesis.",
+      "file_lines": [
+        81
+      ],
+      "module_path": "document_integrity.py",
+      "rank": 2
+    },
+    {
+      "description": "The decision comparison `if score >= 0.4:` at document_integrity.py:83 uses a binary float threshold, so rounding at the boundary may flip the result.",
+      "falsification_test": "Run inputs immediately below, exactly at, and above the threshold using exact decimal values; stable, documented boundary behavior falsifies the hypothesis.",
+      "file_lines": [
+        83
+      ],
+      "module_path": "document_integrity.py",
+      "rank": 3
+    },
+    {
+      "description": "The parser call `data = json.loads(raw)` at forensic_db.py:268 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 268; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        268
+      ],
+      "module_path": "forensic_db.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `hist = json.loads(raw)` at forensic_db.py:367 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 367; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        367
+      ],
+      "module_path": "forensic_db.py",
+      "rank": 2
+    },
+    {
+      "description": "The decision comparison `f\"CLIP visual_malice_score={score:.3f} > 0.4. \"` at vigia_planner.py:343 uses a binary float threshold, so rounding at the boundary may flip the result.",
+      "falsification_test": "Run inputs immediately below, exactly at, and above the threshold using exact decimal values; stable, documented boundary behavior falsifies the hypothesis.",
+      "file_lines": [
+        343
+      ],
+      "module_path": "vigia_planner.py",
+      "rank": 1
+    },
+    {
+      "description": "The decision comparison `if score >= 0.5:` at vigia_planner.py:796 uses a binary float threshold, so rounding at the boundary may flip the result.",
+      "falsification_test": "Run inputs immediately below, exactly at, and above the threshold using exact decimal values; stable, documented boundary behavior falsifies the hypothesis.",
+      "file_lines": [
+        796
+      ],
+      "module_path": "vigia_planner.py",
+      "rank": 2
+    },
+    {
+      "description": "The decision comparison `elif score >= 0.2:` at vigia_planner.py:798 uses a binary float threshold, so rounding at the boundary may flip the result.",
+      "falsification_test": "Run inputs immediately below, exactly at, and above the threshold using exact decimal values; stable, documented boundary behavior falsifies the hypothesis.",
+      "file_lines": [
+        798
+      ],
+      "module_path": "vigia_planner.py",
+      "rank": 3
+    }
+  ],
+  "limitations": [
+    "Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only."
+  ],
+  "root": "/home/labestiadevigia/vigia-repo/vigia/tools",
+  "schema_version": "1.0",
+  "triage_schema_version": "1.1"
+}
