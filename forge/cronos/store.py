@@ -1,7 +1,7 @@
 """
 CRONOS — SQLite persistence layer.
 WAL mode enables concurrent reads while a trace is being written.
-All writes to traces + steps + chain land in a single atomic commit.
+Open traces persist steps incrementally; the final chain seal remains atomic.
 """
 
 import json
@@ -123,6 +123,45 @@ class TraceStore:
         self._conn.commit()
         log.info("trace_steps migration complete")
 
+    @staticmethod
+    def _step_row(seq: int, step: TraceStep) -> tuple[int, str, str, str]:
+        return (
+            seq,
+            step.kind.value,
+            json.dumps(step.payload, ensure_ascii=False, sort_keys=True),
+            step.timestamp,
+        )
+
+    def start_trace(self, trace: Trace) -> None:
+        """Persist an open trace and its objective before agent work begins."""
+        objective_step = trace.steps[0] if trace.steps else None
+        if objective_step is None:
+            raise ValueError("CRONOS trace must start with an objective step")
+        with self._conn:
+            self._conn.execute(
+                """INSERT INTO traces
+                   (trace_id, agent_id, channel_id, user_id, objective,
+                    decision, confidence, started_at, closed_at, chain_ok,
+                    cronos_version)
+                   VALUES (?, ?, ?, ?, ?, NULL, NULL, ?, NULL, 0, ?)""",
+                (trace.trace_id, trace.agent_id, trace.channel_id, trace.user_id,
+                 trace.objective, trace.started_at, trace.cronos_version),
+            )
+            self._conn.execute(
+                """INSERT INTO trace_steps (trace_id, seq, kind, payload, timestamp)
+                   VALUES (?, ?, ?, ?, ?)""",
+                (trace.trace_id, *self._step_row(0, objective_step)),
+            )
+
+    def append_step(self, trace_id: str, seq: int, step: TraceStep) -> None:
+        """Commit one step so an abrupt process death leaves observable evidence."""
+        with self._conn:
+            self._conn.execute(
+                """INSERT INTO trace_steps (trace_id, seq, kind, payload, timestamp)
+                   VALUES (?, ?, ?, ?, ?)""",
+                (trace_id, *self._step_row(seq, step)),
+            )
+
     def save_trace(self, trace: Trace) -> None:
         """
         Atomically persist a closed Trace:
@@ -137,15 +176,7 @@ class TraceStore:
         # Serialize every step exactly once.  The same JSON string is both
         # hashed into the seal and persisted to trace_steps, so seal-time and
         # verify-time inputs are byte-identical (no re-serialization drift).
-        step_rows = [
-            (
-                seq,
-                step.kind.value,
-                json.dumps(step.payload, ensure_ascii=False, sort_keys=True),
-                step.timestamp,
-            )
-            for seq, step in enumerate(trace.steps)
-        ]
+        step_rows = [self._step_row(seq, step) for seq, step in enumerate(trace.steps)]
         steps_hash = _steps_hash(step_rows)
 
         try:
@@ -177,13 +208,16 @@ class TraceStore:
                 trace.cronos_version or None,
             ))
 
+            # An open trace already has incrementally persisted steps. Replace
+            # them with the final canonical sequence in this closing commit.
+            self._conn.execute("DELETE FROM trace_steps WHERE trace_id = ?", (trace.trace_id,))
             for (seq, kind, payload_json, timestamp) in step_rows:
                 self._conn.execute("""
                     INSERT INTO trace_steps (trace_id, seq, kind, payload, timestamp)
                     VALUES (?, ?, ?, ?, ?)
                 """, (trace.trace_id, seq, kind, payload_json, timestamp))
 
-            self._conn.commit()  # single commit: chain + header + steps
+            self._conn.commit()  # atomic final seal: chain + header + canonical steps
 
         except Exception:
             self._conn.rollback()  # no partial traces — all or nothing
@@ -251,7 +285,7 @@ class TraceStore:
             closed_at=closed_at,
             entry_hash=entry_hash,
             chain_ok=bool(chain_ok),
-            closed=True,
+            closed=closed_at is not None,
             quality=quality,
             diversity=diversity,
             contradictions=contradictions,

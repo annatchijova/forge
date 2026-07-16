@@ -54,6 +54,30 @@ def test_cronos_trace_store_is_optional_and_records_the_runtime(tmp_path):
     connection.close()
 
 
+def test_cronos_persists_open_steps_before_context_exit(tmp_path):
+    from forge.cronos import CronosTracer, TraceStore
+
+    database = tmp_path / "incremental.sqlite3"
+    store = TraceStore(str(database))
+    tracer = CronosTracer(store, "agent", "", "", "incremental test")
+    tracer.__enter__()
+    tracer.call_tool("fixture", "step persisted before close")
+
+    connection = sqlite3.connect(database)
+    row = connection.execute(
+        "SELECT closed_at, chain_ok FROM traces WHERE trace_id = ?", (tracer.trace.trace_id,)
+    ).fetchone()
+    steps = connection.execute(
+        "SELECT kind, payload FROM trace_steps WHERE trace_id = ? ORDER BY seq", (tracer.trace.trace_id,)
+    ).fetchall()
+    connection.close()
+    store._conn.close()
+
+    assert row == (None, 0)
+    assert [item[0] for item in steps] == ["objective", "tool"]
+    assert "step persisted before close" in steps[1][1]
+
+
 def test_cronos_store_cannot_write_inside_the_audited_repository(tmp_path):
     (tmp_path / "main.py").write_text("x = 1\n")
     with pytest.raises(ValueError, match="outside the audited repository"):

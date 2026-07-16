@@ -62,8 +62,10 @@ class CronosTracer:
     """
     Records the decision trace of a single agent action cycle.
     Must be used as a context manager.
-    On __exit__: quality metrics are computed, confidence is constrained,
-    and the trace is sealed + stored atomically.
+    The objective and every subsequent step are persisted incrementally. On
+    __exit__: quality metrics are computed, confidence is constrained, and the
+    trace is sealed atomically. A process killed before __exit__ leaves an open
+    unsealed trace rather than no evidence.
     """
 
     def __init__(
@@ -94,11 +96,19 @@ class CronosTracer:
             },
             timestamp=self.trace.started_at,
         ))
+        self._started = False
 
     # ── Context manager ───────────────────────────────────────────────────────
 
     def __enter__(self) -> "CronosTracer":
+        self._store.start_trace(self.trace)
+        self._started = True
         return self
+
+    def _record_step(self, step: TraceStep) -> None:
+        self.trace.steps.append(step)
+        if self._started:
+            self._store.append_step(self.trace.trace_id, len(self.trace.steps) - 1, step)
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> bool:
         self.trace.closed_at = _now()
@@ -159,11 +169,11 @@ class CronosTracer:
         payload: dict = {"memory_id": memory_id, "summary": summary}
         if score is not None:
             payload["score"] = f"{score.numerator}/{score.denominator}"
-        self.trace.steps.append(TraceStep(StepKind.RECALL, payload, _now()))
+        self._record_step(TraceStep(StepKind.RECALL, payload, _now()))
 
     def call_tool(self, tool_name: str, result_summary: str) -> None:
         """Record an external tool call and its result summary."""
-        self.trace.steps.append(TraceStep(
+        self._record_step(TraceStep(
             StepKind.TOOL,
             {"tool": tool_name, "result": result_summary},
             _now(),
@@ -171,7 +181,7 @@ class CronosTracer:
 
     def add_hypothesis(self, label: str, description: str) -> None:
         """Register a hypothesis under active consideration."""
-        self.trace.steps.append(TraceStep(
+        self._record_step(TraceStep(
             StepKind.HYPOTHESIS,
             {"label": label, "description": description},
             _now(),
@@ -179,7 +189,7 @@ class CronosTracer:
 
     def discard_hypothesis(self, label: str, reason: str) -> None:
         """Mark a hypothesis as discarded and record the reason."""
-        self.trace.steps.append(TraceStep(
+        self._record_step(TraceStep(
             StepKind.DISCARD,
             {"label": label, "reason": reason},
             _now(),
@@ -242,7 +252,7 @@ class CronosTracer:
             )
         self.trace.decision   = decision
         self.trace.confidence = confidence
-        self.trace.steps.append(TraceStep(
+        self._record_step(TraceStep(
             StepKind.DECISION,
             {
                 "decision":   decision,
