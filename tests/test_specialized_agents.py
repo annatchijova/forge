@@ -111,6 +111,47 @@ def test_integrity_ml_domain_suppression_is_scoped_to_flagged_paths_only(tmp_pat
     hits = inspect(tmp_path, ml_domain_paths=frozenset({"signal.py"}))
     assert [x.path for x in hits] == ["verdict.py"]
 
+def test_integrity_flags_sql_real_column_with_money_shaped_name(tmp_path):
+    write(tmp_path, "db.py", (
+        "import sqlite3\n"
+        "def init(conn):\n"
+        "    conn.executescript('CREATE TABLE t (discount_percent REAL NOT NULL DEFAULT 0)')\n"
+    ))
+    hits = [x for x in inspect(tmp_path) if x.family == "money-as-float"]
+    assert len(hits) == 1 and "discount_percent" in hits[0].description
+
+def test_integrity_ignores_sql_real_column_with_unrelated_name(tmp_path):
+    write(tmp_path, "db.py", (
+        "import sqlite3\n"
+        "def init(conn):\n"
+        "    conn.executescript('CREATE TABLE t (latitude REAL NOT NULL DEFAULT 0)')\n"
+    ))
+    assert not [x for x in inspect(tmp_path) if x.family == "money-as-float"]
+
+def test_integrity_flags_round_over_division_on_money_shaped_value(tmp_path):
+    write(tmp_path, "checkout.py", (
+        "def line_total(product):\n"
+        "    return round(product['price_cents'] * (1 - product['discount_percent'] / 100))\n"
+    ))
+    hits = [x for x in inspect(tmp_path) if x.family == "money-as-float"]
+    assert len(hits) == 1
+
+def test_integrity_ignores_round_over_division_on_unrelated_value(tmp_path):
+    write(tmp_path, "physics.py", (
+        "def average(samples):\n"
+        "    return round(sum(samples) / len(samples))\n"
+    ))
+    assert not [x for x in inspect(tmp_path) if x.family == "money-as-float"]
+
+def test_integrity_ignores_money_computed_with_fraction_not_division(tmp_path):
+    write(tmp_path, "checkout.py", (
+        "from fractions import Fraction\n"
+        "def line_total(product):\n"
+        "    discount = Fraction(product['discount_percent_bp'], 10000)\n"
+        "    return round(product['price_cents'] * (1 - discount))\n"
+    ))
+    assert not [x for x in inspect(tmp_path) if x.family == "money-as-float"]
+
 def test_shared_discovery_excludes_venv_from_security(tmp_path):
     write(tmp_path, "main.py", "x = 1\n")
     write(tmp_path, ".venv/site.py", "password = 'leaked'\n")

@@ -118,7 +118,7 @@ conservative, named benign criteria (see `DECISIONS.md`):
 
 ## Integrity Inspector (`forge/agents/integrity_inspector.py`)
 
-Also pure AST scanning. Flags two families:
+Also pure AST scanning. Flags three families:
 
 * **decision-adjacent-float** — a `float(...)` call whose value has a
   shallow data-flow path to a `return` statement, in *any* function. There is
@@ -130,7 +130,18 @@ Also pure AST scanning. Flags two families:
   since ordinary numeric computation (model weights, predictions, physical
   quantities derived from signals) would otherwise be flagged identically to
   an actual governance verdict. The module is still examined for the other
-  family below.
+  families below.
+* **money-as-float** — a value that is float-typed *by provenance*, never by
+  an explicit `float()` call, so `decision-adjacent-float`'s call-site
+  tracing cannot see it at all: a SQLite `REAL` column declared with a
+  money-shaped name (`price`, `cost`, `amount`, `total`, `subtotal`,
+  `discount`, `fee`, `balance`, `charge`, `payment`) in a `CREATE TABLE`
+  statement, or a `round(...)` call wrapping a `/` true division that
+  touches a money-shaped name. Found via a stress-test audit of a
+  quickly-built checkout service, where discounts computed as
+  `product["price_cents"] * (1 - product["discount_percent"] / 100)` went
+  completely undetected — the float never comes from a `float()` call, it
+  comes from a SQLite `REAL` column and Python 3's `/` operator.
 * **unversioned-serialization** — a `json`/`pickle` dump whose payload is not
   visibly a mapping containing `schema_version` or `version`
 

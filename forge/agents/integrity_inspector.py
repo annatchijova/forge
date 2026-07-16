@@ -1,6 +1,6 @@
 """Determinism and schema-versioning checks, independent of bug hypotheses."""
 from __future__ import annotations
-import ast, os
+import ast, os, re
 from dataclasses import dataclass
 from pathlib import Path
 from forge.detector.stack import triage
@@ -12,6 +12,57 @@ from forge.agent_protocol import mandatory_protocol
 @dataclass(frozen=True)
 class IntegrityFinding:
     family: str; path: str; line: int; description: str
+
+_MONEY_NAME = re.compile(r"(price|cost|amount|total|subtotal|discount|fee|balance|charge|payment)", re.I)
+_SQL_EXEC_METHODS = {"execute", "executemany", "executescript"}
+
+
+def _sql_real_money_columns(tree: ast.AST) -> list[tuple[int, str]]:
+    """Line numbers of CREATE TABLE column definitions declaring a
+    money-shaped column REAL (SQLite's floating-point type)."""
+    hits: list[tuple[int, str]] = []
+    for node in ast.walk(tree):
+        if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr in _SQL_EXEC_METHODS):
+            continue
+        for arg in node.args:
+            if not (isinstance(arg, ast.Constant) and isinstance(arg.value, str) and "CREATE TABLE" in arg.value.upper()):
+                continue
+            for match in re.finditer(r"(\w+)\s+REAL\b", arg.value, re.I):
+                if _MONEY_NAME.search(match.group(1)):
+                    hits.append((node.lineno, match.group(1)))
+    return hits
+
+
+def _money_shaped(node: ast.AST) -> bool:
+    if isinstance(node, ast.Subscript) and isinstance(node.slice, ast.Constant) and isinstance(node.slice.value, str):
+        return bool(_MONEY_NAME.search(node.slice.value))
+    if isinstance(node, ast.Attribute):
+        return bool(_MONEY_NAME.search(node.attr))
+    if isinstance(node, ast.Name):
+        return bool(_MONEY_NAME.search(node.id))
+    return False
+
+
+def _money_float_division_lines(tree: ast.AST) -> set[int]:
+    """Lines where round() wraps a true division (`/`) touching a
+    money-shaped name, without ever calling float() explicitly.
+
+    `/` always produces a float in Python 3 regardless of operand types, so
+    a SQLite REAL column or an int divided this way silently becomes a
+    float here - decision-adjacent-float never sees it because there is no
+    float() call for float_calls_reaching_return to trace.
+    """
+    hits: set[int] = set()
+    for call in ast.walk(tree):
+        if not (isinstance(call, ast.Call) and isinstance(call.func, ast.Name) and call.func.id == "round" and call.args):
+            continue
+        for node in ast.walk(call.args[0]):
+            if not (isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div)):
+                continue
+            if any(_money_shaped(side) for side in ast.walk(node) if isinstance(side, (ast.Subscript, ast.Attribute, ast.Name))):
+                hits.add(call.lineno)
+                break
+    return hits
 
 
 def _serialization_has_version(call: ast.Call) -> bool:
@@ -100,6 +151,15 @@ def inspect(root: str | os.PathLike[str], eligible: set[str] | None = None, ml_d
             for fn in (n for n in ast.walk(tree) if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))):
                 for line in sorted(float_calls_reaching_return(fn)):
                     out.append(IntegrityFinding("decision-adjacent-float", rel, line, "non-deterministic arithmetic in a decision-adjacent path"))
+        # Money as float: the value is float-typed by provenance (a SQLite
+        # REAL column, or `/` true division) rather than by an explicit
+        # float() call, so decision-adjacent-float's call-site tracing
+        # cannot see it at all. Independent of ml_domain_paths - this is
+        # about money, never about model/signal computation.
+        for line, column in _sql_real_money_columns(tree):
+            out.append(IntegrityFinding("money-as-float", rel, line, f"money-shaped column '{column}' declared REAL (SQLite floating-point) instead of an integer/cents type"))
+        for line in sorted(_money_float_division_lines(tree)):
+            out.append(IntegrityFinding("money-as-float", rel, line, "round() over a floating-point division touching a money-shaped value; no explicit float() call, so it bypasses decision-adjacent-float"))
         for n in ast.walk(tree):
             if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute) and n.func.attr in {"dump", "dumps"} and isinstance(n.func.value, ast.Name) and n.func.value.id in {"json","pickle"}:
                 if (_is_internal_serialization(n, parents) or _is_presentation_serialization(n, parents)
