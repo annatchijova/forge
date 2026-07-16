@@ -51,6 +51,22 @@ def test_parser_broad_handler_with_explicit_degradation_is_benign(tmp_path):
     assert not result.findings
 
 
+def test_parser_exception_handler_that_swallows_is_not_a_benign_boundary():
+    hypotheses, _ = _candidates(
+        "fixture.py",
+        (
+            "import json\n",
+            "def analyze(raw):\n",
+            "    try:\n",
+            "        return json.loads(raw)\n",
+            "    except Exception:\n",
+            "        pass\n",
+        ),
+        "Python",
+    )
+    assert len(hypotheses) == 1
+
+
 def test_local_lexicon_load_is_not_treated_as_external_parser_input():
     hypotheses, _ = _candidates(
         "detector.py",

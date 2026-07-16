@@ -1,6 +1,7 @@
 """Module 2: abductive, read-before-reason hypothesis generation."""
 from __future__ import annotations
 
+import ast
 import json
 import io
 import re
@@ -72,6 +73,36 @@ def _is_trusted_local_json_load(source: tuple[str, ...], line_number: int, code:
     )
 
 
+def _has_explicit_parser_handler(source: tuple[str, ...], line_number: int) -> bool:
+    """Return true only for a handler structurally covering the parser call."""
+    text = "\n".join(source) + "\n"
+    try:
+        tree = ast.parse(text)
+    except SyntaxError:
+        return False
+    parents = {child: parent for parent in ast.walk(tree) for child in ast.iter_child_nodes(parent)}
+    call = next((node for node in ast.walk(tree) if isinstance(node, ast.Call) and node.lineno == line_number), None)
+    if call is None:
+        return False
+    current = call
+    while current in parents:
+        current = parents[current]
+        if not isinstance(current, ast.Try):
+            continue
+        # The call must be in the try body, not in an exception handler.
+        if not any(call is node or call in ast.walk(node) for node in current.body):
+            continue
+        for handler in current.handlers:
+            handler_type = ast.unparse(handler.type) if handler.type else ""
+            named = {"JSONDecodeError", "ValueError", "YAMLError", "TomlDecodeError", "ForgeArtifactError"}
+            broad = handler_type in {"Exception", "BaseException", ""}
+            if (broad or any(name in handler_type for name in named)) and any(
+                isinstance(node, (ast.Return, ast.Raise)) for node in ast.walk(handler)
+            ):
+                return True
+    return False
+
+
 def _candidates(module_path: str, source: tuple[str, ...], language: str) -> list[Hypothesis]:
     candidates: list[tuple[str, int, str]] = []
     matching_source = _mask_string_literals(source)
@@ -90,7 +121,7 @@ def _candidates(module_path: str, source: tuple[str, ...], language: str) -> lis
         if re.search(r"\b(?:json|yaml|toml)\.loads?\s*\(|\bparse\s*\(", matching_stripped):
             if _is_trusted_local_json_load(source, number, matching_stripped):
                 continue
-            if not any("except" in source[i] for i in range(number, min(len(source), number + 5))):
+            if not _has_explicit_parser_handler(source, number):
                 candidates.append((f"The parser call `{stripped}` at {module_path}:{number} has no nearby exception handling, so malformed input may escape as an opaque failure.", number, f"Feed malformed input to the function containing line {number}; a named boundary error or explicit rejection falsifies the hypothesis."))
         if re.search(r"\b(?:score|verdict|classif\w*)\b.*(?:[<>]=?|==).*\d+\.\d+", matching_stripped):
             candidates.append((f"The decision comparison `{stripped}` at {module_path}:{number} uses a binary float threshold, so rounding at the boundary may flip the result.", number, f"Run inputs immediately below, exactly at, and above the threshold using exact decimal values; stable, documented boundary behavior falsifies the hypothesis."))

@@ -36,6 +36,31 @@ def test_held_out_timeout_degrades_honestly(monkeypatch):
     result = validation.run_held_out_suite()
     assert result["passed"] is False and result["timed_out"] is True
 
+
+def test_held_out_gate_fails_closed_when_red_team_fails(monkeypatch):
+    from forge.harness import validation
+
+    class Failed:
+        returncode = 1
+        stdout = "red-team failure"
+        stderr = ""
+
+    calls = []
+
+    def fail_red_team(command, **kwargs):
+        calls.append(command)
+        return Failed()
+
+    monkeypatch.setattr(validation.subprocess, "run", fail_red_team)
+    result = validation.run_held_out_suite()
+    assert result == {
+        "passed": False,
+        "stage": "red_team",
+        "red_team_passed": False,
+        "output": "red-team failure",
+    }
+    assert calls == [["pytest", "-q", "tests/test_red_team_adversarial.py"]]
+
 def test_git_history_timeout_is_bounded_and_reported(tmp_path, monkeypatch):
     from forge.detector import stack
 

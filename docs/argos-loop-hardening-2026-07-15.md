@@ -31,7 +31,8 @@
 Against ARGOS commit `3415ec32f8561663edfb2d3dd5c005b7ee43b66f`:
 
 ```text
-FORGE tests: 130 passed
+FORGE tests: 137 passed
+Red-team gate: passed
 ARGOS findings: 0
 Discarded hypotheses: 1
 Coverage: 23/70 (32.9%)
@@ -48,4 +49,3 @@ assets, and modules outside the connected audit scope. The next scope
 improvement should be a dedicated TypeScript/JavaScript static-analysis agent
 and an explicit policy for configuration and frontend assets; changing the
 status without those checks would be an overclaim.
-
