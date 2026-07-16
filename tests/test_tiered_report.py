@@ -72,6 +72,14 @@ def test_tiered_report_marks_partial_disposition_non_green(tmp_path):
     assert "PARTIAL_SHARDED" in report
     assert "<p class='status-ok'>" not in report
 
+
+def test_tiered_report_identifies_an_authenticated_chain(tmp_path, monkeypatch):
+    monkeypatch.setenv("FORGE_SEAL_HMAC_KEY", "test-only-external-key")
+    manifest = VerificationManifest("2.0", "0.1.0", "1.0", str(tmp_path), 0, (), ())
+    sealed = tmp_path / "sealed.json"; write_sealed_manifest(manifest, sealed)
+    report = render_tiered_report(sealed, "summary", tmp_path / "summary.html").read_text()
+    assert "Authenticated chain verified" in report
+
 def test_invalid_finding_outcome_is_rejected():
     import pytest
     with pytest.raises(ValueError, match="invalid finding outcome"):

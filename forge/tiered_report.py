@@ -138,7 +138,10 @@ def render_tiered_report(sealed_path: str | Path, mode: str, destination: str | 
     display_groups = _display_groups(display_findings)
     manifest = sealed.get("manifest", {})
     payload = base64.b64encode(canonical_findings_bytes(display_findings)).decode("ascii")
-    seal_text = "Chain verified" if verification.get("ok") else "FAILED: " + "; ".join(verification.get("issues", []))
+    if verification.get("ok"):
+        seal_text = "Authenticated chain verified" if verification.get("authentication_status") == "VERIFIED" else "Chain verified (not externally authenticated)"
+    else:
+        seal_text = "FAILED: " + "; ".join(verification.get("issues", []))
     metrics = _sidecar(source, "metrics.json") or {}
     disposition_status = metrics.get("audit_disposition", {}).get("status") or ("VERIFIED" if verification.get("ok") else "FAILED")
     status_tone = _status_tone(disposition_status)
