@@ -1,0 +1,463 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>FORGE report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+:root{
+  --bg:#E3B8B8;
+  --bg-elevated:#FFFFFF;
+  --bg-sunken:#E8E9E3;
+  --ink:#1C2222;
+  --ink-muted:#5B6460;
+  --ink-faint:#8B9490;
+  --rule:#D5D6CE;
+  --rule-strong:#B9BBB0;
+  --accent:#2B5D63;
+  --accent-soft:#DCE7E6;
+  --ok:#3C7A52; --ok-bg:#DFEDE2; --ok-ink:#2A5A3C;
+  --fail:#A8501C; --fail-bg:#F6E3D5; --fail-ink:#7A3A14;
+  --serif: "Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,"Times New Roman",serif;
+  --sans: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono: "SF Mono","IBM Plex Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --shadow: 0 1px 2px rgba(28,34,34,.08), 0 4px 14px rgba(28,34,34,.06);
+}
+*{box-sizing:border-box;}
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+::selection{ background:var(--accent-soft); }
+a{ color:var(--accent); }
+code{ font-family:var(--mono); }
+.wrap{ max-width:1100px; margin:0 auto; padding:0 28px 96px; }
+header.masthead{ border-bottom:2px solid var(--ink); padding:40px 0 22px; margin-bottom:36px; }
+header.masthead h1{ font-family:var(--serif); font-weight:600; font-size:clamp(26px,4vw,38px); margin:0 0 14px; letter-spacing:.003em; }
+.seal-line{ display:inline-block; font-family:var(--mono); font-size:13px; letter-spacing:.03em; padding:6px 12px; border-radius:14px; }
+.seal-line.ok{ background:var(--ok-bg); color:var(--ok-ink); }
+.seal-line.fail{ background:var(--fail-bg); color:var(--fail-ink); }
+header.masthead p{ color:var(--ink-muted); font-size:14.5px; max-width:76ch; margin:14px 0 0; }
+header.masthead small{ display:block; margin-top:6px; color:var(--ink-faint); font-family:var(--mono); font-size:12px; }
+section{ background:var(--bg-elevated); border:1px solid var(--rule); border-radius:3px; margin:1.5rem 0; padding:22px 24px; box-shadow:var(--shadow); }
+section .section-lede{ color:var(--ink-muted); font-size:14px; max-width:72ch; margin:8px 0 18px; }
+header.masthead .summary-grid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:24px 0 18px; }
+.stat-tile{ border:1px solid var(--rule); border-radius:3px; padding:13px 15px; background:var(--bg-sunken); }
+.stat-number{ font:600 25px var(--serif); }
+.stat-label{ color:var(--ink-muted); font:11px var(--mono); letter-spacing:.04em; text-transform:uppercase; margin-top:3px; }
+.stat-tile.risk{ border-top:4px solid var(--fail); } .stat-tile.caution{ border-top:4px solid #CDBB78; }
+.stat-tile.safe{ border-top:4px solid var(--ok); } .stat-tile.neutral{ border-top:4px solid var(--accent); } .stat-tile.muted{ border-top:4px solid var(--ink-faint); }
+.coverage-hero{ display:flex; align-items:baseline; gap:14px; padding:16px; background:var(--bg-sunken); border-left:5px solid var(--accent); border-radius:3px; }
+.coverage-hero strong{ font:600 27px var(--serif); } .coverage-hero span{ color:var(--ink-muted); font-size:13px; }
+section h2{ font-family:var(--serif); font-size:20px; font-weight:600; margin:0 0 14px; padding-bottom:10px; border-bottom:1px solid var(--rule); }
+#findings h2{ color:var(--accent); }
+#discarded h2{ color:#8A6A2E; }
+#scope h2{ color:var(--fail-ink); }
+.finding,.discarded,.scope{ border:1px solid var(--rule); border-radius:3px; padding:14px 18px; margin:14px 0; background:var(--bg); }
+.finding-toolbar{ display:flex; flex-wrap:wrap; gap:10px; align-items:end; padding:12px; margin:0 0 16px; background:var(--bg-sunken); border:1px solid var(--rule); border-radius:3px; }
+.finding-toolbar label{ display:flex; flex-direction:column; gap:4px; font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-muted); }
+.finding-toolbar input,.finding-toolbar select{ min-width:150px; padding:7px 9px; border:1px solid var(--rule-strong); border-radius:3px; background:var(--bg-elevated); color:var(--ink); font:13px var(--sans); text-transform:none; letter-spacing:normal; }
+.finding-toolbar input:focus,.finding-toolbar select:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+.filter-count{ margin-left:auto; padding:8px 0; font-family:var(--mono); font-size:12px; color:var(--ink-muted); }
+.finding.is-hidden{ display:none; }
+.severity-card-critical{ border-left:6px solid #A8501C; }
+.severity-card-high{ border-left:6px solid #D89A70; }
+.severity-card-medium{ border-left:6px solid #CDBB78; }
+.severity-card-low,.severity-card-info{ border-left:6px solid #9BB8A2; }
+.finding p,.discarded p,.scope p{ margin:6px 0; font-size:14px; }
+.badge{ font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; background:var(--accent-soft); color:var(--accent); border:1px solid var(--rule-strong); padding:3px 9px; border-radius:11px; }
+.severity-critical{ background:#F6D7D5; color:#8E2420; border-color:#C76C67; }
+.severity-high{ background:#F6E3D5; color:#7A3A14; border-color:#D89A70; }
+.severity-medium{ background:#F4EED8; color:#765D1C; border-color:#CDBB78; }
+.severity-low,.severity-info{ background:#E5EDE7; color:#356045; border-color:#9BB8A2; }
+.ref{ font-family:var(--mono); font-size:12.5px; color:var(--ink-muted); }
+.finding code{ display:block; white-space:pre-wrap; background:var(--bg-sunken); padding:.6rem; border-radius:3px; font-size:13px; margin-top:4px; }
+small{ color:var(--ink-faint); }
+table.data-table{ border-collapse:collapse; width:100%; }
+table.data-table td,table.data-table th{ text-align:left; padding:8px 12px; border-bottom:1px solid var(--rule); font-size:13.5px; vertical-align:top; }
+table.data-table th{ font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-muted); background:var(--bg-sunken); }
+table.data-table tr:last-child td{ border-bottom:none; }
+table.data-table td:first-child{ font-family:var(--mono); font-size:12.5px; white-space:nowrap; }
+.chain-block{ font-family:var(--mono); font-size:13px; background:var(--bg-sunken); padding:14px 18px; border-radius:3px; white-space:pre-wrap; }
+.dashboard{ background:linear-gradient(135deg,#fff 0%,#fff 62%,#F8E9E9 100%); overflow:hidden; }
+.dashboard-heading{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+.eyebrow{ color:var(--accent); font:11px var(--mono); letter-spacing:.14em; margin:0 0 4px; }
+.dashboard-heading h2{ margin-top:0; }
+.dashboard-status{ border:1px solid var(--rule-strong); background:var(--bg-sunken); color:var(--ink-muted); border-radius:999px; padding:7px 12px; font:11px var(--mono); white-space:nowrap; } .dashboard-status.ok{ border-color:#A9C9B0; background:#EDF7EF; color:#2A5A3C; } .dashboard-status.partial{ border-color:#D89A70; background:#FFF4E9; color:#7A3A14; } .dashboard-status.fail{ border-color:#D39A9A; background:#F8E5E5; color:#8B2F2F; }
+.dashboard-grid{ display:grid; grid-template-columns:150px repeat(3,minmax(0,1fr)); gap:14px; align-items:stretch; }
+.coverage-dial{ width:128px; height:128px; margin:8px auto; border-radius:50%; display:grid; place-items:center; background:conic-gradient(var(--accent) var(--coverage),#F1DADA 0); position:relative; }
+.coverage-dial::after{ content:""; position:absolute; inset:10px; border-radius:50%; background:var(--bg-elevated); }
+.coverage-dial div{ position:relative; z-index:1; text-align:center; }
+.coverage-dial strong{ display:block; font:600 25px var(--serif); } .coverage-dial span{ color:var(--ink-muted); font:10px var(--mono); text-transform:uppercase; }
+.dashboard-panel{ background:rgba(232,233,227,.48); border:1px solid var(--rule); border-radius:4px; padding:15px; }
+.dashboard-panel h3{ margin:0 0 13px; font-size:16px; }
+.bar-row{ display:grid; grid-template-columns:minmax(76px,1fr) 1.4fr 24px; gap:8px; align-items:center; margin:9px 0; }
+.bar-label,.bar-value{ font:11px var(--mono); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .bar-value{ text-align:right; }
+.bar-track{ height:7px; background:#F1DADA; border-radius:99px; overflow:hidden; } .bar-fill{ display:block; height:100%; background:linear-gradient(90deg,var(--accent),#87AEB0); border-radius:99px; }
+.mini-stat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; } .mini-stat-grid div{ background:#fff; border:1px solid var(--rule); border-radius:3px; padding:10px 8px; } .mini-stat-grid strong,.mini-stat-grid span,.metric-strip strong,.metric-strip span{ display:block; } .mini-stat-grid strong{ font:600 22px var(--serif); } .mini-stat-grid span,.metric-strip span{ color:var(--ink-muted); font:10px var(--mono); text-transform:uppercase; }
+.metric-strip{ display:grid; grid-template-columns:repeat(5,1fr); gap:1px; margin-top:16px; border:1px solid var(--rule); background:var(--rule); } .metric-strip div{ background:#fff; padding:13px 15px; } .metric-strip strong{ font:600 22px var(--serif); }
+.metric-strip .cost-tile{ background:#FFF4E9; border-top:4px solid #D89A70; }
+.metrics-details{ margin-top:16px; border-top:1px solid var(--rule); padding-top:13px; } .metrics-details summary{ cursor:pointer; color:var(--accent); font:12px var(--mono); } .detail-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:14px; } .detail-grid h3{ font-size:14px; } .detail-grid pre{ max-height:260px; overflow:auto; } .empty-state{ color:var(--ink-muted); font-size:13px; }
+@media(max-width:900px){ .dashboard-grid{ grid-template-columns:1fr 1fr; } .coverage-dial{ grid-column:span 2; } } @media(max-width:620px){ .dashboard-heading{ display:block; } .dashboard-status{ display:inline-block; margin:8px 0 16px; } .dashboard-grid,.detail-grid{ grid-template-columns:1fr; } .coverage-dial{ grid-column:auto; } .metric-strip{ grid-template-columns:repeat(2,1fr); } }
+</style></head><body>
+<div class="wrap">
+<header class="masthead">
+  <h1>FORGE verification report</h1>
+  <span class="seal-line ok">Chain integrity: VERIFIED (29 entries, 0 issues)</span>
+  <div class="summary-grid"><div class="stat-tile risk"><div class="stat-number">29</div><div class="stat-label">Surviving findings</div></div><div class="stat-tile safe"><div class="stat-number">0</div><div class="stat-label">Discarded hypotheses</div></div><div class="stat-tile neutral"><div class="stat-number">0</div><div class="stat-label">Audited modules</div></div><div class="stat-tile muted"><div class="stat-number">47</div><div class="stat-label">Out of scope</div></div></div>
+  <section id="agent-metrics"><h2>Agent metrics</h2><ul><li><strong>archaeologist</strong>: {&#x27;modules_classified&#x27;: 47, &#x27;elapsed_seconds&#x27;: &#x27;1.016334&#x27;}</li><li><strong>bug_investigator</strong>: {&#x27;hypotheses_generated&#x27;: 0, &#x27;discarded&#x27;: 0, &#x27;survived&#x27;: 0}<div class="examinations-summary">47 module(s) examined — excluded_by_scope: 47</div><p><small>Per-module detail omitted above the 15-module inline threshold; the full per-module breakdown is in the coverage/verification JSON artifacts on disk.</small></p></li><li><strong>security_auditor</strong>: {&#x27;findings_per_family&#x27;: {&#x27;hardcoded-credential&#x27;: 0, &#x27;unsafe-deserialization&#x27;: 0, &#x27;path-traversal&#x27;: 0}}<div class="examinations-summary">111 module(s) examined — excluded_by_policy: 57, excluded_by_scope: 54</div><p><small>Per-module detail omitted above the 15-module inline threshold; the full per-module breakdown is in the coverage/verification JSON artifacts on disk.</small></p></li><li><strong>integrity_inspector</strong>: {&#x27;findings_per_family&#x27;: {&#x27;decision-adjacent-float&#x27;: 7, &#x27;unversioned-serialization&#x27;: 23}}<div class="examinations-summary">111 module(s) examined — examined_with_findings: 14, examined_clean: 33, excluded_by_policy: 57, excluded_by_scope: 7</div><p><small>Per-module detail omitted above the 15-module inline threshold; the full per-module breakdown is in the coverage/verification JSON artifacts on disk.</small></p></li><li><strong>web_auditor</strong>: {&#x27;findings_per_family&#x27;: {&#x27;dynamic-evaluation&#x27;: 0, &#x27;subprocess&#x27;: 0, &#x27;parser-boundary&#x27;: 0, &#x27;path-traversal&#x27;: 0}}<div class="examinations-summary">111 module(s) examined — excluded_by_policy: 57, excluded_by_scope: 54</div><p><small>Per-module detail omitted above the 15-module inline threshold; the full per-module breakdown is in the coverage/verification JSON artifacts on disk.</small></p></li><li><strong>governance_skills</strong>: {&#x27;loaded&#x27;: [&#x27;validate-at-the-boundary&#x27;], &#x27;findings&#x27;: 0, &#x27;applicability_counts&#x27;: {&#x27;APPLICABLE&#x27;: 0, &#x27;NOT_APPLICABLE&#x27;: 47, &#x27;UNDETERMINED&#x27;: 0}}</li></ul></section>
+  <table class="data-table"><tr><td>Root</td><td>/home/labestiadevigia/vigia-repo/vigia/core</td></tr><tr><td>Forge version</td><td>0.1.0</td></tr><tr><td>Schema version</td><td>2.0 (hypotheses 1.0)</td></tr><tr><td>Generated</td><td>2026-07-16T16:01:50Z</td></tr><tr><td>Chain entries</td><td>29</td></tr><tr><td>Chain integrity</td><td>OK</td></tr><tr><td>Seal version</td><td>1</td></tr><tr><td>Canonicalize version</td><td>1</td></tr></table>
+</header>
+
+<section id="objective"><h2>Objective</h2><p>Verify the hypotheses generated for <code>/home/labestiadevigia/vigia-repo/vigia/core</code> against the implemented structural AST checks (<code>subprocess, parser, float comparison, eval/exec</code>), and seal the surviving findings into a tamper-evident chain. 0 module(s) audited; 29 finding(s) survived; 0 hypothesis/es discarded; 47 module(s) out of scope.</p></section>
+
+<section id="dashboard" class="dashboard">
+  <div class="dashboard-heading"><div><p class="eyebrow">AUDIT PULSE</p><h2>Repository intelligence</h2><p class="section-lede">A visual readout of the sealed run: scope, evidence, findings, governance and reproducibility.</p></div><span class="dashboard-status ok">COMPLETE_WITHIN_DECLARED_SCOPE · OK</span></div>
+  <div class="dashboard-grid">
+    <div class="coverage-dial" style="--coverage:42.34%"><div><strong>47/111</strong><span>coverage</span></div></div>
+    <div class="dashboard-panel"><h3>Findings by agent</h3><div class="bar-row"><span class="bar-label">integrity_inspector</span><span class="bar-track"><span class="bar-fill" style="width:100.00%"></span></span><strong class="bar-value">29</strong></div></div>
+    <div class="dashboard-panel"><h3>Severity profile</h3><div class="bar-row"><span class="bar-label">MEDIUM</span><span class="bar-track"><span class="bar-fill" style="width:100.00%"></span></span><strong class="bar-value">29</strong></div></div>
+    <div class="dashboard-panel"><h3>Governance skills</h3><div class="mini-stat-grid"><div><strong>0</strong><span>activated</span></div><div><strong>47</strong><span>not applicable</span></div><div><strong>0</strong><span>undetermined</span></div></div></div>
+  </div>
+  <div class="dashboard-panel"><h3>Audit disposition</h3><p><strong>COMPLETE_WITHIN_DECLARED_SCOPE</strong> — The declared source scope was audited; excluded or unsupported material remains outside the engine boundary.</p><p class="section-lede">Action: Review the declared boundaries before extending the audit scope.</p></div>
+  <div class="dashboard-panel"><h3>FORGE self assessment</h3><p><strong>5/5</strong> specialized agents · <strong>0</strong> contradictions · <strong>3</strong> limitations</p><p class="section-lede">Confidence boundary: evidence-bounded</p></div>
+  <div class="metric-strip"><div><strong>457</strong><span>functions</span></div><div><strong>15069</strong><span>lines of code</span></div><div><strong>0</strong><span>tests</span></div><div><strong>0</strong><span>contracts executed</span></div><div><strong>29</strong><span>primary evidence</span></div></div>
+  <details class="metrics-details"><summary>Full metrics and audit telemetry</summary><p>Complete machine-readable telemetry is kept in <a href="metrics.json">metrics.json</a>; this report intentionally avoids embedding a second copy of the artifact.</p><div class="detail-grid"><div><h3>Quality</h3><pre>{
+  &quot;contract_coverage&quot;: {
+    &quot;covered&quot;: 0,
+    &quot;total&quot;: 47
+  },
+  &quot;contract_coverage_note&quot;: &quot;1 executable skill(s) loaded; this ratio measures applicability observations for executable skills only, not the documented skills catalog.&quot;,
+  &quot;evidence_completeness&quot;: null,
+  &quot;evidence_completeness_note&quot;: &quot;Requires an explicit obligation ledger mapping each executed contract obligation to satisfied or missing Evidence items.&quot;,
+  &quot;module_coverage&quot;: {
+    &quot;covered&quot;: 0,
+    &quot;total&quot;: 47
+  },
+  &quot;repository_coverage&quot;: {
+    &quot;covered&quot;: 47,
+    &quot;total&quot;: 111
+  },
+  &quot;verification_coverage&quot;: null,
+  &quot;verification_coverage_note&quot;: &quot;Requires a count of planned checks versus checks actually executed, including skipped checks and their reasons.&quot;
+}</pre></div><div><h3>Reproducibility</h3><pre>{
+  &quot;artifact_hashes&quot;: null,
+  &quot;environment&quot;: {
+    &quot;os&quot;: &quot;Linux-6.14.0-37-generic-x86_64-with-glibc2.39&quot;,
+    &quot;python&quot;: &quot;3.12.3&quot;
+  },
+  &quot;forge_version&quot;: &quot;0.1.0&quot;,
+  &quot;repository_snapshot_sha256&quot;: &quot;e1521ed9893e890daf9d5358b233a37828e113348dc774f44d7836c2d9816194&quot;,
+  &quot;runtime_deterministic&quot;: null,
+  &quot;schema_versions&quot;: {
+    &quot;triage&quot;: &quot;1.1&quot;
+  },
+  &quot;seal_verified&quot;: null,
+  &quot;seed_used&quot;: null,
+  &quot;skill_versions&quot;: {
+    &quot;validate-at-the-boundary&quot;: &quot;1.0&quot;
+  }
+}</pre></div></div></details>
+</section>
+
+<section id="findings"><h2>FINDINGS</h2><div class="finding-toolbar" role="search" aria-label="Finding filters">
+  <label>Search <input id="finding-search" type="search" placeholder="module, description, reasoning…"></label>
+  <label>Agent <select id="finding-agent"><option value="">All agents</option><option value="integrity_inspector">integrity_inspector</option></select></label>
+  <label>Severity <select id="finding-severity"><option value="">All severities</option><option value="MEDIUM">MEDIUM</option></select></label>
+  <label>Status <select id="finding-epistemic"><option value="">All statuses</option><option value="CODE FACT">CODE FACT</option></select></label>
+  <span id="finding-count" class="filter-count">Showing 29 of 29</span>
+</div><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="bundle_builder.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">bundle_builder.py:298</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: bundle_builder.py:298</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1777785005; commit=573438d35c601ced2c740947225cca8fb9c5ff19</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="bundle_builder.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">bundle_builder.py:151</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: bundle_builder.py:151</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1777785005; commit=573438d35c601ced2c740947225cca8fb9c5ff19</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="causal_closure.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">causal_closure.py:184</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: causal_closure.py:184</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1777911657; commit=0b4df79257e3580f47a074d43ebe5c683a999034</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="config_sentinel.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">config_sentinel.py:154</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: config_sentinel.py:154</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1777901383; commit=59c6ff4b64b6448d2432e1cf6688bc008f526bbe</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="config_sentinel.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">config_sentinel.py:159</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: config_sentinel.py:159</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1777901383; commit=59c6ff4b64b6448d2432e1cf6688bc008f526bbe</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="darvo_detector.py non-deterministic arithmetic in a decision-adjacent path ast detector emitted this observation: decision-adjacent-float. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">darvo_detector.py:40</span></div>
+      <p><strong>Description (inference):</strong> non-deterministic arithmetic in a decision-adjacent path</p>
+      <p><strong>Source observation:</strong> <code>non-deterministic arithmetic in a decision-adjacent path</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: decision-adjacent-float.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: darvo_detector.py:40</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1782312469; commit=0f373d5db417a7e74528166704b2186886f8129d</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="ebs_v1.py non-deterministic arithmetic in a decision-adjacent path ast detector emitted this observation: decision-adjacent-float. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">ebs_v1.py:121</span></div>
+      <p><strong>Description (inference):</strong> non-deterministic arithmetic in a decision-adjacent path</p>
+      <p><strong>Source observation:</strong> <code>non-deterministic arithmetic in a decision-adjacent path</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: decision-adjacent-float.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: ebs_v1.py:121</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Claude; date=1783440089; commit=e844a2dd81327a1531a0275e6808da0ee50c51ff</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="entanglement.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">entanglement.py:559</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: entanglement.py:559</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1777114020; commit=64e6f95cd5f39c76428ddd4ef1d5f8b6a69c1b4e</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="execution_logger.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">execution_logger.py:102</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: execution_logger.py:102</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1777431307; commit=5aec6655315c7cbeace153f408d0578285f3b2ca</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="execution_logger.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">execution_logger.py:117</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: execution_logger.py:117</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1777431307; commit=5aec6655315c7cbeace153f408d0578285f3b2ca</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="execution_logger.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">execution_logger.py:138</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: execution_logger.py:138</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1777431307; commit=5aec6655315c7cbeace153f408d0578285f3b2ca</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="fit_calibration.py non-deterministic arithmetic in a decision-adjacent path ast detector emitted this observation: decision-adjacent-float. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">fit_calibration.py:379</span></div>
+      <p><strong>Description (inference):</strong> non-deterministic arithmetic in a decision-adjacent path</p>
+      <p><strong>Source observation:</strong> <code>non-deterministic arithmetic in a decision-adjacent path</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: decision-adjacent-float.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: fit_calibration.py:379</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1776821504; commit=6ea18c6675815329c7fb39696ec27a06b15b183f</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="fit_calibration.py non-deterministic arithmetic in a decision-adjacent path ast detector emitted this observation: decision-adjacent-float. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">fit_calibration.py:380</span></div>
+      <p><strong>Description (inference):</strong> non-deterministic arithmetic in a decision-adjacent path</p>
+      <p><strong>Source observation:</strong> <code>non-deterministic arithmetic in a decision-adjacent path</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: decision-adjacent-float.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: fit_calibration.py:380</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1776821504; commit=6ea18c6675815329c7fb39696ec27a06b15b183f</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="fit_calibration.py non-deterministic arithmetic in a decision-adjacent path ast detector emitted this observation: decision-adjacent-float. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">fit_calibration.py:400</span></div>
+      <p><strong>Description (inference):</strong> non-deterministic arithmetic in a decision-adjacent path</p>
+      <p><strong>Source observation:</strong> <code>non-deterministic arithmetic in a decision-adjacent path</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: decision-adjacent-float.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: fit_calibration.py:400</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1776821504; commit=6ea18c6675815329c7fb39696ec27a06b15b183f</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="fit_calibration.py non-deterministic arithmetic in a decision-adjacent path ast detector emitted this observation: decision-adjacent-float. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">fit_calibration.py:401</span></div>
+      <p><strong>Description (inference):</strong> non-deterministic arithmetic in a decision-adjacent path</p>
+      <p><strong>Source observation:</strong> <code>non-deterministic arithmetic in a decision-adjacent path</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: decision-adjacent-float.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: fit_calibration.py:401</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1776821504; commit=6ea18c6675815329c7fb39696ec27a06b15b183f</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="fit_calibration.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">fit_calibration.py:141</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: fit_calibration.py:141</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1776821504; commit=6ea18c6675815329c7fb39696ec27a06b15b183f</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="fit_calibration.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">fit_calibration.py:525</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: fit_calibration.py:525</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1776821504; commit=6ea18c6675815329c7fb39696ec27a06b15b183f</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="fit_calibration.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">fit_calibration.py:532</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: fit_calibration.py:532</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1776821504; commit=6ea18c6675815329c7fb39696ec27a06b15b183f</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="fit_calibration.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">fit_calibration.py:540</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: fit_calibration.py:540</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1776821504; commit=6ea18c6675815329c7fb39696ec27a06b15b183f</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="fit_calibration.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">fit_calibration.py:551</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: fit_calibration.py:551</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1776821504; commit=6ea18c6675815329c7fb39696ec27a06b15b183f</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="forensic_adapter.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">forensic_adapter.py:220</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: forensic_adapter.py:220</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1778868438; commit=887441e6aa40e7ee0ce41a728565e6b7b6004f78</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="hash_chain.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">hash_chain.py:102</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: hash_chain.py:102</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Claude; date=1782978628; commit=c8f4517af1676ea9201d554f3db1a9e70057a1a9</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="likelihood_ratio.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">likelihood_ratio.py:206</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: likelihood_ratio.py:206</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Claude; date=1783451998; commit=257295854a8647a9e45fc688f7c64fdf37f1a6aa</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="likelihood_ratio.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">likelihood_ratio.py:182</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: likelihood_ratio.py:182</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Claude; date=1783088600; commit=7569efa1c38b055c1941d52356dab9dae6c5880a</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="lr_calibration.py non-deterministic arithmetic in a decision-adjacent path ast detector emitted this observation: decision-adjacent-float. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">lr_calibration.py:245</span></div>
+      <p><strong>Description (inference):</strong> non-deterministic arithmetic in a decision-adjacent path</p>
+      <p><strong>Source observation:</strong> <code>non-deterministic arithmetic in a decision-adjacent path</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: decision-adjacent-float.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: lr_calibration.py:245</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1782189382; commit=9a91736cb39d1cb1c47b6af5811dd880f7c20e19</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="lr_calibration.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">lr_calibration.py:536</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: lr_calibration.py:536</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1777114020; commit=64e6f95cd5f39c76428ddd4ef1d5f8b6a69c1b4e</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="lr_calibration.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">lr_calibration.py:473</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: lr_calibration.py:473</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1777114020; commit=64e6f95cd5f39c76428ddd4ef1d5f8b6a69c1b4e</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="tool_log_chain.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">tool_log_chain.py:148</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: tool_log_chain.py:148</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Claude; date=1782978628; commit=c8f4517af1676ea9201d554f3db1a9e70057a1a9</p>
+    </article><article class="finding severity-card-medium" data-agent="integrity_inspector" data-severity="MEDIUM" data-epistemic="CODE FACT" data-search="trust_fusion.py unversioned serialization ast detector emitted this observation: unversioned-serialization. integrity_inspector code fact medium">
+      <p><strong>Agent:</strong> integrity_inspector</p>
+      <div><span class="badge severity-medium">Severity: MEDIUM</span> <span class="badge">CODE FACT</span> <span class="ref">trust_fusion.py:421</span></div>
+      <p><strong>Description (inference):</strong> unversioned serialization</p>
+      <p><strong>Source observation:</strong> <code>unversioned serialization</code></p>
+      <p><strong>Reasoning:</strong> AST detector emitted this observation: unversioned-serialization.</p>
+      <p><strong>Evidence provenance:</strong> AST, RUNTIME_NOT_EXECUTED<br/><strong>Evidence ledger:</strong> primary: trust_fusion.py:421</p>
+      <p><strong>Falsification test:</strong> No originating hypothesis test was found in the supplied manifest.</p>
+      <p><strong>Additional evidence — git blame:</strong> author=Anna Tchijova; date=1777736179; commit=5cddf9560b7e3fd2ef67a94dd26f3d7efd780c33</p>
+    </article></section>
+<section id="discarded"><h2>DISCARDED</h2><p>Generated hypotheses ruled out by the verification criteria are retained here with their reasons.</p><p>No discarded hypotheses recorded.</p></section>
+<section id="clean"><h2>No structural risk indicators found</h2><p>Audited modules with zero surviving findings:</p><ul><li>No audited module met the clean-module condition.</li></ul></section>
+<section id="scope"><h2>NOT ANALYZED</h2><p>These triaged modules were not analyzed in this run because they were not classified as CONNECTED_ALIVE:</p><article class="scope"><strong>__init__.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>abductive_intent_engine.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>advanced_signal_router.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>atomic_io.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>audit_action.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>bundle_builder.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>canonicalize.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>carnegie_education_detector.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>causal_closure.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>chain_of_custody.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>compare_baseline.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>config_sentinel.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>darvo_detector.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>decision_layer.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>devil_advocate_gen.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>dissent_report.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>ebs_v1.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>eco_check.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>enfsi.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>entanglement.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>evidence_aggregator.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>execution_logger.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>explainable_governance.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>fit_calibration.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>forensic_adapter.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>forensic_technical_detector.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>geopolitical_v2.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>graph_stability.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>hash_chain.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>integrity_constraints.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>likelihood_engine.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>likelihood_ratio.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>lr_calibration.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>narrative_auditor.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>normalization_layer.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>ockham_adversarial.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>path_guard.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>peirceplanner_bounded.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>planner_adapter.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>resource_optimizer.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>risk_bounded_layer.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>semiotic_detector_v2.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>signal_mapper.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>signal_quality_gate.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>tool_log_chain.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>trust_fusion.py</strong> — FOSSIL_HIGH_RISK. This module was outside CONNECTED_ALIVE scope for this run.</article><article class="scope"><strong>vigia_scorer.py</strong> — DEAD_WEIGHT. This module was outside CONNECTED_ALIVE scope for this run.</article></section>
+
+<section id="hypotheses-summary"><h2>Hypotheses summary</h2><table class="data-table"><thead><tr><th>Label</th><th>Status</th><th>Outcome</th></tr></thead><tbody><tr><td><code>bundle_builder.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>bundle_builder.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>causal_closure.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>config_sentinel.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>config_sentinel.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>darvo_detector.py</code></td><td>Finding — CODE FACT</td><td>non-deterministic arithmetic in a decision-adjacent path</td></tr><tr><td><code>ebs_v1.py</code></td><td>Finding — CODE FACT</td><td>non-deterministic arithmetic in a decision-adjacent path</td></tr><tr><td><code>entanglement.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>execution_logger.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>execution_logger.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>execution_logger.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>fit_calibration.py</code></td><td>Finding — CODE FACT</td><td>non-deterministic arithmetic in a decision-adjacent path</td></tr><tr><td><code>fit_calibration.py</code></td><td>Finding — CODE FACT</td><td>non-deterministic arithmetic in a decision-adjacent path</td></tr><tr><td><code>fit_calibration.py</code></td><td>Finding — CODE FACT</td><td>non-deterministic arithmetic in a decision-adjacent path</td></tr><tr><td><code>fit_calibration.py</code></td><td>Finding — CODE FACT</td><td>non-deterministic arithmetic in a decision-adjacent path</td></tr><tr><td><code>fit_calibration.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>fit_calibration.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>fit_calibration.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>fit_calibration.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>fit_calibration.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>forensic_adapter.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>hash_chain.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>likelihood_ratio.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>likelihood_ratio.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>lr_calibration.py</code></td><td>Finding — CODE FACT</td><td>non-deterministic arithmetic in a decision-adjacent path</td></tr><tr><td><code>lr_calibration.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>lr_calibration.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>tool_log_chain.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr><tr><td><code>trust_fusion.py</code></td><td>Finding — CODE FACT</td><td>unversioned serialization</td></tr></tbody></table></section>
+
+<section id="decision"><h2>Decision</h2><p><strong>Chain integrity: VERIFIED (29 entries, 0 issues)</strong></p><p>The seal shows that sealed findings were not altered after sealing; it does not show that findings are correct. It does not protect against a full cascade forgery or truncation with an edited reported_chain_length. <a href="DECISIONS.md">DECISIONS.md</a> records the bounds.</p><p><small>Git blame is attempted per finding and is shown when available; unavailable blame is labeled rather than inferred.</small></p></section>
+
+<section id="quality"><h2>Quality metrics</h2><table class="data-table"><tr><td>Audited modules</td><td>0</td></tr><tr><td>Findings (surviving)</td><td>29</td></tr><tr><td>Discarded hypotheses</td><td>0</td></tr><tr><td>Clean modules</td><td>0</td></tr><tr><td>Out of scope</td><td>47</td></tr><tr><td>AST-verified families</td><td>subprocess, parser, float comparison, eval/exec</td></tr><tr><td>AST-unverified families</td><td>none recorded</td></tr><tr><td>Contract coverage</td><td>0/47 — 1 executable skill(s) loaded; this ratio measures applicability observations for executable skills only, not the documented skills catalog.</td></tr><tr><td>Findings by agent</td><td>{&#x27;integrity_inspector&#x27;: 29}</td></tr><tr><td>Findings by severity</td><td>{&#x27;MEDIUM&#x27;: 29}</td></tr><tr><td>Structural verification</td><td>{&#x27;checks_passed&#x27;: 0, &#x27;checks_failed&#x27;: 0, &#x27;checks_unresolved&#x27;: 0}</td></tr></table></section>
+<section id="coverage"><h2>Coverage</h2><p class="section-lede">Coverage is shown after the findings and decision context so the opening view stays focused.</p><div class="coverage-hero"><strong>47/111 (42.3%)</strong><span>47 analyzed · 64 skipped · 111 discovered</span></div><p>Skipped reasons: {&#x27;excluded_by_policy&#x27;: [&#x27;__pycache__/__init__.cpython-312.pyc&#x27;, &#x27;__pycache__/abductive_intent_engine.cpython-312.pyc&#x27;, &#x27;__pycache__/advanced_signal_router.cpython-312.pyc&#x27;, &#x27;__pycache__/atomic_io.cpython-312.pyc&#x27;, &#x27;__pycache__/audit_action.cpython-312.pyc&#x27;, &#x27;__pycache__/bundle_builder.cpython-312.pyc&#x27;, &#x27;__pycache__/canonicalize.cpython-312.pyc&#x27;, &#x27;__pycache__/carnegie_education_detector.cpython-312.pyc&#x27;, &#x27;__pycache__/causal_closure.cpython-312.pyc&#x27;, &#x27;__pycache__/chain_of_custody.cpython-312.pyc&#x27;, &#x27;__pycache__/compare_baseline.cpython-312.pyc&#x27;, &#x27;__pycache__/config_sentinel.cpython-312.pyc&#x27;, &#x27;__pycache__/darvo_detector.cpython-312.pyc&#x27;, &#x27;__pycache__/decision_layer.cpython-312.pyc&#x27;, &#x27;__pycache__/devil_advocate_gen.cpython-312.pyc&#x27;, &#x27;__pycache__/dissent_report.cpython-312.pyc&#x27;, &#x27;__pycache__/ebs_v1.cpython-312.pyc&#x27;, &#x27;__pycache__/eco_check.cpython-312.pyc&#x27;, &#x27;__pycache__/enfsi.cpython-312.pyc&#x27;, &#x27;__pycache__/entanglement.cpython-312.pyc&#x27;, &#x27;__pycache__/evidence_aggregator.cpython-312.pyc&#x27;, &#x27;__pycache__/execution_logger.cpython-312.pyc&#x27;, &#x27;__pycache__/explainable_governance.cpython-312.pyc&#x27;, &#x27;__pycache__/fit_calibration.cpython-312.pyc&#x27;, &#x27;__pycache__/forensic_adapter.cpython-312.pyc&#x27;, &#x27;__pycache__/forensic_db.cpython-312.pyc&#x27;, &#x27;__pycache__/forensic_technical_detector.cpython-312.pyc&#x27;, &#x27;__pycache__/geopolitical_v2.cpython-312.pyc&#x27;, &#x27;__pycache__/graph_stability.cpython-312.pyc&#x27;, &#x27;__pycache__/hash_chain.cpython-312.pyc&#x27;, &#x27;__pycache__/integrity_constraints.cpython-312.pyc&#x27;, &#x27;__pycache__/likelihood_engine.cpython-312.pyc&#x27;, &#x27;__pycache__/likelihood_ratio.cpython-312.pyc&#x27;, &#x27;__pycache__/llm_backend.cpython-312.pyc&#x27;, &#x27;__pycache__/lr_calibration.cpython-312.pyc&#x27;, &#x27;__pycache__/narrative_auditor.cpython-312.pyc&#x27;, &#x27;__pycache__/negation_handler.cpython-312.pyc&#x27;, &#x27;__pycache__/normalization_layer.cpython-312.pyc&#x27;, &#x27;__pycache__/ockham_adversarial.cpython-312.pyc&#x27;, &#x27;__pycache__/path_guard.cpython-312.pyc&#x27;, &#x27;__pycache__/peirceplanner_bounded.cpython-312.pyc&#x27;, &#x27;__pycache__/pipeline.cpython-312.pyc&#x27;, &#x27;__pycache__/planner_adapter.cpython-312.pyc&#x27;, &#x27;__pycache__/resource_optimizer.cpython-312.pyc&#x27;, &#x27;__pycache__/risk_bounded_layer.cpython-312.pyc&#x27;, &#x27;__pycache__/semiotic_detector.cpython-312.pyc&#x27;, &#x27;__pycache__/semiotic_detector_v2.cpython-312.pyc&#x27;, &#x27;__pycache__/shadow_mode.cpython-312.pyc&#x27;, &#x27;__pycache__/signal_contract.cpython-312.pyc&#x27;, &#x27;__pycache__/signal_mapper.cpython-312.pyc&#x27;, &#x27;__pycache__/signal_quality_gate.cpython-312.pyc&#x27;, &#x27;__pycache__/tool_log_chain.cpython-312.pyc&#x27;, &#x27;__pycache__/trust_fusion.cpython-312.pyc&#x27;, &#x27;__pycache__/trust_levels.cpython-312.pyc&#x27;, &#x27;__pycache__/vigia_core_forensic_technical_detector.cpython-312.pyc&#x27;, &#x27;__pycache__/vigia_core_semiotic_detector.cpython-312.pyc&#x27;, &#x27;__pycache__/vigia_scorer.cpython-312.pyc&#x27;], &#x27;non_python_not_analyzed&#x27;: [&#x27;abductive_intent_engine.py.bak&#x27;, &#x27;bundle_builder.py.bak&#x27;, &#x27;devil_advocate_gen.py.bak&#x27;, &#x27;ebs_v1.py.bak&#x27;, &#x27;forensic_adapter.py.bak&#x27;, &#x27;likelihood_engine.py.bak&#x27;, &#x27;lr_calibration.py.bak&#x27;]}</p></section>
+<section id="limitations"><h2>Honest degradation and limitations</h2><ul><li>Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only.</li><li>64 discovered file(s) were skipped; see skipped_reasons for the exact paths and policy categories.</li><li>47 triaged module(s) were outside CONNECTED_ALIVE audit scope.</li></ul></section>
+
+<section id="chain-of-custody"><h2>Chain of custody</h2><div class="chain-block">entry_hash : 1416838dbee911c9c6b6e646a61ec5c9de93cc93f34f0e75e6b4e55db7dfd0e8
+chain_ok   : True</div></section>
+</div>
+<script>
+(() => {
+  const cards = [...document.querySelectorAll('.finding')];
+  const search = document.getElementById('finding-search');
+  const agent = document.getElementById('finding-agent');
+  const severity = document.getElementById('finding-severity');
+  const epistemic = document.getElementById('finding-epistemic');
+  const count = document.getElementById('finding-count');
+  const apply = () => {
+    const query = (search.value || '').trim().toLowerCase();
+    let visible = 0;
+    cards.forEach(card => {
+      const matches = (!agent.value || card.dataset.agent === agent.value)
+        && (!severity.value || card.dataset.severity === severity.value)
+        && (!epistemic.value || card.dataset.epistemic === epistemic.value)
+        && (!query || card.dataset.search.includes(query));
+      card.classList.toggle('is-hidden', !matches);
+      if (matches) visible += 1;
+    });
+    count.textContent = `Showing ${visible} of ${cards.length}`;
+  };
+  [search, agent, severity, epistemic].forEach(control => control.addEventListener('input', apply));
+})();
+</script>
+</body></html>
