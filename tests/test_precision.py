@@ -34,8 +34,13 @@ def test_golden_corpus_has_three_positive_and_negative_cases_per_agent():
     #   of a trusted function itself (canonical_json), not a caller of it -
     #   found via a self-audit of forge/canonical.py. _enclosing_function()
     #   existed in this file already but was never wired into the check.
+    # - integrity_inspector negative-8: a "canonical_*"-prefixed function
+    #   other than canonical_json (found: canonical_findings_bytes in
+    #   forge/tiered_report.py), and html.escape(json.dumps(...)) - the
+    #   report renderers' presentation shape, previously only recognized
+    #   via the f-string (JoinedStr) shape.
     expected_positives = {"integrity_inspector": 4, "security_auditor": 5, "web_auditor": 3}
-    expected_negatives = {"integrity_inspector": 7, "security_auditor": 5, "web_auditor": 3}
+    expected_negatives = {"integrity_inspector": 8, "security_auditor": 5, "web_auditor": 3}
     assert result["case_count"] == sum(expected_positives.values()) + sum(expected_negatives.values())
     for agent in {row["agent"] for row in result["cases"]}:
         cases = [row for row in result["cases"] if row["agent"] == agent]

@@ -82,7 +82,19 @@ def _is_version_key(name: object) -> bool:
     return isinstance(name, str) and (name == "version" or name.endswith("schema_version"))
 
 
-_VERSIONING_TRUSTED_CALLS = {"seal_manifest", "seal_findings", "canonical_json"}
+_VERSIONING_TRUSTED_NAMES = {"seal_manifest", "seal_findings"}
+
+
+def _is_trusted_versioning_name(name: str) -> bool:
+    """A trusted deterministic-serialization primitive, structurally.
+
+    `canonical_json` was the one enumerated name; `canonical_findings_bytes`
+    (forge/tiered_report.py) is the identical pattern under the project's
+    own "canonical_*" naming convention and was missed the same way the
+    schema_version-key allowlist was - matched by prefix, not by adding a
+    second name to another exact-match set.
+    """
+    return name in _VERSIONING_TRUSTED_NAMES or name.startswith("canonical_")
 
 
 def _serialization_has_version(call: ast.Call) -> bool:
@@ -91,7 +103,7 @@ def _serialization_has_version(call: ast.Call) -> bool:
         return any(isinstance(key, ast.Constant) and _is_version_key(key.value) for key in data.keys)
     if isinstance(data, ast.Call) and isinstance(data.func, ast.Attribute) and data.func.attr == "to_dict":
         return True
-    if isinstance(data, ast.Call) and isinstance(data.func, ast.Name) and data.func.id in _VERSIONING_TRUSTED_CALLS:
+    if isinstance(data, ast.Call) and isinstance(data.func, ast.Name) and _is_trusted_versioning_name(data.func.id):
         return True
     if isinstance(data, ast.Call) and isinstance(data.func, ast.Name) and data.func.id == "dict":
         return any(_is_version_key(keyword.arg) for keyword in data.keywords)
@@ -128,10 +140,23 @@ def _is_internal_serialization(call: ast.Call, parents: dict[ast.AST, ast.AST]) 
 
 
 def _is_presentation_serialization(call: ast.Call, parents: dict[ast.AST, ast.AST]) -> bool:
-    """Recognize serialization embedded in a presentation template structurally."""
+    """Recognize serialization embedded in a presentation template structurally.
+
+    Two independent shapes count: interpolation into an f-string
+    (ast.JoinedStr), and `html.escape(json.dumps(...))` - the HTML report
+    renderers' own convention for embedding a JSON dump as readable text in
+    a report page. Found via a self-audit of forge/tiered_report.py, which
+    false-flagged five such calls: the dump there is presentation (a human
+    reading a report), never a persisted artifact needing its own version
+    key, but this check only recognized the f-string shape.
+    """
     current = parents.get(call)
     while current is not None:
         if isinstance(current, ast.JoinedStr):
+            return True
+        if (isinstance(current, ast.Call) and isinstance(current.func, ast.Attribute)
+                and current.func.attr == "escape" and isinstance(current.func.value, ast.Name)
+                and current.func.value.id == "html"):
             return True
         current = parents.get(current)
     return False
@@ -185,7 +210,7 @@ def inspect(root: str | os.PathLike[str], eligible: set[str] | None = None, ml_d
                 if (_is_internal_serialization(n, parents) or _is_presentation_serialization(n, parents)
                         or _serialization_has_version(n)
                         or (isinstance(n.args[0], ast.Name) and n.args[0].id in versioned_payload_names)
-                        or _enclosing_function(n, parents) in _VERSIONING_TRUSTED_CALLS):
+                        or _is_trusted_versioning_name(_enclosing_function(n, parents))):
                     continue
                 out.append(IntegrityFinding("unversioned-serialization", rel, n.lineno, "unversioned serialization"))
         examinations[rel]="examined_with_findings" if any(x.path == rel for x in out) else "examined_clean"

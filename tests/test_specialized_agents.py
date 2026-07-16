@@ -208,6 +208,29 @@ def test_integrity_trusts_json_dumps_inside_a_trusted_functions_own_body(tmp_pat
     ))
     assert not [x for x in inspect(tmp_path) if x.family == "unversioned-serialization"]
 
+def test_integrity_trusts_any_canonical_prefixed_function_by_name(tmp_path):
+    # canonical_findings_bytes (forge/tiered_report.py) is the identical
+    # "canonical_*" naming convention as canonical_json, just a different
+    # name - matched by prefix, not by adding it to another exact-match set.
+    write(tmp_path, "report.py", (
+        "import json\n"
+        "def canonical_findings_bytes(findings):\n"
+        "    return json.dumps(findings, sort_keys=True).encode('utf-8')\n"
+    ))
+    assert not [x for x in inspect(tmp_path) if x.family == "unversioned-serialization"]
+
+def test_integrity_trusts_json_dumps_wrapped_in_html_escape(tmp_path):
+    # forge/tiered_report.py's own convention for embedding a JSON dump as
+    # readable text in an HTML report - presentation, not a persisted
+    # artifact. Previously only the f-string (JoinedStr) shape was
+    # recognized as presentation serialization.
+    write(tmp_path, "report.py", (
+        "import html, json\n"
+        "def render(coverage):\n"
+        "    return \"<pre>\" + html.escape(json.dumps(coverage, indent=2)) + \"</pre>\"\n"
+    ))
+    assert not [x for x in inspect(tmp_path) if x.family == "unversioned-serialization"]
+
 def test_integrity_suppresses_decision_adjacent_float_for_ml_domain_paths(tmp_path):
     # Same code, same detector: whether it fires depends only on whether the
     # caller (runtime.py, via infer_domains) marked this path machine_learning.

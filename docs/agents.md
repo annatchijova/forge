@@ -174,6 +174,16 @@ Also pure AST scanning. Flags three families:
   keys (`findings_jsonl_schema_version`, `metrics_schema_version`,
   `sharding_schema_version`, ...) were only ever partially enumerated by
   name — a new artifact type adds another one an exact-match set cannot see.
+  A `json.dumps(...)` call is also trusted when it sits inside the body of a
+  function named `seal_manifest`/`seal_findings`, or any `canonical_*`-named
+  function (that function *is* the versioning primitive, not a caller of
+  one — its own version marker lives one layer up, in whatever payload
+  embeds its output) — found via self-audits of `forge/canonical.py`
+  (`canonical_json`) and `forge/tiered_report.py`
+  (`canonical_findings_bytes`). And presentation serialization — a JSON dump
+  embedded as human-readable text, never a persisted artifact — is
+  recognized both as f-string interpolation and as
+  `html.escape(json.dumps(...))`, the report renderers' own convention.
 
 ## Patch Reviewer (`forge/agents/patch_reviewer.py`)
 
