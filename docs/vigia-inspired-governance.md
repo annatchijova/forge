@@ -24,7 +24,7 @@ signals into a repository-level disposition.
 | `COMPLETE_NO_FINDINGS` | Declared source scope verified; no finding survived | No action within declared scope |
 | `COMPLETE_WITH_FINDINGS` | Declared source scope verified; findings survived | Review evidence and findings |
 | `ABSTAIN_INSUFFICIENT_SCOPE` | Source boundary was skipped, unreadable, syntactically invalid, or outside audit scope | Complete the scope and rerun |
-| `ABSTAIN_UNDETERMINED` | Governance applicability could not be determined | Resolve applicability and rerun |
+| `ABSTAIN_UNDETERMINED` | Independent evidence paths contradict each other | Resolve the contradiction and rerun |
 
 The disposition does not erase findings. This is the key separation learned
 from VIGÍA: a run can contain useful evidence and still abstain from claiming
@@ -33,6 +33,19 @@ complete repository coverage.
 Intentional language boundaries (`non_python_not_analyzed`) are disclosed but
 do not independently trigger abstention. The current AST engine is allowed to
 say exactly what it did not analyze.
+
+**Update (2026-07-16):** an UNDETERMINED governance-applicability result (one
+skill could not classify one module's domain) originally forced
+`ABSTAIN_UNDETERMINED` on its own, same as a real contradiction. A stress-test
+audit of a small, freshly-built repository abstained for exactly this reason
+on a single ambiguous test file, hiding 4 real findings behind a disposition
+that read as "review this before trusting it" when the specialized agents had
+in fact run to completion. Governance applicability is now folded into the
+same declared-boundary bucket as an excluded module or an unsupported source
+language (`COMPLETE_WITHIN_DECLARED_SCOPE`) — still disclosed in
+`evidence_boundary`, never hidden, but no longer a hard block on its own.
+`ABSTAIN_UNDETERMINED` is now reserved for the case the name always most
+precisely described: contradictory evidence between independent agents.
 
 ## VIGÍA patterns queued for FORGE
 

@@ -98,15 +98,19 @@ def determine_disposition(*, coverage: Any, triage: Any, governance: Any,
             "Restore the unavailable agent and rerun the audit.",
             degraded,
         )
-    if undetermined:
-        return AuditDisposition(
-            "ABSTAIN_UNDETERMINED",
-            "UNDETERMINED_GOVERNANCE_APPLICABILITY",
-            "A governance contract could not determine whether its checks applied.",
-            "Resolve applicability and rerun before claiming completeness.",
-            boundary,
-        )
-    if excluded_modules or unsupported_sources or skipped.get("excluded_by_policy"):
+    # An UNDETERMINED governance applicability result means one skill could
+    # not confidently classify one module's domain (e.g. a test file with no
+    # clear input-boundary signal) - the specialized agents (bug_investigator,
+    # security_auditor, integrity_inspector) still ran fully regardless. This
+    # is a declared boundary of the same kind as an excluded module or an
+    # unsupported source language, not a failure: a single undetermined
+    # result out of many (module, skill) pairs previously forced the whole
+    # audit to ABSTAIN_UNDETERMINED regardless of how small a fraction it
+    # was, which is disproportionate to what actually went unresolved. It
+    # still shows up in evidence_boundary below either way, so it is
+    # reported, never hidden - it just no longer blocks a completeness claim
+    # on its own.
+    if excluded_modules or unsupported_sources or undetermined or skipped.get("excluded_by_policy"):
         declared_boundary = boundary
         if skipped.get("excluded_by_policy"):
             declared_boundary += (f"policy_excluded_files: {len(skipped['excluded_by_policy'])} file(s)",)

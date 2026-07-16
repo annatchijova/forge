@@ -101,6 +101,31 @@ def test_contradictory_credential_explanations_force_abstention(tmp_path):
     assert result.status == "ABSTAIN_UNDETERMINED"
     assert result.reason_code == "CONTRADICTORY_EVIDENCE"
 
+def test_undetermined_governance_applicability_alone_is_a_declared_boundary():
+    class Coverage:
+        skipped_reasons = {}
+    class Triage:
+        modules = []
+    class Governance:
+        applicability = {"main.py": {"validate-at-the-boundary": "UNDETERMINED"}}
+    result = determine_disposition(coverage=Coverage(), triage=Triage(), governance=Governance(), findings=[])
+    assert result.status == "COMPLETE_WITHIN_DECLARED_SCOPE"
+    assert "skill_applicability: 1 undetermined result(s)" in result.evidence_boundary
+
+def test_undetermined_governance_applicability_does_not_abstain_even_at_high_proportion():
+    # No proportional gate: whether it is 1 undetermined result out of 1000
+    # or 999 out of 1000, it is reported as a declared boundary either way,
+    # never silently hidden and never a hard block on its own.
+    class Coverage:
+        skipped_reasons = {}
+    class Triage:
+        modules = []
+    class Governance:
+        applicability = {f"m{i}.py": {"validate-at-the-boundary": "UNDETERMINED"} for i in range(999)} | {"m999.py": {"validate-at-the-boundary": "APPLICABLE"}}
+    result = determine_disposition(coverage=Coverage(), triage=Triage(), governance=Governance(), findings=[])
+    assert result.status == "COMPLETE_WITHIN_DECLARED_SCOPE"
+    assert "skill_applicability: 999 undetermined result(s)" in result.evidence_boundary
+
 def test_audit_seals_repository_snapshot_and_provenance(tmp_path):
     put(tmp_path, "main.py", "def run(value):\n    return eval(value)\n")
     run_specialized_pipeline(tmp_path, tmp_path / "out")
@@ -110,13 +135,24 @@ def test_audit_seals_repository_snapshot_and_provenance(tmp_path):
     assert "AST" in finding["provenance"]
     assert "RUNTIME_NOT_EXECUTED" in finding["provenance"]
 
-def test_unsupported_source_language_with_undetermined_governance_still_abstains(tmp_path):
+def test_unsupported_source_language_and_undetermined_governance_are_a_declared_boundary_not_abstain(tmp_path):
+    # An unsupported source language (native.rs) and an UNDETERMINED skill
+    # applicability result (main.py: no clear input-boundary signal for
+    # validate-at-the-boundary) are declared boundaries of the same kind as
+    # an excluded module, not failures - the specialized agents still ran
+    # fully. A single ambiguous applicability result out of the whole
+    # repository previously forced a hard ABSTAIN_UNDETERMINED regardless of
+    # how small a fraction it was (found via a real audit that abstained on
+    # a two-file repository for exactly this reason). Both boundaries must
+    # still be visible in evidence_boundary - reported, never hidden - they
+    # just no longer block a completeness claim on their own.
     put(tmp_path, "main.py", "x = 1\n")
     put(tmp_path, "native.rs", "fn main() {}\n")
     result = run_specialized_pipeline(tmp_path, tmp_path / "out")
     metrics = json.loads((tmp_path / "out/metrics.json").read_text())
-    assert metrics["audit_disposition"]["status"] == "ABSTAIN_UNDETERMINED"
+    assert metrics["audit_disposition"]["status"] == "COMPLETE_WITHIN_DECLARED_SCOPE"
     assert "unsupported_source_language: Rust (1 file(s))" in metrics["audit_disposition"]["evidence_boundary"]
+    assert "skill_applicability: 1 undetermined result(s)" in metrics["audit_disposition"]["evidence_boundary"]
 
 def test_self_assessment_is_bounded_not_a_quality_score(tmp_path):
     put(tmp_path, "main.py", "x = 1\n")
@@ -124,7 +160,10 @@ def test_self_assessment_is_bounded_not_a_quality_score(tmp_path):
     metrics = json.loads((tmp_path / "out/metrics.json").read_text())
     assessment = metrics["self_assessment"]
     assert assessment["specialized_agents"] == {"available": 5, "total": 5}
-    assert assessment["confidence_boundary"] == "scope-limited"
+    # A single file with an UNDETERMINED governance-applicability result no
+    # longer forces ABSTAIN (see disposition.py) - main.py alone completes,
+    # so the boundary here is the finding evidence itself, not the scope.
+    assert assessment["confidence_boundary"] == "evidence-bounded"
     assert "quality score" in assessment["note"]
 
 def test_ast_structural_agents_use_red_team_auditing_epistemic_vocabulary(tmp_path):

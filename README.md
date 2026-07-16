@@ -212,7 +212,7 @@ audit disposition is deterministic and separate from the findings themselves:
 | `COMPLETE_NO_FINDINGS` | Declared source scope was verified and no finding survived | No action within that scope |
 | `COMPLETE_WITH_FINDINGS` | Declared source scope was verified and findings survived | Review the evidence |
 | `ABSTAIN_INSUFFICIENT_SCOPE` | Source files were skipped, unreadable, syntactically invalid, outside scope, or in an unsupported language | Complete the scope and rerun |
-| `ABSTAIN_UNDETERMINED` | Governance applicability or evidence interpretation could not be resolved | Resolve the ambiguity and rerun |
+| `ABSTAIN_UNDETERMINED` | Independent evidence paths contradict each other | Resolve the contradiction and rerun |
 | `ABSTAIN_DEGRADED` | A specialized agent was unavailable but partial evidence was preserved | Restore the agent and rerun |
 
 `ABSTAIN` does not erase findings. It says that FORGE refuses to generalize
@@ -259,6 +259,7 @@ FORGE intentionally does **not**:
 **Build**
 * [`docs/mcp.md`](docs/mcp.md) — MCP tools and Claude Code integration
 * [`docs/hackathon.md`](docs/hackathon.md) — build notes and Codex session evidence
+* [`docs/technical-companion.html`](docs/technical-companion.html) — bilingual interactive technical companion for reviewers
 
 **Reference**
 * [`DECISIONS.md`](DECISIONS.md) — recorded architectural decisions and their boundaries
