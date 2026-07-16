@@ -10,6 +10,7 @@ import tokenize
 from pathlib import Path
 
 from forge.models import HypothesesManifest, Hypothesis, ModuleClass, TriageManifest
+from forge.dataflow import comparison_reaches_return
 
 
 def _lines(path: Path) -> tuple[str, ...]:
@@ -123,7 +124,7 @@ def _candidates(module_path: str, source: tuple[str, ...], language: str) -> lis
                 continue
             if not _has_explicit_parser_handler(source, number):
                 candidates.append((f"The parser call `{stripped}` at {module_path}:{number} has no nearby exception handling, so malformed input may escape as an opaque failure.", number, f"Feed malformed input to the function containing line {number}; a named boundary error or explicit rejection falsifies the hypothesis."))
-        if re.search(r"\b(?:score|verdict|classif\w*)\b.*(?:[<>]=?|==).*\d+\.\d+", matching_stripped):
+        if re.search(r"\b(?:score|verdict|classif\w*)\b.*(?:[<>]=?|==).*\d+\.\d+", matching_stripped) and _comparison_reaches_return(source, number):
             candidates.append((f"The decision comparison `{stripped}` at {module_path}:{number} uses a binary float threshold, so rounding at the boundary may flip the result.", number, f"Run inputs immediately below, exactly at, and above the threshold using exact decimal values; stable, documented boundary behavior falsifies the hypothesis."))
         if re.search(r"\bmath\.isclose\s*\(", matching_stripped):
             candidates.append((f"The tolerance call `{stripped}` at {module_path}:{number} governs a float decision and must expose an explicit tolerance policy.", number, f"Vary values within and outside the stated tolerance; a documented, stable boundary falsifies this hypothesis."))
@@ -132,6 +133,13 @@ def _candidates(module_path: str, source: tuple[str, ...], language: str) -> lis
     hypotheses = [Hypothesis(module_path, rank, desc, (line,), test) for rank, (desc, line, test) in enumerate(candidates[:5], 1)]
     omitted = len(candidates) - len(hypotheses)
     return hypotheses, omitted
+
+
+def _comparison_reaches_return(source: tuple[str, ...], line: int) -> bool:
+    try:
+        return comparison_reaches_return(ast.parse("\n".join(source) + "\n"), line)
+    except SyntaxError:
+        return False
 
 
 def generate_hypotheses(triage: TriageManifest, include_fossil_high_risk: bool = False) -> HypothesesManifest:

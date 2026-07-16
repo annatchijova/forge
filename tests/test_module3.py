@@ -105,6 +105,12 @@ def test_float_tolerance_is_benign_exact_float_remains_candidate(tmp_path):
     assert not result.findings
 
 
+def test_float_threshold_ignores_telemetry_comparison_not_returned(tmp_path):
+    (tmp_path / "main.py").write_text("def score_report(value):\n    score = float(value) > 0.5\n    telemetry = {'score': score}\n    return 'ok'\n")
+    result = generate_hypotheses(triage(tmp_path))
+    assert not [item for item in result.hypotheses if "binary float threshold" in item.description]
+
+
 def test_math_isclose_phrase_inside_string_is_not_a_hypothesis():
     # The detector's own surface pattern is a string literal, not a real call.
     hypotheses, _ = _candidates("fixture.py", ('if "math.isclose" in stripped:\n',), "Python")
