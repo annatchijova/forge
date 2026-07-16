@@ -110,7 +110,13 @@ Pure AST scanning, no network calls, no execution. Flags three families with
 conservative, named benign criteria (see `DECISIONS.md`):
 
 * **hardcoded-credential** — a non-empty, non-placeholder string literal
-  assigned to a credential-shaped name, unless it comes from `os.getenv(...)`
+  assigned to a credential-shaped name; or a non-empty, non-placeholder
+  string literal passed as the *default* argument of `os.getenv(name,
+  default)`, where `name` is credential-shaped. `os.getenv(...)` itself is a
+  legitimate way to source a credential — the finding is specifically the
+  hardcoded fallback that silently applies whenever the variable is unset,
+  e.g. `os.getenv("ADMIN_PASSWORD", "admin123")`. Found via a stress-test
+  audit of a quickly-built checkout service.
 * **unsafe-deserialization** — `pickle.load(s)`, `marshal.loads`, or
   `yaml.load` without `Loader=yaml.SafeLoader`
 * **path-traversal** — a function parameter reaching `os.path.*` or `open()`

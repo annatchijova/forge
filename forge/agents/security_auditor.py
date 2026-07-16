@@ -15,7 +15,7 @@ class SecurityFinding:
 _CRED = re.compile(r"(password|passwd|secret|token|api[_-]?key|credential)", re.I)
 _PLACEHOLDER = re.compile(r"^(changeme|change_me|example|placeholder|your[_ -].*|<.*>)$", re.I)
 
-def _safe_credential(node):
+def _is_getenv_call(node):
     return isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == "os" and node.func.attr == "getenv"
 
 def _assigned(tree):
@@ -23,8 +23,29 @@ def _assigned(tree):
         targets = n.targets if isinstance(n, ast.Assign) else [n.target] if isinstance(n, ast.AnnAssign) else []
         value = getattr(n, "value", None)
         for target in targets:
-            if isinstance(target, ast.Name) and _CRED.search(target.id) and isinstance(value, ast.Constant) and isinstance(value.value, str) and value.value and not _PLACEHOLDER.match(value.value) and not _safe_credential(value):
+            if isinstance(target, ast.Name) and _CRED.search(target.id) and isinstance(value, ast.Constant) and isinstance(value.value, str) and value.value and not _PLACEHOLDER.match(value.value):
                 yield SecurityFinding("hardcoded-credential", "", n.lineno, f"non-empty credential-like string assigned to {target.id}")
+
+def _getenv_default_credential(tree):
+    """os.getenv(name, default) where default is a hardcoded credential.
+
+    An env var lookup is a legitimate way to source a credential, but a
+    non-empty, non-placeholder literal as its *default* argument is a
+    credential that silently applies whenever the variable is unset -
+    exactly as real a hardcoded secret as a bare assignment, just one
+    argument deeper. `_assigned` above cannot see this: its value is an
+    ast.Call (the getenv call), not an ast.Constant, so it never matches.
+    """
+    for node in ast.walk(tree):
+        if not (_is_getenv_call(node) and len(node.args) >= 2):
+            continue
+        default = node.args[1]
+        if not (isinstance(default, ast.Constant) and isinstance(default.value, str) and default.value and not _PLACEHOLDER.match(default.value)):
+            continue
+        name_arg = node.args[0]
+        env_name = name_arg.value if isinstance(name_arg, ast.Constant) and isinstance(name_arg.value, str) else ""
+        if _CRED.search(env_name):
+            yield SecurityFinding("hardcoded-credential", "", node.lineno, f"os.getenv default value for {env_name!r} is a non-empty hardcoded credential")
 
 def _deserialization(tree):
     for n in ast.walk(tree):
@@ -75,7 +96,7 @@ def audit(root: str | os.PathLike[str], eligible: set[str] | None = None) -> tup
     scope = set(eligible) if eligible is not None else {m.path for m in triage(base).modules if m.module_class in {ModuleClass.CONNECTED_ALIVE, ModuleClass.FOSSIL_HIGH_RISK, ModuleClass.DEAD_WEIGHT}}
     scan=prepare_python_scan(base, scope); out=[]; examinations=dict(scan.examinations)
     for rel, tree in scan.modules:
-        for f in (*_assigned(tree), *_deserialization(tree), *_paths(tree)): out.append(SecurityFinding(f.family, rel, f.line, f.description))
+        for f in (*_assigned(tree), *_getenv_default_credential(tree), *_deserialization(tree), *_paths(tree)): out.append(SecurityFinding(f.family, rel, f.line, f.description))
         examinations[rel]="examined_with_findings" if any(x.path == rel for x in out) else "examined_clean"
     return AgentScanResult(
         tuple(out), examinations,

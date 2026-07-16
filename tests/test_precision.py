@@ -5,22 +5,27 @@ from forge.precision import run_precision
 
 def test_golden_corpus_has_three_positive_and_negative_cases_per_agent():
     result = run_precision("tests/corpus")
-    # integrity_inspector carries two extra cases beyond the base 3+3:
-    # - negative-4: a machine_learning-domain module whose float() would
-    #   otherwise trigger decision-adjacent-float (domain-aware suppression,
-    #   no equivalent rule in security_auditor/web_auditor).
-    # - positive-4 / negative-5: money-as-float (SQLite REAL money column
-    #   and round()-over-division on a money-shaped name, with a Fraction-
-    #   based negative counterpart) - a value can be float-typed without
-    #   ever calling float(), so this is a separate detection path from
-    #   decision-adjacent-float entirely.
-    assert result["case_count"] == 21
+    # Base rate is 3 positive + 3 negative per agent. Deviations, each
+    # covering one detector rule with no equivalent in the other agents:
+    # - integrity_inspector +1/+2:
+    #   - negative-4: a machine_learning-domain module whose float() would
+    #     otherwise trigger decision-adjacent-float (domain-aware
+    #     suppression).
+    #   - positive-4 / negative-5: money-as-float (SQLite REAL money column
+    #     and round()-over-division on a money-shaped name, with a
+    #     Fraction-based negative counterpart) - a value can be float-typed
+    #     without ever calling float(), a separate detection path entirely.
+    # - security_auditor +1/+1: positive-4 / negative-4: os.getenv(name,
+    #   default) where default is a hardcoded credential - the assignment's
+    #   value is a Call, not a Constant, so the base hardcoded-credential
+    #   check (which only matches bare literal assignments) never sees it.
+    expected_positives = {"integrity_inspector": 4, "security_auditor": 4, "web_auditor": 3}
+    expected_negatives = {"integrity_inspector": 5, "security_auditor": 4, "web_auditor": 3}
+    assert result["case_count"] == sum(expected_positives.values()) + sum(expected_negatives.values())
     for agent in {row["agent"] for row in result["cases"]}:
         cases = [row for row in result["cases"] if row["agent"] == agent]
-        expected_positives = 4 if agent == "integrity_inspector" else 3
-        expected_negatives = 5 if agent == "integrity_inspector" else 3
-        assert len([row for row in cases if row["expected_families"]]) == expected_positives
-        assert len([row for row in cases if not row["expected_families"]]) == expected_negatives
+        assert len([row for row in cases if row["expected_families"]]) == expected_positives[agent]
+        assert len([row for row in cases if not row["expected_families"]]) == expected_negatives[agent]
 
 
 def test_golden_corpus_baseline_is_exact():

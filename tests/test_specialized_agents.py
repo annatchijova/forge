@@ -18,6 +18,23 @@ def test_security_credential_trigger_and_safe_context(tmp_path):
     hits = audit(tmp_path)
     assert [(x.path, x.family) for x in hits] == [("bad.py", "hardcoded-credential")]
 
+def test_security_flags_hardcoded_credential_as_getenv_default(tmp_path):
+    write(tmp_path, "app.py", "import os\nADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'admin123')\n")
+    hits = [x for x in audit(tmp_path) if x.family == "hardcoded-credential"]
+    assert len(hits) == 1 and "ADMIN_PASSWORD" in hits[0].description
+
+def test_security_ignores_getenv_without_default(tmp_path):
+    write(tmp_path, "app.py", "import os\nADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD')\n")
+    assert not [x for x in audit(tmp_path) if x.family == "hardcoded-credential"]
+
+def test_security_ignores_getenv_placeholder_default(tmp_path):
+    write(tmp_path, "app.py", "import os\nADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'changeme')\n")
+    assert not [x for x in audit(tmp_path) if x.family == "hardcoded-credential"]
+
+def test_security_ignores_getenv_default_for_non_credential_name(tmp_path):
+    write(tmp_path, "app.py", "import os\nTIMEOUT = os.getenv('REQUEST_TIMEOUT', '30')\n")
+    assert not [x for x in audit(tmp_path) if x.family == "hardcoded-credential"]
+
 def test_security_deserialization_trigger_and_safe_yaml(tmp_path):
     write(tmp_path, "bad.py", "pickle.load(stream)\nyaml.load(raw)\nmarshal.loads(raw)\n")
     write(tmp_path, "safe.py", "yaml.load(raw, Loader=yaml.SafeLoader)\n# pickle.load(trusted)\n")
