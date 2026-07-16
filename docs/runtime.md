@@ -75,6 +75,12 @@ the scope guard as full-repository coverage. For Git repositories, each
 finding's HTML/Markdown evidence includes the source commit when `git blame`
 is available; unavailable blame is labeled rather than inferred.
 
+The discovery boundary is applied before detector reads. Dependency trees,
+virtual environments, VCS metadata, caches, generated audit output, binaries,
+and files larger than 5 MiB are excluded by policy and remain visible in
+coverage as `excluded_by_policy`. This prevents prior reports or large
+artifacts from becoming accidental audit input.
+
 ## Reproducible benchmark corpus
 
 Place local repositories under a corpus directory and run:
