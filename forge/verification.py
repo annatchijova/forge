@@ -135,7 +135,10 @@ def verify_hypotheses(manifest: HypothesesManifest, induce: bool = False) -> Ver
             if result.status == "CONFIRMED BY INDUCTION":
                 findings.append(Finding("INFERRED", result.status, h.module_path, h.description, evidence, f"{result.detail} Evidence: {result.evidence}"))
                 continue
-            reasoning = f"Observed construct matches; induction was undetermined: {result.detail}"
+            if result.status == "ERROR_PATH_REACHABLE":
+                reasoning = f"Observed construct matches, but induction only established that an error path is reachable: {result.detail} Evidence: {result.evidence}"
+            else:
+                reasoning = f"Observed construct matches; induction was undetermined: {result.detail}"
         else:
             reasoning = "Observed construct matches; no induction was run, so level is capped at PLAUSIBLE HYPOTHESIS."
         findings.append(Finding("INFERRED", "PLAUSIBLE HYPOTHESIS", h.module_path, h.description, evidence, reasoning))

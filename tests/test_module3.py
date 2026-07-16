@@ -128,9 +128,18 @@ def test_shell_true_is_a_distinct_hypothesis_family():
     assert "shell=True" in hypotheses[0].description
 
 
-def test_parser_induction_confirms_opaque_failure_in_child_process(tmp_path):
+def test_parser_induction_does_not_confirm_opaque_failure_outside_hypothesized_call(tmp_path):
     (tmp_path / "main.py").write_text("def parse(raw):\n    raise RuntimeError('opaque parser failure')\n")
     result = verify_hypotheses(generate_hypotheses(triage(tmp_path)), induce=True)
+    assert result.findings
+    assert result.findings[0].epistemic_level == "PLAUSIBLE HYPOTHESIS"
+    assert result.induction[0]["status"] == "ERROR_PATH_REACHABLE"
+
+
+def test_parser_induction_confirms_opaque_failure_at_hypothesized_call(tmp_path):
+    (tmp_path / "main.py").write_text("def parse(raw):\n    raise RuntimeError('opaque parser failure')\n")
+    manifest = HypothesesManifest("1.0", "0.1.0", "1.0", str(tmp_path), 0, (Hypothesis("main.py", 1, "The parser call `json.loads(raw)` has no nearby exception handling.", (2,), "force failure"),), ("main.py",))
+    result = verify_hypotheses(manifest, induce=True)
     assert result.findings
     assert result.findings[0].epistemic_level == "CONFIRMED BY INDUCTION"
     assert result.induction[0]["status"] == "CONFIRMED BY INDUCTION"

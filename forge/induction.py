@@ -12,6 +12,7 @@ import importlib.util
 import inspect
 import multiprocessing
 import sys
+import traceback
 from queue import Empty
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -73,7 +74,7 @@ def _module_name(root: Path, module_path: str) -> str | None:
     return ".".join(parts)
 
 
-def _invoke_worker(root: str, module_path: str, function_name: str, queue: Any) -> None:
+def _invoke_worker(root: str, module_path: str, function_name: str, target_line: int, queue: Any) -> None:
     try:
         root_path = Path(root)
         qualified_name = _module_name(root_path, module_path)
@@ -110,7 +111,12 @@ def _invoke_worker(root: str, module_path: str, function_name: str, queue: Any) 
         result = function(*args)
         queue.put(("returned", type(result).__name__))
     except BaseException as exc:  # child boundary: never leak target exceptions to the audit process
-        queue.put(("exception", type(exc).__name__, str(exc)[:240]))
+        target_file = str((Path(root) / module_path).resolve())
+        frames = traceback.extract_tb(exc.__traceback__)
+        target_frames = [frame for frame in frames if str(Path(frame.filename).resolve()) == target_file]
+        at_hypothesized_call = any(frame.lineno == target_line for frame in target_frames)
+        frame_detail = ", ".join(f"{frame.filename}:{frame.lineno}" for frame in target_frames[-3:])
+        queue.put(("exception", type(exc).__name__, str(exc)[:240], at_hypothesized_call, frame_detail))
 
 
 def induce_hypothesis(root: str | Path, module_path: str, line: int, description: str) -> InductionResult:
@@ -144,7 +150,7 @@ def induce_hypothesis(root: str | Path, module_path: str, line: int, description
 
     context = multiprocessing.get_context("spawn")
     queue = context.Queue()
-    process = context.Process(target=_invoke_worker, args=(str(root_path), module_path, function_name, queue))
+    process = context.Process(target=_invoke_worker, args=(str(root_path), module_path, function_name, line, queue))
     process.start()
     process.join(1.0)
     if process.is_alive():
@@ -159,9 +165,16 @@ def induce_hypothesis(root: str | Path, module_path: str, line: int, description
         return InductionResult("UNDETERMINED", family, f"Target module could not be loaded in its package context: {result[1]}: {result[2]}", f"{module_path}:{line}")
     if result[0] == "exception":
         error_name, detail = result[1], result[2]
+        at_hypothesized_call = bool(result[3]) if len(result) > 3 else False
+        frame_detail = result[4] if len(result) > 4 else ""
+        evidence = f"{module_path}:{line}: {error_name}: {detail}"
+        if frame_detail:
+            evidence += f" [target frames: {frame_detail}]"
+        if not at_hypothesized_call:
+            return InductionResult("ERROR_PATH_REACHABLE", family, f"Malformed input reached an opaque {error_name}, but the exception did not originate at the hypothesized parser call.", evidence)
         if error_name in _NAMED_BOUNDARY_ERRORS:
-            return InductionResult("FALSIFIED", family, f"Named boundary error {error_name} was raised for malformed input.", f"{module_path}:{line}: {error_name}: {detail}")
-        return InductionResult("CONFIRMED BY INDUCTION", family, f"Malformed input raised opaque {error_name}.", f"{module_path}:{line}: {error_name}: {detail}")
+            return InductionResult("FALSIFIED", family, f"Named boundary error {error_name} was raised for malformed input.", evidence)
+        return InductionResult("CONFIRMED BY INDUCTION", family, f"Malformed input raised opaque {error_name} at the hypothesized parser call.", evidence)
     if result[0] == "returned":
         return InductionResult("FALSIFIED", family, "Malformed input was accepted without an exception.", f"{module_path}:{line}: returned {result[1]}")
     return InductionResult("UNDETERMINED", family, str(result[1]), f"{module_path}:{line}")
