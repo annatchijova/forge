@@ -6,11 +6,10 @@
 ![Audit](https://img.shields.io/badge/audit-SHA--256%20sealed-brightgreen)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 
-> **Forensic Repository Governance Engine**
+> **Forensic governance runtime for reproducible software audits.**
 >
-> A deterministic multi-agent system for repository governance, forensic
-> software engineering, architectural archaeology, and evidence-driven code
-> review.
+> A deterministic repository-governance engine for forensic software
+> engineering, architectural archaeology, and evidence-driven code review.
 
 ---
 
