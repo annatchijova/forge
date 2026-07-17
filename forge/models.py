@@ -97,6 +97,7 @@ class CoverageReport:
     skipped_reasons: dict[str, tuple[str, ...]]
     ast_verified_families: tuple[str, ...] = ()
     coverage_ratio: Fraction = field(default_factory=lambda: Fraction(0, 1))
+    language_coverage: dict[str, dict[str, int]] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         data = asdict(self)

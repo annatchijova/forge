@@ -235,3 +235,15 @@ def test_coverage_accounting_never_loses_readable_non_python_files(tmp_path):
         "every discovered file must land in exactly one bucket: analyzed or a skipped_reasons category"
     )
     assert "README.md" in coverage["skipped_reasons"].get("non_python_not_analyzed", ())
+    assert coverage["language_coverage"]["Python"] == {"analyzed": 1, "abstained": 0}
+    assert coverage["language_coverage"]["MD"] == {"analyzed": 0, "abstained": 1}
+
+
+def test_coverage_makes_js_ts_and_unsupported_language_scope_explicit(tmp_path):
+    put(tmp_path, "main.py", "x = 1\n")
+    put(tmp_path, "frontend.ts", "export const parse = (raw) => JSON.parse(raw);\n")
+    put(tmp_path, "native.rs", "fn main() {}\n")
+    coverage = run_specialized_pipeline(tmp_path, tmp_path / "out")["coverage"]
+    assert coverage["language_coverage"]["JavaScript/TypeScript"] == {"analyzed": 0, "abstained": 1}
+    assert coverage["language_coverage"]["RS"] == {"analyzed": 0, "abstained": 1}
+    assert "native.rs" in coverage["skipped_reasons"]["non_python_not_analyzed"]

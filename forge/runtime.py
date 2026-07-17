@@ -50,21 +50,26 @@ def _coverage(root: Path, families=(), discovered=None, analyzed_paths=()) -> Co
     discovered = discovered if discovered is not None else discover_files(root, include_excluded=True)
     skipped: dict[str, list[str]] = {"excluded_by_policy": [], "syntax_error": [], "binary_or_unreadable": [], "non_python_not_analyzed": []}
     analyzed = 0
+    language_coverage: dict[str, dict[str, int]] = {}
+    language_names = {".py": "Python", ".js": "JavaScript/TypeScript", ".jsx": "JavaScript/TypeScript", ".ts": "JavaScript/TypeScript", ".tsx": "JavaScript/TypeScript"}
+    def account(path: Path, state: str) -> None:
+        language = language_names.get(path.suffix.lower(), path.suffix.lower().lstrip(".").upper() or "Other")
+        language_coverage.setdefault(language, {"analyzed": 0, "abstained": 0})[state] += 1
     analyzed_paths = set(analyzed_paths)
     for path in discovered:
         rel = str(path.relative_to(root))
         if is_excluded_by_policy(path, root): skipped["excluded_by_policy"].append(rel); continue
         try: source = path.read_text(encoding="utf-8")
-        except (OSError, UnicodeDecodeError): skipped["binary_or_unreadable"].append(rel); continue
+        except (OSError, UnicodeDecodeError): skipped["binary_or_unreadable"].append(rel); account(path, "abstained"); continue
         if rel in analyzed_paths:
-            analyzed += 1
+            analyzed += 1; account(path, "analyzed")
             continue
-        if path.suffix != ".py": skipped["non_python_not_analyzed"].append(rel); continue
+        if path.suffix != ".py": skipped["non_python_not_analyzed"].append(rel); account(path, "abstained"); continue
         try: ast.parse(source)
-        except SyntaxError: skipped["syntax_error"].append(rel); continue
-        analyzed += 1
+        except SyntaxError: skipped["syntax_error"].append(rel); account(path, "abstained"); continue
+        analyzed += 1; account(path, "analyzed")
     compact = {key: tuple(sorted(value)) for key, value in skipped.items() if value}
-    return CoverageReport(len(discovered), analyzed, sum(map(len, compact.values())), compact, tuple(families), Fraction(analyzed, len(discovered) or 1))
+    return CoverageReport(len(discovered), analyzed, sum(map(len, compact.values())), compact, tuple(families), Fraction(analyzed, len(discovered) or 1), dict(sorted(language_coverage.items())))
 
 def _agent_finding(agent: str, item) -> Finding:
     detail = item.description
@@ -373,7 +378,7 @@ class Runtime:
         self._phase_end(trace, cronos, "canonicalization", canonical_started)
         verification = VerificationManifest("2.0", "0.1.0", bug.verification.hypotheses_schema_version, str(root), int(time.time()), tuple(findings), bug.verification.discarded, bug.verification.ast_verified_families, bug.verification.ast_unverified_families, bug.verification.induction, repository_snapshot_sha256)
         verification = replace(verification, source_attestation=attest_manifest(verification.to_dict()))
-        coverage = CoverageReport(coverage.files_discovered, coverage.files_analyzed, coverage.files_skipped, coverage.skipped_reasons, verification.ast_verified_families, coverage.coverage_ratio)
+        coverage = CoverageReport(coverage.files_discovered, coverage.files_analyzed, coverage.files_skipped, coverage.skipped_reasons, verification.ast_verified_families, coverage.coverage_ratio, coverage.language_coverage)
         triage_path, hypotheses_path = out / "triage-manifest.json", out / "hypotheses-manifest.json"
         verification_path, sealed_path, coverage_path = out / "verification-manifest.json", out / "verification-manifest.sealed.json", out / "coverage-report.json"
         skills_path, metrics_path, report_path = out / "skills-runtime.json", out / "metrics.json", out / "forge-report.html"
