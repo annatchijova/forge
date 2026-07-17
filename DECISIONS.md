@@ -140,6 +140,15 @@ the Bug Investigator is measured alongside static agents. Severity is a
 deterministic projection of independent epistemic, controllability and
 exploitability axes, not a synonym for family.
 
+The separate seeded recall corpus measures only families FORGE explicitly
+models. Its `positive` fixtures are exact identity obligations, its
+`benign_twin` fixtures are precision guards, and its `out_of_scope` fixtures
+are recorded but excluded from the recall denominator. This prevents a clean
+run from being misread as a claim that general logic, authorization,
+concurrency, type, or resource-lifetime bugs were searched. The gate is at
+least 0.90 recall per represented family and zero benign-twin hits; see
+`docs/seeded-recall-corpus.md`.
+
 Induction supports parser, eval/exec, subprocess, float-threshold and SQL
 injection harnesses
 inside a spawned, resource-limited worker. The worker blocks network, actual

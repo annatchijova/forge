@@ -1,0 +1,26 @@
+{
+  "recall_schema_version": "1.0",
+  "recall_global": {"detected": 29, "total": 29, "recall": 1.0},
+  "fp_on_twins": {"count": 0, "cases": []},
+  "out_of_scope_case_count": 8,
+  "recall_by_family": {
+    "atomic-state-mutation": {"detected": 1, "total": 1, "recall": 1.0},
+    "command-injection": {"detected": 1, "total": 1, "recall": 1.0},
+    "decision-adjacent-float": {"detected": 2, "total": 2, "recall": 1.0},
+    "deterministic-core": {"detected": 1, "total": 1, "recall": 1.0},
+    "dynamic-evaluation": {"detected": 2, "total": 2, "recall": 1.0},
+    "hardcoded-credential": {"detected": 2, "total": 2, "recall": 1.0},
+    "honest-degradation": {"detected": 1, "total": 1, "recall": 1.0},
+    "money-as-float": {"detected": 4, "total": 4, "recall": 1.0},
+    "parser-boundary": {"detected": 2, "total": 2, "recall": 1.0},
+    "path-traversal": {"detected": 4, "total": 4, "recall": 1.0},
+    "sql-aggregation-not-materialization": {"detected": 1, "total": 1, "recall": 1.0},
+    "sql-injection": {"detected": 1, "total": 1, "recall": 1.0},
+    "subprocess": {"detected": 2, "total": 2, "recall": 1.0},
+    "tamper-evident-audit-chain": {"detected": 1, "total": 1, "recall": 1.0},
+    "unsafe-deserialization": {"detected": 1, "total": 1, "recall": 1.0},
+    "unverified-webhook": {"detected": 1, "total": 1, "recall": 1.0},
+    "unversioned-serialization": {"detected": 1, "total": 1, "recall": 1.0},
+    "validate-at-the-boundary": {"detected": 1, "total": 1, "recall": 1.0}
+  }
+}

@@ -249,7 +249,15 @@ def _paths(tree):
             if not unsafe_parameters:
                 continue
             controllability = _path_controllability(tree, function, sorted(unsafe_parameters)[0])
-            if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == "os" and node.func.attr == "path":
+            is_os_path_operation = (
+                isinstance(node.func, ast.Attribute)
+                and isinstance(node.func.value, ast.Attribute)
+                and isinstance(node.func.value.value, ast.Name)
+                and node.func.value.value.id == "os"
+                and node.func.value.attr == "path"
+                and node.func.attr not in {"normpath", "realpath", "basename", "resolve"}
+            )
+            if is_os_path_operation:
                 yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches os.path operation without proven normalization", controllability, "PLAUSIBLE", node.col_offset + 1)
             elif isinstance(node.func, ast.Name) and node.func.id == "open":
                 yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches open() without proven normalization", controllability, "PLAUSIBLE", node.col_offset + 1)

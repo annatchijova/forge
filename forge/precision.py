@@ -39,7 +39,14 @@ def _bug_investigator_family(description: str) -> str:
     raise ValueError(f"unmapped bug-investigator hypothesis description: {description!r}")
 
 
-def _findings(agent: str, root: Path) -> set[FindingIdentity]:
+def _findings(agent: str, root: Path, *, induce: bool = True) -> set[FindingIdentity]:
+    """Return exact identities emitted by one corpus agent.
+
+    ``induce`` is configurable for the recall corpus: a static recall case
+    must not silently acquire evidence from an induction harness, whereas a
+    ``both`` case explicitly asks for it.  The precision corpus keeps its
+    historical induced behaviour through the default.
+    """
     if agent == "integrity_inspector":
         ml_domain_paths = frozenset(
             h.module_path for h in infer_domains(triage(root)) if "machine_learning" in h.domains
@@ -53,7 +60,7 @@ def _findings(agent: str, root: Path) -> set[FindingIdentity]:
         result, _ = audit_web(root)
         return {(finding.family, finding.path, finding.line) for finding in result.findings}
     if agent == "bug_investigator":
-        verified = verify_hypotheses(generate_hypotheses(triage(root)), induce=True)
+        verified = verify_hypotheses(generate_hypotheses(triage(root)), induce=induce)
         findings: set[FindingIdentity] = set()
         for finding in verified.findings:
             source = next((item.source for item in finding.evidence if item.kind == "source"), "")

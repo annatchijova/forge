@@ -287,6 +287,7 @@ FORGE intentionally does **not**:
 **Architecture**
 * [`docs/runtime.md`](docs/runtime.md) — frontends, demo mode, benchmark corpus
 * [`docs/agents.md`](docs/agents.md) — full agent-by-agent breakdown
+* [`docs/seeded-recall-corpus.md`](docs/seeded-recall-corpus.md) — modeled-family recall, benign twins, and explicit out-of-scope limits
 
 **Evidence**
 * [`docs/artifacts.md`](docs/artifacts.md) — output artifacts and sealing
