@@ -206,6 +206,35 @@ python -m pip install --upgrade pip
 python -m pip install -e .
 ```
 
+The commands are cross-platform; only virtual-environment activation differs by
+shell:
+
+**Windows PowerShell**
+
+```powershell
+git clone https://github.com/annatchijova/forge.git
+Set-Location forge
+py -3 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e .
+```
+
+**Windows Command Prompt**
+
+```bat
+git clone https://github.com/annatchijova/forge.git
+cd forge
+py -3 -m venv .venv
+.venv\Scripts\activate.bat
+python -m pip install --upgrade pip
+python -m pip install -e .
+```
+
+On macOS, use the Unix block above. If `python3` is not installed, install a
+current Python 3.10+ distribution first; on Windows, `py -3` selects the
+Python launcher explicitly.
+
 The optional MCP frontend can be installed with `python -m pip install -e
 ".[mcp]"`. The core CLI does not require model credentials or third-party
 packages.
