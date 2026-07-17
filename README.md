@@ -64,6 +64,22 @@ Seal
 The objective is not to produce more findings. It is to produce findings that
 can be independently verified.
 
+## FORGE's governed engineering method
+
+The runtime is organized as a sequence of responsibilities. Each stage is
+backed by explicit skills, so the method is inspectable rather than hidden in a
+prompt or an agent persona.
+
+| Stage | Skills |
+|---|---|
+| **Understand** | `abductive-engineering`, `software-archaeology`, `reverse-engineering` |
+| **Audit** | `red-team-auditing`, `diagnosing-bugs`, `codebase-health-assessment` |
+| **Build** | `secure-by-construction`, `validate-at-the-boundary`, `sql-aggregation-not-materialization` |
+| **Modify** | `audit-before-patch`, `surgical-patcher` |
+| **Guarantee** | `deterministic-core`, `llm-out-of-the-loop`, `tamper-evident-audit-chain`, `atomic-state-mutation`, `versioned-schema-evolution` |
+| **Operate** | `git-discipline`, `honest-degradation` |
+| **Communicate** | `daubert-defensible-writing` |
+
 FORGE's normal audit path also keeps the decision mechanism out of the LLM
 loop: discovery, AST parsing, structural detectors, hypothesis handling,
 sealing, and report generation run as local deterministic code, so operational
