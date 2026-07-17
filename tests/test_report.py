@@ -44,6 +44,7 @@ def test_report_separates_findings_discarded_scope_and_clean_module(tmp_path):
     assert "Showing 1 of 1" in report
     assert 'id="dashboard"' in report
     assert "coverage-dial" in report
+    assert "Finding origin check" in report
     assert "Full metrics and audit telemetry" in report
 
 

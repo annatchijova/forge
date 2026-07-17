@@ -158,6 +158,9 @@ def render_tiered_report(sealed_path: str | Path, mode: str, destination: str | 
     disposition_status = metrics.get("audit_disposition", {}).get("status") or ("VERIFIED" if verification.get("ok") else "FAILED")
     disposition_reason = str(metrics.get("audit_disposition", {}).get("reason", ""))
     coverage = _sidecar(source, "coverage-report.json")
+    triage_sidecar = _sidecar(source, "triage-manifest.json") or {}
+    module_classes = {str(item.get("path")): str(item.get("module_class", "UNKNOWN")) for item in triage_sidecar.get("modules", [])}
+    finding_scope_counts = Counter(module_classes.get(str(finding.get("module_path")), "UNKNOWN") for finding in display_findings)
     eligible_source = coverage.get("eligible_source_files", coverage.get("files_discovered", 0)) if coverage else 0
     source_scope = (
         f"Source coverage: {coverage.get('files_analyzed', 0)}/{eligible_source} eligible files parsed; "
@@ -183,7 +186,7 @@ def render_tiered_report(sealed_path: str | Path, mode: str, destination: str | 
     sections = [
         _overview_html(manifest, coverage, display_findings, display_groups, verification["ok"]),
         "<section id='seal'><h2>Seal status</h2><p class='status-" + status_tone + "'>" + html.escape(str(disposition_status)) + " · " + html.escape(seal_text) + "<br>" + html.escape(attestation_text) + ("<br>" + html.escape(provenance_text) if provenance_text else "") + "<br>" + html.escape(disposition_reason) + "<br>" + html.escape(source_scope) + "</p></section>",
-        "<section id='detector-scope'><h2>Detector scope</h2><p>" + html.escape(detector_scope_statement()) + "</p><p>A clean disposition means no surviving finding within both the declared source scope and detector scope. It is not a repository-wide correctness or safety certification.</p></section>",
+        "<section id='detector-scope'><h2>Detector scope</h2><p>" + html.escape(detector_scope_statement()) + "</p><p><strong>Finding origin check:</strong> " + html.escape(json.dumps(dict(finding_scope_counts), sort_keys=True)) + ". CONNECTED_ALIVE is the specialized-agent scope; individual detectors and governance skills may be broader, so this count is not a claim that other modules received no attention.</p><p>A clean disposition means no surviving finding within both the declared source scope and detector scope. It is not a repository-wide correctness or safety certification.</p></section>",
         "<section id='findings'><h2>Findings</h2>" + findings_html + "</section>",
         "<section id='narrated-summary' class='narrated-summary'><p class='prose-label'>💬 Narrated summary (not verified)</p><h2>Reader-oriented summary</h2><p>" + html.escape(narration.narrative) + "</p><p>This deterministic prose is derived after verification from the sealed finding set only. It is not evidence, is not sealed, and cannot change a finding, severity, disposition, or audit decision.</p>" + ("<ul>" + "".join("<li>" + html.escape(issue) + "</li>" for issue in narration.verification_issues) + "</ul>" if narration.verification_issues else "") + "</section>",
         "<section id='limitations'><h2>Limitations</h2><ul>" + "".join(f"<li>{html.escape(str(item))}</li>" for item in sealed.get("limitations", [])) + "</ul></section>",

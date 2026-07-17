@@ -178,6 +178,8 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
     audited = hypotheses_doc.get("audited_modules", [])
     clean = [module for module in audited if module not in finding_modules]
     out_of_scope = [m for m in triage.get("modules", []) if m.get("module_class") != "CONNECTED_ALIVE"]
+    module_classes = {str(item.get("path")): str(item.get("module_class", "UNKNOWN")) for item in triage.get("modules", [])}
+    finding_scope_counts = Counter(module_classes.get(str(finding.get("module_path")), "UNKNOWN") for finding in findings)
     families = ", ".join(manifest.get("ast_verified_families", [])) or "the implemented structural checks"
     seal_text = f"Chain integrity: VERIFIED ({len(sealed.get('chain', []))} entries, 0 issues)" if seal["ok"] else f"Chain integrity: FAILED ({len(sealed.get('chain', []))} entries, {len(seal['issues'])} issues): {'; '.join(seal['issues'])}"
     git_note = "Git blame is attempted per finding and is shown when available; unavailable blame is labeled rather than inferred."
@@ -249,6 +251,7 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
             f'<section id="coverage"><h2>Coverage</h2>'
             f'<p class="section-lede">Semantic coverage means modules that received detector attention, not only files that parsed.</p>'
             f'<div class="coverage-hero"><div><strong>Source coverage</strong><b>{_e(ratio_text)}</b><span>eligible source files parsed</span></div><div><strong>Detector scope</strong><b>{_e(f"{detector_scope}/{scope_denominator} ({scope_percent:.1f}%)")}</b><span>CONNECTED_ALIVE modules receiving detector attention</span></div><small>{_e(coverage_data.get("detector_scope_excluded_modules", 0))} modules outside detector scope · {_e(coverage_data.get("files_skipped", 0))} files skipped · {_e(coverage_data.get("files_discovered", 0))} discovered. File and module counts are different measures.</small></div>'
+            f'<p><strong>Finding origin check:</strong> {_e(dict(finding_scope_counts))}. CONNECTED_ALIVE describes specialized-agent scope; some detector families and governance skills may run more broadly.</p>'
             f'<p>Language coverage: {_e(coverage_data.get("language_coverage", {}))}</p>'
             f'<p>Skipped reasons: {_e(coverage_data.get("skipped_reasons", {}))}</p></section>'
         )
@@ -436,7 +439,7 @@ table.data-table td:first-child{{ font-family:var(--mono); font-size:12.5px; whi
 <section id=\"findings\"><h2>FINDINGS</h2>{filter_html}{findings_html}</section>
 <section id=\"discarded\"><h2>DISCARDED</h2><p>Generated hypotheses ruled out by the verification criteria are retained here with their reasons.</p>{discarded_html}</section>
 <section id=\"clean\"><h2>No structural risk indicators found</h2><p>Audited modules with zero surviving findings:</p><ul>{clean_html}</ul></section>
-<section id=\"scope\"><h2>NOT ANALYZED</h2><p>These triaged modules were not analyzed in this run because they were not classified as CONNECTED_ALIVE:</p>{scope_html}</section>
+<section id=\"scope\"><h2>NOT ANALYZED</h2><p><strong>Finding origin check:</strong> {_e(dict(finding_scope_counts))}. CONNECTED_ALIVE is the specialized-agent scope; some detector families and governance skills may run more broadly.</p><p>These triaged modules were not analyzed in this run because they were not classified as CONNECTED_ALIVE:</p>{scope_html}</section>
 
 <section id=\"hypotheses-summary\"><h2>Hypotheses summary</h2>{hypotheses_summary_html}</section>
 
