@@ -464,7 +464,7 @@ The same boundary is reflected in the self-assessment metrics. A qualitative
 confidence boundary is reported instead of an invented numeric score. This
 keeps the VIGÍA lesson intact while preserving FORGE's code-audit vocabulary.
 
-## Honest degradation: logging is not always disclosure (2026-07-17)
+## Honest degradation: logging is not structural degradation (2026-07-17)
 
 The executable `honest-degradation` contract treats a handler that raises,
 returns a named error, or records an explicit degraded/error state differently
@@ -479,6 +479,18 @@ the handler does not raise or mark an explicit degraded/error flag. The benign
 counterpart is a handler that logs and also propagates degraded state into the
 returned result or surrounding control flow. This remains a narrow structural
 subset: ordinary logged failures are not findings merely because they log.
+
+The same rule applies to intra-function stage swallowing: if a caught
+exception replaces a stage/component result such as `caie`, `timeline`,
+`signal`, `artifact`, or `bundle` with `None`/empty/default and that name flows
+to the returned result, the log is not enough. The handler must raise, emit an
+`*_UNANALYZED`-style sentinel, append to an error/drop accumulator, set an
+explicit skipped/degraded/error flag, or call an explicit marker such as
+`mark_degraded`/`record_drop`. Optional scalar fields and cleanup in `finally`
+remain outside this contract.
+
+Likewise, `log; return None` remains a degraded default return unless the
+returned value itself carries the unanalyzed/degraded state.
 
 ## Source classification and coverage honesty (2026-07-17)
 

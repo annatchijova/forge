@@ -61,6 +61,12 @@ non-boundary misses stay in the baseline as visible backlog. See
 fixtures and limits, and [`recall-gap-closure-lot-2.md`](recall-gap-closure-lot-2.md)
 for the SQL/command work.
 
+The VIGÍA-derived honest-degradation variants add the first breadth checks for
+executable governance skills: logged default returns, logged loop drops, and
+logged stage swallows are positive cases, while sentinels, raised errors,
+explicit error accumulators, skip flags, optional fields, and cleanup paths are
+precision guardrails.
+
 ## Scope is not a cleanliness certificate
 
 The out-of-scope fixtures deliberately include business-logic exception

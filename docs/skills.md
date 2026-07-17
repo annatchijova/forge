@@ -71,6 +71,21 @@ also raises or records explicit degraded/error state. The executable contract
 therefore flags `log; continue` discard paths without such state, while
 leaving logged handlers clean when the degraded outcome is propagated.
 
+The current executable subset covers two direct AST patterns:
+
+- loop drops: an exception handler inside a loop silently reduces a returned
+  collection;
+- stage swallows: an exception handler replaces a stage/component result with
+  `None` or an empty/default value and returns it as ordinary output.
+- default returns: an exception handler logs and returns `None`/empty/default
+  without emitting an unanalyzed/degraded marker.
+
+The accepted visibility actions are structural, not narrative: raise, emit an
+`*_UNANALYZED`-style sentinel, append to an error/drop accumulator, set an
+explicit degraded/skipped/error flag, or call a named marker such as
+`mark_degraded` or `record_drop`. Optional field defaults and cleanup paths are
+corpus guardrails because they are not degraded-stage evidence.
+
 ## Catalog
 
 **Core reasoning** — Abductive Engineering · Red-Team Auditing · Secure by

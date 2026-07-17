@@ -34,6 +34,22 @@ def load(raw):
     assert _skill_findings(result, "honest-degradation") == []
 
 
+def test_honest_degradation_does_not_exonerate_logged_default_return(tmp_path):
+    result = _run(tmp_path, """\
+import logging
+
+def load(raw):
+    try:
+        return raw["payload"]
+    except Exception:
+        logging.warning("payload unavailable")
+        return None
+""")
+    findings = _skill_findings(result, "honest-degradation")
+    assert len(findings) == 1
+    assert "without raising or marking degraded state" in findings[0].description
+
+
 def test_honest_degradation_reports_logged_drop_continue_without_degraded_state(tmp_path):
     result = _run(tmp_path, """\
 import logging
@@ -50,7 +66,7 @@ def run_vigia(rows):
 """)
     findings = _skill_findings(result, "honest-degradation")
     assert len(findings) == 1
-    assert "drops the item" in findings[0].description
+    assert "output silently reduced" in findings[0].description
 
     result = _run(tmp_path, """\
 import logging
@@ -66,6 +82,82 @@ def run_vigia(rows):
             degraded = True
             continue
     return {"verdict": verdict_from(signals), "degraded": degraded}
+""")
+    assert _skill_findings(result, "honest-degradation") == []
+
+
+def test_honest_degradation_accepts_sentinel_and_error_accumulator(tmp_path):
+    result = _run(tmp_path, """\
+def build_signals(rows):
+    signals = []
+    for row in rows:
+        try:
+            signals.append(Signal(row["tool"], row["value"]))
+        except Exception as exc:
+            signals.append(unanalyzed_marker(row, exc))
+    return signals
+""")
+    assert _skill_findings(result, "honest-degradation") == []
+
+    result = _run(tmp_path, """\
+def build_signals(rows):
+    signals = []
+    errors = []
+    for row in rows:
+        try:
+            signals.append(Signal(row["tool"], row["value"]))
+        except Exception as exc:
+            errors.append((row, exc))
+            continue
+    return signals, errors
+""")
+    assert _skill_findings(result, "honest-degradation") == []
+
+
+def test_honest_degradation_reports_stage_swallow_but_not_recorded_skip(tmp_path):
+    result = _run(tmp_path, """\
+def analyze(signal):
+    try:
+        caie = run_caie(signal.metadata)
+    except Exception:
+        logger.warning("CAIE failed non-blocking")
+        caie = None
+    return build_result(signal, caie)
+""")
+    findings = _skill_findings(result, "honest-degradation")
+    assert len(findings) == 1
+    assert "stage result" in findings[0].description
+
+    result = _run(tmp_path, """\
+def analyze(signal):
+    result_flags = {}
+    try:
+        caie = run_caie(signal.metadata)
+    except Exception as exc:
+        caie = None
+        result_flags["caie_skipped"] = str(exc)
+    return build_result(signal, caie, result_flags)
+""")
+    assert _skill_findings(result, "honest-degradation") == []
+
+
+def test_honest_degradation_does_not_mark_optional_field_or_cleanup(tmp_path):
+    result = _run(tmp_path, """\
+def profile(data):
+    try:
+        nickname = data["nickname"]
+    except KeyError:
+        nickname = None
+    return {"nickname": nickname}
+""")
+    assert _skill_findings(result, "honest-degradation") == []
+
+    result = _run(tmp_path, """\
+def parse_tmp(tmp):
+    try:
+        return load(tmp)
+    finally:
+        os.unlink(tmp)
 """)
     assert _skill_findings(result, "honest-degradation") == []
 

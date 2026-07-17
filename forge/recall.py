@@ -14,6 +14,8 @@ from pathlib import Path
 from typing import Any
 
 from forge.agents.security_auditor import audit as audit_security
+from forge.detector.stack import triage
+from forge.governance.runtime import run_skills
 from forge.precision import FindingIdentity, _findings
 from forge.severity import severity_for
 
@@ -93,6 +95,17 @@ def _security_metadata(case_root: Path) -> dict[FindingIdentity, dict[str, str]]
     return metadata
 
 
+def _governance_metadata(case_root: Path) -> dict[FindingIdentity, dict[str, str]]:
+    """Return descriptions for executable governance skill findings."""
+    metadata: dict[FindingIdentity, dict[str, str]] = {}
+    for finding in run_skills(triage(case_root)).findings:
+        source = next((item.source for item in finding.evidence if item.kind == "source"), "")
+        _path, separator, line = source.rpartition(":")
+        if separator and line.isdecimal():
+            metadata[(finding.agent, finding.module_path, int(line))] = {"description": finding.description}
+    return metadata
+
+
 def _score(detections: list[bool]) -> dict[str, Any]:
     detected = sum(detections)
     total = len(detections)
@@ -145,7 +158,12 @@ def run_recall(corpus: str | Path) -> dict[str, Any]:
         }
         if case["kind"] == "positive":
             expected = _identity(case)
-            metadata = _security_metadata(case_root) if case["agent"] == "security_auditor" else {}
+            if case["agent"] == "security_auditor":
+                metadata = _security_metadata(case_root)
+            elif case["agent"] == "governance_skills":
+                metadata = _governance_metadata(case_root)
+            else:
+                metadata = {}
             observed = metadata.get(expected, {})
             mechanism_tokens = tuple(str(token).lower() for token in case.get("mechanism_tokens", ()))
             observed_description = str(observed.get("description", "")).lower()

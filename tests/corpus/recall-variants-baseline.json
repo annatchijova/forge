@@ -1,11 +1,12 @@
 {
   "recall_variants_schema_version": "1.0",
-  "recall_variant_global": {"detected": 27, "total": 36, "recall": 0.75},
+  "recall_variant_global": {"detected": 30, "total": 39, "recall": 0.769231},
   "recall_variant_by_family": {
     "command-injection": {"detected": 2, "total": 3, "recall": 0.666667},
     "decision-adjacent-float": {"detected": 2, "total": 3, "recall": 0.666667},
     "dynamic-evaluation": {"detected": 3, "total": 4, "recall": 0.75},
     "hardcoded-credential": {"detected": 3, "total": 4, "recall": 0.75},
+    "honest-degradation": {"detected": 3, "total": 3, "recall": 1.0},
     "parser-boundary": {"detected": 2, "total": 3, "recall": 0.666667},
     "path-traversal": {"detected": 5, "total": 7, "recall": 0.714286},
     "sql-injection": {"detected": 4, "total": 4, "recall": 1.0},
