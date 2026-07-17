@@ -64,6 +64,27 @@ CAIE-bound evidence. It also records the cases that remain only component-level
 or unresolved. That is deliberate: FORGE prepares a falsifiable investigation;
 it does not replace adjudication with a claim of universal truth.
 
+### CAIE timestamp coverage lead — confirmed only after bounded induction
+
+FORGE also emitted a deterministic `honest-degradation` lead in CAIE's
+timestamp parsing path: an exception-handled parsing failure could reduce
+temporal-analysis coverage without a structural marker in the returned result.
+That emission was a reproducible code fact, not a proven vulnerability.
+
+A subsequent human/agent investigation constructed two otherwise identical
+artifacts. With parseable timestamps, CAIE detected one
+`TEMPORAL_CAUSALITY_VIOLATION` and the sealed pipeline produced
+`SUSPICION` (`0.4549`). Replacing one required timestamp with an unparseable
+value caused CAIE to omit the comparison, return zero fractures, and seal
+`NOISE` (`0.0192`) without a coverage marker. The HMAC audit log records the
+parse error, but the CAIE result and sealed decision did not distinguish
+“evaluated clean” from “not evaluated.”
+
+This is the intended evidence chain: FORGE supplied the deterministic lead;
+the follow-up investigation proved reachability and impact; VIGÍA receives a
+separate fix that preserves skipped temporal-pair coverage and abstains rather
+than sealing a clean result when decision-relevant analysis was omitted.
+
 ## What these runs demonstrate
 
 FORGE is not a guarantee that a repository is bug-free. It is a governed

@@ -129,6 +129,13 @@ show why that boundary is useful:
   temporal assertion, turning a `SUSPICION` result into `NOISE` without a
   coverage marker. Other candidates were classified honestly as false
   positives, component-level gaps, or still-unresolved reachability questions.
+- A subsequent investigation followed FORGE's deterministic lead in CAIE's
+  timestamp-parse path. FORGE did not prove the defect: a human/agent built a
+  controlled valid-versus-unparseable timestamp pair and established that a
+  real temporal-causality fracture disappeared, while the sealed pipeline
+  changed from `SUSPICION` (`0.4549`) to `NOISE` (`0.0192`) with no coverage
+  marker. The target fix is therefore evidence-preservation plus abstention,
+  not a detector verdict being relabeled after the fact.
 
 That is the intended workflow: deterministic detection narrows the search;
 human or agent adjudication traces callers and executes bounded experiments;
