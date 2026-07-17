@@ -243,7 +243,17 @@ def _invoke_worker(root: str, module_path: str, function_name: str, target_line:
     except BaseException as exc:  # child boundary: never leak target exceptions to the audit process
         target_file = str((Path(root) / module_path).resolve())
         frames = traceback.extract_tb(exc.__traceback__)
-        target_frames = [frame for frame in frames if str(Path(frame.filename).resolve()) == target_file]
+        target_frames = []
+        for frame in frames:
+            try:
+                is_target = str(Path(frame.filename).resolve()) == target_file
+            except (OSError, ValueError):
+                # eval/exec adds synthetic frames such as ``<string>``. They
+                # are useful context but are not filesystem paths and must
+                # never make the worker's exception-reporting path fail.
+                is_target = False
+            if is_target:
+                target_frames.append(frame)
         at_hypothesized_call = any(frame.lineno == target_line for frame in target_frames)
         frame_detail = ", ".join(f"{frame.filename}:{frame.lineno}" for frame in target_frames[-3:])
         queue.put(("exception", type(exc).__name__, str(exc)[:240], at_hypothesized_call, frame_detail))
