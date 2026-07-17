@@ -1,0 +1,4625 @@
+{
+  "deletion_judgments": {
+    "vigia/__init__.py": "deleting would remove unreachable code",
+    "vigia/abduction/hypothesis_lineage.py": "deleting would remove unreachable code",
+    "vigia/abduction/vigia_artifact_graph.py": "deleting would remove unreachable code",
+    "vigia/abduction/vigia_counter_fact.py": "deleting would remove unreachable code",
+    "vigia/action/vigia_mitigation_planner.py": "deleting would remove unreachable code",
+    "vigia/cli.py": "deleting would remove unreachable code",
+    "vigia/core/__init__.py": "deleting would remove unreachable code",
+    "vigia/core/advanced_signal_router.py": "deleting would remove unreachable code",
+    "vigia/core/carnegie_education_detector.py": "deleting would remove unreachable code",
+    "vigia/core/case_linkage.py": "deleting would remove unreachable code",
+    "vigia/core/causal_closure.py": "deleting would remove unreachable code",
+    "vigia/core/compare_baseline.py": "deleting would remove unreachable code",
+    "vigia/core/config_sentinel.py": "deleting would remove unreachable code",
+    "vigia/core/decision_layer.py": "deleting would remove unreachable code",
+    "vigia/core/dissent_report.py": "deleting would remove unreachable code",
+    "vigia/core/evidence_aggregator.py": "deleting would remove unreachable code",
+    "vigia/core/explainable_governance.py": "deleting would remove unreachable code",
+    "vigia/core/fit_calibration.py": "deleting would remove unreachable code",
+    "vigia/core/forensic_technical_detector.py": "deleting would remove unreachable code",
+    "vigia/core/geopolitical_v2.py": "deleting would remove unreachable code",
+    "vigia/core/integrity_constraints.py": "deleting would remove unreachable code",
+    "vigia/core/narrative_auditor.py": "deleting would remove unreachable code",
+    "vigia/core/normalization_layer.py": "deleting would remove unreachable code",
+    "vigia/core/ockham_adversarial.py": "deleting would remove unreachable code",
+    "vigia/core/planner_adapter.py": "deleting would remove unreachable code",
+    "vigia/core/resource_optimizer.py": "deleting would remove unreachable code",
+    "vigia/core/semiotic_detector_v2.py": "deleting would remove unreachable code",
+    "vigia/core/signal_quality_gate.py": "deleting would remove unreachable code",
+    "vigia/core/tool_log_chain.py": "deleting would remove unreachable code",
+    "vigia/core/vigia_scorer.py": "deleting would remove unreachable code",
+    "vigia/forensics/__init__.py": "deleting would remove unreachable code",
+    "vigia/forensics/pdf_dual_parser.py": "deleting would remove unreachable code",
+    "vigia/forensics/pki_tools.py": "deleting would remove unreachable code",
+    "vigia/forensics/temporal_forensics.py": "deleting would remove unreachable code",
+    "vigia/forensics/temporal_forensics_redteam.py": "deleting would remove unreachable code",
+    "vigia/forensics/vigia_chain_of_custody.py": "deleting would remove unreachable code",
+    "vigia/governance/trust_levels_p0.py": "deleting would remove unreachable code",
+    "vigia/inference/audit_action.py": "deleting would remove unreachable code",
+    "vigia/inference/check_determinism.py": "deleting would remove unreachable code",
+    "vigia/inference/recommendation_engine_v3.1.py": "deleting would remove unreachable code",
+    "vigia/llm/hallucination_guard.py": "deleting would remove unreachable code",
+    "vigia/models/ebs.py": "deleting would remove unreachable code",
+    "vigia/patterns/adversarial_silence.py": "deleting would remove unreachable code",
+    "vigia/pipeline/__init__.py": "deleting would remove unreachable code",
+    "vigia/pipeline/evidence_bundle.py": "deleting would remove unreachable code",
+    "vigia/pipeline/report_exporter_v2.py": "deleting would remove unreachable code",
+    "vigia/pipeline/security_evidence_registry.py": "deleting would remove unreachable code",
+    "vigia/security/vigia_seguridad.py": "deleting would remove unreachable code",
+    "vigia/sift/__init__.py": "deleting would remove unreachable code",
+    "vigia/sift/android_forensics.py": "deleting would remove unreachable code",
+    "vigia/sift/google_takeout_forensics.py": "deleting would remove unreachable code",
+    "vigia/sift/ios_forensics.py": "deleting would remove unreachable code",
+    "vigia/sift/macos_forensics.py": "deleting would remove unreachable code",
+    "vigia/sift/mft_parser.py": "deleting would remove unreachable code",
+    "vigia/sift/pcap_parser.py": "deleting would remove unreachable code",
+    "vigia/sift/sans_phase.py": "deleting would remove unreachable code",
+    "vigia/temporal/coherence_validator.py": "deleting would remove unreachable code",
+    "vigia/tools/__init__.py": "deleting would remove unreachable code",
+    "vigia/tools/adversarial_mutation_suite.py": "deleting would remove unreachable code",
+    "vigia/tools/build_calibration_dataset.py": "deleting would remove unreachable code",
+    "vigia/tools/eml_symbolic.py": "deleting would remove unreachable code",
+    "vigia/tools/entropy_kernel.py": "deleting would remove unreachable code",
+    "vigia/tools/entropy_locality.py": "deleting would remove unreachable code",
+    "vigia/tools/generate_calibration.py": "deleting would remove unreachable code",
+    "vigia/tools/geopolitical.py": "deleting would remove unreachable code",
+    "vigia/tools/init_patterns_db.py": "deleting would remove unreachable code",
+    "vigia/tools/metabolic_profiler.py": "deleting would remove unreachable code",
+    "vigia/tools/mitre_clustering.py": "deleting would remove unreachable code",
+    "vigia/tools/pattern_detector.py": "deleting would remove unreachable code",
+    "vigia/tools/picerl_mapping.py": "deleting would remove unreachable code",
+    "vigia/tools/sanitize_judicial.py": "deleting would remove unreachable code",
+    "vigia/tools/signal_adapter.py": "deleting would remove unreachable code",
+    "vigia/tools/temporal_drift.py": "deleting would remove unreachable code",
+    "vigia/tools/vigia_case_adapter.py": "deleting would remove unreachable code",
+    "vigia/tools/vigia_planner.py": "deleting would remove unreachable code",
+    "vigia/vigia_api.py": "deleting would remove unreachable code",
+    "vigia/vigia_command_center.py": "deleting would remove unreachable code",
+    "vigia/vigia_sift_bridge.py": "deleting would remove unreachable code"
+  },
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784323568,
+  "limitations": [
+    "Git history unavailable; temporal classification is conservative."
+  ],
+  "modules": [
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/abduction/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/abduction/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DUPLICATE",
+      "path": "vigia/abduction/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Verdict",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/abduction/hypothesis_lineage.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/abduction/hypothesis_lineage.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/abduction/hypothesis_lineage.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/abduction/vigia_artifact_graph.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/abduction/vigia_artifact_graph.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/abduction/vigia_artifact_graph.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Score",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/abduction/vigia_counter_fact.py"
+        },
+        {
+          "detail": "decision keywords: ['Score', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/abduction/vigia_counter_fact.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/abduction/vigia_counter_fact.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/abductive_intent_engine.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/abductive_intent_engine.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DUPLICATE",
+      "path": "vigia/abductive_intent_engine.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "decision",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/action/vigia_mitigation_planner.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/action/vigia_mitigation_planner.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/action/vigia_mitigation_planner.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/cli.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/cli.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/cli.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "Decision",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/collapse_decision.py"
+        },
+        {
+          "detail": "decision keywords: ['Decision', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/collapse_decision.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/collapse_decision.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/config.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/config.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/config.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/core/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/abductive_intent_engine.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/abductive_intent_engine.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DUPLICATE",
+      "path": "vigia/core/abductive_intent_engine.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/advanced_signal_router.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/advanced_signal_router.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/core/advanced_signal_router.py"
+    },
+    {
+      "caller_count": 4,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "4 caller(s), 4 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/atomic_io.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/atomic_io.py"
+        }
+      ],
+      "import_count": 4,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/atomic_io.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "decision"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/audit_action.py"
+        },
+        {
+          "detail": "decision keywords: ['decision']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/audit_action.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/audit_action.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "decision",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/bundle_builder.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/bundle_builder.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/bundle_builder.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/canonicalize.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/canonicalize.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/canonicalize.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/carnegie_education_detector.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/carnegie_education_detector.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/core/carnegie_education_detector.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/case_linkage.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/case_linkage.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/case_linkage.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE",
+        "Score",
+        "decision",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/causal_closure.py"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'Score', 'decision', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/causal_closure.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/causal_closure.py"
+    },
+    {
+      "caller_count": 14,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "14 caller(s), 14 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/chain_of_custody.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/chain_of_custody.py"
+        }
+      ],
+      "import_count": 14,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/chain_of_custody.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE",
+        "Score",
+        "Verdict",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/compare_baseline.py"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'Score', 'Verdict', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/compare_baseline.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/compare_baseline.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/config_sentinel.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/config_sentinel.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/config_sentinel.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "gate"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/darvo_detector.py"
+        },
+        {
+          "detail": "decision keywords: ['gate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/darvo_detector.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/darvo_detector.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Decision",
+        "decision",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/decision_layer.py"
+        },
+        {
+          "detail": "decision keywords: ['Decision', 'decision', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/decision_layer.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/decision_layer.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/devil_advocate_gen.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/devil_advocate_gen.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/devil_advocate_gen.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Verdict",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/dissent_report.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/dissent_report.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/dissent_report.py"
+    },
+    {
+      "caller_count": 37,
+      "decision_keywords": [
+        "decision"
+      ],
+      "evidence": [
+        {
+          "detail": "37 caller(s), 37 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/ebs_v1.py"
+        },
+        {
+          "detail": "decision keywords: ['decision']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/ebs_v1.py"
+        }
+      ],
+      "import_count": 37,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/ebs_v1.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "gate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/eco_check.py"
+        },
+        {
+          "detail": "decision keywords: ['gate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/eco_check.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/eco_check.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/enfsi.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/enfsi.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/enfsi.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "Classification",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/entanglement.py"
+        },
+        {
+          "detail": "decision keywords: ['Classification', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/entanglement.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/entanglement.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/evidence_aggregator.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/evidence_aggregator.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/core/evidence_aggregator.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "DECISION",
+        "decision",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/execution_logger.py"
+        },
+        {
+          "detail": "decision keywords: ['DECISION', 'decision', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/execution_logger.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/execution_logger.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Score",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/explainable_governance.py"
+        },
+        {
+          "detail": "decision keywords: ['Score', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/explainable_governance.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/explainable_governance.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/fit_calibration.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/fit_calibration.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/core/fit_calibration.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/forensic_adapter.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/forensic_adapter.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/forensic_adapter.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/forensic_technical_detector.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/forensic_technical_detector.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/core/forensic_technical_detector.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/geopolitical_v2.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/geopolitical_v2.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/geopolitical_v2.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "decision",
+        "gate",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/graph_stability.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'gate', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/graph_stability.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/graph_stability.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/hash_chain.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/hash_chain.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/hash_chain.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/integrity_constraints.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/integrity_constraints.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/integrity_constraints.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/likelihood_engine.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/likelihood_engine.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/likelihood_engine.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/likelihood_ratio.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/likelihood_ratio.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/likelihood_ratio.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "Score"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/lr_calibration.py"
+        },
+        {
+          "detail": "decision keywords: ['Score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/lr_calibration.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/lr_calibration.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "classification"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/narrative_auditor.py"
+        },
+        {
+          "detail": "decision keywords: ['classification']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/narrative_auditor.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/narrative_auditor.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/normalization_layer.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/normalization_layer.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/normalization_layer.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/ockham_adversarial.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/ockham_adversarial.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/core/ockham_adversarial.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "validate"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/path_guard.py"
+        },
+        {
+          "detail": "decision keywords: ['validate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/path_guard.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/path_guard.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "VERDICT",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/peirceplanner_bounded.py"
+        },
+        {
+          "detail": "decision keywords: ['VERDICT', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/peirceplanner_bounded.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/peirceplanner_bounded.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/planner_adapter.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/planner_adapter.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/planner_adapter.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "decision"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/resource_optimizer.py"
+        },
+        {
+          "detail": "decision keywords: ['decision']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/resource_optimizer.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/resource_optimizer.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "decision",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/risk_bounded_layer.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/risk_bounded_layer.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/risk_bounded_layer.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/semiotic_detector_v2.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/semiotic_detector_v2.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/core/semiotic_detector_v2.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "Gate",
+        "Score",
+        "gate",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/signal_mapper.py"
+        },
+        {
+          "detail": "decision keywords: ['Gate', 'Score', 'gate', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/signal_mapper.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/signal_mapper.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Gate",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/signal_quality_gate.py"
+        },
+        {
+          "detail": "decision keywords: ['Gate', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/signal_quality_gate.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/core/signal_quality_gate.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/tool_log_chain.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/tool_log_chain.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/core/tool_log_chain.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/trust_fusion.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/trust_fusion.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/core/trust_fusion.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/core/vigia_scorer.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/core/vigia_scorer.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/core/vigia_scorer.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/forensics/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/forensics/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/forensics/__init__.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "VERDICT",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/forensics/forensic_reporter.py"
+        },
+        {
+          "detail": "decision keywords: ['VERDICT', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/forensics/forensic_reporter.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/forensics/forensic_reporter.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/forensics/pdf_dual_parser.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/forensics/pdf_dual_parser.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/forensics/pdf_dual_parser.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/forensics/pki_tools.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/forensics/pki_tools.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/forensics/pki_tools.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/forensics/rfc3161_chain.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/forensics/rfc3161_chain.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/forensics/rfc3161_chain.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Classification"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/forensics/temporal_forensics.py"
+        },
+        {
+          "detail": "decision keywords: ['Classification']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/forensics/temporal_forensics.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/forensics/temporal_forensics.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Classification",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/forensics/temporal_forensics_redteam.py"
+        },
+        {
+          "detail": "decision keywords: ['Classification', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/forensics/temporal_forensics_redteam.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/forensics/temporal_forensics_redteam.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/forensics/vigia_chain_of_custody.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/forensics/vigia_chain_of_custody.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/forensics/vigia_chain_of_custody.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "Score",
+        "VERDICT",
+        "classification",
+        "classify",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/forensics/vision_audit.py"
+        },
+        {
+          "detail": "decision keywords: ['Score', 'VERDICT', 'classification', 'classify', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/forensics/vision_audit.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/forensics/vision_audit.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/governance/trust_levels_p0.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/governance/trust_levels_p0.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/governance/trust_levels_p0.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/inference/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/inference/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DUPLICATE",
+      "path": "vigia/inference/__init__.py"
+    },
+    {
+      "caller_count": 4,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "4 caller(s), 4 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/inference/abductive_intent_engine.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/inference/abductive_intent_engine.py"
+        }
+      ],
+      "import_count": 4,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/inference/abductive_intent_engine.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "gate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/inference/abductive_reasoner.py"
+        },
+        {
+          "detail": "decision keywords: ['gate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/inference/abductive_reasoner.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/inference/abductive_reasoner.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "SCORE",
+        "Score",
+        "VERDICT",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/inference/abductive_reasoner_v2.py"
+        },
+        {
+          "detail": "decision keywords: ['SCORE', 'Score', 'VERDICT', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/inference/abductive_reasoner_v2.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/inference/abductive_reasoner_v2.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/inference/audit_action.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/inference/audit_action.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/inference/audit_action.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/inference/behavioral_fingerprint.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/inference/behavioral_fingerprint.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/inference/behavioral_fingerprint.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "Score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/inference/case_pattern_library.py"
+        },
+        {
+          "detail": "decision keywords: ['Score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/inference/case_pattern_library.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/inference/case_pattern_library.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Validate"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/inference/check_determinism.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/inference/check_determinism.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/inference/check_determinism.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/inference/cross_artifact_resonance.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/inference/cross_artifact_resonance.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/inference/cross_artifact_resonance.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "Score",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/inference/metabolic_profiler.py"
+        },
+        {
+          "detail": "decision keywords: ['Score', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/inference/metabolic_profiler.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/inference/metabolic_profiler.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/inference/recommendation_engine_v3.1.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/inference/recommendation_engine_v3.1.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/inference/recommendation_engine_v3.1.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/llm/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/llm/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DUPLICATE",
+      "path": "vigia/llm/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/llm/hallucination_guard.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/llm/hallucination_guard.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/llm/hallucination_guard.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/memory/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/memory/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DUPLICATE",
+      "path": "vigia/memory/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/models/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/models/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DUPLICATE",
+      "path": "vigia/models/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "decision"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/models/ebs.py"
+        },
+        {
+          "detail": "decision keywords: ['decision']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/models/ebs.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/models/ebs.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/patterns/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/patterns/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DUPLICATE",
+      "path": "vigia/patterns/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/patterns/adversarial_silence.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/patterns/adversarial_silence.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/patterns/adversarial_silence.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/phonetic_loader.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/phonetic_loader.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/phonetic_loader.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/pipeline/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/pipeline/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/pipeline/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/pipeline/evidence_bundle.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/pipeline/evidence_bundle.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/pipeline/evidence_bundle.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "Decision",
+        "decision",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/pipeline/pipeline.py"
+        },
+        {
+          "detail": "decision keywords: ['Decision', 'decision', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/pipeline/pipeline.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/pipeline/pipeline.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/pipeline/report_builder.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/pipeline/report_builder.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/pipeline/report_builder.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/pipeline/report_exporter_v2.py"
+        },
+        {
+          "detail": "decision keywords: ['Score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/pipeline/report_exporter_v2.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/pipeline/report_exporter_v2.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/pipeline/security_evidence_registry.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/pipeline/security_evidence_registry.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/pipeline/security_evidence_registry.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "Validate",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/pipeline/vigia_integration_bridge.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/pipeline/vigia_integration_bridge.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/pipeline/vigia_integration_bridge.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sandbox.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sandbox.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sandbox.py"
+    },
+    {
+      "caller_count": 17,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "17 caller(s), 17 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/security/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/security/__init__.py"
+        }
+      ],
+      "import_count": 17,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/security/__init__.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "Validate"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/security/sandbox.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/security/sandbox.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/security/sandbox.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "Validate",
+        "score",
+        "validate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/security/security.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate', 'score', 'validate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/security/security.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/security/security.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/security/vigia_seguridad.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/security/vigia_seguridad.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/security/vigia_seguridad.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/sift/__init__.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/_fs_utils.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/_fs_utils.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/_fs_utils.py"
+    },
+    {
+      "caller_count": 19,
+      "decision_keywords": [
+        "classification",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "19 caller(s), 19 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/_math_utils.py"
+        },
+        {
+          "detail": "decision keywords: ['classification', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/_math_utils.py"
+        }
+      ],
+      "import_count": 19,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/_math_utils.py"
+    },
+    {
+      "caller_count": 4,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "4 caller(s), 4 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/_sql_utils.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/_sql_utils.py"
+        }
+      ],
+      "import_count": 4,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/_sql_utils.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/amcache_shimcache.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/amcache_shimcache.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/amcache_shimcache.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Validate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/android_forensics.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/android_forensics.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/sift/android_forensics.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/browser_forensics.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/browser_forensics.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/browser_forensics.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/disk_forensics.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/disk_forensics.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/disk_forensics.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/event_log_correlator.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/event_log_correlator.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/event_log_correlator.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/fsevents_parser.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/fsevents_parser.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/fsevents_parser.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Validate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/google_takeout_forensics.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/google_takeout_forensics.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/sift/google_takeout_forensics.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/ioc_manager.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/ioc_manager.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/ioc_manager.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Validate",
+        "score",
+        "validate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/ios_forensics.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate', 'score', 'validate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/ios_forensics.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/sift/ios_forensics.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Validate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/macos_forensics.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/macos_forensics.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/sift/macos_forensics.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/memory_forensics.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/memory_forensics.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/memory_forensics.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/mft_parser.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/mft_parser.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/sift/mft_parser.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "Score",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/network_forensics.py"
+        },
+        {
+          "detail": "decision keywords: ['Score', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/network_forensics.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/network_forensics.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/pcap_parser.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/pcap_parser.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/sift/pcap_parser.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/prefetch_analyzer.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/prefetch_analyzer.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/prefetch_analyzer.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/registry_timeline_reconstructor.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/registry_timeline_reconstructor.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/registry_timeline_reconstructor.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/sans_phase.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/sans_phase.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/sift/sans_phase.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/shellbag_analyzer.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/shellbag_analyzer.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/shellbag_analyzer.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "Gate",
+        "gate",
+        "validate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/sift_orchestrator.py"
+        },
+        {
+          "detail": "decision keywords: ['Gate', 'gate', 'validate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/sift_orchestrator.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/sift_orchestrator.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/unified_timeline_engine.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/unified_timeline_engine.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/unified_timeline_engine.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/sift/usb_device_tracker.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/sift/usb_device_tracker.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/sift/usb_device_tracker.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/temporal/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/temporal/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DUPLICATE",
+      "path": "vigia/temporal/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score",
+        "validate"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/temporal/coherence_validator.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'validate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/temporal/coherence_validator.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/temporal/coherence_validator.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/tools/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/abductive_intent_engine.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/abductive_intent_engine.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DUPLICATE",
+      "path": "vigia/tools/abductive_intent_engine.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/adversarial_mutation_suite.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/adversarial_mutation_suite.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/tools/adversarial_mutation_suite.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "decision",
+        "gate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/adversarial_nlp.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'gate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/adversarial_nlp.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/adversarial_nlp.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/adversarial_robustness.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/adversarial_robustness.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/adversarial_robustness.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/build_calibration_dataset.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/build_calibration_dataset.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/tools/build_calibration_dataset.py"
+    },
+    {
+      "caller_count": 8,
+      "decision_keywords": [
+        "DECISION",
+        "Score",
+        "Verdict",
+        "classification",
+        "classify",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "8 caller(s), 8 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/caie.py"
+        },
+        {
+          "detail": "decision keywords: ['DECISION', 'Score', 'Verdict', 'classification', 'classify', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/caie.py"
+        }
+      ],
+      "import_count": 8,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/caie.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/document_integrity.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/document_integrity.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/document_integrity.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/eml_gci.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/eml_gci.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/eml_gci.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/eml_symbolic.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/eml_symbolic.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/tools/eml_symbolic.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/entanglement.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/entanglement.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/entanglement.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/entropy_kernel.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/entropy_kernel.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/tools/entropy_kernel.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "VERDICT",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/entropy_locality.py"
+        },
+        {
+          "detail": "decision keywords: ['VERDICT', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/entropy_locality.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/tools/entropy_locality.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/forensic_db.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/forensic_db.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/forensic_db.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/generate_calibration.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/generate_calibration.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/tools/generate_calibration.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/geopolitical.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/geopolitical.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/tools/geopolitical.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/init_patterns_db.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/init_patterns_db.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/tools/init_patterns_db.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "VERDICT",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/metabolic_profiler.py"
+        },
+        {
+          "detail": "decision keywords: ['VERDICT', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/metabolic_profiler.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/tools/metabolic_profiler.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/mitre_clustering.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/mitre_clustering.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/tools/mitre_clustering.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "Verdict",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/mitre_mapping.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/mitre_mapping.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/mitre_mapping.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/nlp_constants.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/nlp_constants.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/nlp_constants.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "decision",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/paired_review.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/paired_review.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/paired_review.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/pattern_detector.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/pattern_detector.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/tools/pattern_detector.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/picerl_mapping.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/picerl_mapping.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/tools/picerl_mapping.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/sanitize_judicial.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/sanitize_judicial.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DEAD_WEIGHT",
+      "path": "vigia/tools/sanitize_judicial.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/signal_adapter.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/signal_adapter.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/tools/signal_adapter.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/signal_contract.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/signal_contract.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/signal_contract.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "VERDICT",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/temporal_drift.py"
+        },
+        {
+          "detail": "decision keywords: ['VERDICT', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/temporal_drift.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/tools/temporal_drift.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/vigia_adversarial_nlp.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/vigia_adversarial_nlp.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/vigia_adversarial_nlp.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "decision"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/vigia_case_adapter.py"
+        },
+        {
+          "detail": "decision keywords: ['decision']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/vigia_case_adapter.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/tools/vigia_case_adapter.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/vigia_entanglement.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/vigia_entanglement.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/vigia_entanglement.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Score",
+        "Validate",
+        "Verdict",
+        "decision",
+        "score",
+        "validate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/vigia_planner.py"
+        },
+        {
+          "detail": "decision keywords: ['Score', 'Validate', 'Verdict', 'decision', 'score', 'validate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/vigia_planner.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/tools/vigia_planner.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/visible_variables.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/visible_variables.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/visible_variables.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/tools/vision_audit.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/tools/vision_audit.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/tools/vision_audit.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/utils/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/utils/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DUPLICATE",
+      "path": "vigia/utils/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/verdict/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/verdict/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "DUPLICATE",
+      "path": "vigia/verdict/__init__.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "Classification",
+        "Verdict",
+        "classification",
+        "classify",
+        "decision",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/verdict/quadripartite.py"
+        },
+        {
+          "detail": "decision keywords: ['Classification', 'Verdict', 'classification', 'classify', 'decision', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/verdict/quadripartite.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia/verdict/quadripartite.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/vigia_api.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/vigia_api.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/vigia_api.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "decision",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/vigia_command_center.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/vigia_command_center.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/vigia_command_center.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Validate",
+        "Verdict",
+        "decision",
+        "score",
+        "validate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia/vigia_sift_bridge.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate', 'Verdict', 'decision', 'score', 'validate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia/vigia_sift_bridge.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "vigia/vigia_sift_bridge.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "Decision",
+        "GATE",
+        "Gate",
+        "Score",
+        "classification",
+        "classify",
+        "decision",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "vigia_scorer.py"
+        },
+        {
+          "detail": "decision keywords: ['Decision', 'GATE', 'Gate', 'Score', 'classification', 'classify', 'decision', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "vigia_scorer.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": null,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "vigia_scorer.py"
+    }
+  ],
+  "protocol": {
+    "adi": [
+      {
+        "evidence": [
+          "classified 167 modules and recorded caller/Git evidence"
+        ],
+        "stage": "abduction",
+        "statement": "Observed evidence may be explained by: classified 167 modules and recorded caller/Git evidence.",
+        "status": "PLAUSIBLE_HYPOTHESIS"
+      },
+      {
+        "evidence": [
+          "classified 167 modules and recorded caller/Git evidence"
+        ],
+        "stage": "deduction",
+        "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+        "status": "PREDICTION_REQUIRED"
+      },
+      {
+        "evidence": [
+          "classified 167 modules and recorded caller/Git evidence"
+        ],
+        "stage": "induction",
+        "statement": "No language-specific induction harness was registered for this observation.",
+        "status": "UNDETERMINED"
+      }
+    ],
+    "agent": "archaeologist",
+    "scope": [
+      "vigia/__init__.py",
+      "vigia/abduction/__init__.py",
+      "vigia/abduction/hypothesis_lineage.py",
+      "vigia/abduction/vigia_artifact_graph.py",
+      "vigia/abduction/vigia_counter_fact.py",
+      "vigia/abductive_intent_engine.py",
+      "vigia/action/vigia_mitigation_planner.py",
+      "vigia/cli.py",
+      "vigia/collapse_decision.py",
+      "vigia/config.py",
+      "vigia/core/__init__.py",
+      "vigia/core/abductive_intent_engine.py",
+      "vigia/core/advanced_signal_router.py",
+      "vigia/core/atomic_io.py",
+      "vigia/core/audit_action.py",
+      "vigia/core/bundle_builder.py",
+      "vigia/core/canonicalize.py",
+      "vigia/core/carnegie_education_detector.py",
+      "vigia/core/case_linkage.py",
+      "vigia/core/causal_closure.py",
+      "vigia/core/chain_of_custody.py",
+      "vigia/core/compare_baseline.py",
+      "vigia/core/config_sentinel.py",
+      "vigia/core/darvo_detector.py",
+      "vigia/core/decision_layer.py",
+      "vigia/core/devil_advocate_gen.py",
+      "vigia/core/dissent_report.py",
+      "vigia/core/ebs_v1.py",
+      "vigia/core/eco_check.py",
+      "vigia/core/enfsi.py",
+      "vigia/core/entanglement.py",
+      "vigia/core/evidence_aggregator.py",
+      "vigia/core/execution_logger.py",
+      "vigia/core/explainable_governance.py",
+      "vigia/core/fit_calibration.py",
+      "vigia/core/forensic_adapter.py",
+      "vigia/core/forensic_technical_detector.py",
+      "vigia/core/geopolitical_v2.py",
+      "vigia/core/graph_stability.py",
+      "vigia/core/hash_chain.py",
+      "vigia/core/integrity_constraints.py",
+      "vigia/core/likelihood_engine.py",
+      "vigia/core/likelihood_ratio.py",
+      "vigia/core/lr_calibration.py",
+      "vigia/core/narrative_auditor.py",
+      "vigia/core/normalization_layer.py",
+      "vigia/core/ockham_adversarial.py",
+      "vigia/core/path_guard.py",
+      "vigia/core/peirceplanner_bounded.py",
+      "vigia/core/planner_adapter.py",
+      "vigia/core/resource_optimizer.py",
+      "vigia/core/risk_bounded_layer.py",
+      "vigia/core/semiotic_detector_v2.py",
+      "vigia/core/signal_mapper.py",
+      "vigia/core/signal_quality_gate.py",
+      "vigia/core/tool_log_chain.py",
+      "vigia/core/trust_fusion.py",
+      "vigia/core/vigia_scorer.py",
+      "vigia/forensics/__init__.py",
+      "vigia/forensics/forensic_reporter.py",
+      "vigia/forensics/pdf_dual_parser.py",
+      "vigia/forensics/pki_tools.py",
+      "vigia/forensics/rfc3161_chain.py",
+      "vigia/forensics/temporal_forensics.py",
+      "vigia/forensics/temporal_forensics_redteam.py",
+      "vigia/forensics/vigia_chain_of_custody.py",
+      "vigia/forensics/vision_audit.py",
+      "vigia/governance/trust_levels_p0.py",
+      "vigia/inference/__init__.py",
+      "vigia/inference/abductive_intent_engine.py",
+      "vigia/inference/abductive_reasoner.py",
+      "vigia/inference/abductive_reasoner_v2.py",
+      "vigia/inference/audit_action.py",
+      "vigia/inference/behavioral_fingerprint.py",
+      "vigia/inference/case_pattern_library.py",
+      "vigia/inference/check_determinism.py",
+      "vigia/inference/cross_artifact_resonance.py",
+      "vigia/inference/metabolic_profiler.py",
+      "vigia/inference/recommendation_engine_v3.1.py",
+      "vigia/llm/__init__.py",
+      "vigia/llm/hallucination_guard.py",
+      "vigia/memory/__init__.py",
+      "vigia/models/__init__.py",
+      "vigia/models/ebs.py",
+      "vigia/patterns/__init__.py",
+      "vigia/patterns/adversarial_silence.py",
+      "vigia/phonetic_loader.py",
+      "vigia/pipeline/__init__.py",
+      "vigia/pipeline/evidence_bundle.py",
+      "vigia/pipeline/pipeline.py",
+      "vigia/pipeline/report_builder.py",
+      "vigia/pipeline/report_exporter_v2.py",
+      "vigia/pipeline/security_evidence_registry.py",
+      "vigia/pipeline/vigia_integration_bridge.py",
+      "vigia/sandbox.py",
+      "vigia/security/__init__.py",
+      "vigia/security/sandbox.py",
+      "vigia/security/security.py",
+      "vigia/security/vigia_seguridad.py",
+      "vigia/sift/__init__.py",
+      "vigia/sift/_fs_utils.py",
+      "vigia/sift/_math_utils.py",
+      "vigia/sift/_sql_utils.py",
+      "vigia/sift/amcache_shimcache.py",
+      "vigia/sift/android_forensics.py",
+      "vigia/sift/browser_forensics.py",
+      "vigia/sift/disk_forensics.py",
+      "vigia/sift/event_log_correlator.py",
+      "vigia/sift/fsevents_parser.py",
+      "vigia/sift/google_takeout_forensics.py",
+      "vigia/sift/ioc_manager.py",
+      "vigia/sift/ios_forensics.py",
+      "vigia/sift/macos_forensics.py",
+      "vigia/sift/memory_forensics.py",
+      "vigia/sift/mft_parser.py",
+      "vigia/sift/network_forensics.py",
+      "vigia/sift/pcap_parser.py",
+      "vigia/sift/prefetch_analyzer.py",
+      "vigia/sift/registry_timeline_reconstructor.py",
+      "vigia/sift/sans_phase.py",
+      "vigia/sift/shellbag_analyzer.py",
+      "vigia/sift/sift_orchestrator.py",
+      "vigia/sift/unified_timeline_engine.py",
+      "vigia/sift/usb_device_tracker.py",
+      "vigia/temporal/__init__.py",
+      "vigia/temporal/coherence_validator.py",
+      "vigia/tools/__init__.py",
+      "vigia/tools/abductive_intent_engine.py",
+      "vigia/tools/adversarial_mutation_suite.py",
+      "vigia/tools/adversarial_nlp.py",
+      "vigia/tools/adversarial_robustness.py",
+      "vigia/tools/build_calibration_dataset.py",
+      "vigia/tools/caie.py",
+      "vigia/tools/document_integrity.py",
+      "vigia/tools/eml_gci.py",
+      "vigia/tools/eml_symbolic.py",
+      "vigia/tools/entanglement.py",
+      "vigia/tools/entropy_kernel.py",
+      "vigia/tools/entropy_locality.py",
+      "vigia/tools/forensic_db.py",
+      "vigia/tools/generate_calibration.py",
+      "vigia/tools/geopolitical.py",
+      "vigia/tools/init_patterns_db.py",
+      "vigia/tools/metabolic_profiler.py",
+      "vigia/tools/mitre_clustering.py",
+      "vigia/tools/mitre_mapping.py",
+      "vigia/tools/nlp_constants.py",
+      "vigia/tools/paired_review.py",
+      "vigia/tools/pattern_detector.py",
+      "vigia/tools/picerl_mapping.py",
+      "vigia/tools/sanitize_judicial.py",
+      "vigia/tools/signal_adapter.py",
+      "vigia/tools/signal_contract.py",
+      "vigia/tools/temporal_drift.py",
+      "vigia/tools/vigia_adversarial_nlp.py",
+      "vigia/tools/vigia_case_adapter.py",
+      "vigia/tools/vigia_entanglement.py",
+      "vigia/tools/vigia_planner.py",
+      "vigia/tools/visible_variables.py",
+      "vigia/tools/vision_audit.py",
+      "vigia/utils/__init__.py",
+      "vigia/verdict/__init__.py",
+      "vigia/verdict/quadripartite.py",
+      "vigia/vigia_api.py",
+      "vigia/vigia_command_center.py",
+      "vigia/vigia_sift_bridge.py",
+      "vigia_scorer.py"
+    ],
+    "skills": [
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "abductive-engineering",
+        "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry atomic-state-mutation before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "atomic-state-mutation",
+        "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "audit-before-patch",
+        "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "claim-provenance-discipline",
+        "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "codebase-health-assessment",
+        "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "daubert-defensible-writing",
+        "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry deterministic-core before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "deterministic-core",
+        "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "diagnosing-bugs",
+        "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "git-discipline",
+        "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry honest-degradation before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "honest-degradation",
+        "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "llm-out-of-the-loop",
+        "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "red-team-auditing",
+        "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "reverse-engineering",
+        "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "secure-by-construction",
+        "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "software-archaeology",
+        "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry sql-aggregation-not-materialization before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "sql-aggregation-not-materialization",
+        "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "surgical-patcher",
+        "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry tamper-evident-audit-chain before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "tamper-evident-audit-chain",
+        "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry validate-at-the-boundary before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "validate-at-the-boundary",
+        "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "versioned-schema-evolution",
+        "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+        "status": "LOADED_ONLY"
+      }
+    ]
+  },
+  "root": "/tmp/forge-vigia-production-view",
+  "schema_version": "1.1",
+  "stacks": [
+    {
+      "confidence": {
+        "denominator": 20,
+        "numerator": 11
+      },
+      "evidence": [
+        {
+          "detail": "Python: 167 files with extension",
+          "kind": "file_count",
+          "role": "primary",
+          "source": "filesystem"
+        }
+      ],
+      "name": "Python"
+    }
+  ],
+  "summary": {
+    "CONNECTED_ALIVE": 77,
+    "DEAD_WEIGHT": 33,
+    "DUPLICATE": 12,
+    "FOSSIL_HIGH_RISK": 45
+  }
+}

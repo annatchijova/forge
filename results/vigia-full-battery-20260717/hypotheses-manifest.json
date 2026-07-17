@@ -1,0 +1,244 @@
+{
+  "audited_modules": [
+    "vigia/collapse_decision.py",
+    "vigia/config.py",
+    "vigia/core/atomic_io.py",
+    "vigia/core/audit_action.py",
+    "vigia/core/bundle_builder.py",
+    "vigia/core/canonicalize.py",
+    "vigia/core/chain_of_custody.py",
+    "vigia/core/darvo_detector.py",
+    "vigia/core/devil_advocate_gen.py",
+    "vigia/core/ebs_v1.py",
+    "vigia/core/eco_check.py",
+    "vigia/core/enfsi.py",
+    "vigia/core/entanglement.py",
+    "vigia/core/execution_logger.py",
+    "vigia/core/forensic_adapter.py",
+    "vigia/core/graph_stability.py",
+    "vigia/core/hash_chain.py",
+    "vigia/core/likelihood_engine.py",
+    "vigia/core/likelihood_ratio.py",
+    "vigia/core/lr_calibration.py",
+    "vigia/core/path_guard.py",
+    "vigia/core/peirceplanner_bounded.py",
+    "vigia/core/risk_bounded_layer.py",
+    "vigia/core/signal_mapper.py",
+    "vigia/core/trust_fusion.py",
+    "vigia/forensics/forensic_reporter.py",
+    "vigia/forensics/rfc3161_chain.py",
+    "vigia/forensics/vision_audit.py",
+    "vigia/inference/abductive_intent_engine.py",
+    "vigia/inference/abductive_reasoner.py",
+    "vigia/inference/abductive_reasoner_v2.py",
+    "vigia/inference/behavioral_fingerprint.py",
+    "vigia/inference/case_pattern_library.py",
+    "vigia/inference/cross_artifact_resonance.py",
+    "vigia/inference/metabolic_profiler.py",
+    "vigia/phonetic_loader.py",
+    "vigia/pipeline/pipeline.py",
+    "vigia/pipeline/report_builder.py",
+    "vigia/pipeline/vigia_integration_bridge.py",
+    "vigia/sandbox.py",
+    "vigia/security/__init__.py",
+    "vigia/security/sandbox.py",
+    "vigia/security/security.py",
+    "vigia/sift/_fs_utils.py",
+    "vigia/sift/_math_utils.py",
+    "vigia/sift/_sql_utils.py",
+    "vigia/sift/amcache_shimcache.py",
+    "vigia/sift/browser_forensics.py",
+    "vigia/sift/disk_forensics.py",
+    "vigia/sift/event_log_correlator.py",
+    "vigia/sift/fsevents_parser.py",
+    "vigia/sift/ioc_manager.py",
+    "vigia/sift/memory_forensics.py",
+    "vigia/sift/network_forensics.py",
+    "vigia/sift/prefetch_analyzer.py",
+    "vigia/sift/registry_timeline_reconstructor.py",
+    "vigia/sift/shellbag_analyzer.py",
+    "vigia/sift/sift_orchestrator.py",
+    "vigia/sift/unified_timeline_engine.py",
+    "vigia/sift/usb_device_tracker.py",
+    "vigia/tools/adversarial_nlp.py",
+    "vigia/tools/adversarial_robustness.py",
+    "vigia/tools/caie.py",
+    "vigia/tools/document_integrity.py",
+    "vigia/tools/eml_gci.py",
+    "vigia/tools/entanglement.py",
+    "vigia/tools/forensic_db.py",
+    "vigia/tools/mitre_mapping.py",
+    "vigia/tools/nlp_constants.py",
+    "vigia/tools/paired_review.py",
+    "vigia/tools/signal_contract.py",
+    "vigia/tools/vigia_adversarial_nlp.py",
+    "vigia/tools/vigia_entanglement.py",
+    "vigia/tools/visible_variables.py",
+    "vigia/tools/vision_audit.py",
+    "vigia/verdict/quadripartite.py",
+    "vigia_scorer.py"
+  ],
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784323572,
+  "hypotheses": [
+    {
+      "description": "The decision comparison `return score >= 2.0, max(1, len(strong)), min(1.0, score / 5.0)` at vigia/core/entanglement.py:505 uses a binary float threshold, so rounding at the boundary may flip the result.",
+      "falsification_test": "Run inputs immediately below, exactly at, and above the threshold using exact decimal values; stable, documented boundary behavior falsifies the hypothesis.",
+      "file_lines": [
+        505
+      ],
+      "module_path": "vigia/core/entanglement.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `data = json.load(f)` at vigia/core/lr_calibration.py:490 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 490; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        490
+      ],
+      "module_path": "vigia/core/lr_calibration.py",
+      "rank": 1
+    },
+    {
+      "description": "The dynamic command invocation `proc = subprocess.run(` at vigia/pipeline/pipeline.py:1165 may pass attacker-controlled arguments without an enclosing failure boundary.",
+      "falsification_test": "Invoke this call with a harmless invalid executable and a shell metacharacter fixture; an explicit exception path with no command execution falsifies the hypothesis.",
+      "file_lines": [
+        1165
+      ],
+      "module_path": "vigia/pipeline/pipeline.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `bundle_dict = json.load(f)` at vigia/pipeline/pipeline.py:1272 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 1272; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        1272
+      ],
+      "module_path": "vigia/pipeline/pipeline.py",
+      "rank": 2
+    },
+    {
+      "description": "The parser call `bundle_dict = json.load(f)` at vigia/pipeline/pipeline.py:1328 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 1328; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        1328
+      ],
+      "module_path": "vigia/pipeline/pipeline.py",
+      "rank": 3
+    },
+    {
+      "description": "The parser call `sealed_dict = json.loads(result[\"bundle_json\"])` at vigia/pipeline/vigia_integration_bridge.py:1189 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 1189; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        1189
+      ],
+      "module_path": "vigia/pipeline/vigia_integration_bridge.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `case = json.load(f)` at vigia/pipeline/vigia_integration_bridge.py:1299 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 1299; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        1299
+      ],
+      "module_path": "vigia/pipeline/vigia_integration_bridge.py",
+      "rank": 2
+    },
+    {
+      "description": "The parser call `entry = json.loads(raw_line)` at vigia/security/security.py:519 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 519; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        519
+      ],
+      "module_path": "vigia/security/security.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `entries = self._parse(json.loads(parsed_json or \"{}\").get(\"entries\", []))` at vigia/sift/disk_forensics.py:131 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 131; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        131
+      ],
+      "module_path": "vigia/sift/disk_forensics.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `tree = ET.parse(xml_path)` at vigia/sift/event_log_correlator.py:187 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 187; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        187
+      ],
+      "module_path": "vigia/sift/event_log_correlator.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `data = json.load(f)` at vigia/sift/ioc_manager.py:123 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 123; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        123
+      ],
+      "module_path": "vigia/sift/ioc_manager.py",
+      "rank": 1
+    },
+    {
+      "description": "The dynamic command invocation `result = subprocess.run(` at vigia/sift/registry_timeline_reconstructor.py:189 may pass attacker-controlled arguments without an enclosing failure boundary.",
+      "falsification_test": "Invoke this call with a harmless invalid executable and a shell metacharacter fixture; an explicit exception path with no command execution falsifies the hypothesis.",
+      "file_lines": [
+        189
+      ],
+      "module_path": "vigia/sift/registry_timeline_reconstructor.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `mft_bytes = json.dumps(json.loads(mft_json), sort_keys=True, separators=(\",\", \":\")).encode()` at vigia/sift/sift_orchestrator.py:507 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 507; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        507
+      ],
+      "module_path": "vigia/sift/sift_orchestrator.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `return json.load(f)` at vigia/tools/adversarial_nlp.py:177 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 177; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        177
+      ],
+      "module_path": "vigia/tools/adversarial_nlp.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `_PHONETIC_CACHE = json.load(fh)` at vigia/tools/document_integrity.py:70 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 70; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        70
+      ],
+      "module_path": "vigia/tools/document_integrity.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `data = json.loads(raw)` at vigia/tools/forensic_db.py:268 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 268; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        268
+      ],
+      "module_path": "vigia/tools/forensic_db.py",
+      "rank": 1
+    },
+    {
+      "description": "The parser call `hist = json.loads(raw)` at vigia/tools/forensic_db.py:367 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "falsification_test": "Feed malformed input to the function containing line 367; a named boundary error or explicit rejection falsifies the hypothesis.",
+      "file_lines": [
+        367
+      ],
+      "module_path": "vigia/tools/forensic_db.py",
+      "rank": 2
+    }
+  ],
+  "limitations": [
+    "Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only."
+  ],
+  "root": "/tmp/forge-vigia-production-view",
+  "schema_version": "1.0",
+  "triage_schema_version": "1.1"
+}
