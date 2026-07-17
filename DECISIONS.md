@@ -179,11 +179,14 @@ claim remains tied to a fixture, detector output, disposition, and commit.
 ### Variant corpus scope boundaries (2026-07-18)
 
 The first variants baseline is intentionally below the canonical floor. After
-auditing the mechanism behind surprising hits, it records 12 detected forms
-out of 36 variants and preserves every current non-boundary miss in
-`tests/corpus/recall-variants-baseline.json`. Those misses
-are recall backlog, not failures to hide or reasons to weaken the canonical
-gate.
+auditing the mechanism behind surprising hits, it initially recorded 12
+detected forms out of 36 variants. The first closure lot then raised that
+measurement to 23/36 without changing the canonical 29/29 floor or producing
+a benign-twin hit. Its import-alias, credential-target, and local path-flow
+mechanisms are recorded in `docs/recall-gap-closure-lot-1.md`; every remaining
+non-boundary miss stays in `tests/corpus/recall-variants-baseline.json`. Those
+misses are recall backlog, not failures to hide or reasons to weaken the
+canonical gate.
 
 Two variants are explicit scope boundaries at this point: a credential formed
 by concatenating literals (`"ab" + "cd"`) and an indirect evaluator invoked

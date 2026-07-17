@@ -90,6 +90,24 @@ shell-variable result was marked an incidental generic-flow hit rather than
 coverage of shell-flag resolution. The baseline fails only on coverage
 regression or an unrecorded miss, not because an honest known gap exists.
 
+## Recall-gap closure — lot 1
+
+The first measured closure lot raised realistic-variant recall from 12/36 to
+23/36 while preserving canonical recall (29/29), zero benign-twin hits, and
+the precision corpus at 1.0. It did so through three bounded mechanisms:
+
+1. module-level alias/direct-import resolution and YAML loader normalization
+   for unsafe deserialization (4/4 variants);
+2. direct credential-shaped mapping keys, attributes, and dict entries (3/4;
+   literal concatenation remains a scope boundary); and
+3. local unsafe-origin propagation through path expressions and keyword sinks
+   with composed sanitizer barriers (5/7; `pathlib` remains undecided).
+
+This is a depth improvement inside already modeled families, not evidence that
+FORGE now covers unmodeled bug classes or every spelling of these families. The
+specific fixtures, retained boundaries, and verification commands are in
+[`recall-gap-closure-lot-1.md`](recall-gap-closure-lot-1.md).
+
 ## Reproducibility and checkpoints
 
 The relevant checkpoints are:
@@ -100,10 +118,12 @@ The relevant checkpoints are:
   phrase **Forensic governance runtime for reproducible software audits**.
 - `596c658` — add the seeded recall runner, fixtures, baseline, tests, and
   scope documentation.
+- `f42fa6a`, `a85c285`, and `39b94e9` — first bounded closure lot for
+  deserialization imports, credential targets, and path expressions.
 
-Validation at the pause point: full test suite `289 passed`; the seeded recall
-gate is green at the canonical floor (`1.0` per represented family, zero twin
-FPs). No variant-corpus claim has been made yet.
+Validation after lot 1: the full test suite, precision corpus, and seeded
+recall gate are green. Canonical recall remains `1.0` per represented family,
+with zero twin FPs; variant recall is 23/36 and its known gaps remain visible.
 
 ## Decision discipline going forward
 

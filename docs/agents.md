@@ -109,18 +109,25 @@ never promoted to a stronger claim without an executed check.
 Pure AST scanning, no network calls, no execution. Flags four families with
 conservative, named benign criteria (see `DECISIONS.md`):
 
-* **hardcoded-credential** — a non-empty, non-placeholder string literal
-  assigned to a credential-shaped name; or a non-empty, non-placeholder
-  string literal passed as the *default* argument of `os.getenv(name,
-  default)`, where `name` is credential-shaped. `os.getenv(...)` itself is a
-  legitimate way to source a credential — the finding is specifically the
-  hardcoded fallback that silently applies whenever the variable is unset,
-  e.g. `os.getenv("ADMIN_PASSWORD", "admin123")`. Found via a stress-test
-  audit of a quickly-built checkout service.
-* **unsafe-deserialization** — `pickle.load(s)`, `marshal.loads`, or
-  `yaml.load` without `Loader=yaml.SafeLoader`
-* **path-traversal** — a function parameter reaching `os.path.*` or `open()`
-  without a visible `normpath`/`realpath` step first
+* **hardcoded-credential** — a non-empty, non-placeholder string literal at a
+  credential-shaped assignment target: a local name, attribute, string mapping
+  key, or direct dict entry; or a non-empty, non-placeholder string literal
+  passed as the *default* argument of `os.getenv(name, default)`, where `name`
+  is credential-shaped. `os.getenv(...)` itself is a legitimate way to source
+  a credential — the finding is specifically the hardcoded fallback that
+  silently applies whenever the variable is unset, e.g.
+  `os.getenv("ADMIN_PASSWORD", "admin123")`. Literal concatenation remains
+  outside this direct-AST contract.
+* **unsafe-deserialization** — `pickle.load(s)`, `marshal.loads`, or risky
+  YAML loads (`load`, `unsafe_load`, `full_load`) without
+  `Loader=yaml.SafeLoader`. The scanner resolves unshadowed module-level
+  aliases and direct imports, but deliberately does not infer ambiguous local
+  shadowing.
+* **path-traversal** — a function parameter or locally propagated alias
+  reaching `os.path.*` or `open()` through a direct expression, positional
+  argument, or keyword argument without a visible composed
+  `normpath`/`realpath`/`basename`/`resolve` barrier. `pathlib` sinks are not
+  covered by this family yet.
 * **unverified-webhook** — a state-mutating route (`@app.post`/`put`/`patch`/
   `delete`) whose path is named like a webhook, with no FastAPI
   `Depends(...)` parameter and no signature/HMAC verification anywhere in

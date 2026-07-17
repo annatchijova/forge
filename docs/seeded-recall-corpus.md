@@ -49,6 +49,17 @@ The result is deterministic for a given commit and manifest, so the JSON
 emitted by the command can be stored alongside any benchmark run and compared
 across commits.
 
+## Current measured baseline
+
+The canonical corpus remains 29/29 (`1.0`) with zero benign-twin hits. The
+realistic-variants corpus is 23/36 (`0.638889`) after the first gap-closure
+lot. That increase came from import spellings for unsafe deserialization,
+extended credential targets, and local path-expression flow; it is not a
+claim of family-complete coverage. The remaining non-boundary misses stay in
+the baseline as visible backlog. See
+[`recall-gap-closure-lot-1.md`](recall-gap-closure-lot-1.md) for exact
+fixtures, limits, commits, and reproduction commands.
+
 ## Scope is not a cleanliness certificate
 
 The out-of-scope fixtures deliberately include business-logic exception
