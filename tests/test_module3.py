@@ -119,6 +119,14 @@ def test_subprocess_induction_uses_an_in_memory_probe_not_a_real_process(tmp_pat
     assert result.induction[0]["family"] == "subprocess"
     assert "no process was started" in result.induction[0]["detail"]
 
+
+def test_float_threshold_induction_compares_float_and_exact_decimal_boundaries(tmp_path):
+    (tmp_path / "main.py").write_text("def verdict(value):\n    verdict = float(value) > 0.1\n    return verdict\n")
+    result = verify_hypotheses(generate_hypotheses(triage(tmp_path)), induce=True)
+    assert result.findings[0].epistemic_level == "CONFIRMED BY INDUCTION"
+    assert result.induction[0]["family"] == "float-threshold"
+    assert "diverged" in result.induction[0]["detail"]
+
 def test_float_tolerance_is_benign_exact_float_remains_candidate(tmp_path):
     (tmp_path / "main.py").write_text("import math\ndef score(x):\n    return math.isclose(x, 1.0, abs_tol=0.01)\n")
     result = verify_hypotheses(generate_hypotheses(triage(tmp_path)))

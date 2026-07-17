@@ -1,11 +1,12 @@
-"""Conservative, time-bounded execution for parser, eval/exec, and subprocess hypotheses.
+"""Conservative, time-bounded execution for parser, eval/exec, subprocess, and float hypotheses.
 
 Induction is deliberately narrower than arbitrary fuzzing.  It only invokes a
 module-level function in a spawned child process. Parser hypotheses receive
 synthetic malformed text; eval/exec hypotheses receive a sentinel payload
 that may write only inside the child sandbox; subprocess hypotheses receive
-synthetic command input against an in-memory process probe. Other hypothesis
-families remain AST-only until a family-specific harness exists.
+synthetic command input against an in-memory process probe; float thresholds
+are compared against exact-decimal probes. Other hypothesis families remain
+AST-only until a family-specific harness exists.
 """
 from __future__ import annotations
 
@@ -22,6 +23,7 @@ import subprocess
 import sys
 import tempfile
 import traceback
+from decimal import Decimal
 from queue import Empty
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -196,6 +198,42 @@ _EVAL_SENTINEL_PAYLOAD = f"open({_EVAL_SENTINEL_NAME!r}, 'w').write('confirmed')
 _SUBPROCESS_PROBE_PAYLOAD = "forge-induction; harmless-metacharacter"
 
 
+def _float_probe_plan(tree: ast.AST, line: int) -> dict[str, Any] | None:
+    """Build an exact-decimal differential probe for `float(x) <op> N`."""
+    comparison = next((node for node in ast.walk(tree) if isinstance(node, ast.Compare) and node.lineno == line), None)
+    if not (comparison and len(comparison.ops) == len(comparison.comparators) == 1):
+        return None
+    left, right, op = comparison.left, comparison.comparators[0], comparison.ops[0]
+    if not (
+        isinstance(left, ast.Call) and isinstance(left.func, ast.Name) and left.func.id == "float"
+        and len(left.args) == 1 and isinstance(left.args[0], ast.Name)
+        and isinstance(right, ast.Constant) and isinstance(right.value, float)
+    ):
+        return None
+    operators = {ast.Gt: ">", ast.GtE: ">=", ast.Lt: "<", ast.LtE: "<=", ast.Eq: "=="}
+    symbol = operators.get(type(op))
+    if symbol is None:
+        return None
+    threshold = Decimal(str(right.value))
+    delta = Decimal("1e-17")
+    return {
+        "parameter": left.args[0].id,
+        "operator": symbol,
+        "threshold": str(threshold),
+        "probes": tuple(str(value) for value in (threshold - delta, threshold, threshold + delta)),
+    }
+
+
+def _decimal_compare(value: Decimal, threshold: Decimal, operator: str) -> bool:
+    return {
+        ">": value > threshold,
+        ">=": value >= threshold,
+        "<": value < threshold,
+        "<=": value <= threshold,
+        "==": value == threshold,
+    }[operator]
+
+
 def _install_subprocess_probe() -> list[tuple[tuple[Any, ...], dict[str, Any]]]:
     """Replace process launchers with an in-memory probe in the child only."""
     calls: list[tuple[tuple[Any, ...], dict[str, Any]]] = []
@@ -223,7 +261,7 @@ def _install_subprocess_probe() -> list[tuple[tuple[Any, ...], dict[str, Any]]]:
     return calls
 
 
-def _invoke_worker(root: str, module_path: str, function_name: str, target_line: int, family: str, queue: Any) -> None:
+def _invoke_worker(root: str, module_path: str, function_name: str, target_line: int, family: str, float_plan: dict[str, Any] | None, queue: Any) -> None:
     try:
         root_path = Path(root)
         with tempfile.TemporaryDirectory(prefix="forge-induction-") as sandbox:
@@ -267,6 +305,22 @@ def _invoke_worker(root: str, module_path: str, function_name: str, target_line:
                 if family == "subprocess" and isinstance(value, str):
                     value = _SUBPROCESS_PROBE_PAYLOAD
                 args.append(value)
+            if family == "float-threshold":
+                if float_plan is None:
+                    queue.put(("float-probe-unavailable",))
+                    return
+                parameters = [parameter for parameter in signature.parameters.values() if parameter.kind not in (parameter.VAR_POSITIONAL, parameter.VAR_KEYWORD) and parameter.default is parameter.empty]
+                index = next((index for index, parameter in enumerate(parameters) if parameter.name == float_plan["parameter"]), None)
+                if index is None or index >= len(args):
+                    queue.put(("float-probe-unavailable",))
+                    return
+                outcomes = []
+                for probe in float_plan["probes"]:
+                    attempt = list(args)
+                    attempt[index] = probe
+                    outcomes.append(bool(function(*attempt)))
+                queue.put(("float-probe", tuple(outcomes)))
+                return
             result = function(*args)
             if family == "eval/exec":
                 queue.put(("eval-sentinel", (Path(_EVAL_SENTINEL_NAME)).is_file()))
@@ -301,9 +355,11 @@ def induce_hypothesis(root: str | Path, module_path: str, line: int, description
         family = "eval/exec"
     elif "subprocess call" in description.lower() or "dynamic command invocation" in description.lower():
         family = "subprocess"
+    elif "float threshold" in description.lower() or "tolerance call" in description.lower():
+        family = "float-threshold"
     else:
         family = "unsupported"
-    if family not in {"parser", "eval/exec", "subprocess"}:
+    if family not in {"parser", "eval/exec", "subprocess", "float-threshold"}:
         return InductionResult("UNDETERMINED", family, "No executable harness is registered for this hypothesis family.", "AST-only verification")
     path = (Path(root) / module_path).resolve()
     root_path = Path(root).resolve()
@@ -317,6 +373,9 @@ def induce_hypothesis(root: str | Path, module_path: str, line: int, description
         return InductionResult("UNDETERMINED", family, f"Cannot prepare isolated execution: {exc}", f"{module_path}:{line}")
     if function is None or isinstance(function, ast.AsyncFunctionDef):
         return InductionResult("UNDETERMINED", family, "No synchronous module-level function boundary was found.", f"{module_path}:{line}")
+    float_plan = _float_probe_plan(tree, line) if family == "float-threshold" else None
+    if family == "float-threshold" and float_plan is None:
+        return InductionResult("UNDETERMINED", family, "No supported float(x) comparison shape was found for differential induction.", f"{module_path}:{line}")
 
     # Test the public detector boundary when the parser call is in a private
     # helper. This avoids treating trusted lexicon loaders as user-input APIs.
@@ -332,7 +391,7 @@ def induce_hypothesis(root: str | Path, module_path: str, line: int, description
 
     context = multiprocessing.get_context("spawn")
     queue = context.Queue()
-    process = context.Process(target=_invoke_worker, args=(str(root_path), module_path, function_name, line, family, queue))
+    process = context.Process(target=_invoke_worker, args=(str(root_path), module_path, function_name, line, family, float_plan, queue))
     process.start()
     process.join(INDUCTION_TIMEOUT_SECONDS)
     if process.is_alive():
@@ -353,6 +412,17 @@ def induce_hypothesis(root: str | Path, module_path: str, line: int, description
         if result[1]:
             return InductionResult("CONFIRMED BY INDUCTION", family, "Synthetic command input reached the in-memory subprocess probe; no process was started.", f"{module_path}:{line}: subprocess probe observed")
         return InductionResult("FALSIFIED", family, "Synthetic command input did not reach a subprocess launch boundary.", f"{module_path}:{line}: subprocess probe not observed")
+    if result[0] == "float-probe-unavailable":
+        return InductionResult("UNDETERMINED", family, "Float differential probe could not bind the compared parameter.", f"{module_path}:{line}")
+    if result[0] == "float-probe":
+        assert float_plan is not None
+        threshold = Decimal(float_plan["threshold"])
+        expected = tuple(_decimal_compare(Decimal(value), threshold, float_plan["operator"]) for value in float_plan["probes"])
+        actual = tuple(result[1])
+        evidence = f"{module_path}:{line}: probes={float_plan['probes']}; Decimal={expected}; float={actual}"
+        if actual != expected:
+            return InductionResult("CONFIRMED BY INDUCTION", family, "Binary float comparison diverged from exact-decimal behavior at the threshold probes.", evidence)
+        return InductionResult("FALSIFIED", family, "Float threshold matched exact-decimal behavior for all threshold probes.", evidence)
     if result[0] == "exception":
         error_name, detail = result[1], result[2]
         at_hypothesized_call = bool(result[3]) if len(result) > 3 else False
