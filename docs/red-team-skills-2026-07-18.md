@@ -9,7 +9,7 @@ Fecha: 2026-07-18.
 | H1 | Confirmado por inducción | CONFIRMED BY INDUCTION | Recomendar cierre de puerta lateral; no parchear durante el audit. |
 | H1.b | Confirmado | CODE FACT | Exponer atestación al verificar sello. |
 | H2 | Falsificado para fixture propuesto | FALSIFIED | Regresión unitaria para callers mixtos. |
-| H3 | Confirmado | CODE FACT | Corregir identidad de riesgo antes de confiar en dedup. |
+| H3 | Confirmado y remediado | CODE FACT | La identidad conserva la columna AST del sink; regresión para dos sinks en una línea. |
 | H4 | Confirmado | CODE FACT | ERROR debe degradar/abstener veredicto global. |
 | H5 | Ataques ensayados contenidos | CODE FACT | Mantener límites y cobertura adversarial. |
 | R1 | No comparable | UNDETERMINED | Congelar commit y scope para baseline. |
@@ -36,7 +36,9 @@ El fixture tenía una ruta `@app.post` que llamaba `_sink(request.args["path"])`
 
 ## H3 — deduplicación de sinks distintos
 
-`def load(a, b): open(a); open(b)` produjo dos `SecurityFinding` crudos de path traversal en línea 1. Tras `_agent_finding()` y `_deduplicate_findings()` quedó uno; `occurrences` fue `("main.py:1", "main.py:1")` y no identifica argumento/sink. Es una `CODE FACT`: la identidad actual usa descripción y evidencia sin expresión del argumento. `occurrences` conserva multiplicidad, no identidad de riesgo. No se añadió negativo de corpus: es un FN por colapso, no un FP; primero debe corregirse la identidad.
+En el commit auditado, `def load(a, b): open(a); open(b)` produjo dos `SecurityFinding` crudos de path traversal en línea 1. Tras `_agent_finding()` y `_deduplicate_findings()` quedó uno; `occurrences` fue `("main.py:1", "main.py:1")` y no identifica argumento/sink. Fue una `CODE FACT`: la identidad usaba descripción y evidencia sin ubicación precisa del sink. `occurrences` conservaba multiplicidad, no identidad de riesgo.
+
+**Remediación.** El adaptador conserva ahora `line:column` de los sinks AST de Python. Dos llamadas distintas en la misma línea tienen evidencia e identidad distintas; dos observaciones del mismo sink aún deduplican. La regresión `test_dedup_keeps_distinct_path_sinks_on_the_same_line` cubre el FN confirmado. El resultado histórico no se promociona: sólo queda corregido en la versión posterior a este audit.
 
 ## H4 — ERROR de skill deja un clean verdict
 

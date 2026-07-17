@@ -2,7 +2,7 @@ from forge.agents.security_auditor import audit as security_audit
 from forge.agents.web_auditor import audit as web_audit
 from forge.agents.integrity_inspector import inspect as integrity_inspect
 from forge.models import Evidence, Finding
-from forge.runtime import _deduplicate_findings
+from forge.runtime import _agent_finding, _deduplicate_findings
 from forge.severity import severity_for
 
 
@@ -99,6 +99,19 @@ def test_dedup_identity_collapses_variable_names_but_preserves_occurrences():
     result = _deduplicate_findings([first, second])
     assert len(result) == 1
     assert result[0].occurrences == ("app.py:7", "app.py:7")
+
+
+def test_dedup_keeps_distinct_path_sinks_on_the_same_line(tmp_path):
+    _write(tmp_path, "main.py", "def load(a, b): open(a); open(b)\n")
+    raw = [item for item in security_audit(tmp_path).findings if item.family == "path-traversal"]
+    assert len(raw) == 2
+    assert len({item.column for item in raw}) == 2
+    findings = [_agent_finding("security_auditor", item) for item in raw]
+    result = _deduplicate_findings(findings)
+    assert len(result) == 2
+    assert {item.evidence[0].source for item in result} == {
+        item.evidence[0].source for item in findings
+    }
 
 
 def test_money_as_float_covers_literals_division_and_sql_dialects_without_decimal_fp(tmp_path):

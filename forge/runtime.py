@@ -74,9 +74,12 @@ def _coverage(root: Path, families=(), discovered=None, analyzed_paths=()) -> Co
 def _agent_finding(agent: str, item) -> Finding:
     detail = item.description
     outcome = "PROTOCOL_GAP" if agent == "validate-at-the-boundary" else "OBSERVED"
+    source = f"{item.path}:{item.line}"
+    if getattr(item, "column", None) is not None:
+        source += f":{item.column}"
     return Finding(
         "OBSERVED", "CODE FACT", item.path, detail,
-        (Evidence("source", f"{item.path}:{item.line}", detail, "primary"),),
+        (Evidence("source", source, detail, "primary"),),
         f"AST detector emitted this observation: {item.family}.", agent, outcome,
         provenance=("AST",),
         controllability=getattr(item, "controllability", "UNDETERMINED"),

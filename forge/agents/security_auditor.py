@@ -13,6 +13,7 @@ class SecurityFinding:
     family: str; path: str; line: int; description: str
     controllability: str = "UNDETERMINED"
     exploitability: str = "NOT_ASSESSED"
+    column: int | None = None
 
 _CRED = re.compile(r"(password|passwd|secret|token|api[_-]?key|credential)", re.I)
 _PLACEHOLDER = re.compile(r"^(changeme|change_me|example|placeholder|your[_ -].*|<.*>)$", re.I)
@@ -249,9 +250,9 @@ def _paths(tree):
                 continue
             controllability = _path_controllability(tree, function, sorted(unsafe_parameters)[0])
             if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == "os" and node.func.attr == "path":
-                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches os.path operation without proven normalization", controllability, "PLAUSIBLE")
+                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches os.path operation without proven normalization", controllability, "PLAUSIBLE", node.col_offset + 1)
             elif isinstance(node.func, ast.Name) and node.func.id == "open":
-                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches open() without proven normalization", controllability, "PLAUSIBLE")
+                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches open() without proven normalization", controllability, "PLAUSIBLE", node.col_offset + 1)
 
 def audit(root: str | os.PathLike[str], eligible: set[str] | None = None) -> tuple[SecurityFinding, ...]:
     base=Path(root)
@@ -259,7 +260,7 @@ def audit(root: str | os.PathLike[str], eligible: set[str] | None = None) -> tup
     scan=prepare_python_scan(base, scope); out=[]; examinations=dict(scan.examinations)
     for rel, tree in scan.modules:
         for f in (*_assigned(tree), *_getenv_default_credential(tree), *_unverified_webhooks(tree), *_deserialization(tree), *_paths(tree), *_sql_injection(tree), *_command_injection(tree)):
-            out.append(SecurityFinding(f.family, rel, f.line, f.description, f.controllability, f.exploitability))
+            out.append(SecurityFinding(f.family, rel, f.line, f.description, f.controllability, f.exploitability, f.column))
         examinations[rel]="examined_with_findings" if any(x.path == rel for x in out) else "examined_clean"
     return AgentScanResult(
         tuple(out), examinations,
