@@ -123,7 +123,8 @@ classification is deliberately split:
 | Bucket | Candidates | Status |
 |---|---|---|
 | Structural gap in the function | `forensic_adapter`, two disk-timeline paths, EVTX parser, three Volatility parsers, registry key parser | The item is omitted from a returned forensic collection without a count or marker. These are CODE FACT coverage gaps; their final VIGÍA severity still requires path-specific induction. |
-| Decision-adjacent structural gap | `vigia_scorer._vigia_score` CAIE artifact skip | **P1 confirmed by induction.** A valid two-artifact temporal-causality case produced one live CAIE fracture and `SUSPICION` (`0.5058`). Replacing the fracture-bearing artifact's metadata with a list made `CaieArtifact(...)` raise; the handler silently skipped it, producing zero fractures and `NOISE` (`0.0701`). No rejection count entered the result. |
+| Decision-adjacent structural gap | normalization of CAIE-bound artifact metadata | **P1 confirmed by induction.** A valid two-artifact temporal-causality case produced one live CAIE fracture and `SUSPICION` (`0.5058`). A JSON `metadata` list without acquisition fields was silently rewritten to `{}` by normalization, passed validation, removed the temporal assertion, and produced zero fractures and `NOISE` (`0.0701`) without a coverage marker. |
+| Component-level honest-degradation gap | `vigia_scorer._vigia_score` CAIE artifact skip | **CODE FACT; end-to-end P1 not yet established.** The `except Exception: continue` silently drops any artifact whose `CaieArtifact` construction fails. A non-empty list can reach this branch after validation when acquisition metadata prevents normalization, but the same malformed type later crashes a downstream metadata consumer rather than yielding a sealed clean verdict. |
 | FP corrected in FORGE | `PrefetchAnalyzer.analyze_directory` | The handler increments `unparsed`; the returned `PrefetchAnalysisResult` exposes `unparsed_files`. This is visible F7 degradation, not a silent drop. FP-008 adds an `AugAssign` counter regression. |
 | FP: outside the intra-function decision boundary | `paired_review._prior_trust_mean`, MCP `list_processes` | These are best-effort / terminal analysis outputs with no verdict authority. Their caller or user-facing boundary supplies the relevant context, which a local handler rule cannot infer. |
 
@@ -134,13 +135,28 @@ misread local handler. Future reporting will keep three counts separate:
 confirmed or structurally supported gaps, corpus-correctable false positives,
 and false positives caused by the declared intra-function scope boundary.
 
-The scorer experiment is deliberately distinct from the adapter result above.
+The scorer experiments are deliberately distinct from the adapter result above.
 The adapter feeds pipeline CAIE annotation and remained P2 after reconciliation
-with B-062/B-094. The induced skip is in `vigia_scorer._vigia_score`, where the
-live CAIE fracture boost is applied before the decision is emitted. The
-malformed field was chosen to exercise the actual `except Exception: continue`
-branch: a non-numeric `raw_score` is now safely zeroed inside `CaieArtifact` and
-does **not** exercise the discard branch.
+with B-062/B-094. The live CAIE fracture boost is applied in
+`vigia_scorer._vigia_score` before the decision is emitted, but the trace
+separated two mechanisms that must not be conflated:
+
+- `raw_score="not_a_number"` is safely zeroed by `CaieArtifact`; it does not
+  exercise the discard branch.
+- `metadata=[]` without acquisition fields is silently normalized to `{}`;
+  validation then passes and the temporal assertion disappears. This is the
+  induced P1 verdict flip above, and is a normalization/coverage defect.
+- A non-empty metadata list can be preserved by adding top-level
+  `acquisition_tool`; it passes `validate_case_schema`, makes
+  `CaieArtifact(...)` raise, and is caught by the local `continue`. However,
+  that same list later reaches a metadata consumer and raises before a verdict
+  is returned. Thus local discard reachability is confirmed, but an exploitable
+  sealed-verdict flip through that exact branch remains unconfirmed.
+
+The broad structural rule remains: any CAIE construction failure is dropped
+without a rejection count or F7 marker. The demonstrated JSON trigger fixes the
+severity of the normalization path; it does not license an overclaim that every
+local `continue` currently reaches a clean sealed verdict.
 
 The two terminal false positives do not justify an ad-hoc caller analysis.
 They are recorded as a contract limitation: the executable skill is direct AST
