@@ -113,6 +113,12 @@ def audit(root: str | Path, eligible: set[str] | None = None) -> tuple[AgentScan
             for match in re.finditer(r"\b(\w+)\s*=.*?\.replace\s*\(", source)
             if re.search(r"\[\^|separator|slash|path|name|slug", match.group(0), re.I)
         }
+        sanitized_names.update(
+            match.group(1)
+            for match in re.finditer(
+                r"\b(\w+)\s*=\s*(?:\w+\.)?(?:basename|resolve|normalize)\s*\(", source
+            )
+        )
         # Carry the evidence through simple filename assignments such as
         # ``filename = f"{slug}_{timestamp}.json"``.  A sanitizer on ``slug``
         # is still relevant when that value is the only user-derived part of

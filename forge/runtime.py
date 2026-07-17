@@ -69,15 +69,26 @@ def _coverage(root: Path, families=(), discovered=None, analyzed_paths=()) -> Co
 def _agent_finding(agent: str, item) -> Finding:
     detail = item.description
     outcome = "PROTOCOL_GAP" if agent == "validate-at-the-boundary" else "OBSERVED"
-    return Finding("OBSERVED", "CODE FACT", item.path, detail, (Evidence("source", f"{item.path}:{item.line}", detail, "primary"),), f"AST detector emitted this observation: {item.family}.", agent, outcome, provenance=("AST",))
+    return Finding(
+        "OBSERVED", "CODE FACT", item.path, detail,
+        (Evidence("source", f"{item.path}:{item.line}", detail, "primary"),),
+        f"AST detector emitted this observation: {item.family}.", agent, outcome,
+        provenance=("AST",),
+        controllability=getattr(item, "controllability", "UNDETERMINED"),
+        exploitability=getattr(item, "exploitability", "NOT_ASSESSED"),
+    )
 
 
 def _with_severity(finding: Finding, family: str | None = None) -> Finding:
     return Finding(finding.category, finding.epistemic_level, finding.module_path,
                    finding.description, finding.evidence, finding.reasoning,
                    finding.agent, finding.outcome,
-                   severity_for(finding.module_path, finding.epistemic_level, finding.description, finding.agent, family=family),
-                   finding.provenance)
+                   severity_for(
+                       finding.module_path, finding.epistemic_level, finding.description, finding.agent,
+                       family=family, controllability=finding.controllability,
+                       exploitability=finding.exploitability,
+                   ),
+                   finding.provenance, finding.controllability, finding.exploitability, finding.occurrences)
 
 
 def _finding_identity(finding: Finding) -> tuple[str, str, int, tuple[tuple[str, str, str], ...]]:
@@ -88,30 +99,36 @@ def _finding_identity(finding: Finding) -> tuple[str, str, int, tuple[tuple[str,
         if match:
             line = int(match.group(1))
             break
-    evidence = tuple(sorted(
-        (item.kind, item.source, " ".join(item.detail.split()))
-        for item in finding.evidence
-    ))
+    def normalized_evidence(detail: str) -> str:
+        # Variable names in a one-argument code expression do not change the
+        # risk identity (`json.dumps(payload)` vs `json.dumps(report)`). Keep
+        # all other prose untouched so distinct evidence is never erased.
+        compact = " ".join(detail.split())
+        return __import__("re").sub(r"(?<=\()\s*[A-Za-z_]\w*(?=\s*[,\)])", "_", compact)
+    evidence = tuple(sorted((item.kind, item.source, normalized_evidence(item.detail)) for item in finding.evidence))
     return finding_family(finding.description), finding.module_path, line, evidence
 
 
 def _deduplicate_findings(findings: list[Finding]) -> list[Finding]:
-    """Collapse exact evidence duplicates while preserving cross-agent provenance."""
+    """Collapse normalized risk identities while retaining every occurrence."""
     merged: dict[tuple[str, str, int, tuple[tuple[str, str, str], ...]], Finding] = {}
     agents: dict[tuple[str, str, int, tuple[tuple[str, str, str], ...]], set[str]] = {}
+    occurrences: dict[tuple[str, str, int, tuple[tuple[str, str, str], ...]], list[str]] = {}
     for finding in findings:
         identity = _finding_identity(finding)
         if identity not in merged:
             merged[identity] = finding
             agents[identity] = {finding.agent}
-            continue
-        agents[identity].add(finding.agent)
+            occurrences[identity] = list(finding.occurrences) or [item.source for item in finding.evidence]
+        else:
+            agents[identity].add(finding.agent)
+            occurrences[identity].extend(finding.occurrences or tuple(item.source for item in finding.evidence))
     result: list[Finding] = []
     for identity, finding in merged.items():
         provenance = list(finding.provenance)
         if len(agents[identity]) > 1:
             provenance.append("MULTIPLE_AGENTS")
-        result.append(replace(finding, provenance=tuple(dict.fromkeys(provenance))))
+        result.append(replace(finding, provenance=tuple(dict.fromkeys(provenance)), occurrences=tuple(occurrences[identity])))
     return result
 
 

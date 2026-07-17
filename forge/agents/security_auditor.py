@@ -11,6 +11,8 @@ from forge.agent_protocol import mandatory_protocol
 @dataclass(frozen=True)
 class SecurityFinding:
     family: str; path: str; line: int; description: str
+    controllability: str = "UNDETERMINED"
+    exploitability: str = "NOT_ASSESSED"
 
 _CRED = re.compile(r"(password|passwd|secret|token|api[_-]?key|credential)", re.I)
 _PLACEHOLDER = re.compile(r"^(changeme|change_me|example|placeholder|your[_ -].*|<.*>)$", re.I)
@@ -106,6 +108,86 @@ def _deserialization(tree):
             safe = any(k.arg == "Loader" and isinstance(k.value, ast.Attribute) and isinstance(k.value.value, ast.Name) and k.value.value.id == "yaml" and k.value.attr == "SafeLoader" for k in n.keywords)
             if not safe: yield SecurityFinding("unsafe-deserialization", "", n.lineno, "yaml.load lacks Loader=yaml.SafeLoader")
 
+def _path_barrier_names(function: ast.FunctionDef | ast.AsyncFunctionDef) -> dict[str, int]:
+    """Return names proven sanitized before a later sink in one function."""
+    barriers: dict[str, int] = {}
+
+    def target_names(node: ast.AST) -> set[str]:
+        if isinstance(node, ast.Name):
+            return {node.id}
+        if isinstance(node, (ast.Tuple, ast.List)):
+            return {name for item in node.elts for name in target_names(item)}
+        return set()
+
+    def is_path_sanitizer(value: ast.AST) -> bool:
+        if isinstance(value, ast.Call) and isinstance(value.func, ast.Attribute):
+            if value.func.attr in {"normpath", "realpath", "basename", "resolve"}:
+                return True
+        return isinstance(value, ast.Attribute) and value.attr == "name"
+
+    # Fixed point is deliberate: `b = basename(a); c = b; open(c)` is just as
+    # safe as using b directly, and a one-pass AST walk loses that fact.
+    changed = True
+    while changed:
+        changed = False
+        for node in ast.walk(function):
+            if not isinstance(node, (ast.Assign, ast.AnnAssign)):
+                continue
+            value = node.value
+            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            safe = is_path_sanitizer(value) or any(
+                isinstance(name, ast.Name) and name.id in barriers
+                for name in ast.walk(value) if isinstance(name, ast.Name)
+            )
+            if safe:
+                for target in targets:
+                    for name in target_names(target):
+                        if name not in barriers:
+                            barriers[name] = node.lineno
+                            changed = True
+    # Validation barriers only apply after their guard.  The body must visibly
+    # terminate, otherwise an allowlist/extension check is merely commentary.
+    for node in ast.walk(function):
+        if not isinstance(node, ast.If) or not any(isinstance(item, (ast.Raise, ast.Return)) for item in ast.walk(node)):
+            continue
+        names = {item.id for item in ast.walk(node.test) if isinstance(item, ast.Name)}
+        allowlist = isinstance(node.test, ast.Compare) and any(isinstance(op, (ast.NotIn, ast.In)) for op in node.test.ops)
+        extension = any(isinstance(item, ast.Attribute) and item.attr in {"endswith", "suffix"} for item in ast.walk(node.test))
+        if allowlist or extension:
+            for name in names:
+                barriers.setdefault(name, node.lineno)
+    return barriers
+
+
+def _literal_or_constant_path(node: ast.AST) -> bool:
+    if isinstance(node, ast.Constant):
+        return True
+    return (
+        isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "Path"
+        and any(isinstance(item, ast.Name) and item.id == "__file__" for item in ast.walk(node))
+    )
+
+
+def _path_controllability(
+    tree: ast.AST, function: ast.FunctionDef | ast.AsyncFunctionDef, parameter: str,
+) -> str:
+    params = [item.arg for item in (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs)]
+    if parameter not in params:
+        return "UNDETERMINED"
+    if any(True for _ in _route_decorators(function)) or function.name == "analyze":
+        return "ATTACKER_CONTROLLED"
+    if not function.name.startswith("_"):
+        return "UNDETERMINED"
+    index = params.index(parameter)
+    callers = [
+        node for node in ast.walk(tree)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == function.name
+    ]
+    if callers and all(index < len(call.args) and _literal_or_constant_path(call.args[index]) for call in callers):
+        return "INTERNAL_ONLY"
+    return "UNDETERMINED"
+
+
 def _paths(tree):
     parents = {child: parent for parent in ast.walk(tree) for child in ast.iter_child_nodes(parent)}
 
@@ -119,33 +201,30 @@ def _paths(tree):
 
     for function in (node for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))):
         params = {argument.arg for argument in (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs)}
-        normalized = {
-            target.id
-            for node in ast.walk(function)
-            if isinstance(node, ast.Assign)
-            and isinstance(node.value, ast.Call)
-            and isinstance(node.value.func, ast.Attribute)
-            and node.value.func.attr in {"normpath", "realpath"}
-            for target in node.targets
-            if isinstance(target, ast.Name)
-        }
+        normalized = _path_barrier_names(function)
         for node in ast.walk(function):
             if enclosing_function(node) is not function or not isinstance(node, ast.Call) or not node.args:
                 continue
-            reaches_parameter = any(isinstance(argument, ast.Name) and argument.id in params and argument.id not in normalized for argument in node.args)
-            if not reaches_parameter:
+            unsafe_parameters = {
+                argument.id for argument in node.args
+                if isinstance(argument, ast.Name) and argument.id in params
+                and (argument.id not in normalized or normalized[argument.id] >= node.lineno)
+            }
+            if not unsafe_parameters:
                 continue
+            controllability = _path_controllability(tree, function, sorted(unsafe_parameters)[0])
             if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == "os" and node.func.attr == "path":
-                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches os.path operation without proven normalization")
+                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches os.path operation without proven normalization", controllability)
             elif isinstance(node.func, ast.Name) and node.func.id == "open":
-                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches open() without proven normalization")
+                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches open() without proven normalization", controllability)
 
 def audit(root: str | os.PathLike[str], eligible: set[str] | None = None) -> tuple[SecurityFinding, ...]:
     base=Path(root)
     scope = set(eligible) if eligible is not None else {m.path for m in triage(base).modules if m.module_class in {ModuleClass.CONNECTED_ALIVE, ModuleClass.FOSSIL_HIGH_RISK, ModuleClass.DEAD_WEIGHT}}
     scan=prepare_python_scan(base, scope); out=[]; examinations=dict(scan.examinations)
     for rel, tree in scan.modules:
-        for f in (*_assigned(tree), *_getenv_default_credential(tree), *_unverified_webhooks(tree), *_deserialization(tree), *_paths(tree)): out.append(SecurityFinding(f.family, rel, f.line, f.description))
+        for f in (*_assigned(tree), *_getenv_default_credential(tree), *_unverified_webhooks(tree), *_deserialization(tree), *_paths(tree)):
+            out.append(SecurityFinding(f.family, rel, f.line, f.description, f.controllability, f.exploitability))
         examinations[rel]="examined_with_findings" if any(x.path == rel for x in out) else "examined_clean"
     return AgentScanResult(
         tuple(out), examinations,

@@ -51,18 +51,27 @@ def finding_family(description: str) -> str:
     return "other"
 
 
-def severity_for(module_path: str, epistemic_level: str, description: str, agent: str = "", family: str | None = None) -> str:
-    """Return potential impact capped by the evidence level.
+def severity_for(
+    module_path: str,
+    epistemic_level: str,
+    description: str,
+    agent: str = "",
+    family: str | None = None,
+    controllability: str = "UNDETERMINED",
+    exploitability: str = "NOT_ASSESSED",
+) -> str:
+    """Derive severity deterministically from four independent axes.
 
-    Impact and confidence are deliberately separate dimensions. A dangerous
-    family can still be only a plausible hypothesis; it must not become a
-    critical result merely because of its family or module name.
+    Family describes potential impact; epistemic level, controllability and
+    exploitability bound what may be claimed.  In particular, no finding is
+    HIGH/CRITICAL unless attacker control and flow evidence are explicit.
     """
     family = family or finding_family(description)
     impact = _IMPACT_BY_FAMILY.get(family, "MEDIUM")
-    if any(marker in module_path for marker in CORE_MODULE_MARKERS) and _SEVERITY_RANK[impact] < _SEVERITY_RANK["HIGH"]:
-        impact = "HIGH"
-    if agent == "validate-at-the-boundary" and _SEVERITY_RANK[impact] < _SEVERITY_RANK["HIGH"]:
-        impact = "HIGH"
     ceiling = _CONFIDENCE_CEILING.get(epistemic_level, "LOW")
-    return impact if _SEVERITY_RANK[impact] <= _SEVERITY_RANK[ceiling] else ceiling
+    severity = impact if _SEVERITY_RANK[impact] <= _SEVERITY_RANK[ceiling] else ceiling
+    if controllability != "ATTACKER_CONTROLLED":
+        ceiling = "MEDIUM"
+    elif exploitability not in {"PLAUSIBLE", "CONFIRMED"}:
+        ceiling = "MEDIUM"
+    return severity if _SEVERITY_RANK[severity] <= _SEVERITY_RANK[ceiling] else ceiling

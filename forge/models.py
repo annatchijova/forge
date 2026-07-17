@@ -209,6 +209,8 @@ class HypothesesManifest:
 RED_TEAM_EPISTEMIC_LEVELS = frozenset({"CODE FACT", "PLAUSIBLE HYPOTHESIS", "CONFIRMED BY INDUCTION", "FALSIFIED"})
 PROTOCOL_EPISTEMIC_LEVELS = frozenset({"PROTOCOL_GAP", "DESIGN_INCONSISTENCY", "UNDETERMINED", "NOT_APPLICABLE"})
 EPISTEMIC_LEVELS = RED_TEAM_EPISTEMIC_LEVELS | PROTOCOL_EPISTEMIC_LEVELS
+CONTROLLABILITY_LEVELS = frozenset({"ATTACKER_CONTROLLED", "INTERNAL_ONLY", "UNDETERMINED"})
+EXPLOITABILITY_LEVELS = frozenset({"OBSERVED_BOUNDARY", "PLAUSIBLE", "CONFIRMED", "NOT_ASSESSED"})
 
 @dataclass(frozen=True)
 class Finding:
@@ -222,6 +224,9 @@ class Finding:
     outcome: str = "OBSERVED"
     severity: str = "MEDIUM"
     provenance: tuple[str, ...] = ()
+    controllability: str = "UNDETERMINED"
+    exploitability: str = "NOT_ASSESSED"
+    occurrences: tuple[str, ...] = ()
     def __post_init__(self) -> None:
         if self.category not in {"OBSERVED", "INFERRED", "OPINION"}:
             raise ValueError("invalid finding category")
@@ -235,6 +240,10 @@ class Finding:
             raise ValueError("invalid finding outcome")
         if self.severity not in {"CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"}:
             raise ValueError("invalid finding severity")
+        if self.controllability not in CONTROLLABILITY_LEVELS:
+            raise ValueError("invalid finding controllability")
+        if self.exploitability not in EXPLOITABILITY_LEVELS:
+            raise ValueError("invalid finding exploitability")
         if not self.evidence:
             raise ValueError("every finding requires evidence")
 
