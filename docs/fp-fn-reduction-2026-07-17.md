@@ -81,5 +81,5 @@ python3 -m forge.precision --corpus tests/corpus \
   --min-precision 0.95 --min-recall 0.90
 ```
 
-El cierre pasó con 263 tests. Los commits incluyen coautoría de Terra (Codex /
+El cierre pasó con 266 tests. Los commits incluyen coautoría de Terra (Codex /
 ChatGPT 5.6).
