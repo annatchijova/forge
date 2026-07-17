@@ -99,7 +99,7 @@ def _overview_html(manifest: dict[str, Any], coverage: dict[str, Any] | None, fi
         highest = next((severity for severity in SEVERITY_ORDER if counts[severity]), "NONE")
         if coverage:
             eligible = coverage.get("eligible_source_files", coverage.get("files_discovered", 0))
-            scope = f"{coverage.get('files_analyzed', 0)} analyzed / {eligible} eligible source"
+            scope = f"{coverage.get('files_analyzed', 0)} parsed / {coverage.get('connected_alive_modules', 0)} in detector scope / {coverage.get('detector_scope_excluded_modules', 0)} outside detector scope"
         else:
             scope = "Unavailable"
         cards = [("Repository", str(manifest.get("root", "unknown"))), ("Generated", _generated_at(manifest.get("generated_at_epoch"))), ("Sealed records", str(len(findings))), ("Distinct review items", str(len(display_groups))), ("Highest severity", highest), ("Scope", scope)]
@@ -116,7 +116,7 @@ def _finding_html(finding: dict[str, Any], extended: bool, root: str, duplicate_
     additional_locations = "<p class='duplicate-note'>Also recorded at: " + ", ".join("<code>" + html.escape(location) + "</code>" for location in source_locations[1:]) + ".</p>" if len(source_locations) > 1 else ""
     body = [
         f"<div class='finding-heading'><h3>{html.escape(str(finding.get('module_path', 'unknown')))}</h3><span class='severity-badge severity-{severity.lower()}'>{severity}</span></div>",
-        f"<p>Agent: {html.escape(str(finding.get('agent', 'bug_investigator')))} · Category: {html.escape(str(finding.get('category', '')))} · Outcome: {html.escape(str(finding.get('outcome', 'OBSERVED')))}</p>",
+        f"<p><strong>Lead status:</strong> {html.escape(str(finding.get('epistemic_level', 'UNSPECIFIED')))} · Agent: {html.escape(str(finding.get('agent', 'bug_investigator')))} · Category: {html.escape(str(finding.get('category', '')))} · Outcome: {html.escape(str(finding.get('outcome', 'OBSERVED')))}</p>",
         f"<p>{html.escape(str(finding.get('description', '')))}</p>", duplicate_note, additional_locations,
         f"<pre>{html.escape(source_location)}: {html.escape(str(primary.get('detail', '')))}</pre>",
         "<details class='reproduction'><summary>Review actions</summary><p>Source location: <code>" + html.escape(source_location) + "</code></p><p>Reproduce this audit:</p><pre>" + html.escape(reproduction) + "</pre></details>",
@@ -153,8 +153,10 @@ def render_tiered_report(sealed_path: str | Path, mode: str, destination: str | 
     coverage = _sidecar(source, "coverage-report.json")
     eligible_source = coverage.get("eligible_source_files", coverage.get("files_discovered", 0)) if coverage else 0
     source_scope = (
-        f"Source coverage: {coverage.get('files_analyzed', 0)} analyzed / "
-        f"{eligible_source} eligible source; "
+        f"Source coverage: {coverage.get('files_analyzed', 0)} parsed / "
+        f"{eligible_source} eligible source; detector scope: "
+        f"{coverage.get('connected_alive_modules', 0)} CONNECTED_ALIVE, "
+        f"{coverage.get('detector_scope_excluded_modules', 0)} outside detector scope; "
         f"discovery accounting: {coverage.get('files_discovered', 0)} discovered"
         if coverage else "Source coverage: unavailable"
     )

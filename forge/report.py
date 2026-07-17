@@ -244,8 +244,8 @@ def render_report(triage_path: str | Path, hypotheses_path: str | Path, sealed_p
         coverage_data, ratio_text = coverage_summary
         coverage_section_html = (
             f'<section id="coverage"><h2>Coverage</h2>'
-            f'<p class="section-lede">Coverage is shown after the findings and decision context so the opening view stays focused.</p>'
-            f'<div class="coverage-hero"><strong>{_e(ratio_text)}</strong><span>{_e(coverage_data.get("files_analyzed", 0))} analyzed · {_e(coverage_data.get("eligible_source_files", coverage_data.get("files_discovered", 0)))} eligible source · {_e(coverage_data.get("files_skipped", 0))} skipped · {_e(coverage_data.get("files_discovered", 0))} discovered (accounting)</span></div>'
+            f'<p class="section-lede">Semantic coverage means modules that received detector attention, not only files that parsed.</p>'
+            f'<div class="coverage-hero"><strong>{_e(ratio_text)}</strong><span>{_e(coverage_data.get("files_analyzed", 0))} parsed · {_e(coverage_data.get("connected_alive_modules", 0))} in detector scope · {_e(coverage_data.get("detector_scope_excluded_modules", 0))} outside detector scope · {_e(coverage_data.get("files_skipped", 0))} skipped · {_e(coverage_data.get("files_discovered", 0))} discovered</span></div>'
             f'<p>Language coverage: {_e(coverage_data.get("language_coverage", {}))}</p>'
             f'<p>Skipped reasons: {_e(coverage_data.get("skipped_reasons", {}))}</p></section>'
         )

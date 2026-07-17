@@ -97,6 +97,21 @@ def _coverage(root: Path, families=(), discovered=None, analyzed_paths=()) -> Co
         language_coverage=dict(sorted(language_coverage.items())),
     )
 
+def _with_detector_scope(coverage: CoverageReport, triage_manifest) -> CoverageReport:
+    summary = dict(getattr(triage_manifest, "summary", {}) or {})
+    connected = int(summary.get("CONNECTED_ALIVE", 0))
+    excluded_by_class = {
+        str(name): int(count)
+        for name, count in summary.items()
+        if name != "CONNECTED_ALIVE" and int(count) > 0
+    }
+    return replace(
+        coverage,
+        connected_alive_modules=connected,
+        detector_scope_excluded_modules=sum(excluded_by_class.values()),
+        detector_scope_excluded_by_class=excluded_by_class,
+    )
+
 def _agent_finding(agent: str, item) -> Finding:
     detail = item.description
     outcome = "PROTOCOL_GAP" if agent == "validate-at-the-boundary" else "OBSERVED"
@@ -334,7 +349,10 @@ class Runtime:
         self._event(trace, cronos, "agent_completed", agent="web_auditor", findings=len(web_result.findings), examinations=web_result.examinations)
         self._phase_end(trace, cronos, "web_auditor", web_started)
         coverage_started = self._phase_start(trace, cronos, "coverage")
-        coverage = _coverage(root, discovered=discovered, analyzed_paths=web_analyzed_paths)
+        coverage = _with_detector_scope(
+            _coverage(root, discovered=discovered, analyzed_paths=web_analyzed_paths),
+            triage_manifest,
+        )
         self._event(trace, cronos, "coverage_collected", discovered=coverage.files_discovered, analyzed=coverage.files_analyzed, skipped=coverage.files_skipped, skipped_reasons=coverage.skipped_reasons)
         self._phase_end(trace, cronos, "coverage", coverage_started)
         governance_started = self._phase_start(trace, cronos, "governance")
@@ -419,6 +437,9 @@ class Runtime:
             coverage_ratio=coverage.coverage_ratio,
             discovery_ratio=coverage.discovery_ratio,
             language_coverage=coverage.language_coverage,
+            connected_alive_modules=coverage.connected_alive_modules,
+            detector_scope_excluded_modules=coverage.detector_scope_excluded_modules,
+            detector_scope_excluded_by_class=coverage.detector_scope_excluded_by_class,
         )
         triage_path, hypotheses_path = out / "triage-manifest.json", out / "hypotheses-manifest.json"
         verification_path, sealed_path, coverage_path = out / "verification-manifest.json", out / "verification-manifest.sealed.json", out / "coverage-report.json"

@@ -100,6 +100,10 @@ class CoverageReport:
     coverage_ratio: Fraction = field(default_factory=lambda: Fraction(0, 1))
     discovery_ratio: Fraction = field(default_factory=lambda: Fraction(0, 1))
     language_coverage: dict[str, dict[str, int]] = field(default_factory=dict)
+    # Parsing coverage and detector attention are different claims.
+    connected_alive_modules: int = 0
+    detector_scope_excluded_modules: int = 0
+    detector_scope_excluded_by_class: dict[str, int] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         data = asdict(self)
