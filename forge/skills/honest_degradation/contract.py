@@ -121,7 +121,9 @@ def _function_is_required_stage(function: ast.FunctionDef | ast.AsyncFunctionDef
     if function is None:
         return False
     name = function.name.lower()
-    if any(name.startswith(f"{prefix}_") or name.startswith(prefix) for prefix in _STAGE_PREFIXES):
+    # Prefixes describe whole verb segments, not arbitrary leading letters:
+    # ``to_signal`` is a conversion stage while ``token_count`` is not.
+    if any(name == prefix or name.startswith(f"{prefix}_") for prefix in _STAGE_PREFIXES):
         return True
     if _name_has_token(name, _STAGE_TOKENS):
         return True
@@ -152,11 +154,24 @@ def _default_return_values(body: list[ast.stmt]) -> bool:
     return False
 
 
-def _is_explicit_parse_helper(function: ast.FunctionDef | ast.AsyncFunctionDef | None, handler: ast.ExceptHandler) -> bool:
-    if function is None or not function.name.lower().startswith("parse"):
-        return False
+_PARSE_OR_DECODE_EXCEPTIONS = (
+    "syntaxerror", "jsondecodeerror", "unicodedecodeerror", "yamlerror",
+    "tomldecodeerror",
+)
+
+
+def _handles_specific_parse_or_decode_error(handler: ast.ExceptHandler) -> bool:
+    """Return true only for a narrow, explicitly named parse/decode failure.
+
+    This is intentionally independent of the helper name.  A broad
+    ``except Exception`` in ``parse_x`` is still a potentially silent fallback;
+    conversely, a specifically caught syntax/decode failure is an honest
+    not-parseable sentinel even when the function has another name.
+    """
     handled = tuple(handler.type.elts) if isinstance(handler.type, ast.Tuple) else ((handler.type,) if handler.type else ())
-    return any(_text(item).endswith("syntaxerror") for item in handled)
+    if not handled:
+        return False
+    return all(_text(item).lower().endswith(_PARSE_OR_DECODE_EXCEPTIONS) for item in handled)
 
 
 def _stage_swallow_targets(handler: ast.ExceptHandler, function: ast.FunctionDef | ast.AsyncFunctionDef | None) -> set[str]:
@@ -205,7 +220,7 @@ class HonestDegradationSkill:
             drops_item = any(isinstance(node, ast.Continue) for stmt in body for node in ast.walk(stmt))
             silent_return = any(isinstance(node, (ast.Return, ast.Pass)) for stmt in body for node in ast.walk(stmt))
             function = _nearest_function(handler, parents)
-            if _is_explicit_parse_helper(function, handler):
+            if _handles_specific_parse_or_decode_error(handler):
                 continue
             loop_drop = (
                 drops_item

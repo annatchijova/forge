@@ -171,10 +171,39 @@ def parse_tmp(tmp):
     assert _skill_findings(result, "honest-degradation") == []
 
     result = _run(tmp_path, """\
-def parse(source):
+def inspect_source(source):
     try:
         return ast.parse(source)
     except SyntaxError:
+        return None
+""")
+    assert _skill_findings(result, "honest-degradation") == []
+
+
+def test_honest_degradation_stage_prefixes_and_parse_exemption_are_structural(tmp_path):
+    result = _run(tmp_path, """\
+def token_count(raw):
+    try:
+        return int(raw)
+    except Exception:
+        return None
+""")
+    assert _skill_findings(result, "honest-degradation") == []
+
+    result = _run(tmp_path, """\
+def parse_untrusted(raw):
+    try:
+        return ast.parse(raw)
+    except Exception:
+        return None
+""")
+    assert len(_skill_findings(result, "honest-degradation")) == 1
+
+    result = _run(tmp_path, """\
+def inspect_payload(raw):
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
         return None
 """)
     assert _skill_findings(result, "honest-degradation") == []

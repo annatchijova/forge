@@ -80,6 +80,15 @@ The current executable subset covers two direct AST patterns:
 - default returns: a required stage/conversion helper logs and returns
   `None`/empty/default without emitting an unanalyzed/degraded marker.
 
+Required-stage name matching uses complete verb segments (for example,
+`to_signal`, `run_full`, or `load_artifact`), never bare letter prefixes such
+as `to` matching `token_count`. A `None` sentinel is also accepted only when
+the handler catches a narrow, explicitly named parse/decode exception (such as
+`SyntaxError`, `JSONDecodeError`, or `UnicodeDecodeError`); the function name
+does not grant that exception. A broad handler in `parse_x` remains auditable.
+The narrow gate deliberately leaves helpers outside this vocabulary (for
+example `deserialize`) as visible coverage limits rather than guessing.
+
 The accepted visibility actions are structural, not narrative: raise, emit an
 `*_UNANALYZED`-style sentinel, append to an error/drop accumulator, set an
 explicit degraded/skipped/error flag, or call a named marker such as

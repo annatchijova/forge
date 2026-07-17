@@ -489,6 +489,14 @@ explicit skipped/degraded/error flag, or call an explicit marker such as
 `mark_degraded`/`record_drop`. Optional scalar fields and cleanup in `finally`
 remain outside this contract.
 
+The default-return subset is deliberately gated by complete stage verb
+segments (`to_signal`, `run_full`, `load_artifact`), not raw string prefixes:
+`token_count` and `runtime` are not stages merely because they begin with
+`to`/`run`. Likewise, a parse sentinel exemption is based on a narrow named
+exception (`SyntaxError`, JSON/Unicode decode errors, and equivalent parser
+errors), never on naming a function `parse_*`. This controls false-positive
+flooding while leaving unmodelled helper names as an explicit coverage limit.
+
 Likewise, `log; return None` remains a degraded default return only when it
 appears in a required stage/conversion helper or a stage-shaped try body. A
 plain optional getter such as `get_nickname(...): return None` is not a finding
