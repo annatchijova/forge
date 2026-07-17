@@ -33,6 +33,7 @@ def render_sharded_dashboard(run_dir: str | Path, destination: str | Path | None
     cards = []
     total_rows = total_discarded = 0
     finding_hashes: set[str] = set()
+    hashes_complete = True
     for item in plan.get("shards", []):
         index = int(item.get("index", len(cards) + 1))
         shard_dir = directory / "shards" / f"shard-{index:04d}"
@@ -53,7 +54,9 @@ def render_sharded_dashboard(run_dir: str | Path, destination: str | Path | None
                     if record.get("hash"):
                         finding_hashes.add(str(record["hash"]))
                 except (ValueError, json.JSONDecodeError):
-                    continue
+                    hashes_complete = False
+        else:
+            hashes_complete = False
         findings = int(item.get("findings", metrics.get("findings", {}).get("total", 0)) or 0)
         discarded = int(item.get("discarded", 0) or 0)
         total_rows += findings
@@ -62,16 +65,19 @@ def render_sharded_dashboard(run_dir: str | Path, destination: str | Path | None
         tone = "ok" if status == "COMPLETE" else ("partial" if status.startswith(("ABSTAIN", "PARTIAL")) else "fail")
         report_name = "forge-report-standard.html" if (shard_dir / "forge-report-standard.html").is_file() else "report.md"
         report_href = f"shards/shard-{index:04d}/{report_name}"
+        summary_name = "forge-report-summary.html" if (shard_dir / "forge-report-summary.html").is_file() else report_name
+        summary_href = f"shards/shard-{index:04d}/{summary_name}"
         cards.append(
             f"<article class='shard-card'><div class='shard-top'><span>SHARD {index:04d}</span>"
             f"<b class='{tone}'>{html.escape(status)}</b></div>"
             f"<strong>{findings}</strong><span>surviving leads</span>"
             f"<p>{discarded} discarded hypotheses · {len(item.get('paths', []))} connected modules</p>"
             f"<a class='button' href='{html.escape(report_href)}'>Open shard report</a> "
-            f"<a href='shards/shard-{index:04d}/forge-report-summary.html'>summary</a></article>"
+            f"<a href='{html.escape(summary_href)}'>summary</a></article>"
         )
     destination = Path(destination) if destination else directory / "forge-report-shards.html"
-    unique_findings = len(finding_hashes) if finding_hashes else total_rows
+    unique_findings = len(finding_hashes) if hashes_complete else total_rows
+    dedup_note = "deduplicated by record hash" if hashes_complete else "hash dedup unavailable; showing shard counts"
     document = f"""<!doctype html><html lang='en'><head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width,initial-scale=1'><title>FORGE sharded audit</title>
 <style>:root{{--ink:#172326;--muted:#5d6b6d;--paper:#fff;--wash:#f3f7f6;--line:#d7e1df;--accent:#176b70;--ok:#2d7a4c;--fail:#a23d36;--partial:#9a6b18;--mono:ui-monospace,SFMono-Regular,Menlo,monospace;--serif:Georgia,serif}}
@@ -79,7 +85,7 @@ def render_sharded_dashboard(run_dir: str | Path, destination: str | Path | None
 <body><main><header><p class='eyebrow'>FORGE · PRESENTATION INDEX</p><h1>Sharded audit review</h1>
 <p>Each shard has an independent sealed evidence chain. This page is navigation and aggregation only; it does not create a parent seal or merge findings.</p></header>
 <div class='notice'><strong>Qualified result:</strong> {html.escape(str(plan.get('status','UNKNOWN')))} · {html.escape(str(plan.get('parent_seal','')))}</div>
-<div class='stats'><div class='stat'><strong>{unique_findings}</strong><span>unique surviving leads by record hash</span><small>{total_rows} shard rows before deduplication</small></div><div class='stat'><strong>{total_discarded}</strong><span>discarded hypotheses</span></div><div class='stat'><strong>{len(cards)}</strong><span>independently sealed shards</span></div></div>
+<div class='stats'><div class='stat'><strong>{unique_findings}</strong><span>surviving leads · {dedup_note}</span><small>{total_rows} shard rows before deduplication</small></div><div class='stat'><strong>{total_discarded}</strong><span>discarded hypotheses</span></div><div class='stat'><strong>{len(cards)}</strong><span>independently sealed shards</span></div></div>
 <h2>Open a shard</h2><div class='shards'>{''.join(cards) or '<p>No shard records were found.</p>'}</div>
 <footer>Repository: {html.escape(str(plan.get('repository','unknown')))} · max connected per shard: {html.escape(str(plan.get('max_connected','unknown')))}</footer>
 </main></body></html>"""

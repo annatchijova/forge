@@ -1,7 +1,7 @@
 # FORGE — three-to-five minute judge demo
 
 The demo presents FORGE as an investigation instrument, not an oracle. Keep
-the sealed artifact and its HTML report visible throughout; the important story
+the sealed artifacts and their HTML reports visible throughout; the important story
 is the boundary between a deterministic lead and a human/agent adjudication.
 
 ## 1. Run a local audit (about one minute)
@@ -13,12 +13,16 @@ python3 -m forge audit . \
   --output-dir /tmp/forge-demo-run --summary
 ```
 
-Open the generated standard report:
+This self-audit is intentionally sharded because the repository exceeds the
+bounded connected-module limit. Open the navigation index:
 
 ```bash
-python3 -m forge report /tmp/forge-demo-run/verification-manifest.sealed.json \
-  --mode standard -o /tmp/forge-demo-run/report.html
+python3 -m forge report /tmp/forge-demo-run
 ```
+
+Open `forge-report-shards.html`, then open one shard's standard report. Each
+shard has its own sealed manifest; the index is navigation only and does not
+invent a parent seal.
 
 Point out the two independent boundaries in the coverage block:
 
@@ -32,24 +36,15 @@ not presented as a bug count.
 
 Use the report's seal and detector-scope sections. Explain that a clean result
 means no surviving lead within both declared scopes. It does not certify that
-unmodeled classes are absent. Then verify the exact artifact:
+unmodeled classes are absent. Verify the exact artifact from the shard shown:
 
 ```bash
-python3 -m forge verify /tmp/forge-demo-run/verification-manifest.sealed.json
+python3 -m forge verify \
+  /tmp/forge-demo-run/shards/shard-0001/verification-manifest.sealed.json
 ```
 
 The same report can be rendered at `summary`, `standard`, and `extended` tiers;
 the renderer reads the sealed finding set and does not recompute detectors.
-
-If the repository exceeds the bounded connected-module limit, FORGE produces
-independent shards instead of inventing a parent seal. Render the navigation
-index with:
-
-```bash
-python3 -m forge report /tmp/forge-demo-run
-```
-
-Open `forge-report-shards.html` first, then choose a shard's standard report.
 
 ## 3. Show the real VIGÍA case (about two minutes)
 

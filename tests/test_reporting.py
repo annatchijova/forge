@@ -36,6 +36,6 @@ def test_render_sharded_dashboard_links_independent_seals(tmp_path):
     output = render_sharded_dashboard(run)
     report = output.read_text(encoding="utf-8")
     assert "navigation and aggregation only" in report
-    assert "1" in report and "unique surviving leads by record hash" in report
+    assert "1" in report and "surviving leads · deduplicated by record hash" in report
     assert "1 discarded hypotheses" in report
     assert "shards/shard-0001/report.md" in report
