@@ -154,6 +154,31 @@ whether that item reaches a verdict or an integrity claim. Existing F7 fixes
 (`*_drops` plus returned `*_unanalyzed`, and emitted `unparsed_files`) remain
 recognized as benign and must not be relitigated.
 
+## Post-harvest adjudication corrections
+
+The sealed finding set is an inventory of structural signals. The following
+read-only traces prevent two high-severity interpretations from being promoted
+before their reachable mechanism is established.
+
+- `vigia/core/bundle_builder.py:414,432,438` are the three `OSError` fallbacks
+  inside `BundleBuilder.compute_engine_attestation()`. No internal call site of
+  that static method exists. This is the already-known **dead duplicate** that
+  led investigators to the reachable, separate
+  `VigiaPipeline._compute_attestation()` implementation. The three signals are
+  real code facts and a useful lead, but are not three independently confirmed
+  live bundle-construction failures. FORGE's miss of the pipeline method
+  remains the honest live false negative.
+- `vigia/core/trust_fusion.py:456` converts an incoming `confidence` to a
+  `float` in `trust_fusion_analysis()`. The function is registered as an MCP
+  tool; no internal call path from it to `VigiaPipeline` or
+  `BundleBuilder.seal()` was found. Thus the static normalization is a CODE
+  FACT, but the stronger claim that it enters an automatically sealed payload
+  is unproven. Any future H1 test must demonstrate that complete route.
+- The 45 `FOSSIL_HIGH_RISK` modules are a triage risk inventory: they carry
+  decision vocabulary while currently having no detected callers/imports. They
+  are not defects merely by classification. Treat them as resurrection-risk
+  candidates, separate from active findings.
+
 ## Explicit limits
 
 - The run does not prove a path traversal, SQL injection, credential leak, or
