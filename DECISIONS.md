@@ -150,7 +150,8 @@ or incompatible shapes remain `UNDETERMINED`.
 
 JavaScript/TypeScript remains a bounded lexical scan. Coverage reports
 language-level analyzed/abstained counts so this limitation is visible rather
-than silently clean. Cross-run comparison is scope-bound, and multi-agent
+than silently clean; unresolved multiline filesystem expressions are emitted
+as explicit pending-verification observations. Cross-run comparison is scope-bound, and multi-agent
 closeout requires an exact A-D-I cycle per hypothesis ID plus a shared
 canonical finding-set digest across closeout artifacts.
 

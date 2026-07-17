@@ -70,6 +70,13 @@ def test_web_path_sanitizer_names_propagate_to_sink(tmp_path):
     assert [(item.path, item.family) for item in findings if item.family == "path-traversal"] == [("unsafe.ts", "path-traversal")]
 
 
+def test_web_multiline_unresolved_path_is_explicit_observation(tmp_path):
+    _write(tmp_path, "pending.ts", "fs.writeFileSync(\n  buildTarget(input),\n  body\n);\n")
+    findings, _ = web_audit(tmp_path)
+    path_findings = [item for item in findings if item.family == "path-traversal"]
+    assert path_findings and "requires verification" in path_findings[0].description
+
+
 def test_dedup_identity_collapses_variable_names_but_preserves_occurrences():
     first = Finding("OBSERVED", "CODE FACT", "app.py", "unversioned serialization", (Evidence("source", "app.py:7", "json.dumps(payload)"),), "first")
     second = Finding("OBSERVED", "CODE FACT", "app.py", "unversioned serialization", (Evidence("source", "app.py:7", "json.dumps(report)"),), "second")

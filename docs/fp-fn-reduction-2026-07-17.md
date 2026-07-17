@@ -27,7 +27,9 @@ python3 -m forge.precision --corpus tests/corpus \
 - Paths Python propagan `basename`, `normpath`, `realpath`, `resolve`,
   `Path.name`, allowlists y extensiones por punto fijo.
 - JS/TS propaga `basename`, `resolve` y `normalize` por asignaciones simples.
-  Sigue siendo un análisis léxico acotado, no un parser JavaScript.
+  Las operaciones de filesystem multilínea no demostrables se emiten como
+  observaciones explícitas de verificación pendiente. Sigue siendo un análisis
+  léxico acotado, no un parser JavaScript.
 - Paths registran `ATTACKER_CONTROLLED`, `INTERNAL_ONLY` o `UNDETERMINED`.
 - Severidad deriva determinísticamente de familia, nivel epistémico,
   controlabilidad y explotabilidad. Sin control de atacante y evidencia

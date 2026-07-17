@@ -56,6 +56,19 @@ def _has_enclosing_try(lines: list[str], line_number: int) -> bool:
     return False
 
 
+def _multiline_call(lines: list[str], start: int) -> str | None:
+    """Return a bounded call span when a sink crosses source lines."""
+    depth = 0
+    parts: list[str] = []
+    for index in range(start, min(len(lines), start + 32)):
+        code = _mask_string_literals(lines[index])
+        parts.append(code)
+        depth += code.count("(") - code.count(")")
+        if index > start and depth <= 0:
+            return " ".join(parts)
+    return None
+
+
 def _mask_string_literals(line: str) -> str:
     """Preserve line shape while removing quoted data in linear time.
 
@@ -144,6 +157,12 @@ def audit(root: str | Path, eligible: set[str] | None = None) -> tuple[AgentScan
                 local.append(WebFinding("parser-boundary", rel, number, "JSON.parse call has no nearby visible try/catch boundary"))
             if re.search(r"\b(?:readFile|readFileSync|writeFile|writeFileSync|unlink|rm)\s*\(", code_line):
                 names = set(re.findall(r"\b(?:user|request|input|path|file|name)\w*\b", code_line, re.I))
+                span = _multiline_call(lines, number - 1)
+                if span is not None and span != code_line:
+                    span_names = set(re.findall(r"\b(?:user|request|input|path|file|name)\w*\b", span, re.I))
+                    if span_names and not re.search(r"\b(?:resolve|normalize|basename)\s*\(", span):
+                        local.append(WebFinding("path-traversal", rel, number, "multiline filesystem path boundary requires verification; lexical scope cannot prove sanitization"))
+                        continue
                 # ``path`` is commonly the imported path namespace (path.join,
                 # path.resolve), not an attacker-controlled value. Keep it only
                 # when it also appears as a bare argument; this preserves the
