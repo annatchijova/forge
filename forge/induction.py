@@ -8,11 +8,15 @@ family-specific harness exists.
 from __future__ import annotations
 
 import ast
+import builtins
+import io
 import importlib.util
 import inspect
 import multiprocessing
 import os
 import resource
+import socket
+import subprocess
 import sys
 import tempfile
 import traceback
@@ -116,12 +120,82 @@ def _apply_worker_limits() -> None:
             continue
 
 
+def _apply_worker_sandbox(sandbox: Path) -> None:
+    """Deny process, network and out-of-sandbox writes in an induction child.
+
+    RLIMITs constrain resource use but do not stop a target module's import
+    side effects. This guard is installed before importing target code. It is
+    intentionally deny-by-default for execution/network and permits writes
+    only to the child-owned temporary directory used for synthetic fixtures.
+    It is defense in depth, not a claim of a kernel security boundary.
+    """
+    root = sandbox.resolve()
+    original_open, original_io_open, original_os_open = builtins.open, io.open, os.open
+
+    def writable_path(value: Any) -> bool:
+        if isinstance(value, int):
+            return True
+        try:
+            candidate = Path(value).resolve()
+        except (OSError, TypeError, ValueError):
+            return False
+        return candidate == root or root in candidate.parents
+
+    def denied(*_args: Any, **_kwargs: Any) -> None:
+        raise PermissionError("FORGE induction sandbox blocks process, network, and destructive operations")
+
+    def guarded_open(file: Any, mode: str = "r", *args: Any, **kwargs: Any):
+        if any(flag in mode for flag in ("w", "a", "x", "+")) and not writable_path(file):
+            raise PermissionError("FORGE induction sandbox blocks writes outside its temporary directory")
+        return original_open(file, mode, *args, **kwargs)
+
+    def guarded_io_open(file: Any, mode: str = "r", *args: Any, **kwargs: Any):
+        if any(flag in mode for flag in ("w", "a", "x", "+")) and not writable_path(file):
+            raise PermissionError("FORGE induction sandbox blocks writes outside its temporary directory")
+        return original_io_open(file, mode, *args, **kwargs)
+
+    def guarded_os_open(file: Any, flags: int, *args: Any, **kwargs: Any):
+        write_flags = os.O_WRONLY | os.O_RDWR | os.O_CREAT | os.O_TRUNC | os.O_APPEND
+        if flags & write_flags and not writable_path(file):
+            raise PermissionError("FORGE induction sandbox blocks writes outside its temporary directory")
+        return original_os_open(file, flags, *args, **kwargs)
+
+    builtins.open = guarded_open
+    io.open = guarded_io_open
+    os.open = guarded_os_open
+    for name in ("system", "popen", "execv", "execve", "execvp", "execvpe", "spawnv", "spawnve"):
+        if hasattr(os, name):
+            setattr(os, name, denied)
+    for name in ("run", "Popen", "call", "check_call", "check_output"):
+        setattr(subprocess, name, denied)
+    for name in ("remove", "unlink", "rmdir", "removedirs"):
+        if not hasattr(os, name):
+            continue
+        original = getattr(os, name)
+        def guarded_remove(path: Any, *args: Any, _original=original, **kwargs: Any):
+            if not writable_path(path):
+                return denied()
+            return _original(path, *args, **kwargs)
+        setattr(os, name, guarded_remove)
+    for name in ("rename", "replace"):
+        if not hasattr(os, name):
+            continue
+        original = getattr(os, name)
+        def guarded_rename(source: Any, destination: Any, *args: Any, _original=original, **kwargs: Any):
+            if not writable_path(source) or not writable_path(destination):
+                return denied()
+            return _original(source, destination, *args, **kwargs)
+        setattr(os, name, guarded_rename)
+    socket.socket = denied
+
+
 def _invoke_worker(root: str, module_path: str, function_name: str, target_line: int, queue: Any) -> None:
     try:
         root_path = Path(root)
         with tempfile.TemporaryDirectory(prefix="forge-induction-") as sandbox:
             os.chdir(sandbox)
             _apply_worker_limits()
+            _apply_worker_sandbox(Path(sandbox))
             qualified_name = _module_name(root_path, module_path)
             if qualified_name:
                 sys.path.insert(0, str(root_path))

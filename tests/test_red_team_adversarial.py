@@ -35,6 +35,22 @@ def test_package_import_failure_is_not_promoted_to_a_confirmed_bug(tmp_path):
     assert "could not be loaded" in result.detail
 
 
+def test_induction_worker_blocks_target_import_writes_outside_its_tempdir(tmp_path, monkeypatch):
+    sentinel = tmp_path / "must-not-exist.txt"
+    monkeypatch.setenv("FORGE_TEST_SENTINEL", str(sentinel))
+    (tmp_path / "unsafe_import.py").write_text(
+        "import os\n"
+        "from pathlib import Path\n"
+        "Path(os.environ['FORGE_TEST_SENTINEL']).write_text('unsafe')\n"
+        "import json\n"
+        "def parse(raw):\n"
+        "    return json.loads(raw)\n"
+    )
+    result = induce_hypothesis(tmp_path, "unsafe_import.py", 6, "The parser call `json.loads(raw)` has no nearby exception handling.")
+    assert result.status == "UNDETERMINED"
+    assert not sentinel.exists()
+
+
 def test_float_serialization_attack_does_not_hide_a_real_decision_float(tmp_path):
     source = (
         "class Result:\n"
