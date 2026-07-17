@@ -1,10 +1,11 @@
-"""Conservative, time-bounded execution for parser and eval/exec hypotheses.
+"""Conservative, time-bounded execution for parser, eval/exec, and subprocess hypotheses.
 
 Induction is deliberately narrower than arbitrary fuzzing.  It only invokes a
 module-level function in a spawned child process. Parser hypotheses receive
 synthetic malformed text; eval/exec hypotheses receive a sentinel payload
-that may write only inside the child sandbox. Other hypothesis families remain
-AST-only until a family-specific harness exists.
+that may write only inside the child sandbox; subprocess hypotheses receive
+synthetic command input against an in-memory process probe. Other hypothesis
+families remain AST-only until a family-specific harness exists.
 """
 from __future__ import annotations
 
@@ -192,6 +193,34 @@ def _apply_worker_sandbox(sandbox: Path) -> None:
 
 _EVAL_SENTINEL_NAME = "forge-eval-induction-sentinel.txt"
 _EVAL_SENTINEL_PAYLOAD = f"open({_EVAL_SENTINEL_NAME!r}, 'w').write('confirmed')"
+_SUBPROCESS_PROBE_PAYLOAD = "forge-induction; harmless-metacharacter"
+
+
+def _install_subprocess_probe() -> list[tuple[tuple[Any, ...], dict[str, Any]]]:
+    """Replace process launchers with an in-memory probe in the child only."""
+    calls: list[tuple[tuple[Any, ...], dict[str, Any]]] = []
+
+    class ProbeResult:
+        returncode = 127
+        stdout = b""
+        stderr = b"forge induction subprocess probe"
+
+        def communicate(self, *_args: Any, **_kwargs: Any) -> tuple[bytes, bytes]:
+            return self.stdout, self.stderr
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args: Any) -> bool:
+            return False
+
+    def probe(*args: Any, **kwargs: Any) -> ProbeResult:
+        calls.append((args, kwargs))
+        return ProbeResult()
+
+    for name in ("run", "Popen", "call", "check_call", "check_output"):
+        setattr(subprocess, name, probe)
+    return calls
 
 
 def _invoke_worker(root: str, module_path: str, function_name: str, target_line: int, family: str, queue: Any) -> None:
@@ -222,6 +251,7 @@ def _invoke_worker(root: str, module_path: str, function_name: str, target_line:
                     queue.put(("import-error", type(exc).__name__, str(exc)[:240]))
                     return
             function = getattr(module, function_name)
+            subprocess_calls = _install_subprocess_probe() if family == "subprocess" else []
             signature = inspect.signature(function)
             args: list[Any] = []
             for parameter in signature.parameters.values():
@@ -234,10 +264,15 @@ def _invoke_worker(root: str, module_path: str, function_name: str, target_line:
                 value = _synthetic_value(parameter.name, parameter.annotation)
                 if family == "eval/exec" and isinstance(value, str):
                     value = _EVAL_SENTINEL_PAYLOAD
+                if family == "subprocess" and isinstance(value, str):
+                    value = _SUBPROCESS_PROBE_PAYLOAD
                 args.append(value)
             result = function(*args)
             if family == "eval/exec":
                 queue.put(("eval-sentinel", (Path(_EVAL_SENTINEL_NAME)).is_file()))
+                return
+            if family == "subprocess":
+                queue.put(("subprocess-probe", bool(subprocess_calls)))
                 return
             queue.put(("returned", type(result).__name__))
     except BaseException as exc:  # child boundary: never leak target exceptions to the audit process
@@ -264,9 +299,11 @@ def induce_hypothesis(root: str | Path, module_path: str, line: int, description
         family = "parser"
     elif "dynamic evaluation" in description.lower():
         family = "eval/exec"
+    elif "subprocess call" in description.lower() or "dynamic command invocation" in description.lower():
+        family = "subprocess"
     else:
         family = "unsupported"
-    if family not in {"parser", "eval/exec"}:
+    if family not in {"parser", "eval/exec", "subprocess"}:
         return InductionResult("UNDETERMINED", family, "No executable harness is registered for this hypothesis family.", "AST-only verification")
     path = (Path(root) / module_path).resolve()
     root_path = Path(root).resolve()
@@ -312,6 +349,10 @@ def induce_hypothesis(root: str | Path, module_path: str, line: int, description
         if result[1]:
             return InductionResult("CONFIRMED BY INDUCTION", family, "Isolated eval/exec payload created the in-sandbox sentinel.", f"{module_path}:{line}: {_EVAL_SENTINEL_NAME}")
         return InductionResult("FALSIFIED", family, "Isolated eval/exec payload returned without creating the in-sandbox sentinel.", f"{module_path}:{line}: sentinel absent")
+    if result[0] == "subprocess-probe":
+        if result[1]:
+            return InductionResult("CONFIRMED BY INDUCTION", family, "Synthetic command input reached the in-memory subprocess probe; no process was started.", f"{module_path}:{line}: subprocess probe observed")
+        return InductionResult("FALSIFIED", family, "Synthetic command input did not reach a subprocess launch boundary.", f"{module_path}:{line}: subprocess probe not observed")
     if result[0] == "exception":
         error_name, detail = result[1], result[2]
         at_hypothesized_call = bool(result[3]) if len(result) > 3 else False
