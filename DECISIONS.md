@@ -489,8 +489,10 @@ explicit skipped/degraded/error flag, or call an explicit marker such as
 `mark_degraded`/`record_drop`. Optional scalar fields and cleanup in `finally`
 remain outside this contract.
 
-Likewise, `log; return None` remains a degraded default return unless the
-returned value itself carries the unanalyzed/degraded state.
+Likewise, `log; return None` remains a degraded default return only when it
+appears in a required stage/conversion helper or a stage-shaped try body. A
+plain optional getter such as `get_nickname(...): return None` is not a finding
+without additional evidence that the missing field is required.
 
 ## Source classification and coverage honesty (2026-07-17)
 

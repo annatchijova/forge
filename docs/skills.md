@@ -77,8 +77,8 @@ The current executable subset covers two direct AST patterns:
   collection;
 - stage swallows: an exception handler replaces a stage/component result with
   `None` or an empty/default value and returns it as ordinary output.
-- default returns: an exception handler logs and returns `None`/empty/default
-  without emitting an unanalyzed/degraded marker.
+- default returns: a required stage/conversion helper logs and returns
+  `None`/empty/default without emitting an unanalyzed/degraded marker.
 
 The accepted visibility actions are structural, not narrative: raise, emit an
 `*_UNANALYZED`-style sentinel, append to an error/drop accumulator, set an

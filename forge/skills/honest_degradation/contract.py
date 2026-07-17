@@ -21,6 +21,7 @@ _STAGE_TOKENS = (
     "artifact", "bundle", "caie", "engine", "metadata", "profile", "result",
     "signal", "stage", "timeline",
 )
+_STAGE_PREFIXES = ("analyze", "build", "convert", "load", "parse", "process", "run", "to")
 
 
 def _text(node: ast.AST) -> str:
@@ -32,6 +33,11 @@ def _text(node: ast.AST) -> str:
 
 def _contains_token(node: ast.AST, tokens: tuple[str, ...]) -> bool:
     return any(token in _text(node) for token in tokens)
+
+
+def _name_has_token(name: str, tokens: tuple[str, ...]) -> bool:
+    lowered = name.lower()
+    return any(token in lowered for token in tokens)
 
 
 def _parent_map(tree: ast.AST) -> dict[ast.AST, ast.AST]:
@@ -73,7 +79,13 @@ def _has_visibility_action(body: list[ast.stmt]) -> bool:
             if isinstance(node, ast.Raise):
                 return True
             if isinstance(node, (ast.Assign, ast.AnnAssign)):
-                if _contains_token(node, _VISIBILITY_TOKENS):
+                if any(_name_has_token(name, _VISIBILITY_TOKENS) for name in _assigned_names(node)):
+                    return True
+                targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+                if any(_contains_token(target, _VISIBILITY_TOKENS) for target in targets):
+                    return True
+                value = node.value
+                if value is not None and _contains_token(value, _VISIBILITY_TOKENS):
                     return True
             if isinstance(node, ast.Call):
                 name = call_name(node).lower()
@@ -103,6 +115,48 @@ def _function_returns_collection_built_in_loop(function: ast.FunctionDef | ast.A
         if isinstance(node, ast.Return) and node.value is not None:
             returned_names.update(child.id for child in ast.walk(node.value) if isinstance(child, ast.Name))
     return bool(collection_names & appended_names & returned_names)
+
+
+def _function_is_required_stage(function: ast.FunctionDef | ast.AsyncFunctionDef | None) -> bool:
+    if function is None:
+        return False
+    name = function.name.lower()
+    if any(name.startswith(f"{prefix}_") or name.startswith(prefix) for prefix in _STAGE_PREFIXES):
+        return True
+    if _name_has_token(name, _STAGE_TOKENS):
+        return True
+    for argument in (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs):
+        if _name_has_token(argument.arg, _STAGE_TOKENS):
+            return True
+    return False
+
+
+def _try_body_touches_stage(handler: ast.ExceptHandler, parents: dict[ast.AST, ast.AST]) -> bool:
+    parent = parents.get(handler)
+    if not isinstance(parent, ast.Try):
+        return False
+    for stmt in parent.body:
+        for node in ast.walk(stmt):
+            if isinstance(node, (ast.Name, ast.Attribute, ast.Call)) and _name_has_token(_text(node), _STAGE_TOKENS):
+                return True
+    return False
+
+
+def _default_return_values(body: list[ast.stmt]) -> bool:
+    for stmt in body:
+        for node in ast.walk(stmt):
+            if isinstance(node, ast.Return) and node.value is not None and _is_empty_or_default(node.value):
+                return True
+            if isinstance(node, ast.Pass):
+                return True
+    return False
+
+
+def _is_explicit_parse_helper(function: ast.FunctionDef | ast.AsyncFunctionDef | None, handler: ast.ExceptHandler) -> bool:
+    if function is None or not function.name.lower().startswith("parse"):
+        return False
+    handled = tuple(handler.type.elts) if isinstance(handler.type, ast.Tuple) else ((handler.type,) if handler.type else ())
+    return any(_text(item).endswith("syntaxerror") for item in handled)
 
 
 def _stage_swallow_targets(handler: ast.ExceptHandler, function: ast.FunctionDef | ast.AsyncFunctionDef | None) -> set[str]:
@@ -151,10 +205,16 @@ class HonestDegradationSkill:
             drops_item = any(isinstance(node, ast.Continue) for stmt in body for node in ast.walk(stmt))
             silent_return = any(isinstance(node, (ast.Return, ast.Pass)) for stmt in body for node in ast.walk(stmt))
             function = _nearest_function(handler, parents)
+            if _is_explicit_parse_helper(function, handler):
+                continue
             loop_drop = (
                 drops_item
                 and _handler_is_in_loop(handler, parents)
                 and _function_returns_collection_built_in_loop(function)
+            )
+            default_return = _default_return_values(body)
+            required_stage_return = default_return and (
+                _function_is_required_stage(function) or _try_body_touches_stage(handler, parents)
             )
             stage_swallow = _stage_swallow_targets(handler, function)
             if loop_drop and not (has_raise or has_flag):
@@ -164,7 +224,7 @@ class HonestDegradationSkill:
                 names_rendered = ", ".join(sorted(stage_swallow))
                 detail = f"exception handler leaves stage result `{names_rendered}` discarded without marking degraded state"
                 findings.append(source_finding(context, self.contract.name, handler, detail, "A stage result is replaced with an empty/default value that flows into the returned result, so a failed stage can be presented as ordinary partial output."))
-            elif silent_return and not (has_raise or has_flag):
+            elif silent_return and required_stage_return and not (has_raise or has_flag):
                 detail = "exception handler returns a plausible fallback without raising or marking degraded state"
                 findings.append(source_finding(context, self.contract.name, handler, detail, "A degraded-input handler is structurally silent, so callers cannot distinguish fallback data from verified data."))
 

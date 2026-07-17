@@ -17,7 +17,7 @@ def _skill_findings(result, name):
 
 def test_honest_degradation_reports_silent_fallback_but_not_named_raise(tmp_path):
     result = _run(tmp_path, """\
-def load(raw):
+def load_artifact(raw):
     try:
         return raw[\"payload\"]
     except Exception:
@@ -25,7 +25,7 @@ def load(raw):
 """)
     assert len(_skill_findings(result, "honest-degradation")) == 1
     result = _run(tmp_path, """\
-def load(raw):
+def load_artifact(raw):
     try:
         return raw[\"payload\"]
     except KeyError as error:
@@ -38,7 +38,7 @@ def test_honest_degradation_does_not_exonerate_logged_default_return(tmp_path):
     result = _run(tmp_path, """\
 import logging
 
-def load(raw):
+def to_signal(raw):
     try:
         return raw["payload"]
     except Exception:
@@ -153,11 +153,29 @@ def profile(data):
     assert _skill_findings(result, "honest-degradation") == []
 
     result = _run(tmp_path, """\
+def get_nickname(data):
+    try:
+        return data["nickname"]
+    except KeyError:
+        return None
+""")
+    assert _skill_findings(result, "honest-degradation") == []
+
+    result = _run(tmp_path, """\
 def parse_tmp(tmp):
     try:
         return load(tmp)
     finally:
         os.unlink(tmp)
+""")
+    assert _skill_findings(result, "honest-degradation") == []
+
+    result = _run(tmp_path, """\
+def parse(source):
+    try:
+        return ast.parse(source)
+    except SyntaxError:
+        return None
 """)
     assert _skill_findings(result, "honest-degradation") == []
 
