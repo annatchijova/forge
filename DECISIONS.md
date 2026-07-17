@@ -126,14 +126,32 @@ paper's full stochastic, LLM-proposer implementation.
 
 ### Hypothesis candidate cap
 
-`hypotheses._candidates()` intentionally surfaces only `candidates[:5]` per
-module. A module that triggers more than five distinct risk patterns therefore
-has later candidates omitted. This is a known completeness limitation, not
-evidence that the omitted patterns were absent — and, as of 2026-07-15, it is
-surfaced rather than silent: `generate_hypotheses()` adds one entry per capped
-module to `HypothesesManifest.limitations` (`"<module>: N additional risk
-pattern(s) ... omitted"`), so it reaches the manifest and the report instead
-of only living in this document.
+The historical `candidates[:5]` cap was removed on 2026-07-17. Every generated
+candidate now reaches module 3 verification. Presentation may group repeated
+causes, but it cannot silently remove candidates or change the sealed finding
+set. See `docs/fp-fn-reduction-2026-07-17.md` for the corpus gate and its
+regression coverage.
+
+## FP/FN reduction and bounded induction (2026-07-17)
+
+The precision corpus is exact at `(family, path, line)` granularity and gates
+global precision/recall. Historical FP ledger cases are corpus regressions;
+the Bug Investigator is measured alongside static agents. Severity is a
+deterministic projection of independent epistemic, controllability and
+exploitability axes, not a synonym for family.
+
+Induction supports parser, eval/exec, subprocess and float-threshold harnesses
+inside a spawned, resource-limited worker. The worker blocks network, actual
+process creation and writes outside its temporary directory before importing
+target code. This is defense in depth, **not** a kernel-grade sandbox, and a
+confirmation means only the stated harness behavior reproduced. Unsupported
+or incompatible shapes remain `UNDETERMINED`.
+
+JavaScript/TypeScript remains a bounded lexical scan. Coverage reports
+language-level analyzed/abstained counts so this limitation is visible rather
+than silently clean. Cross-run comparison is scope-bound, and multi-agent
+closeout requires an exact A-D-I cycle per hypothesis ID plus a shared
+canonical finding-set digest across closeout artifacts.
 
 ## Executable skill runtime boundary
 
