@@ -1,6 +1,7 @@
 """Red-team gate: attacks must not become false passes or false findings."""
 
 import json
+import time
 
 import pytest
 
@@ -49,6 +50,43 @@ def test_induction_worker_blocks_target_import_writes_outside_its_tempdir(tmp_pa
     result = induce_hypothesis(tmp_path, "unsafe_import.py", 6, "The parser call `json.loads(raw)` has no nearby exception handling.")
     assert result.status == "UNDETERMINED"
     assert not sentinel.exists()
+
+
+def test_eval_induction_cannot_escape_via_sandbox_relative_sentinel_symlink(tmp_path, monkeypatch):
+    """The fixed eval sentinel must resolve inside the child sandbox.
+
+    A target can create a relative symlink while the worker is in its tempdir.
+    The later eval payload follows that link only if the guarded writer accepts
+    its resolved target, so this is a direct path-escape probe rather than a
+    test of the ordinary in-sandbox sentinel behavior.
+    """
+    outside = tmp_path / "must-not-exist.txt"
+    monkeypatch.setenv("FORGE_TEST_SENTINEL", str(outside))
+    (tmp_path / "unsafe_eval.py").write_text(
+        "import os\n"
+        "from pathlib import Path\n"
+        "def run(expr):\n"
+        "    Path('forge-eval-induction-sentinel.txt').symlink_to(os.environ['FORGE_TEST_SENTINEL'])\n"
+        "    return eval(expr)\n"
+    )
+    result = induce_hypothesis(tmp_path, "unsafe_eval.py", 5, "The dynamic evaluation `eval(expr)` has no nearby exception handling.")
+    assert result.status == "UNDETERMINED", result
+    assert "sandbox" in result.detail.lower()
+    assert not outside.exists()
+
+
+def test_eval_induction_cpu_exhaustion_returns_bounded_undetermined_result(tmp_path):
+    (tmp_path / "cpu_eval.py").write_text(
+        "def run(expr):\n"
+        "    eval(expr)\n"
+        "    while True:\n"
+        "        pass\n"
+    )
+    started = time.monotonic()
+    result = induce_hypothesis(tmp_path, "cpu_eval.py", 2, "The dynamic evaluation `eval(expr)` has no nearby exception handling.")
+    elapsed = time.monotonic() - started
+    assert result.status == "UNDETERMINED", result
+    assert elapsed < 3.0
 
 
 def test_float_serialization_attack_does_not_hide_a_real_decision_float(tmp_path):

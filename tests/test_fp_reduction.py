@@ -63,6 +63,22 @@ def analyze():
     assert severity_for("internal.py", "CODE FACT", "path reaches open()", family="path-traversal", controllability="INTERNAL_ONLY") == "MEDIUM"
 
 
+def test_mixed_private_helper_callers_never_degrade_to_internal_only(tmp_path):
+    _write(tmp_path, "mixed.py", """\
+@app.post("/read")
+def read(request):
+    return _sink(request.args["path"])
+
+def _sink(path):
+    return open(path)
+
+def startup():
+    return _sink("config.json")
+""")
+    finding = next(item for item in security_audit(tmp_path).findings if item.family == "path-traversal")
+    assert finding.controllability == "UNDETERMINED"
+
+
 def test_web_path_sanitizer_names_propagate_to_sink(tmp_path):
     _write(tmp_path, "safe.ts", "const slug = path.basename(input);\nconst filename = slug;\nfs.writeFileSync(filename, data);\n")
     _write(tmp_path, "unsafe.ts", "fs.writeFileSync(input, data);\n")
