@@ -1,1 +1,0 @@
-{"discarded": [], "downgraded": [{"candidate":"all static exploitability claims","reason":"No safe induction harness or target execution; retained as undetermined hypotheses."}], "note":"No result is called a false positive without falsification evidence."}

@@ -154,6 +154,24 @@ diagram in [`docs/agents.md`](docs/agents.md).
 
 ---
 
+## Installation
+
+FORGE's core audit path uses only the Python standard library. Python 3.10 or
+newer is required.
+
+```bash
+git clone https://github.com/annatchijova/forge.git
+cd forge
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e .
+```
+
+The optional MCP frontend can be installed with `python -m pip install -e
+".[mcp]"`. The core CLI does not require model credentials or third-party
+packages.
+
 ## Quick start
 
 ```text
@@ -320,6 +338,7 @@ FORGE intentionally does **not**:
 **Build**
 * [`docs/mcp.md`](docs/mcp.md) — MCP tools and Claude Code integration
 * [`docs/hackathon.md`](docs/hackathon.md) — build notes and Codex session evidence
+* [`docs/real-repository-case-studies.md`](docs/real-repository-case-studies.md) — public Stylometry and Vigia adjudication case studies
 * [`docs/technical-companion.html`](docs/technical-companion.html) — bilingual interactive technical companion for reviewers
 
 **Reference**

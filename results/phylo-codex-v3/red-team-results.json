@@ -1,1 +1,0 @@
-{"gate":"PASS","command":"python3 -m pytest -q tests/test_red_team_adversarial.py","passed":8,"failed":0,"exit_code":0,"executed_first":true}

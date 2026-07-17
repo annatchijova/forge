@@ -67,12 +67,13 @@
   </style>
 </head>
 <body>
-  <header class="topbar"><div class="shell"><a class="brand" href="#top">FORGE</a><nav><a href="#judges" data-i18n="navJudges">For judges</a><a href="#method" data-i18n="navMethod">Method</a><a href="#agents" data-i18n="navAgents">Agents</a><a href="#skills" data-i18n="navSkills">Skills</a><a href="#evidence" data-i18n="navEvidence">Evidence</a><a href="#learning" data-i18n="navLearning">Learning</a><button class="language" id="language" aria-label="Switch language">ES</button></nav></div></header>
+  <header class="topbar"><div class="shell"><a class="brand" href="#top">FORGE</a><nav><a href="#judges" data-i18n="navJudges">For judges</a><a href="#method" data-i18n="navMethod">Method</a><a href="#agents" data-i18n="navAgents">Agents</a><a href="#skills" data-i18n="navSkills">Skills</a><a href="#evidence" data-i18n="navEvidence">Evidence</a><a href="#learning" data-i18n="navLearning">Learning</a><a href="#case-studies">Case studies</a><button class="language" id="language" aria-label="Switch language">ES</button></nav></div></header>
   <main id="top">
     <div class="shell hero">
       <div class="hero-layout"><div>
         <p class="eyebrow" data-i18n="eyebrow">Interactive technical companion</p>
         <h1 data-i18n="title">A forensic way to understand a codebase.</h1>
+        <p class="lede" data-i18n="lede">FORGE is a deterministic multi-agent repository-governance runtime for forensic software audits you can verify. It investigates codebases through evidence, falsifiable hypotheses, and tamper-evident artifacts—not opaque AI opinions. This companion explains its real methods, source contracts, agents, evidence boundaries, and the lessons gained while auditing Forge and stress-testing AI-generated code.</p>
         <div class="tagrow"><span class="tag good" data-i18n="tagReadOnly">Read-only audit</span><span class="tag good" data-i18n="tagDeterministic">Deterministic decision path</span><span class="tag" data-i18n="tagMcp">CLI · Python · MCP</span><span class="tag warn" data-i18n="tagNotDemo">Technical companion, not the final demo</span></div>
       </div><aside class="judge-card"><h2 data-i18n="judgeCardTitle">Judge's 60-second brief</h2><p data-i18n="judgeCardCopy">Start here, then inspect the artifacts—not a marketing claim.</p><ul><li data-i18n="judgePointOne">One governed audit path, from declared scope to sealed evidence.</li><li data-i18n="judgePointTwo">Findings, rejected hypotheses, limits, and provenance stay visible.</li><li data-i18n="judgePointThree">Built-in decisions run locally as deterministic code.</li></ul><a href="#evidence" data-i18n="judgeCardLink">See what can be verified →</a></aside>
     </div>
@@ -166,6 +167,18 @@ verify_seal(sealed_path="forge-run/verification-manifest.sealed.json")</code></p
       <p class="callout" style="margin-top:1rem"><span data-i18n="runsNote">All successful and failed historical FORGE runs are published for review in</span> <a href="https://github.com/annatchijova/forge-results">annatchijova/forge-results</a>.</p>
     </div></section>
 
+    <section id="case-studies"><div class="shell">
+      <p class="eyebrow">Public case studies / Casos públicos</p>
+      <h2>Real repositories, visible adjudication.</h2>
+      <p class="section-copy">FORGE was not demonstrated on repositories seeded with bugs. The snapshots, source history, sealed artifacts, and subsequent fixes are public so judges can inspect the complete path.</p>
+      <div class="grid two">
+        <article class="card"><h3>Stylometry: honest false positives</h3><p><a href="https://github.com/annatchijova/stylometry">GitHub</a> · <a href="https://gitlab.com/anna.tchijova/stylometry">GitLab mirror</a>. Stylometry was a real Google-hackathon-winning repository, left untouched for roughly a month before the audit. FORGE produced reproducible findings, including contextual false positives. Codex checked them against the source, isolated a swallowed GitLab delivery failure and an entropy return-type mismatch, and the confirmed fixes were committed as <code>034069c</code> and pushed.</p><p><a href="https://github.com/annatchijova/forge-results">Inspect the sealed runs and HTML reports →</a></p></article>
+        <article class="card"><h3>Vigia: a useful false-positive lead</h3><p><a href="https://github.com/annatchijova/vigia-intent-analysis">Vigia Intent Analysis</a> produced an initial signal that looked contextual. The signal was not silently promoted to “confirmed”; Codex followed the evidence and found a separate real bug, which was corrected, committed, and pushed. The lesson is the workflow: deterministic evidence first, human or agent adjudication second.</p><p><a href="https://github.com/annatchijova/vigia-intent-analysis">Inspect the repository history →</a></p></article>
+      </div>
+      <p class="callout" style="margin-top:1rem"><strong>Boundary:</strong> a FORGE finding is not automatically a confirmed vulnerability, and a false positive is not automatically useless. Both the original evidence and the adjudication remain visible.</p>
+      <p><a href="https://github.com/annatchijova/forge/blob/main/docs/real-repository-case-studies.md">Read the full case-study record →</a></p>
+    </div></section>
+
     <section id="skills"><div class="shell">
       <p class="eyebrow" data-i18n="skillsEyebrow">Skills: honest applicability</p><h2 data-i18n="skillsTitle">A policy document is not automatically an executable detector.</h2>
       <p class="section-copy" data-i18n="skillsCopy">The skills catalog is deliberately visible here because reviewers should be able to see the difference between a documented policy, an executable contract, and a result marked undetermined.</p>
@@ -197,7 +210,7 @@ verify_seal(sealed_path="forge-run/verification-manifest.sealed.json")</code></p
     };
     Object.assign(copy.es, {
       navJudges:'Para jueces', navSkills:'Skills',
-      lede:'FORGE es un runtime determinista de gobernanza de repositorios. Este acompañante muestra a quienes revisan el método, el límite de evidencia y la implementación real detrás de sus afirmaciones.',
+      lede:'FORGE es un runtime determinista y multiagente de gobernanza de repositorios para auditorías forenses de software que podés verificar. Investiga bases de código mediante evidencia, hipótesis falsables y artefactos con evidencia de alteración, no opiniones opacas de IA. Este acompañante explica sus métodos reales, contratos de fuente, agentes, límites de evidencia y aprendizajes de auditar Forge y estresar código generado por IA.',
       definitionLabel:'Qué es FORGE',
       definition:'Un runtime de gobernanza forense para auditorías de software reproducibles: gobernanza determinista de repositorios para ingeniería de software forense, arqueología arquitectónica y revisión de código guiada por evidencia.',
       judgeCardTitle:'Resumen para jueces en 60 segundos',
@@ -227,6 +240,7 @@ verify_seal(sealed_path="forge-run/verification-manifest.sealed.json")</code></p
       comparisonEyebrow:'Un marco rápido de evaluación', comparisonTitle:'No es otro prompt de “encontrá bugs”.', comparisonCopy:'FORGE vuelve parte del resultado lo que una persona revisora necesita para confiar en una auditoría: alcance declarado, evidencia, hipótesis rechazadas, limitaciones, límites de rol y artefactos reproducibles.'
     });
     Object.assign(copy.en, {
+      lede:'FORGE is a deterministic multi-agent repository-governance runtime for forensic software audits you can verify. It investigates codebases through evidence, falsifiable hypotheses, and tamper-evident artifacts—not opaque AI opinions. This companion explains its real methods, source contracts, agents, evidence boundaries, and the lessons gained while auditing Forge and stress-testing AI-generated code.',
       selfText:'A self-audit of Anna Tchijova’s unseen repository exposed an infinite loop in Forge’s own float data-flow handling when a name was reassigned in two branches. The fix added a regression test; the documented run fell from a timeout beyond 280 seconds to roughly 2.5 seconds.',
       collabNote:'Attribution note: the Terra/Luna session history is build context provided by Anna Tchijova. It is not embedded in a sealed audit artifact and is not used by Forge to make an audit decision.',
       runsNote:'All successful and failed historical FORGE runs are published for review in',

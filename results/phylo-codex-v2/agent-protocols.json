@@ -1,7 +1,0 @@
-{
-  "agents": ["coordinator", "scope_triage", "python_security", "web_security", "integrity_numeric", "abduction_hypotheses", "adversarial_redteam", "independent_reviewer"],
-  "source": "agent-results/*.json",
-  "adi_required": ["abduction", "deduction", "induction"],
-  "skill_catalog_count": 20,
-  "note": "Detailed independent work products and material skill actions are recorded in each agent result."
-}
