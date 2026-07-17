@@ -1,6 +1,7 @@
 import json
 from fractions import Fraction
 
+from forge import Runtime
 from forge.orchestrator import run_specialized_pipeline
 from forge.disposition import determine_disposition
 from forge.contradictions import find_contradictions
@@ -85,6 +86,33 @@ def test_unavailable_specialized_agent_degrades_to_abstain(monkeypatch, tmp_path
     metrics = json.loads((tmp_path / "out/metrics.json").read_text())
     assert metrics["audit_disposition"]["status"] == "ABSTAIN_DEGRADED"
     assert any("security_auditor unavailable" in item for item in metrics["honest_degradation"]["limitations"])
+
+
+def test_crashed_executable_skill_degrades_disposition_instead_of_passing_clean(tmp_path):
+    skills = tmp_path / "skills" / "crashing-skill"
+    skills.mkdir(parents=True)
+    put(skills, "manifest.json", json.dumps({
+        "name": "crashing-skill", "version": "1.0", "entrypoint": "contract.py", "class_name": "CrashingSkill",
+    }))
+    put(skills, "contract.py", """\
+from forge.models import Applicability, SkillContract
+class CrashingSkill:
+    contract = SkillContract("crashing-skill", "1.0", (), (), (), ())
+    def applicability(self, context):
+        return Applicability.APPLICABLE
+    def evaluate(self, context):
+        raise RuntimeError("synthetic evaluate crash")
+""")
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    put(repo, "main.py", "x = 1\n")
+    Runtime(skills_root=tmp_path / "skills").audit(repo, tmp_path / "out")
+    metrics = json.loads((tmp_path / "out" / "metrics.json").read_text())
+    assert metrics["skill_runtime"]["contract_failures"] == 1
+    assert metrics["audit_disposition"]["status"] == "ABSTAIN_DEGRADED"
+    assert metrics["audit_disposition"]["reason_code"] == "GOVERNANCE_SKILL_FAILURE"
+    assert "skill_contract: 1 error result(s)" in metrics["audit_disposition"]["evidence_boundary"]
+    assert any("crashing-skill failed" in item for item in metrics["honest_degradation"]["limitations"])
 
 def test_contradictory_credential_explanations_force_abstention(tmp_path):
     from forge.models import Evidence, Finding

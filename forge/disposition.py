@@ -63,6 +63,11 @@ def determine_disposition(*, coverage: Any, triage: Any, governance: Any,
         for states in governance.applicability.values()
         for state in states.values()
     )
+    skill_errors = sum(
+        state == "ERROR"
+        for states in governance.applicability.values()
+        for state in states.values()
+    )
     boundary = tuple(
         f"{key}: {len(paths)} file(s)"
         for key, paths in sorted(blocking.items())
@@ -71,6 +76,8 @@ def determine_disposition(*, coverage: Any, triage: Any, governance: Any,
         boundary += (f"out_of_scope_modules: {len(excluded_modules)} module(s)",)
     if undetermined:
         boundary += (f"skill_applicability: {undetermined} undetermined result(s)",)
+    if skill_errors:
+        boundary += (f"skill_contract: {skill_errors} error result(s)",)
     if unsupported_sources:
         boundary += tuple(f"unsupported_source_language: {language} ({count} file(s))" for language, count in sorted(unsupported_sources.items()))
 
@@ -88,6 +95,14 @@ def determine_disposition(*, coverage: Any, triage: Any, governance: Any,
             "UNVERIFIED_SOURCE_BOUNDARY",
             "The run found evidence, but one or more source boundaries were not verified.",
             "Inspect skipped files and rerun with complete source coverage.",
+            boundary,
+        )
+    if skill_errors:
+        return AuditDisposition(
+            "ABSTAIN_DEGRADED",
+            "GOVERNANCE_SKILL_FAILURE",
+            "One or more executable governance skills failed; the remaining evidence is partial.",
+            "Repair the failed governance skill and rerun the audit.",
             boundary,
         )
     if degraded:

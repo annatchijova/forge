@@ -10,7 +10,7 @@ Fecha: 2026-07-18.
 | H1.b | Confirmado | CODE FACT | Exponer atestación al verificar sello. |
 | H2 | Falsificado para fixture propuesto | FALSIFIED | Regresión unitaria para callers mixtos. |
 | H3 | Confirmado y remediado | CODE FACT | La identidad conserva la columna AST del sink; regresión para dos sinks en una línea. |
-| H4 | Confirmado | CODE FACT | ERROR debe degradar/abstener veredicto global. |
+| H4 | Confirmado y remediado | CODE FACT | ERROR conserva la limitación y fuerza `ABSTAIN_DEGRADED` con causa específica. |
 | H5 | Ataques ensayados contenidos | CODE FACT | Mantener límites y cobertura adversarial. |
 | R1 | No comparable | UNDETERMINED | Congelar commit y scope para baseline. |
 | R2 | Parcial | UNDETERMINED | Phylo medido; Vigía requiere shards/presupuesto. |
@@ -42,7 +42,9 @@ En el commit auditado, `def load(a, b): open(a); open(b)` produjo dos `SecurityF
 
 ## H4 — ERROR de skill deja un clean verdict
 
-Una skill temporal aplicable lanzó `RuntimeError("synthetic violation crash")` en `evaluate()`. `run_skills()` registró `ERROR`, incrementó `contract_failures` y emitió limitación, pero la auditoría terminó `COMPLETE_NO_FINDINGS` con “No action required”. Es una `CODE FACT`: `determine_disposition()` cuenta `UNDETERMINED`, no `ERROR`. Un failure de contrato puede suprimir hallazgos y aun así parecer completo. La corrección debe llevar `ERROR` a abstención/degradación conservando contrato y limitación.
+En el commit auditado, una skill temporal aplicable lanzó `RuntimeError("synthetic violation crash")` en `evaluate()`. `run_skills()` registró `ERROR`, incrementó `contract_failures` y emitió limitación, pero la auditoría terminó `COMPLETE_NO_FINDINGS` con “No action required”. Fue una `CODE FACT`: `determine_disposition()` contaba `UNDETERMINED`, no `ERROR`. Un failure de contrato podía suprimir hallazgos y aun así parecer completo.
+
+**Remediación.** `ERROR` se cuenta ahora como un límite de evidencia `skill_contract` y devuelve `ABSTAIN_DEGRADED` / `GOVERNANCE_SKILL_FAILURE`. El resto del audit se conserva para diagnóstico; el resultado global no afirma completitud. La regresión `test_crashed_executable_skill_degrades_disposition_instead_of_passing_clean` vuelve a ejecutar una skill que falla en `evaluate()` y exige esa disposición y su limitación.
 
 ## H5 — aislamiento de inducción
 
