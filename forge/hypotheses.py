@@ -136,9 +136,11 @@ def _candidates(module_path: str, source: tuple[str, ...], language: str) -> lis
         # execution) without also excluding a real `something.eval(expr)`.
         if re.search(r"\b(eval|exec)\s*\(\s*(?!\))", matching_stripped):
             candidates.append((f"The dynamic evaluation `{stripped}` at {module_path}:{number} may execute data as code instead of treating it as data.", number, f"Supply a payload that would create a harmless sentinel file; absence of the sentinel and explicit rejection falsify the hypothesis."))
-    hypotheses = [Hypothesis(module_path, rank, desc, (line,), test) for rank, (desc, line, test) in enumerate(candidates[:5], 1)]
-    omitted = len(candidates) - len(hypotheses)
-    return hypotheses, omitted
+    # Verification operates on every generated candidate. Presentation layers
+    # may summarize later, but no candidate is omitted from analysis simply
+    # because it appears after the fifth source-order match.
+    hypotheses = [Hypothesis(module_path, rank, desc, (line,), test) for rank, (desc, line, test) in enumerate(candidates, 1)]
+    return hypotheses, 0
 
 
 def _comparison_reaches_return(source: tuple[str, ...], line: int) -> bool:
@@ -167,11 +169,7 @@ def generate_hypotheses(triage: TriageManifest, include_fossil_high_risk: bool =
         module_hypotheses, omitted = _candidates(module.path, source, module.language)
         hypotheses.extend(module_hypotheses)
         if omitted:
-            limitations.append(
-                f"{module.path}: {omitted} additional risk pattern(s) beyond the 5-candidate "
-                "cap were detected but omitted from this report; this is a completeness "
-                "limitation, not evidence those patterns were absent."
-            )
+            limitations.append(f"{module.path}: {omitted} candidate(s) explicitly omitted by a configured cap.")
     return HypothesesManifest("1.0", "0.1.0", triage.schema_version, triage.root, int(time.time()), tuple(hypotheses), tuple(audited), tuple(limitations))
 
 

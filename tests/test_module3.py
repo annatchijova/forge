@@ -149,6 +149,23 @@ def test_shell_true_is_a_distinct_hypothesis_family():
     assert "shell=True" in hypotheses[0].description
 
 
+def test_all_candidates_are_verified_instead_of_a_silent_five_item_cap(tmp_path):
+    (tmp_path / "main.py").write_text(
+        "def run(a, b, c, d, e, f, g):\n"
+        "    eval(a)\n"
+        "    eval(b)\n"
+        "    eval(c)\n"
+        "    eval(d)\n"
+        "    eval(e)\n"
+        "    eval(f)\n"
+        "    eval(g)\n"
+    )
+    hypotheses = generate_hypotheses(triage(tmp_path))
+    assert len(hypotheses.hypotheses) == 7
+    assert not [item for item in hypotheses.limitations if "omitted" in item.lower()]
+    assert len(verify_hypotheses(hypotheses).findings) == 7
+
+
 def test_parser_induction_does_not_confirm_opaque_failure_outside_hypothesized_call(tmp_path):
     (tmp_path / "main.py").write_text("def parse(raw):\n    raise RuntimeError('opaque parser failure')\n")
     result = verify_hypotheses(generate_hypotheses(triage(tmp_path)), induce=True)
