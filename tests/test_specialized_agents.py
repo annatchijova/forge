@@ -91,6 +91,30 @@ def test_security_deserialization_trigger_and_safe_yaml(tmp_path):
     write(tmp_path, "safe.py", "yaml.load(raw, Loader=yaml.SafeLoader)\n# pickle.load(trusted)\n")
     assert sum(x.family == "unsafe-deserialization" for x in audit(tmp_path)) == 3
 
+
+def test_security_resolves_deserialization_import_spellings_without_shadowing(tmp_path):
+    write(tmp_path, "bad.py", (
+        "import pickle as p\n"
+        "from pickle import loads as direct_loads\n"
+        "import yaml\n"
+        "p.loads(blob)\n"
+        "direct_loads(blob)\n"
+        "yaml.unsafe_load(raw)\n"
+        "yaml.full_load(raw)\n"
+    ))
+    write(tmp_path, "safe.py", (
+        "import pickle as p\n"
+        "import yaml\n"
+        "yaml.safe_load(raw)\n"
+        "yaml.load(raw, Loader=yaml.SafeLoader)\n"
+        "def load(p):\n"
+        "    return p.loads(blob)\n"
+    ))
+    findings = [item for item in audit(tmp_path) if item.family == "unsafe-deserialization"]
+    assert [(item.path, item.line) for item in findings] == [
+        ("bad.py", 4), ("bad.py", 5), ("bad.py", 6), ("bad.py", 7),
+    ]
+
 def test_security_path_trigger_and_normalized_safe_context(tmp_path):
     write(tmp_path, "bad.py", "def read(path):\n    return open(path)\n")
     write(tmp_path, "safe.py", "def read(path):\n    path = os.path.normpath(path)\n    return open(path)\n")

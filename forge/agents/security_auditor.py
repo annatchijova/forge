@@ -101,15 +101,72 @@ def _unverified_webhooks(tree):
             yield SecurityFinding("unverified-webhook", "", function.lineno, f"{method.upper()} route {path!r} has no auth dependency and no signature/HMAC verification in its body")
 
 
-def _deserialization(tree):
-    for n in ast.walk(tree):
-        if not isinstance(n, ast.Call) or not isinstance(n.func, ast.Attribute) or not isinstance(n.func.value, ast.Name): continue
-        mod, name = n.func.value.id, n.func.attr
-        if (mod, name) in {("pickle", "loads"), ("pickle", "load"), ("marshal", "loads")}:
-            yield SecurityFinding("unsafe-deserialization", "", n.lineno, f"{mod}.{name} accepts serialized data without a safe structural boundary")
-        elif mod == "yaml" and name == "load":
-            safe = any(k.arg == "Loader" and isinstance(k.value, ast.Attribute) and isinstance(k.value.value, ast.Name) and k.value.value.id == "yaml" and k.value.attr == "SafeLoader" for k in n.keywords)
-            if not safe: yield SecurityFinding("unsafe-deserialization", "", n.lineno, "yaml.load lacks Loader=yaml.SafeLoader")
+def _module_import_aliases(tree: ast.Module) -> dict[str, str]:
+    """Resolve only unambiguous, module-level spellings of risky imports."""
+    aliases: dict[str, str] = {}
+    for node in tree.body:
+        if isinstance(node, ast.Import):
+            for item in node.names:
+                if item.name in {"pickle", "marshal", "yaml"}:
+                    aliases[item.asname or item.name] = item.name
+        elif isinstance(node, ast.ImportFrom) and node.module in {"pickle", "marshal", "yaml"}:
+            for item in node.names:
+                if item.name != "*":
+                    aliases[item.asname or item.name] = f"{node.module}.{item.name}"
+    return aliases
+
+
+def _function_shadows_name(function: ast.FunctionDef | ast.AsyncFunctionDef | None, name: str) -> bool:
+    """Avoid treating a module import as authoritative after a local shadow."""
+    if function is None:
+        return False
+    parameters = (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs)
+    if any(parameter.arg == name for parameter in parameters):
+        return True
+    for node in ast.walk(function):
+        if isinstance(node, (ast.Assign, ast.AnnAssign)):
+            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            if any(isinstance(target, ast.Name) and target.id == name for target in targets):
+                return True
+    return False
+
+
+def _deserialization(tree: ast.Module):
+    aliases = _module_import_aliases(tree)
+    parents = {child: parent for parent in ast.walk(tree) for child in ast.iter_child_nodes(parent)}
+
+    def enclosing_function(node: ast.AST) -> ast.FunctionDef | ast.AsyncFunctionDef | None:
+        current = parents.get(node)
+        while current is not None:
+            if isinstance(current, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                return current
+            current = parents.get(current)
+        return None
+
+    def canonical_target(node: ast.AST, function: ast.FunctionDef | ast.AsyncFunctionDef | None) -> str | None:
+        if isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name):
+            if _function_shadows_name(function, node.value.id):
+                return None
+            module = aliases.get(node.value.id, node.value.id)
+            return f"{module}.{node.attr}" if module in {"pickle", "marshal", "yaml"} else None
+        if isinstance(node, ast.Name) and not _function_shadows_name(function, node.id):
+            return aliases.get(node.id)
+        return None
+
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        target = canonical_target(node.func, enclosing_function(node))
+        if target in {"pickle.loads", "pickle.load", "marshal.loads"}:
+            yield SecurityFinding("unsafe-deserialization", "", node.lineno, f"{target} accepts serialized data without a safe structural boundary")
+        elif target in {"yaml.load", "yaml.unsafe_load", "yaml.full_load"}:
+            safe = any(
+                keyword.arg == "Loader" and isinstance(keyword.value, ast.Attribute)
+                and keyword.value.attr == "SafeLoader"
+                for keyword in node.keywords
+            )
+            if not safe:
+                yield SecurityFinding("unsafe-deserialization", "", node.lineno, f"{target} lacks Loader=yaml.SafeLoader")
 
 def _path_barrier_names(function: ast.FunctionDef | ast.AsyncFunctionDef) -> dict[str, int]:
     """Return names proven sanitized before a later sink in one function."""
