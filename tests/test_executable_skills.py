@@ -34,6 +34,42 @@ def load(raw):
     assert _skill_findings(result, "honest-degradation") == []
 
 
+def test_honest_degradation_reports_logged_drop_continue_without_degraded_state(tmp_path):
+    result = _run(tmp_path, """\
+import logging
+
+def run_vigia(rows):
+    signals = []
+    for row in rows:
+        try:
+            signals.append(SignalOutput(description=row["description"]))
+        except TypeError:
+            logging.warning("Invalid signal ignored")
+            continue
+    return verdict_from(signals)
+""")
+    findings = _skill_findings(result, "honest-degradation")
+    assert len(findings) == 1
+    assert "drops the item" in findings[0].description
+
+    result = _run(tmp_path, """\
+import logging
+
+def run_vigia(rows):
+    signals = []
+    degraded = False
+    for row in rows:
+        try:
+            signals.append(SignalOutput(description=row["description"]))
+        except TypeError:
+            logging.warning("Invalid signal ignored")
+            degraded = True
+            continue
+    return {"verdict": verdict_from(signals), "degraded": degraded}
+""")
+    assert _skill_findings(result, "honest-degradation") == []
+
+
 def test_deterministic_core_requires_canonical_hash_input(tmp_path):
     result = _run(tmp_path, """\
 import hashlib

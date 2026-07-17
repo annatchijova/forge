@@ -62,6 +62,15 @@ like Security Auditor) is a different, less pluggable path — it still means
 touching the runtime — so this extensibility claim is scoped precisely to
 governance skills, not to agents in general.
 
+## Honest degradation boundary
+
+`honest-degradation` does not treat every log call as sufficient disclosure.
+A handler that logs an exception and then drops the current item with
+`continue` still leaves the caller with a plausible partial result unless it
+also raises or records explicit degraded/error state. The executable contract
+therefore flags `log; continue` discard paths without such state, while
+leaving logged handlers clean when the degraded outcome is propagated.
+
 ## Catalog
 
 **Core reasoning** — Abductive Engineering · Red-Team Auditing · Secure by

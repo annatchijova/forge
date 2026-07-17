@@ -28,12 +28,18 @@ class HonestDegradationSkill:
             body = handler.body
             # FP guards: reraising, named errors, logging/warnings, and an
             # explicit error/degraded flag are visible disclosure paths.
+            # Logging alone is not sufficient for handlers that drop the item
+            # and continue: callers still receive a plausible reduced result.
             names = {call_name(node) for stmt in body for node in ast.walk(stmt) if isinstance(node, ast.Call)}
             has_raise = any(isinstance(node, ast.Raise) for stmt in body for node in ast.walk(stmt))
             has_disclosure = any(name.startswith("logging.") or name in {"warn", "warning", "warnings.warn"} for name in names)
             has_flag = any(isinstance(node, (ast.Assign, ast.AnnAssign)) and any(token in " ".join(ast.unparse(target) for target in ([*node.targets] if isinstance(node, ast.Assign) else [node.target])).lower() for token in ("error", "failed", "invalid", "degraded", "warn")) for stmt in body for node in ast.walk(stmt))
+            drops_item = any(isinstance(node, ast.Continue) for stmt in body for node in ast.walk(stmt))
             silent_return = any(isinstance(node, (ast.Return, ast.Pass)) for stmt in body for node in ast.walk(stmt))
-            if silent_return and not (has_raise or has_disclosure or has_flag):
+            if drops_item and not (has_raise or has_flag):
+                detail = "exception handler logs or handles an error, then drops the item without marking degraded state"
+                findings.append(source_finding(context, self.contract.name, handler, detail, "A logged-and-continued degraded path can still produce a plausible partial result, so the caller cannot distinguish complete evaluation from discarded evidence."))
+            elif silent_return and not (has_raise or has_disclosure or has_flag):
                 detail = "exception handler returns a plausible fallback without raising, logging, or marking degraded state"
                 findings.append(source_finding(context, self.contract.name, handler, detail, "A degraded-input handler is structurally silent, so callers cannot distinguish fallback data from verified data."))
 

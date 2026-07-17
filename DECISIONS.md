@@ -464,6 +464,22 @@ The same boundary is reflected in the self-assessment metrics. A qualitative
 confidence boundary is reported instead of an invented numeric score. This
 keeps the VIGÍA lesson intact while preserving FORGE's code-audit vocabulary.
 
+## Honest degradation: logging is not always disclosure (2026-07-17)
+
+The executable `honest-degradation` contract treats a handler that raises,
+returns a named error, or records an explicit degraded/error state differently
+from a handler that simply hides the degraded path. A VIGÍA-labelled specimen
+showed a sharper boundary: catching an exception, logging "invalid item
+ignored", and then `continue`-ing inside a loop can still produce a plausible
+partial verdict. The log is diagnostic evidence for an operator, but it is not
+machine-consumable degradation state for the caller.
+
+FORGE therefore classifies `except ...: log; continue` as a protocol gap when
+the handler does not raise or mark an explicit degraded/error flag. The benign
+counterpart is a handler that logs and also propagates degraded state into the
+returned result or surrounding control flow. This remains a narrow structural
+subset: ordinary logged failures are not findings merely because they log.
+
 ## Source classification and coverage honesty (2026-07-17)
 
 A Corvus/CRONOS stress test showed that decoding an arbitrary 8 KiB prefix as
