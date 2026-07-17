@@ -16,6 +16,8 @@ class SecurityFinding:
 
 _CRED = re.compile(r"(password|passwd|secret|token|api[_-]?key|credential)", re.I)
 _PLACEHOLDER = re.compile(r"^(changeme|change_me|example|placeholder|your[_ -].*|<.*>)$", re.I)
+_SUBPROCESS_CALLS = {"run", "Popen", "call", "check_call", "check_output"}
+_SQL_EXEC_METHODS = {"execute", "executemany", "executescript"}
 
 def _is_getenv_call(node):
     return isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == "os" and node.func.attr == "getenv"
@@ -188,6 +190,39 @@ def _path_controllability(
     return "UNDETERMINED"
 
 
+def _contains_parameter(node: ast.AST, params: set[str]) -> bool:
+    return any(isinstance(item, ast.Name) and item.id in params for item in ast.walk(node))
+
+
+def _sql_injection(tree: ast.AST):
+    for function in (node for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))):
+        params = {argument.arg for argument in (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs)}
+        for node in ast.walk(function):
+            if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr in _SQL_EXEC_METHODS and node.args):
+                continue
+            query = node.args[0]
+            dynamic_query = isinstance(query, (ast.JoinedStr, ast.BinOp)) and _contains_parameter(query, params)
+            if dynamic_query:
+                control = _path_controllability(tree, function, next(item.id for item in ast.walk(query) if isinstance(item, ast.Name) and item.id in params))
+                yield SecurityFinding("sql-injection", "", node.lineno, "function parameter is concatenated into SQL execution without parameter binding", control, "PLAUSIBLE")
+
+
+def _command_injection(tree: ast.AST):
+    for function in (node for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))):
+        params = {argument.arg for argument in (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs)}
+        for node in ast.walk(function):
+            if not (
+                isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                and isinstance(node.func.value, ast.Name) and node.func.value.id == "subprocess"
+                and node.func.attr in _SUBPROCESS_CALLS and node.args
+            ):
+                continue
+            argv = node.args[0]
+            if _contains_parameter(argv, params):
+                control = _path_controllability(tree, function, next(item.id for item in ast.walk(argv) if isinstance(item, ast.Name) and item.id in params))
+                yield SecurityFinding("command-injection", "", node.lineno, "function parameter reaches subprocess argv construction", control, "PLAUSIBLE")
+
+
 def _paths(tree):
     parents = {child: parent for parent in ast.walk(tree) for child in ast.iter_child_nodes(parent)}
 
@@ -214,16 +249,16 @@ def _paths(tree):
                 continue
             controllability = _path_controllability(tree, function, sorted(unsafe_parameters)[0])
             if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == "os" and node.func.attr == "path":
-                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches os.path operation without proven normalization", controllability)
+                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches os.path operation without proven normalization", controllability, "PLAUSIBLE")
             elif isinstance(node.func, ast.Name) and node.func.id == "open":
-                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches open() without proven normalization", controllability)
+                yield SecurityFinding("path-traversal", "", node.lineno, "parameter reaches open() without proven normalization", controllability, "PLAUSIBLE")
 
 def audit(root: str | os.PathLike[str], eligible: set[str] | None = None) -> tuple[SecurityFinding, ...]:
     base=Path(root)
     scope = set(eligible) if eligible is not None else {m.path for m in triage(base).modules if m.module_class in {ModuleClass.CONNECTED_ALIVE, ModuleClass.FOSSIL_HIGH_RISK, ModuleClass.DEAD_WEIGHT}}
     scan=prepare_python_scan(base, scope); out=[]; examinations=dict(scan.examinations)
     for rel, tree in scan.modules:
-        for f in (*_assigned(tree), *_getenv_default_credential(tree), *_unverified_webhooks(tree), *_deserialization(tree), *_paths(tree)):
+        for f in (*_assigned(tree), *_getenv_default_credential(tree), *_unverified_webhooks(tree), *_deserialization(tree), *_paths(tree), *_sql_injection(tree), *_command_injection(tree)):
             out.append(SecurityFinding(f.family, rel, f.line, f.description, f.controllability, f.exploitability))
         examinations[rel]="examined_with_findings" if any(x.path == rel for x in out) else "examined_clean"
     return AgentScanResult(

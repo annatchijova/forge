@@ -15,6 +15,10 @@
     {"name": "security-fp-basename", "agent": "security_auditor", "path": "security/fp-basename", "expected_findings": []},
     {"name": "security-fp-allowlist", "agent": "security_auditor", "path": "security/fp-allowlist", "expected_findings": []},
     {"name": "security-path-late-barrier", "agent": "security_auditor", "path": "security/fp-late-barrier", "expected_findings": [{"family": "path-traversal", "path": "main.py", "line": 4}]},
+    {"name": "security-sql-injection-positive", "agent": "security_auditor", "path": "security/sql-injection-positive", "expected_findings": [{"family": "sql-injection", "path": "main.py", "line": 3}]},
+    {"name": "security-sql-injection-negative", "agent": "security_auditor", "path": "security/sql-injection-negative", "expected_findings": []},
+    {"name": "security-command-injection-positive", "agent": "security_auditor", "path": "security/command-injection-positive", "expected_findings": [{"family": "command-injection", "path": "main.py", "line": 4}]},
+    {"name": "security-command-injection-negative", "agent": "security_auditor", "path": "security/command-injection-negative", "expected_findings": []},
 
     {"name": "integrity-positive-1", "agent": "integrity_inspector", "path": "integrity/positive-1", "expected_findings": [{"family": "decision-adjacent-float", "path": "main.py", "line": 4}, {"family": "unversioned-serialization", "path": "main.py", "line": 5}]},
     {"name": "integrity-positive-2", "agent": "integrity_inspector", "path": "integrity/positive-2", "expected_findings": [{"family": "decision-adjacent-float", "path": "main.py", "line": 4}, {"family": "unversioned-serialization", "path": "main.py", "line": 5}]},

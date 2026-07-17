@@ -12,6 +12,8 @@ _IMPACT_BY_FAMILY = {
     "dynamic-evaluation": "CRITICAL",
     "unverified-webhook": "CRITICAL",
     "subprocess": "HIGH",
+    "command-injection": "CRITICAL",
+    "sql-injection": "CRITICAL",
     "parser-boundary": "HIGH",
     "numeric-boundary": "MEDIUM",
     "unversioned-serialization": "MEDIUM",
@@ -36,6 +38,8 @@ def finding_family(description: str) -> str:
         return "unversioned-serialization"
     if "parser call" in text or "parser boundary" in text:
         return "parser-boundary"
+    if "subprocess argv" in text:
+        return "command-injection"
     if "shell=true" in text:
         return "shell-true"
     if "subprocess" in text or "os.system" in text:
@@ -46,6 +50,8 @@ def finding_family(description: str) -> str:
         return "credential"
     if "path" in text and "open" in text:
         return "path-traversal"
+    if "sql" in text and "parameter" in text:
+        return "sql-injection"
     if "eval" in text or "exec" in text:
         return "dynamic-evaluation"
     return "other"
