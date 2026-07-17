@@ -1,7 +1,7 @@
 import json
 
 from forge import Runtime
-from forge.reporting import REPORT_MODES, render_dashboard
+from forge.reporting import REPORT_MODES, render_dashboard, render_sharded_dashboard
 
 
 def test_render_dashboard_generates_main_report_and_all_modes(tmp_path):
@@ -19,3 +19,18 @@ def test_render_dashboard_generates_main_report_and_all_modes(tmp_path):
         assert output.is_file()
         if mode == "json":
             assert json.loads(output.read_text())["chain"] == sealed_findings
+
+
+def test_render_sharded_dashboard_links_independent_seals(tmp_path):
+    run = tmp_path / "sharded"
+    (run / "shards" / "shard-0001").mkdir(parents=True)
+    (run / "shards.json").write_text(
+        '{"status":"PARTIAL_SHARDED","repository":"/repo","max_connected":2,'
+        '"parent_seal":"NOT_GENERATED","shards":[{"index":1,"status":"COMPLETE",'
+        '"findings":3,"discarded":1,"paths":["a.py","b.py"]}]}', encoding="utf-8"
+    )
+    output = render_sharded_dashboard(run)
+    report = output.read_text(encoding="utf-8")
+    assert "navigation and aggregation only" in report
+    assert "3" in report and "1 discarded hypotheses" in report
+    assert "shards/shard-0001/forge-report-standard.html" in report

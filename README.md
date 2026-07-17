@@ -289,6 +289,7 @@ recompute findings; choose the one that matches the reader and the question.
 | `forge-report-summary.html` | A fast, shareable status view when someone needs the result and boundaries without the full audit detail. |
 | `forge-report-standard.html` | The normal daily-review report: overview, severity, grouped related findings, source locations, reproduction commands, discarded hypotheses, and coverage. |
 | `forge-report-extended.html` | A forensic deep dive: use when reviewing reasoning chains, governance contracts, and the audit trace. |
+| `forge-report-shards.html` | Navigation index for a bounded audit split into independently sealed shards; it never fabricates a parent seal. |
 | `verification-manifest.sealed.json` | Machine-readable evidence for MCP, automation, or independent verification — not the first file a human reviewer should open. |
 
 For an everyday engineering workflow, start with **standard**. Use the
@@ -297,6 +298,17 @@ when the evidence needs to be examined in depth.
 
 Details on why artifacts are split rather than nested into one blob, and on
 what the seal does and does not prove, in [`docs/artifacts.md`](docs/artifacts.md).
+
+For a sharded run, render the presentation index directly from the run
+directory:
+
+```bash
+python3 -m forge report /path/to/forge-run
+```
+
+The index links each shard's own `summary`, `standard`, and `extended` reports.
+Each shard remains an independent sealed evidence set; the index is only a
+human-friendly map across them.
 
 Historical audit and benchmark runs — including full findings, discarded
 hypotheses, and known false positives — are kept out of this checkout and

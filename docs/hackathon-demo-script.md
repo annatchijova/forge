@@ -41,6 +41,16 @@ python3 -m forge verify /tmp/forge-demo-run/verification-manifest.sealed.json
 The same report can be rendered at `summary`, `standard`, and `extended` tiers;
 the renderer reads the sealed finding set and does not recompute detectors.
 
+If the repository exceeds the bounded connected-module limit, FORGE produces
+independent shards instead of inventing a parent seal. Render the navigation
+index with:
+
+```bash
+python3 -m forge report /tmp/forge-demo-run
+```
+
+Open `forge-report-shards.html` first, then choose a shard's standard report.
+
 ## 3. Show the real VIGÍA case (about two minutes)
 
 Open the preserved HTML artifacts in

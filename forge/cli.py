@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from forge.sealing import read_and_verify
 from forge.tiered_report import MODES, render_tiered_report
+from forge.reporting import render_sharded_dashboard
 from forge.runtime import Runtime
 from forge.models import ModelRouting
 from forge.benchmark import run_benchmark
@@ -89,6 +90,12 @@ def main() -> int:
         report_parser.add_argument("--mode", choices=MODES, default="standard")
         report_parser.add_argument("-o", "--output", type=Path)
         report_args = report_parser.parse_args(sys.argv[2:])
+        if report_args.sealed.is_dir():
+            if not (report_args.sealed / "shards.json").is_file():
+                report_parser.error("report directory must contain shards.json")
+            output = report_args.output or report_args.sealed / "forge-report-shards.html"
+            print(render_sharded_dashboard(report_args.sealed, output))
+            return 0
         print(render_tiered_report(report_args.sealed, report_args.mode, report_args.output))
         return 0
     if len(sys.argv) > 1 and sys.argv[1] == "benchmark":
