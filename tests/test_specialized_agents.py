@@ -212,6 +212,23 @@ def test_security_path_flow_has_no_float_decision_sentinel():
     ]
 
 
+def test_security_tracks_sql_interpolation_but_not_bound_values_or_lookup_keys(tmp_path):
+    write(tmp_path, "queries.py", (
+        "QUERIES = {'active': 'SELECT * FROM t WHERE active = 1'}\n"
+        "def find(cur, user, choice):\n"
+        "    cur.execute(\"SELECT * FROM t WHERE id = {}\".format(user))\n"
+        "    query = \"SELECT * FROM t WHERE id = \" + user\n"
+        "    cur.execute(query)\n"
+        "    cur.execute(\"SELECT * FROM t WHERE id = ?\", (user,))\n"
+        "    cur.execute(\"SELECT * FROM t WHERE id = %s\", (user,))\n"
+        "    cur.execute(QUERIES[choice])\n"
+    ))
+    findings = [item for item in audit(tmp_path) if item.family == "sql-injection"]
+    assert [(item.path, item.line) for item in findings] == [
+        ("queries.py", 3), ("queries.py", 5),
+    ]
+
+
 def test_security_path_normalization_is_scoped_to_each_function(tmp_path):
     write(tmp_path, "mixed.py", """
 def safe(path):

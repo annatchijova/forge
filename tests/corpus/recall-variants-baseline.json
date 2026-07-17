@@ -1,6 +1,6 @@
 {
   "recall_variants_schema_version": "1.0",
-  "recall_variant_global": {"detected": 23, "total": 36, "recall": 0.638889},
+  "recall_variant_global": {"detected": 25, "total": 36, "recall": 0.694444},
   "recall_variant_by_family": {
     "command-injection": {"detected": 0, "total": 3, "recall": 0.0},
     "decision-adjacent-float": {"detected": 2, "total": 3, "recall": 0.666667},
@@ -8,15 +8,13 @@
     "hardcoded-credential": {"detected": 3, "total": 4, "recall": 0.75},
     "parser-boundary": {"detected": 2, "total": 3, "recall": 0.666667},
     "path-traversal": {"detected": 5, "total": 7, "recall": 0.714286},
-    "sql-injection": {"detected": 2, "total": 4, "recall": 0.5},
+    "sql-injection": {"detected": 4, "total": 4, "recall": 1.0},
     "subprocess": {"detected": 0, "total": 1, "recall": 0.0},
     "unsafe-deserialization": {"detected": 4, "total": 4, "recall": 1.0},
     "unversioned-serialization": {"detected": 2, "total": 3, "recall": 0.666667}
   },
   "known_gaps": [
     {"case": "variant-path-pathlib", "family": "path-traversal", "disposition": "undecided"},
-    {"case": "variant-sql-format", "family": "sql-injection", "disposition": "close_gap"},
-    {"case": "variant-sql-alias", "family": "sql-injection", "disposition": "close_gap"},
     {"case": "variant-command-os-system", "family": "command-injection", "disposition": "close_gap"},
     {"case": "variant-command-alias", "family": "command-injection", "disposition": "close_gap"},
     {"case": "variant-command-shell-variable", "family": "command-injection", "disposition": "undecided"},

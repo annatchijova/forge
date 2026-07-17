@@ -130,6 +130,10 @@ conservative, named benign criteria (see `DECISIONS.md`):
   covered by this family yet. A parameter used solely as an external mapping
   key/index is not itself treated as the path value; a parameter used as the
   mapping container remains observable.
+* **sql-injection** — an unsafe parameter origin interpolated into argument
+  zero of `execute`/`executemany`/`executescript`, including local query
+  aliases. Bound parameter tuples/dicts and mapping-key selection of constant
+  queries are excluded deliberately.
 * **unverified-webhook** — a state-mutating route (`@app.post`/`put`/`patch`/
   `delete`) whose path is named like a webhook, with no FastAPI
   `Depends(...)` parameter and no signature/HMAC verification anywhere in

@@ -283,17 +283,18 @@ def _function_parameter_names(function: ast.FunctionDef | ast.AsyncFunctionDef) 
     return {argument.arg for argument in (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs)}
 
 
-def _path_flow_at_calls(
+def _unsafe_param_origins(
     function: ast.FunctionDef | ast.AsyncFunctionDef,
     calls: tuple[ast.Call, ...],
     enclosing_function,
+    is_sanitizer,
+    barriers: dict[str, int] | None = None,
 ) -> dict[ast.Call, dict[str, set[str]]]:
-    """Compute local path origins once, then snapshot them at each call.
+    """Compute local unsafe origins once, then snapshot them at each call.
 
-    Assignments and validation/sanitizer barriers are processed in source
-    order.  That preserves the important property that a sanitizer cannot
-    protect an earlier sink, without rebuilding an AST walk and a fixpoint for
-    every call in a large function.
+    The caller supplies family policy through ``is_sanitizer`` and optional
+    line-scoped barriers. Assignments are processed in source order, so one
+    graph serves path, SQL, and command sinks without per-sink AST walks.
     """
     unsafe = {name: {name} for name in _function_parameter_names(function)}
     assignments = sorted(
@@ -303,8 +304,8 @@ def _path_flow_at_calls(
         ),
         key=lambda node: (node.lineno, node.col_offset),
     )
-    barriers = sorted(
-        _path_barrier_names(function).items(), key=lambda item: (item[1], item[0])
+    barrier_items = sorted(
+        (barriers or {}).items(), key=lambda item: (item[1], item[0])
     )
     snapshots: dict[ast.Call, dict[str, set[str]]] = {}
     assignment_index = barrier_index = 0
@@ -317,7 +318,7 @@ def _path_flow_at_calls(
                 break
             assignment_index += 1
             targets = assignment.targets if isinstance(assignment, ast.Assign) else [assignment.target]
-            if _is_path_sanitizer(assignment.value):
+            if is_sanitizer(assignment.value):
                 origins: set[str] = set()
             else:
                 origins = set().union(*(
@@ -331,19 +332,19 @@ def _path_flow_at_calls(
                         unsafe[name] = set(origins)
                     else:
                         unsafe.pop(name, None)
-        while barrier_index < len(barriers) and barriers[barrier_index][1] <= call.lineno:
-            name, _line = barriers[barrier_index]
+        while barrier_index < len(barrier_items) and barrier_items[barrier_index][1] <= call.lineno:
+            name, _line = barrier_items[barrier_index]
             unsafe.pop(name, None)
             barrier_index += 1
         snapshots[call] = {name: set(origins) for name, origins in unsafe.items()}
     return snapshots
 
 
-def _unsafe_origins_in_path_expression(argument: ast.AST, unsafe: dict[str, set[str]]) -> set[str]:
-    """Return unsafe origins that reach ``argument`` outside inline barriers."""
+def _origins_reaching(argument: ast.AST, unsafe: dict[str, set[str]], is_sanitizer) -> set[str]:
+    """Return unsafe origins reaching an expression outside family barriers."""
     protected: set[ast.AST] = set()
     for node in ast.walk(argument):
-        if _is_path_sanitizer(node):
+        if is_sanitizer(node):
             protected.update(ast.walk(node))
         # A value used only as a mapping key/index is not itself the path that
         # reaches the sink: `open(config.get(user_path))` opens the configured
@@ -364,17 +365,52 @@ def _unsafe_origins_in_path_expression(argument: ast.AST, unsafe: dict[str, set[
     return origins
 
 
+def _path_flow_at_calls(
+    function: ast.FunctionDef | ast.AsyncFunctionDef,
+    calls: tuple[ast.Call, ...],
+    enclosing_function,
+) -> dict[ast.Call, dict[str, set[str]]]:
+    """Path-policy wrapper around the shared intra-function flow engine."""
+    return _unsafe_param_origins(
+        function, calls, enclosing_function, _is_path_sanitizer, _path_barrier_names(function),
+    )
+
+
+def _unsafe_origins_in_path_expression(argument: ast.AST, unsafe: dict[str, set[str]]) -> set[str]:
+    return _origins_reaching(argument, unsafe, _is_path_sanitizer)
+
+
+def _no_sanitizer(_value: ast.AST) -> bool:
+    return False
+
+
 def _sql_injection(tree: ast.AST):
+    parents = {child: parent for parent in ast.walk(tree) for child in ast.iter_child_nodes(parent)}
+
+    def enclosing_function(node):
+        current = parents.get(node)
+        while current is not None:
+            if isinstance(current, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                return current
+            current = parents.get(current)
+        return None
+
     for function in (node for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))):
-        params = {argument.arg for argument in (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs)}
-        for node in ast.walk(function):
-            if not (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr in _SQL_EXEC_METHODS and node.args):
+        calls = tuple(
+            node for node in ast.walk(function)
+            if enclosing_function(node) is function and isinstance(node, ast.Call)
+        )
+        flows = _unsafe_param_origins(function, calls, enclosing_function, _no_sanitizer)
+        for node in calls:
+            if not (
+                isinstance(node.func, ast.Attribute) and node.func.attr in _SQL_EXEC_METHODS and node.args
+            ):
                 continue
             query = node.args[0]
-            dynamic_query = isinstance(query, (ast.JoinedStr, ast.BinOp)) and _contains_parameter(query, params)
-            if dynamic_query:
-                control = _path_controllability(tree, function, next(item.id for item in ast.walk(query) if isinstance(item, ast.Name) and item.id in params))
-                yield SecurityFinding("sql-injection", "", node.lineno, "function parameter is concatenated into SQL execution without parameter binding", control, "PLAUSIBLE")
+            origins = _origins_reaching(query, flows[node], _no_sanitizer)
+            if origins and not isinstance(query, ast.Constant):
+                control = _path_controllability(tree, function, sorted(origins)[0])
+                yield SecurityFinding("sql-injection", "", node.lineno, "unsafe SQL interpolation reaches execute() without parameter binding", control, "PLAUSIBLE")
 
 
 def _command_injection(tree: ast.AST):
