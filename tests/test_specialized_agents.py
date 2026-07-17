@@ -146,6 +146,24 @@ def test_security_path_trigger_and_normalized_safe_context(tmp_path):
     assert [(x.path, x.family) for x in audit(tmp_path)] == [("bad.py", "path-traversal")]
 
 
+def test_security_tracks_unsafe_path_expressions_aliases_and_keywords(tmp_path):
+    write(tmp_path, "bad.py", (
+        "def concat(user_path):\n    return open(user_path + '.txt')\n"
+        "def alias(user_path):\n    path = user_path\n    return open(path)\n"
+        "def fstring(base, user_path):\n    return open(f'{base}/{user_path}')\n"
+        "def keyword(user_path):\n    return open(file=user_path)\n"
+    ))
+    write(tmp_path, "safe.py", (
+        "def inline(user_path):\n    return open(os.path.normpath(user_path))\n"
+        "def alias(user_path):\n    path = os.path.basename(user_path)\n    return open(path)\n"
+        "def literal():\n    return open('static/config.json')\n"
+    ))
+    findings = [item for item in audit(tmp_path) if item.family == "path-traversal"]
+    assert [(item.path, item.line) for item in findings] == [
+        ("bad.py", 2), ("bad.py", 5), ("bad.py", 7), ("bad.py", 9),
+    ]
+
+
 def test_security_path_normalization_is_scoped_to_each_function(tmp_path):
     write(tmp_path, "mixed.py", """
 def safe(path):

@@ -193,22 +193,24 @@ def _deserialization(tree: ast.Module):
             if not safe:
                 yield SecurityFinding("unsafe-deserialization", "", node.lineno, f"{target} lacks Loader=yaml.SafeLoader")
 
+def _assignment_target_names(node: ast.AST) -> set[str]:
+    if isinstance(node, ast.Name):
+        return {node.id}
+    if isinstance(node, (ast.Tuple, ast.List)):
+        return {name for item in node.elts for name in _assignment_target_names(item)}
+    return set()
+
+
+def _is_path_sanitizer(value: ast.AST) -> bool:
+    if isinstance(value, ast.Call) and isinstance(value.func, ast.Attribute):
+        if value.func.attr in {"normpath", "realpath", "basename", "resolve"}:
+            return True
+    return isinstance(value, ast.Attribute) and value.attr == "name"
+
+
 def _path_barrier_names(function: ast.FunctionDef | ast.AsyncFunctionDef) -> dict[str, int]:
     """Return names proven sanitized before a later sink in one function."""
     barriers: dict[str, int] = {}
-
-    def target_names(node: ast.AST) -> set[str]:
-        if isinstance(node, ast.Name):
-            return {node.id}
-        if isinstance(node, (ast.Tuple, ast.List)):
-            return {name for item in node.elts for name in target_names(item)}
-        return set()
-
-    def is_path_sanitizer(value: ast.AST) -> bool:
-        if isinstance(value, ast.Call) and isinstance(value.func, ast.Attribute):
-            if value.func.attr in {"normpath", "realpath", "basename", "resolve"}:
-                return True
-        return isinstance(value, ast.Attribute) and value.attr == "name"
 
     # Fixed point is deliberate: `b = basename(a); c = b; open(c)` is just as
     # safe as using b directly, and a one-pass AST walk loses that fact.
@@ -220,13 +222,13 @@ def _path_barrier_names(function: ast.FunctionDef | ast.AsyncFunctionDef) -> dic
                 continue
             value = node.value
             targets = node.targets if isinstance(node, ast.Assign) else [node.target]
-            safe = is_path_sanitizer(value) or any(
+            safe = _is_path_sanitizer(value) or any(
                 isinstance(name, ast.Name) and name.id in barriers
                 for name in ast.walk(value) if isinstance(name, ast.Name)
             )
             if safe:
                 for target in targets:
-                    for name in target_names(target):
+                    for name in _assignment_target_names(target):
                         if name not in barriers:
                             barriers[name] = node.lineno
                             changed = True
@@ -277,6 +279,74 @@ def _contains_parameter(node: ast.AST, params: set[str]) -> bool:
     return any(isinstance(item, ast.Name) and item.id in params for item in ast.walk(node))
 
 
+def _function_parameter_names(function: ast.FunctionDef | ast.AsyncFunctionDef) -> set[str]:
+    return {argument.arg for argument in (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs)}
+
+
+def _path_unsafe_sources(
+    function: ast.FunctionDef | ast.AsyncFunctionDef,
+    sink_line: int,
+    barriers: dict[str, int],
+    enclosing_function,
+) -> dict[str, set[str]]:
+    """Map local aliases to their unsafe parameter origins at one sink.
+
+    This is deliberately intra-procedural and flow-insensitive only within
+    assignments preceding the sink.  A later sanitizer does not retroactively
+    protect an earlier open(), while a sanitizer before the sink removes that
+    name from the unsafe set.
+    """
+    unsafe = {
+        name: {name}
+        for name in _function_parameter_names(function)
+        if barriers.get(name, float("inf")) >= sink_line
+    }
+    assignments = sorted(
+        (
+            node for node in ast.walk(function)
+            if isinstance(node, (ast.Assign, ast.AnnAssign))
+            and enclosing_function(node) is function and node.lineno < sink_line
+        ),
+        key=lambda node: (node.lineno, node.col_offset),
+    )
+    changed = True
+    while changed:
+        changed = False
+        for node in assignments:
+            if _is_path_sanitizer(node.value):
+                continue
+            origins = set().union(*(
+                unsafe.get(name.id, set())
+                for name in ast.walk(node.value)
+                if isinstance(name, ast.Name)
+            ))
+            if not origins:
+                continue
+            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            for target in targets:
+                for name in _assignment_target_names(target):
+                    if barriers.get(name, float("inf")) < sink_line:
+                        continue
+                    existing = unsafe.setdefault(name, set())
+                    before = len(existing)
+                    existing.update(origins)
+                    changed = changed or len(existing) != before
+    return unsafe
+
+
+def _unsafe_origins_in_path_expression(argument: ast.AST, unsafe: dict[str, set[str]]) -> set[str]:
+    """Return unsafe origins that reach ``argument`` outside inline barriers."""
+    protected: set[ast.AST] = set()
+    for node in ast.walk(argument):
+        if _is_path_sanitizer(node):
+            protected.update(ast.walk(node))
+    origins: set[str] = set()
+    for node in ast.walk(argument):
+        if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node not in protected:
+            origins.update(unsafe.get(node.id, set()))
+    return origins
+
+
 def _sql_injection(tree: ast.AST):
     for function in (node for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))):
         params = {argument.arg for argument in (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs)}
@@ -318,19 +388,18 @@ def _paths(tree):
         return None
 
     for function in (node for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))):
-        params = {argument.arg for argument in (*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs)}
-        normalized = _path_barrier_names(function)
+        barriers = _path_barrier_names(function)
         for node in ast.walk(function):
-            if enclosing_function(node) is not function or not isinstance(node, ast.Call) or not node.args:
+            if enclosing_function(node) is not function or not isinstance(node, ast.Call):
                 continue
-            unsafe_parameters = {
-                argument.id for argument in node.args
-                if isinstance(argument, ast.Name) and argument.id in params
-                and (argument.id not in normalized or normalized[argument.id] >= node.lineno)
-            }
-            if not unsafe_parameters:
+            arguments = (*node.args, *(keyword.value for keyword in node.keywords))
+            unsafe = _path_unsafe_sources(function, node.lineno, barriers, enclosing_function)
+            origins = set().union(*(
+                _unsafe_origins_in_path_expression(argument, unsafe) for argument in arguments
+            ))
+            if not origins:
                 continue
-            controllability = _path_controllability(tree, function, sorted(unsafe_parameters)[0])
+            controllability = _path_controllability(tree, function, sorted(origins)[0])
             is_os_path_operation = (
                 isinstance(node.func, ast.Attribute)
                 and isinstance(node.func.value, ast.Attribute)
