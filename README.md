@@ -377,6 +377,7 @@ FORGE intentionally does **not**:
 * [`docs/mcp.md`](docs/mcp.md) — MCP tools and Claude Code integration
 * [`docs/hackathon.md`](docs/hackathon.md) — build notes and Codex session evidence
 * [`docs/hackathon-demo-script.md`](docs/hackathon-demo-script.md) — three-to-five minute judge demo script
+* [`docs/codex-terminal-prompts.md`](docs/codex-terminal-prompts.md) — copy-paste Codex prompts for read-only FORGE + CRONOS runs
 * [`docs/real-repository-case-studies.md`](docs/real-repository-case-studies.md) — public Stylometry and Vigia adjudication case studies
 * [`docs/vigia-honest-degradation-breadth-2026-07-17.md`](docs/vigia-honest-degradation-breadth-2026-07-17.md) — read-only VIGÍA breadth audit: adjudicated signal, FP, FN, and scope boundary
 * [`docs/vigia-full-battery-2026-07-17.md`](docs/vigia-full-battery-2026-07-17.md) — full detector-family harvest over a declared VIGÍA production scope, with sealed-run inventory and adjudication boundaries
