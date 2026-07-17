@@ -209,6 +209,19 @@ def inspect_payload(raw):
     assert _skill_findings(result, "honest-degradation") == []
 
 
+def test_honest_degradation_recognizes_returned_unanalyzed_signal_and_drop_ledger(tmp_path):
+    result = _run(tmp_path, """\
+class Engine:
+    def to_signal(self, raw):
+        try:
+            return convert(raw)
+        except Exception as exc:
+            self._signal_drops.append(str(exc))
+            return self._unanalyzed_signal("engine", str(exc))
+""")
+    assert _skill_findings(result, "honest-degradation") == []
+
+
 def test_deterministic_core_requires_canonical_hash_input(tmp_path):
     result = _run(tmp_path, """\
 import hashlib

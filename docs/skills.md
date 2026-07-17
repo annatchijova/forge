@@ -95,6 +95,10 @@ explicit degraded/skipped/error flag, or call a named marker such as
 `mark_degraded` or `record_drop`. Optional field defaults and cleanup paths are
 corpus guardrails because they are not degraded-stage evidence.
 
+The VIGÍA F7 regression also covers the equivalent direct form: a handler can
+append to a `*_drops` ledger and return an `*_unanalyzed` signal. Both are
+machine-readable visibility, not merely log text.
+
 ## Catalog
 
 **Core reasoning** — Abductive Engineering · Red-Team Auditing · Secure by

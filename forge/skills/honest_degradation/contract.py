@@ -14,9 +14,9 @@ _VISIBILITY_TOKENS = (
 )
 _VISIBILITY_FUNCTIONS = (
     "abstain", "mark_degraded", "mark_unanalyzed", "mark_unanalysed",
-    "record_drop", "record_error", "record_failure", "record_skip",
+    "record_drop", "record_error", "record_failure", "record_skip", "unanalyzed",
 )
-_ERROR_ACCUMULATORS = ("errors", "failures", "dropped", "discarded", "skipped", "limitations")
+_ERROR_ACCUMULATORS = ("errors", "failures", "drops", "dropped", "discarded", "skipped", "limitations")
 _STAGE_TOKENS = (
     "artifact", "bundle", "caie", "engine", "metadata", "profile", "result",
     "signal", "stage", "timeline",
