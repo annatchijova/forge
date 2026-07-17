@@ -33,10 +33,31 @@ The first direct `vigia/**` run is retained as a scope diagnostic only: its
 193/193 source coverage included nested tests and scripts, and all 77 emitted
 findings came from those roles. It is not used as the production finding set.
 
+### Parsed source is not detector attention
+
+That direct scope diagnostic also exposed a second coverage boundary. Its
+triage manifest classified 193 modules, but only **29** as `CONNECTED_ALIVE`;
+the remainder was 68 `DEAD_WEIGHT`, 84 `FOSSIL_HIGH_RISK`, and 12 `DUPLICATE`.
+FORGE's specialized static agents and executable skills run on the
+`CONNECTED_ALIVE` component. Therefore `193/193` means every eligible Python
+file was parsed/accounted for; it does **not** mean all 193 received the same
+detector attention. The test/script component dominated the connected seed in
+that run, which explains why it emitted 77 harness findings while production
+signals were absent.
+
+The isolated production view was a diagnostic workaround, not a substitute for
+a final original-tree audit: relocating source can alter imports and removes
+Git provenance. A future runtime feature should declare production entrypoints
+or a connected-alive seed on the original checkout, then report alongside
+source coverage: modules classified, modules in detector scope, and modules
+parsed but outside detector scope.
+
 ## Artifact set
 
-The complete sealed run was produced at
-`/tmp/forge-vigia-production-20260717-induced/` during the audit session:
+The complete sealed diagnostic run was produced at
+`/tmp/forge-vigia-production-20260717-induced/` during the audit session and
+was preserved byte-for-byte at
+[`results/vigia-full-battery-20260717/`](../results/vigia-full-battery-20260717/):
 
 - `verification-manifest.sealed.json`
 - `findings.jsonl`
@@ -45,10 +66,11 @@ The complete sealed run was produced at
 - `metrics.json`
 - standard, summary, and extended HTML reports
 
-The temporary location is an execution artifact, not a public evidence link.
-Before publication, copy the exact set into `forge-results` together with its
-repository revision and snapshot digest; do not regenerate it under a different
-tree and call it the same run.
+The preserved files are useful diagnostic artifacts, but they are not a
+Git-provenanced final audit of the original checkout: the production view was
+relocated into `/tmp`. Do not regenerate it under a different tree and call it
+the same run; a citable final run must preserve the original repository and
+declare its production seed.
 
 ## Signal inventory — not a bug count
 
@@ -95,7 +117,24 @@ silently rewritten to `{}`, pass validation, remove a temporal assertion, and
 flip `SUSPICION` to `NOISE` without a coverage marker. See the
 [breadth-adjudication record](vigia-honest-degradation-breadth-2026-07-17.md).
 
-### 3. Browser SQL interpolation — static lead, likely contextual false positive
+`vigia_scorer.py` was included in the production view and classified
+`CONNECTED_ALIVE` (two callers). Integrity Inspector emitted five
+decision-adjacent arithmetic observations there (lines 190, 1059, 1090, 1091,
+and 1102). It was not outside the battery measurement; none of those static
+observations alone establishes an end-to-end decision defect.
+
+### 3. SecurityAudit `/dev/null` fallback — falsified silent-drop lead
+
+The induction sandbox forced the last-resort fallback path in
+`vigia/security/security.py`, which returns `/dev/null` after it cannot create
+a secure temporary log. A focused, read-only behavioral check established that
+this does **not** continue silently: the next log write calls `os.fsync()`, gets
+`EINVAL` on `/dev/null`, and raises `RuntimeError` before advancing the HMAC
+chain. The constructor delays that failure until the first event, which is worth
+design review in VIGÍA, but it is not an `honest-degradation` finding or a
+FORGE false negative under the current contract.
+
+### 4. Browser SQL interpolation — static lead, likely contextual false positive
 
 `vigia/sift/browser_forensics.py:236` constructs a query with an f-string.
 The interpolated `url_expr`, however, is selected only from two constant SQL
@@ -105,7 +144,7 @@ lead for the SQL detector, but not evidence of an exploitable SQL injection
 without a contrary dataflow trace. It is recorded here as a candidate false
 positive; no detector change is made during this harvest.
 
-### 4. Loop drops in forensic parsers — structural coverage leads
+### 5. Loop drops in forensic parsers — structural coverage leads
 
 The run reconfirms the previously triaged direct-AST loop-drop sites in disk,
 EVTX, memory, registry, adapter, paired-review, and the live scorer. The
@@ -131,16 +170,15 @@ recognized as benign and must not be relitigated.
 
 The harvest made no detector or policy change. Targeted recall tests pass
 (`tests/test_recall.py`: 4 passed), and the recall runner reports no variant
-regressions or unrecorded known gaps. Two pre-existing gate discrepancies remain
-visible and are intentionally not repaired under this harvest-only scope:
+regressions or unrecorded known gaps. The runner was also re-executed from a
+real `.py` entrypoint: `fp_on_twins = 0`. The earlier
+`recall-parser-named-error` twin was an induction-spawn artifact caused by
+running the parent program from `<stdin>`, not a precision regression.
 
-- `tests/test_harness.py::test_mine_ledger_reads_the_real_ledger_and_tags_the_ledger_agent`
-  expects six ledger clusters while the current ledger contains eight. This is a
-  stale fixed-count assertion after the FP-007/FP-008 ledger additions.
-- `run_recall("tests/corpus")` reports one benign-twin hit:
-  `recall-parser-named-error`. It is not hidden by the passing recall tests and
-  needs its own precision adjudication before a later detector change claims a
-  fully green twin gate.
+One independent FORGE maintenance item was identified: the ledger harness
+froze its expectation at six clusters although the versioned ledger now
+contains FP-007 and FP-008. The replacement asserts that documented ledger
+entries are mined, without treating a new documented cluster as a test failure.
 
 These are FORGE maintenance items, not VIGÍA findings and not evidence against
 the sealed VIGÍA run. They are recorded so the run cannot be presented as a
