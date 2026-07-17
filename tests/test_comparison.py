@@ -16,7 +16,22 @@ def test_compare_runs_reports_unchanged_and_new_findings(tmp_path):
     result = compare_runs(first, second)
     assert result["current_findings"] >= result["previous_findings"]
     assert "coverage_delta" in result
+    assert result["coverage_comparable"] is False
+    assert result["coverage_delta"] is None
+    assert result["comparison_input"]["previous"]["scope_hash"] != result["comparison_input"]["current"]["scope_hash"]
     assert len(result["unchanged"]) >= 1
+
+
+def test_compare_runs_emits_coverage_delta_only_for_identical_scope(tmp_path):
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    (repo / "main.py").write_text("x = 1\n")
+    first, second = tmp_path / "first", tmp_path / "second"
+    Runtime().audit(repo, first)
+    Runtime().audit(repo, second)
+    result = compare_runs(first, second)
+    assert result["coverage_comparable"] is True
+    assert result["coverage_delta"] == {"numerator": 0, "denominator": 1}
 
 
 def test_compare_runs_rejects_tampered_run(tmp_path):

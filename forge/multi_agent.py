@@ -69,6 +69,9 @@ def finalize_multi_agent_run(run_dir: str | Path, required_agents: list[str], ex
     }
     canonical_path = root / "canonical-findings.json"
     canonical_path.write_text(json.dumps(canonical, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    # The source findings file becomes the final, canonical set at closeout.
+    # External hypotheses survive as an explicit source layer in `records`.
+    (root / "findings.json").write_text(json.dumps(canonical, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     trace_path = root / "audit-trace.json"
     if trace_path.is_file():
         trace = load_json(trace_path, f"audit trace {trace_path}")

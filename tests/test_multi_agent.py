@@ -46,6 +46,12 @@ def test_finalize_multi_agent_run_writes_one_report_trace_and_canonical_seal(tmp
     assert result["status"] == "CANONICAL_FINDINGS_SEALED"
     assert json.loads((run / "agent-independence.json").read_text())["status"] == "INDEPENDENCE_VERIFIED"
     assert verify_sealed(json.loads((run / "verification-manifest.canonical.sealed.json").read_text()))["ok"]
-    assert json.loads((run / "report.json").read_text())["finding_set_digest"] == result["finding_set_digest"]
+    findings = json.loads((run / "findings.json").read_text())
+    report = json.loads((run / "report.json").read_text())
+    sealed = json.loads((run / "verification-manifest.canonical.sealed.json").read_text())
+    assert findings["finding_set_digest"] == result["finding_set_digest"]
+    assert report["finding_set_digest"] == result["finding_set_digest"]
+    assert sealed["manifest"]["finding_set_digest"] == result["finding_set_digest"]
+    assert result["finding_set_digest"] in (run / "report.md").read_text()
     trace = json.loads((run / "audit-trace.json").read_text())
     assert {event["kind"] for event in trace["events"]} == {"external_agents_validated", "canonical_finding_set_created"}

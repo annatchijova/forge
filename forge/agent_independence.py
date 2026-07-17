@@ -40,22 +40,28 @@ def _fingerprint(work: dict[str, Any]) -> str:
 def _validate_adi(agent: str, value: Any) -> None:
     if not isinstance(value, list) or not value:
         raise AgentIndependenceError(f"{agent} has no hypothesis-specific A-D-I ledger")
-    by_hypothesis: dict[str, set[str]] = {}
+    by_hypothesis: dict[str, list[str]] = {}
     for entry in value:
         if not isinstance(entry, dict):
             raise AgentIndependenceError(f"{agent} A-D-I entry is not an object")
         hypothesis_ids = _text_items(entry.get("hypothesis_id"))
         if len(hypothesis_ids) != 1:
             raise AgentIndependenceError(f"{agent} A-D-I entry has no hypothesis_id")
-        by_hypothesis.setdefault(hypothesis_ids[0], set()).add(entry.get("stage"))
+        stage = entry.get("stage")
+        if stage not in {"abduction", "deduction", "induction"}:
+            raise AgentIndependenceError(f"{agent} A-D-I entry has invalid stage: {stage!r}")
+        by_hypothesis.setdefault(hypothesis_ids[0], []).append(stage)
         if not _text_items(entry.get("statement")):
             raise AgentIndependenceError(f"{agent} A-D-I entry has no statement")
         if not _text_items(entry.get("evidence")):
             raise AgentIndependenceError(f"{agent} A-D-I entry has no evidence")
     incomplete = {
-        hypothesis: sorted({"abduction", "deduction", "induction"} - stages)
+        hypothesis: {
+            "missing": sorted({"abduction", "deduction", "induction"} - set(stages)),
+            "duplicate": sorted(stage for stage in set(stages) if stages.count(stage) != 1),
+        }
         for hypothesis, stages in by_hypothesis.items()
-        if stages != {"abduction", "deduction", "induction"}
+        if sorted(stages) != ["abduction", "deduction", "induction"]
     }
     if incomplete:
         raise AgentIndependenceError(f"{agent} A-D-I stages are incomplete by hypothesis: {incomplete}")

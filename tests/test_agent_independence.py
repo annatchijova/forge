@@ -59,6 +59,23 @@ def test_independence_requires_hypothesis_specific_adi():
         validate_independent_results(records, ROLES)
 
 
+def test_independence_rejects_adi_stages_split_or_duplicated_across_hypotheses():
+    records = {role: with_skills(work(role)) for role in ROLES}
+    records["scope_triage"]["work_product"]["adi"] = [
+        {"hypothesis_id": "h1", "stage": "abduction", "statement": "candidate", "evidence": ["a:1"]},
+        {"hypothesis_id": "h2", "stage": "deduction", "statement": "falsifier", "evidence": ["a:2"]},
+        {"hypothesis_id": "h2", "stage": "induction", "statement": "result", "evidence": ["a:3"]},
+    ]
+    with pytest.raises(AgentIndependenceError, match="incomplete by hypothesis"):
+        validate_independent_results(records, ROLES)
+    records = {role: with_skills(work(role)) for role in ROLES}
+    records["scope_triage"]["work_product"]["adi"].append(
+        {"hypothesis_id": "scope_triage-h1", "stage": "induction", "statement": "duplicate", "evidence": ["a:4"]}
+    )
+    with pytest.raises(AgentIndependenceError, match="incomplete by hypothesis"):
+        validate_independent_results(records, ROLES)
+
+
 def test_validation_writes_mandatory_closing_artifact(tmp_path):
     results_dir = tmp_path / "agents"
     results_dir.mkdir()

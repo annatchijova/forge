@@ -38,12 +38,36 @@ def _coverage(run: Path) -> Fraction:
     return Fraction(int(ratio.get("covered", 0)), int(ratio.get("total", 1)) or 1)
 
 
+def _comparison_input(run: Path, findings: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    """Bind a comparison to its scope, engine and detector configuration."""
+    triage = load_json(run / "triage-manifest.json", f"triage manifest in {run}")
+    metrics = load_json(run / "metrics.json", f"metrics in {run}")
+    skills_path = run / "skills-runtime.json"
+    skills = load_json(skills_path, f"skills runtime in {run}") if skills_path.is_file() else {}
+    scope = [
+        {"path": item.get("path"), "language": item.get("language"), "module_class": item.get("module_class")}
+        for item in triage.get("modules", []) if isinstance(item, dict)
+    ]
+    scope_hash = hashlib.sha256(canonical_json(scope).encode("utf-8")).hexdigest()
+    finding_set_digest = hashlib.sha256(canonical_json(sorted(findings)).encode("utf-8")).hexdigest()
+    return {
+        "finding_set_digest": finding_set_digest,
+        "scope_hash": scope_hash,
+        "forge_version": triage.get("forge_version"),
+        "agent_config": sorted(metrics.get("agents", {}).keys()) if isinstance(metrics.get("agents"), dict) else [],
+        "skills": hashlib.sha256(canonical_json(skills).encode("utf-8")).hexdigest(),
+    }
+
+
 def compare_runs(previous: str | Path, current: str | Path) -> dict[str, Any]:
     before, after = Path(previous), Path(current)
     old = _findings(before)
     new = _findings(after)
+    old_input = _comparison_input(before, old)
+    new_input = _comparison_input(after, new)
     old_keys, new_keys = set(old), set(new)
-    delta = _coverage(after) - _coverage(before)
+    comparable = old_input["scope_hash"] == new_input["scope_hash"]
+    delta = _coverage(after) - _coverage(before) if comparable else None
     return {
         "comparison_schema_version": "1.1",
         "previous_run": str(before),
@@ -53,13 +77,15 @@ def compare_runs(previous: str | Path, current: str | Path) -> dict[str, Any]:
         "resolved": [old[key] for key in sorted(old_keys - new_keys)],
         "new": [new[key] for key in sorted(new_keys - old_keys)],
         "unchanged": [new[key] for key in sorted(old_keys & new_keys)],
-        "coverage_delta": {"numerator": delta.numerator, "denominator": delta.denominator},
+        "coverage_comparable": comparable,
+        "coverage_delta": {"numerator": delta.numerator, "denominator": delta.denominator} if delta is not None else None,
         "previous_coverage": {"numerator": _coverage(before).numerator, "denominator": _coverage(before).denominator},
         "current_coverage": {"numerator": _coverage(after).numerator, "denominator": _coverage(after).denominator},
         "finding_set": {
             "previous": "canonical" if (before / "verification-manifest.canonical.sealed.json").is_file() else "native",
             "current": "canonical" if (after / "verification-manifest.canonical.sealed.json").is_file() else "native",
         },
+        "comparison_input": {"previous": old_input, "current": new_input},
     }
 
 
