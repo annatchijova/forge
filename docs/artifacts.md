@@ -46,9 +46,12 @@ files_discovered ................. every file under the audited root
 files_analyzed .................... .py files that parsed cleanly
 files_skipped ...................... files_discovered - files_analyzed
 skipped_reasons
-  excluded_by_policy ............... policy directory, binary, or file > 5 MiB
+  excluded_by_policy ............... policy directory or ignored file name
                                      (e.g. .venv, node_modules, prior results)
-  binary_or_unreadable .............. readable scope file failed a later read
+  oversized_file .................... file exceeds the 5 MiB source guard
+  binary_file ....................... NUL-byte binary signal in the sample
+  unreadable_file ................... I/O or permission failure while reading
+  non_utf8_text ..................... text-like file that cannot decode as UTF-8
   syntax_error ....................... .py file that failed ast.parse
   non_python_not_analyzed ........... readable, not excluded, not .py
 

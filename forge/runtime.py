@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from forge.agents import archaeologist, bug_investigator, integrity_inspector, report_composer, security_auditor, web_auditor
-from forge.detector.stack import discover_files, is_excluded_by_policy, write_manifest
+from forge.detector.stack import discover_files, exclusion_reason, write_manifest
 from forge.evidence_package import build_repository_profile, write_markdown_report, write_repository_profile
 from forge.governance.runtime import infer_domains, load_skills, run_skills
 from forge.hypotheses import generate_hypotheses, write_hypotheses_manifest
@@ -48,7 +48,11 @@ def _peak_rss_bytes() -> int | None:
 
 def _coverage(root: Path, families=(), discovered=None, analyzed_paths=()) -> CoverageReport:
     discovered = discovered if discovered is not None else discover_files(root, include_excluded=True)
-    skipped: dict[str, list[str]] = {"excluded_by_policy": [], "syntax_error": [], "binary_or_unreadable": [], "non_python_not_analyzed": []}
+    skipped: dict[str, list[str]] = {
+        "excluded_by_policy": [], "oversized_file": [], "binary_file": [],
+        "unreadable_file": [], "non_utf8_text": [], "syntax_error": [],
+        "non_python_not_analyzed": [],
+    }
     analyzed = 0
     language_coverage: dict[str, dict[str, int]] = {}
     language_names = {".py": "Python", ".js": "JavaScript/TypeScript", ".jsx": "JavaScript/TypeScript", ".ts": "JavaScript/TypeScript", ".tsx": "JavaScript/TypeScript"}
@@ -58,9 +62,16 @@ def _coverage(root: Path, families=(), discovered=None, analyzed_paths=()) -> Co
     analyzed_paths = set(analyzed_paths)
     for path in discovered:
         rel = str(path.relative_to(root))
-        if is_excluded_by_policy(path, root): skipped["excluded_by_policy"].append(rel); continue
-        try: source = path.read_text(encoding="utf-8")
-        except (OSError, UnicodeDecodeError): skipped["binary_or_unreadable"].append(rel); account(path, "abstained"); continue
+        reason = exclusion_reason(path, root)
+        if reason:
+            skipped[reason].append(rel)
+            continue
+        try:
+            source = path.read_text(encoding="utf-8")
+        except OSError:
+            skipped["unreadable_file"].append(rel); account(path, "abstained"); continue
+        except UnicodeDecodeError:
+            skipped["non_utf8_text"].append(rel); account(path, "abstained"); continue
         if rel in analyzed_paths:
             analyzed += 1; account(path, "analyzed")
             continue

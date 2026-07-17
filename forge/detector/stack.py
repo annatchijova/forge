@@ -51,13 +51,24 @@ def discover_files(root: str | os.PathLike[str], include_excluded: bool = False)
 
 def is_excluded_by_policy(path: Path, root: Path) -> bool:
     """Return whether a path is outside the agent audit boundary."""
+    return exclusion_reason(path, root) is not None
+
+
+def exclusion_reason(path: Path, root: Path) -> str | None:
+    """Return the declared reason a file is excluded before source parsing.
+
+    Binary content, policy exclusions, and oversized files are materially
+    different coverage boundaries.  Keep that distinction available to the
+    runtime instead of flattening all three into ``excluded_by_policy``.
+    """
     relative = path.relative_to(root)
-    return (
-        path.name in SKIP_FILE_NAMES
-        or any(part in SKIP_DIRS for part in relative.parts)
-        or is_oversized_file(path)
-        or is_binary_file(path)
-    )
+    if path.name in SKIP_FILE_NAMES or any(part in SKIP_DIRS for part in relative.parts):
+        return "excluded_by_policy"
+    if is_oversized_file(path):
+        return "oversized_file"
+    if is_binary_file(path):
+        return "binary_file"
+    return None
 
 
 def is_oversized_file(path: Path, limit: int = MAX_AUDIT_FILE_BYTES) -> bool:
@@ -69,7 +80,14 @@ def is_oversized_file(path: Path, limit: int = MAX_AUDIT_FILE_BYTES) -> bool:
 
 
 def is_binary_file(path: Path, sample_size: int = 8192) -> bool:
-    """Classify binary or undecodable files without loading whole artifacts."""
+    """Classify binary files with the stable NUL-byte heuristic.
+
+    A UTF-8 decode of an arbitrary prefix is not a binary test: a valid
+    multibyte character can straddle the sample boundary.  That previously
+    excluded valid authored source (for example ``bridge.py`` in the Corvus
+    stress test) before AST analysis.  Non-UTF-8 text is handled later as its
+    own readable-source boundary, never silently relabeled as binary here.
+    """
     try:
         with path.open("rb") as handle:
             sample = handle.read(sample_size)
@@ -77,15 +95,7 @@ def is_binary_file(path: Path, sample_size: int = 8192) -> bool:
         return True
     if not sample:
         return False
-    return b"\x00" in sample or _cannot_decode_utf8(sample)
-
-
-def _cannot_decode_utf8(sample: bytes) -> bool:
-    try:
-        sample.decode("utf-8")
-    except UnicodeDecodeError:
-        return True
-    return False
+    return b"\x00" in sample
 
 def _files(root: Path) -> list[Path]:
     return discover_files(root)

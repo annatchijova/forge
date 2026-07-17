@@ -1,7 +1,7 @@
 import json
 from fractions import Fraction
-
 from forge import Runtime
+from forge.detector.stack import is_binary_file
 from forge.orchestrator import run_specialized_pipeline
 from forge.disposition import determine_disposition
 from forge.contradictions import find_contradictions
@@ -33,6 +33,40 @@ def test_coverage_surfaces_policy_exclusions(tmp_path):
     coverage = result["coverage"]
     assert ".venv/lib/hidden.py" in coverage["skipped_reasons"]["excluded_by_policy"]
     assert coverage["files_skipped"] >= 1
+
+
+def test_utf8_character_split_at_binary_sample_boundary_reaches_ast(tmp_path):
+    """Regression for Corvus bridge.py: valid UTF-8 must not become binary."""
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    # Byte 8191 starts a two-byte ñ; an 8192-byte prefix ends mid-character.
+    source = b"#" + b"a" * 8190 + "ñ".encode("utf-8") + b"\nvalue = 1\n"
+    path = repo / "bridge.py"
+    path.write_bytes(source)
+    assert is_binary_file(path) is False
+
+    result = Runtime().audit(repo, tmp_path / "out")
+    coverage = result.coverage
+    assert coverage["files_analyzed"] == 1
+    assert "bridge.py" not in coverage["skipped_reasons"].get("binary_file", ())
+    assert "bridge.py" not in coverage["skipped_reasons"].get("non_utf8_text", ())
+
+
+def test_binary_and_non_utf8_boundaries_remain_distinct(tmp_path):
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    (repo / "binary.py").write_bytes(b"python-ish\x00payload")
+    (repo / "legacy.py").write_bytes(b"# latin-1 \xff\nvalue = 1\n")
+    (repo / "small_utf8.py").write_text("# ñ at the real end\nvalue = 1\n", encoding="utf-8")
+
+    assert is_binary_file(repo / "binary.py") is True
+    assert is_binary_file(repo / "legacy.py") is False
+    assert is_binary_file(repo / "small_utf8.py") is False
+
+    coverage = Runtime().audit(repo, tmp_path / "out").coverage
+    assert "binary.py" in coverage["skipped_reasons"]["binary_file"]
+    assert "legacy.py" in coverage["skipped_reasons"]["non_utf8_text"]
+    assert coverage["files_analyzed"] == 1
 
 def test_coverage_counts_syntax_errors(tmp_path):
     put(tmp_path, "main.py", "x = 1\n")

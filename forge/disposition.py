@@ -61,7 +61,7 @@ def determine_disposition(*, coverage: Any, triage: Any, governance: Any,
     blocking = {
         key: tuple(value)
         for key, value in skipped.items()
-        if key in {"syntax_error", "binary_or_unreadable"} and value
+        if key in {"syntax_error", "oversized_file", "binary_file", "unreadable_file", "non_utf8_text"} and value
     }
     unsupported_sources: dict[str, int] = {}
     for path in skipped.get("non_python_not_analyzed", ()):

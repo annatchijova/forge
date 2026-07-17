@@ -10,7 +10,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from forge.detector.stack import discover_files, is_excluded_by_policy
+from forge.detector.stack import discover_files, exclusion_reason
 from forge.models import AgentScanResult
 from forge.agent_protocol import mandatory_protocol
 
@@ -102,8 +102,9 @@ def audit(root: str | Path, eligible: set[str] | None = None) -> tuple[AgentScan
     analyzed: list[str] = []
     for path in discover_files(base, include_excluded=True):
         rel = str(path.relative_to(base))
-        if is_excluded_by_policy(path, base):
-            examinations[rel] = "excluded_by_policy"
+        reason = exclusion_reason(path, base)
+        if reason:
+            examinations[rel] = reason
             continue
         if eligible is not None and rel not in eligible:
             examinations[rel] = "excluded_by_scope"
@@ -113,11 +114,11 @@ def audit(root: str | Path, eligible: set[str] | None = None) -> tuple[AgentScan
             continue
         try:
             source = path.read_text(encoding="utf-8")
-        except UnicodeDecodeError:
-            examinations[rel] = "binary_or_unreadable"
-            continue
         except OSError:
-            examinations[rel] = "binary_or_unreadable"
+            examinations[rel] = "unreadable_file"
+            continue
+        except UnicodeDecodeError:
+            examinations[rel] = "non_utf8_text"
             continue
         analyzed.append(rel)
         lines = source.splitlines()

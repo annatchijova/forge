@@ -21,6 +21,7 @@ UNMODELED_DEFECT_CLASSES = (
     "general business logic", "business authorization",
     "concurrency and race conditions", "general type errors",
     "resource lifetime and leak analysis",
+    "cross-message temporal and stateful behavioral sequences",
 )
 
 

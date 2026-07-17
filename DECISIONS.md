@@ -463,6 +463,34 @@ valid attestation; only `FAILED` makes the seal itself fail verification.
 The same boundary is reflected in the self-assessment metrics. A qualitative
 confidence boundary is reported instead of an invented numeric score. This
 keeps the VIGÍA lesson intact while preserving FORGE's code-audit vocabulary.
+
+## Source classification and coverage honesty (2026-07-17)
+
+A Corvus/CRONOS stress test showed that decoding an arbitrary 8 KiB prefix as
+UTF-8 can cut a valid multibyte character at the sample boundary. Treating that
+decode error as a binary signal excluded valid authored source before AST
+analysis. FORGE therefore uses the stable NUL-byte heuristic for
+`binary_file`; a UTF-8 decode error after that point is reported separately as
+`non_utf8_text`, and I/O failures as `unreadable_file`. Policy exclusions and
+oversized files have their own coverage buckets.
+
+This distinction is contractual: a source file must never be silently reduced
+to binary scope because an arbitrary sample boundary split a valid character.
+Every exclusion remains visible with a cause that tells a reviewer whether to
+extend scope, repair access, or treat the file as genuine binary content.
+
+## Corvus drip-feed boundary (2026-07-17)
+
+The Corvus/CRONOS red team also demonstrated a drip-feed manipulation pattern:
+one tactic per message stays below a per-message corroboration threshold even
+when the sequence is persuasive as a whole. Repairing the UTF-8 scope bug lets
+FORGE inspect the gate implementation, but it does not make this pattern a
+detector false negative. The built-in analysis is per module and per AST; it
+does not model temporal, cross-message state. That class is declared in
+`UNMODELED_DEFECT_CLASSES` as **cross-message temporal and stateful behavioral
+sequences**. It remains an external red-team finding and a scope boundary, not
+a recall miss or an unearned claim that FORGE audited the behavioral invariant.
+
 ## Git ref auditing
 
 `Runtime.audit_ref()` audits a branch, tag, or commit by resolving the ref with
