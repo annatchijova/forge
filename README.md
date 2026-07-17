@@ -371,6 +371,7 @@ FORGE intentionally does **not**:
 * [`docs/hackathon.md`](docs/hackathon.md) — build notes and Codex session evidence
 * [`docs/real-repository-case-studies.md`](docs/real-repository-case-studies.md) — public Stylometry and Vigia adjudication case studies
 * [`docs/vigia-honest-degradation-breadth-2026-07-17.md`](docs/vigia-honest-degradation-breadth-2026-07-17.md) — read-only VIGÍA breadth audit: adjudicated signal, FP, FN, and scope boundary
+* [`docs/vigia-full-battery-2026-07-17.md`](docs/vigia-full-battery-2026-07-17.md) — full detector-family harvest over a declared VIGÍA production scope, with sealed-run inventory and adjudication boundaries
 * [`docs/technical-companion.html`](docs/technical-companion.html) — bilingual interactive technical companion for reviewers
 
 **Reference**
