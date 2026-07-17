@@ -178,9 +178,10 @@ claim remains tied to a fixture, detector output, disposition, and commit.
 
 ### Variant corpus scope boundaries (2026-07-18)
 
-The first variants baseline is intentionally below the canonical floor. It
-records 14 detected forms out of 36 variants and preserves every current
-non-boundary miss in `tests/corpus/recall-variants-baseline.json`. Those misses
+The first variants baseline is intentionally below the canonical floor. After
+auditing the mechanism behind surprising hits, it records 12 detected forms
+out of 36 variants and preserves every current non-boundary miss in
+`tests/corpus/recall-variants-baseline.json`. Those misses
 are recall backlog, not failures to hide or reasons to weaken the canonical
 gate.
 
@@ -191,7 +192,9 @@ obfuscation/indirection policy beyond the current direct-AST contracts and may
 increase false positives. They remain measured, but do not enter the
 close-gap ledger unless a future scope decision changes them. The remaining
 MISS and `undecided` entries are visible in the variants baseline; they were
-not reclassified away.
+not reclassified away. The runner also records raw identity hits that fail a
+declared mechanism check as `incidental_hit`, so an unrelated generic detector
+path cannot inflate a variant's coverage claim.
 
 Induction supports parser, eval/exec, subprocess, float-threshold and SQL
 injection harnesses

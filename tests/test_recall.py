@@ -46,3 +46,9 @@ def test_variant_recall_is_versioned_without_turning_known_misses_into_build_fai
     assert result["gates"]["variant_regressions"] == {}
     assert result["gates"]["unrecorded_known_gaps"] == []
     assert result["known_gaps"]
+    shell = next(row for row in result["cases"] if row["case"] == "variant-command-shell-variable")
+    assert shell["raw_detected"] is True
+    assert shell["detected"] is False
+    assert shell["incidental_hit"] is True
+    assert shell["mechanism_check"]["passed"] is False
+    assert next(row for row in result["hypothesis_mismatches"] if row["case"] == "variant-float-container")

@@ -81,13 +81,14 @@ disposition block also shows source coverage and says that
 ## Variants baseline
 
 The variants corpus contains 36 syntactic/data-flow alternatives across ten
-families. Its first measured baseline is 14/36 (`0.388889`): deliberately much
-lower than the canonical floor, because it measures family width rather than a
-manual-form contract. Twenty non-boundary misses are recorded as known gaps;
-three predicted misses were informative surprises where the detector already
-covered more than expected (shell variable, container-held float, and a helper
-return). The baseline fails only on coverage regression or an unrecorded miss,
-not because an honest known gap exists.
+families. Its semantically audited baseline is 12/36 (`0.333333`): deliberately
+much lower than the canonical floor, because it measures family width rather
+than a manual-form contract. Twenty-three non-boundary misses are recorded as
+known gaps. The float-container prediction was a legitimate positive. The
+interprocedural helper was corrected to a MISS at the decision site, and the
+shell-variable result was marked an incidental generic-flow hit rather than
+coverage of shell-flag resolution. The baseline fails only on coverage
+regression or an unrecorded miss, not because an honest known gap exists.
 
 ## Reproducibility and checkpoints
 

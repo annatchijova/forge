@@ -79,6 +79,7 @@ def _security_metadata(case_root: Path) -> dict[FindingIdentity, dict[str, str]]
         identity = (finding.family, finding.path, finding.line)
         metadata[identity] = {
             "controllability": finding.controllability,
+            "description": finding.description,
             "severity": severity_for(
                 finding.path,
                 "CODE FACT",
@@ -146,6 +147,9 @@ def run_recall(corpus: str | Path) -> dict[str, Any]:
             expected = _identity(case)
             metadata = _security_metadata(case_root) if case["agent"] == "security_auditor" else {}
             observed = metadata.get(expected, {})
+            mechanism_tokens = tuple(str(token).lower() for token in case.get("mechanism_tokens", ()))
+            observed_description = str(observed.get("description", "")).lower()
+            mechanism_ok = all(token in observed_description for token in mechanism_tokens)
             secondary_checks = {
                 "controllability": case.get("controllability"),
                 "expected_severity_min": case.get("expected_severity_min"),
@@ -160,11 +164,13 @@ def run_recall(corpus: str | Path) -> dict[str, Any]:
                 or severity_order.get(observed.get("severity", "INFO"), 0)
                 >= severity_order[secondary_checks["expected_severity_min"]]
             )
-            detected = expected in actual and control_ok and severity_ok
+            raw_detected = expected in actual
+            detected = raw_detected and control_ok and severity_ok and mechanism_ok
             tier = case.get("tier", "canonical")
             (variants if tier == "variant" else canonical)[expected[0]].append(detected)
             row["expected_finding"] = {"family": expected[0], "path": expected[1], "line": expected[2]}
             row["detected"] = detected
+            row["raw_detected"] = raw_detected
             row["tier"] = tier
             if observed:
                 row["observed_secondary_axes"] = observed
@@ -176,6 +182,10 @@ def run_recall(corpus: str | Path) -> dict[str, Any]:
                 row["observed_today"] = observed_today
                 row["hypothesis_confirmed"] = None if case["expected_today"] == "UNKNOWN" else case["expected_today"] == observed_today
                 row["disposition"] = case["disposition"]
+                if mechanism_tokens:
+                    row["mechanism_check"] = {"required_tokens": list(mechanism_tokens), "passed": mechanism_ok}
+                if raw_detected and not detected:
+                    row["incidental_hit"] = True
         elif case["kind"] == "benign_twin":
             clean = not family_actual
             row["clean"] = clean
