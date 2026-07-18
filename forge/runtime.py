@@ -291,11 +291,18 @@ class Runtime:
         trace = RuntimeTrace()
         cronos_context = nullcontext(None)
         store = None
+        # SQLite cannot create missing parent directories itself.  The
+        # documented CLI quick-start intentionally points CRONOS into a fresh
+        # run dir, so prepare its parent before opening the database.  The
+        # audit output itself is still created after discovery in _audit; that
+        # preserves the long-standing guarantee that an in-repository output
+        # directory is not discovered as authored source.
         if self.cronos_db is not None:
             root = Path(repo).resolve()
             database = self.cronos_db.expanduser().resolve()
             if database == root or root in database.parents:
                 raise ValueError("cronos_db must be outside the audited repository")
+            database.parent.mkdir(parents=True, exist_ok=True)
             from forge.cronos import CronosTracer, TraceStore
             store = TraceStore(str(database))
             cronos_context = CronosTracer(store, "forge-runtime", "", "", objective=f"Audit repository {Path(repo).resolve()}")

@@ -1,0 +1,652 @@
+{
+  "deletion_judgments": {
+    "demo.py": "deleting would remove unreachable code",
+    "mcp_server.py": "deleting would remove unreachable code",
+    "verify_offline.py": "deleting would remove unreachable code"
+  },
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784335756,
+  "limitations": [],
+  "modules": [
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "gate",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "demo.py"
+        },
+        {
+          "detail": "decision keywords: ['gate', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "demo.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783464735",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "demo.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1783464735,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "demo.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "mcp_server.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "mcp_server.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783707140",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "mcp_server.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1783707140,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "mcp_server.py"
+    },
+    {
+      "caller_count": 8,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "8 caller(s), 8 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "mneme/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "mneme/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783462876",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "mneme/__init__.py"
+        }
+      ],
+      "import_count": 8,
+      "language": "Python",
+      "last_commit_epoch": 1783462876,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "mneme/__init__.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "mneme/bundle.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "mneme/bundle.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783528450",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "mneme/bundle.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1783528450,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "mneme/bundle.py"
+    },
+    {
+      "caller_count": 5,
+      "decision_keywords": [
+        "validate"
+      ],
+      "evidence": [
+        {
+          "detail": "5 caller(s), 5 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "mneme/canonical.py"
+        },
+        {
+          "detail": "decision keywords: ['validate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "mneme/canonical.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783462876",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "mneme/canonical.py"
+        }
+      ],
+      "import_count": 5,
+      "language": "Python",
+      "last_commit_epoch": 1783462876,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "mneme/canonical.py"
+    },
+    {
+      "caller_count": 8,
+      "decision_keywords": [
+        "decision"
+      ],
+      "evidence": [
+        {
+          "detail": "8 caller(s), 8 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "mneme/custody.py"
+        },
+        {
+          "detail": "decision keywords: ['decision']",
+          "kind": "content",
+          "role": "primary",
+          "source": "mneme/custody.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783528450",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "mneme/custody.py"
+        }
+      ],
+      "import_count": 8,
+      "language": "Python",
+      "last_commit_epoch": 1783528450,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "mneme/custody.py"
+    },
+    {
+      "caller_count": 4,
+      "decision_keywords": [
+        "GATE",
+        "Gate",
+        "Score",
+        "decision",
+        "gate",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "4 caller(s), 4 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "mneme/field.py"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'Gate', 'Score', 'decision', 'gate', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "mneme/field.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783528450",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "mneme/field.py"
+        }
+      ],
+      "import_count": 4,
+      "language": "Python",
+      "last_commit_epoch": 1783528450,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "mneme/field.py"
+    },
+    {
+      "caller_count": 5,
+      "decision_keywords": [
+        "decision"
+      ],
+      "evidence": [
+        {
+          "detail": "5 caller(s), 5 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "mneme/trust.py"
+        },
+        {
+          "detail": "decision keywords: ['decision']",
+          "kind": "content",
+          "role": "primary",
+          "source": "mneme/trust.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783470187",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "mneme/trust.py"
+        }
+      ],
+      "import_count": 5,
+      "language": "Python",
+      "last_commit_epoch": 1783470187,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "mneme/trust.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783528450",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1783528450,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "tests/test_bundle_pure.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_custody_pure.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_custody_pure.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "tests/test_custody_pure.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783528450",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_custody_pure.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1783528450,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "tests/test_custody_pure.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "gate",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_field_pure.py"
+        },
+        {
+          "detail": "decision keywords: ['gate', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_field_pure.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "tests/test_field_pure.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783528450",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_field_pure.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1783528450,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "tests/test_field_pure.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "verify_offline.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "verify_offline.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783528450",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "verify_offline.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1783528450,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "verify_offline.py"
+    }
+  ],
+  "protocol": {
+    "adi": [
+      {
+        "evidence": [
+          "classified 12 modules and recorded caller/Git evidence"
+        ],
+        "stage": "abduction",
+        "statement": "Observed evidence may be explained by: classified 12 modules and recorded caller/Git evidence.",
+        "status": "PLAUSIBLE_HYPOTHESIS"
+      },
+      {
+        "evidence": [
+          "classified 12 modules and recorded caller/Git evidence"
+        ],
+        "stage": "deduction",
+        "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+        "status": "PREDICTION_REQUIRED"
+      },
+      {
+        "evidence": [
+          "classified 12 modules and recorded caller/Git evidence"
+        ],
+        "stage": "induction",
+        "statement": "No language-specific induction harness was registered for this observation.",
+        "status": "UNDETERMINED"
+      }
+    ],
+    "agent": "archaeologist",
+    "scope": [
+      "demo.py",
+      "mcp_server.py",
+      "mneme/__init__.py",
+      "mneme/bundle.py",
+      "mneme/canonical.py",
+      "mneme/custody.py",
+      "mneme/field.py",
+      "mneme/trust.py",
+      "tests/test_bundle_pure.py",
+      "tests/test_custody_pure.py",
+      "tests/test_field_pure.py",
+      "verify_offline.py"
+    ],
+    "skills": [
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "abductive-engineering",
+        "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry atomic-state-mutation before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "atomic-state-mutation",
+        "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "audit-before-patch",
+        "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "claim-provenance-discipline",
+        "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "codebase-health-assessment",
+        "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "daubert-defensible-writing",
+        "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry deterministic-core before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "deterministic-core",
+        "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "diagnosing-bugs",
+        "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "git-discipline",
+        "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry honest-degradation before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "honest-degradation",
+        "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "llm-out-of-the-loop",
+        "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "red-team-auditing",
+        "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "reverse-engineering",
+        "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "secure-by-construction",
+        "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "software-archaeology",
+        "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry sql-aggregation-not-materialization before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "sql-aggregation-not-materialization",
+        "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "surgical-patcher",
+        "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry tamper-evident-audit-chain before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "tamper-evident-audit-chain",
+        "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry validate-at-the-boundary before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "validate-at-the-boundary",
+        "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "versioned-schema-evolution",
+        "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+        "status": "LOADED_ONLY"
+      }
+    ]
+  },
+  "root": "/home/labestiadevigia/mneme",
+  "schema_version": "1.1",
+  "stacks": [
+    {
+      "confidence": {
+        "denominator": 20,
+        "numerator": 11
+      },
+      "evidence": [
+        {
+          "detail": "Python: 12 files with extension",
+          "kind": "file_count",
+          "role": "primary",
+          "source": "filesystem"
+        }
+      ],
+      "name": "Python"
+    }
+  ],
+  "summary": {
+    "CONNECTED_ALIVE": 9,
+    "FOSSIL_HIGH_RISK": 3
+  }
+}

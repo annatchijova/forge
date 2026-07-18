@@ -17,6 +17,7 @@ def test_runtime_shards_when_connected_scope_exceeds_limit(tmp_path):
     assert len(plan["shards"]) == 3
     assert all(item["status"] == "COMPLETE" for item in plan["shards"])
     assert all((tmp_path / "out" / "shards" / f"shard-{index:04d}" / "verification-manifest.sealed.json").exists() for index in range(1, 4))
+    assert all((tmp_path / "out" / "shards" / f"shard-{index:04d}" / "forge-report-standard.html").exists() for index in range(1, 4))
 
 
 def test_sharded_result_does_not_claim_parent_seal(tmp_path):

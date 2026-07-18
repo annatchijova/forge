@@ -67,6 +67,20 @@ def test_cronos_trace_store_is_optional_and_records_the_runtime(tmp_path):
     connection.close()
 
 
+def test_cronos_and_output_parent_dirs_are_created_before_audit(tmp_path):
+    repo = tmp_path / "repo"
+    repo.mkdir()
+    (repo / "main.py").write_text("x = 1\n")
+    output = tmp_path / "fresh-run" / "nested-output"
+    database = output / "cronos.sqlite3"
+
+    result = Runtime(cronos_db=database).audit(repo, output)
+
+    assert output.is_dir()
+    assert database.is_file()
+    assert result.artifacts["cronos_db"] == str(database)
+
+
 def test_cronos_persists_open_steps_before_context_exit(tmp_path):
     from forge.cronos import CronosTracer, TraceStore
 

@@ -1,0 +1,1907 @@
+{
+  "ast_unverified_families": [],
+  "ast_verified_families": [
+    "subprocess",
+    "parser",
+    "float comparison",
+    "eval/exec",
+    "sql injection"
+  ],
+  "discarded": [
+    {
+      "evidence": "mneme/bundle.py:283: returned tuple",
+      "module_path": "mneme/bundle.py",
+      "reason": "Induction falsified hypothesis: Malformed input was accepted without an exception."
+    },
+    {
+      "evidence": "mneme/bundle.py:307: returned tuple",
+      "module_path": "mneme/bundle.py",
+      "reason": "Induction falsified hypothesis: Malformed input was accepted without an exception."
+    },
+    {
+      "evidence": "mneme/bundle.py:311: returned tuple",
+      "module_path": "mneme/bundle.py",
+      "reason": "Induction falsified hypothesis: Malformed input was accepted without an exception."
+    },
+    {
+      "evidence": "mneme/field.py:114: JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1) [target frames: /home/labestiadevigia/mneme/mneme/field.py:114]",
+      "module_path": "mneme/field.py",
+      "reason": "Induction falsified hypothesis: Named boundary error JSONDecodeError was raised for malformed input."
+    }
+  ],
+  "findings": [
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `sid = json.loads(pj).get(\"sweep_id\")` at mneme/bundle.py:180 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "sid = json.loads(pj).get(\"sweep_id\")",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/bundle.py:180"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/bundle.py",
+      "occurrences": [
+        "mneme/bundle.py:180"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches, but induction only established that an error path is reachable: Malformed input reached an opaque AttributeError, but the exception did not originate at the hypothesized parser call. Evidence: mneme/bundle.py:180: AttributeError: 'str' object has no attribute 'execute' [target frames: /home/labestiadevigia/mneme/mneme/bundle.py:130]",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `payload = json.loads(r[\"payload_json\"])` at mneme/bundle.py:216 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "payload = json.loads(r[\"payload_json\"])",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/bundle.py:216"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/bundle.py",
+      "occurrences": [
+        "mneme/bundle.py:216"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches, but induction only established that an error path is reachable: Malformed input reached an opaque TypeError, but the exception did not originate at the hypothesized parser call. Evidence: mneme/bundle.py:216: TypeError: string indices must be integers, not 'str' [target frames: /home/labestiadevigia/mneme/mneme/bundle.py:214]",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `other_claim = json.loads(pj).get(\"claim\")` at mneme/field.py:212 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "other_claim = json.loads(pj).get(\"claim\")",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/field.py:212"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/field.py",
+      "occurrences": [
+        "mneme/field.py:212"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches, but induction only established that an error path is reachable: Malformed input reached an opaque TypeError, but the exception did not originate at the hypothesized parser call. Evidence: mneme/field.py:212: TypeError: store() takes 1 positional argument but 7 were given",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `served = json.loads(served_json)[\"served\"]` at mneme/field.py:461 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "served = json.loads(served_json)[\"served\"]",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/field.py:461"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/field.py",
+      "occurrences": [
+        "mneme/field.py:461"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches, but induction only established that an error path is reachable: Malformed input reached an opaque AttributeError, but the exception did not originate at the hypothesized parser call. Evidence: mneme/field.py:461: AttributeError: 'str' object has no attribute 'execute' [target frames: /home/labestiadevigia/mneme/mneme/field.py:454]",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `pbody = json.loads(partial)[\"body\"]` at tests/test_bundle_pure.py:134 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "pbody = json.loads(partial)[\"body\"]",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:134"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:134"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `json.loads(honest)[\"body\"][\"excluded_sweeps\"] == [])` at tests/test_bundle_pure.py:139 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "json.loads(honest)[\"body\"][\"excluded_sweeps\"] == [])",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:139"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:139"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `tb = json.loads(bundle.export_bundle(cur4))` at tests/test_bundle_pure.py:191 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "tb = json.loads(bundle.export_bundle(cur4))",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:191"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:191"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `payload=json.loads(ch[1][\"payload_json\"]))` at tests/test_bundle_pure.py:199 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "payload=json.loads(ch[1][\"payload_json\"]))",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:199"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:199"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `doc = json.loads(honest)` at tests/test_bundle_pure.py:209 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "doc = json.loads(honest)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:209"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:209"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:211 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "t = json.loads(honest)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:211"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:211"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:215 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "t = json.loads(honest)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:215"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:215"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:221 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "t = json.loads(honest)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:221"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:221"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:227 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "t = json.loads(honest)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:227"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:227"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:235 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "t = json.loads(honest)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:235"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:235"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:243 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "t = json.loads(honest)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:243"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:243"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:251 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "t = json.loads(honest)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:251"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:251"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `t = json.loads(partial)` at tests/test_bundle_pure.py:260 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "t = json.loads(partial)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:260"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:260"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `t = json.loads(partial)` at tests/test_bundle_pure.py:268 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "t = json.loads(partial)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:268"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:268"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:275 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "t = json.loads(honest)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:275"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:275"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:283 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "t = json.loads(honest)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:283"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:283"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:294 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "t = json.loads(honest)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:294"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:294"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The dynamic command invocation `r = subprocess.run([sys.executable,` at tests/test_bundle_pure.py:307 may pass attacker-controlled arguments without an enclosing failure boundary.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "r = subprocess.run([sys.executable,",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:307"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:307"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The dynamic command invocation `r = subprocess.run([sys.executable,` at tests/test_bundle_pure.py:315 may pass attacker-controlled arguments without an enclosing failure boundary.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "r = subprocess.run([sys.executable,",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:315"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:315"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The dynamic command invocation `r = subprocess.run([sys.executable,` at tests/test_bundle_pure.py:324 may pass attacker-controlled arguments without an enclosing failure boundary.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "r = subprocess.run([sys.executable,",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:324"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:324"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `and json.loads(last[1])[\"successor_memory_id\"] == \"mem-new\", str(last))` at tests/test_field_pure.py:241 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "and json.loads(last[1])[\"successor_memory_id\"] == \"mem-new\", str(last))",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_field_pure.py:241"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_field_pure.py",
+      "occurrences": [
+        "tests/test_field_pure.py:241"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `json.loads(birth).get(\"supersedes\") == \"mem-old\")` at tests/test_field_pure.py:245 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "json.loads(birth).get(\"supersedes\") == \"mem-old\")",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_field_pure.py:245"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_field_pure.py",
+      "occurrences": [
+        "tests/test_field_pure.py:245"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches; induction was undetermined: No synchronous module-level function boundary was found.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "security_auditor",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unsafe SQL interpolation reaches execute() without parameter binding",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unsafe SQL interpolation reaches execute() without parameter binding",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/trust.py:175"
+        }
+      ],
+      "exploitability": "PLAUSIBLE",
+      "module_path": "mneme/trust.py",
+      "occurrences": [
+        "mneme/trust.py:175"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: sql-injection.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_custody_pure.py:149"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_custody_pure.py",
+      "occurrences": [
+        "tests/test_custody_pure.py:149"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:204"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:204"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:213"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:213"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:219"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:219"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:225"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:225"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:233"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:233"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:241"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:241"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:249"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:249"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:258"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:258"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:266"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:266"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:273"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:273"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:281"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:281"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:292"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:292"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:298"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:298"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:322"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:322"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "sql-aggregation-not-materialization",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/bundle.py:138"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/bundle.py",
+      "occurrences": [
+        "mneme/bundle.py:138"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A batched query or preload should be considered before issuing one query per loop item.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "sql-aggregation-not-materialization",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/bundle.py:145"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/bundle.py",
+      "occurrences": [
+        "mneme/bundle.py:145"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A batched query or preload should be considered before issuing one query per loop item.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "tamper-evident-audit-chain",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "persistent audit/ledger append has no visible link to a previous entry hash",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "persistent audit/ledger append has no visible link to a previous entry hash",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/bundle.py:226"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/bundle.py",
+      "occurrences": [
+        "mneme/bundle.py:226"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A plain append-only record cannot detect deletion, insertion, or reordering after the fact.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "validate-at-the-boundary",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "parameter `bundle_json` reaches a sensitive boundary call without an explicit raising validation",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "parameter `bundle_json` reaches a sensitive boundary call without an explicit raising validation",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/bundle.py:255"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/bundle.py",
+      "occurrences": [
+        "mneme/bundle.py:255"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "validate-at-the-boundary applies because direct external input reaches a parser or filesystem call.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "atomic-state-mutation",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "related SQL mutations occur without a visible transaction boundary",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "related SQL mutations occur without a visible transaction boundary",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/field.py:334"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/field.py",
+      "occurrences": [
+        "mneme/field.py:334"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A crash between related writes can leave persistent state only partially mutated.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "sql-aggregation-not-materialization",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/field.py:218"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/field.py",
+      "occurrences": [
+        "mneme/field.py:218"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A batched query or preload should be considered before issuing one query per loop item.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "validate-at-the-boundary",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "parameter `s` reaches a sensitive boundary call without an explicit raising validation",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "parameter `s` reaches a sensitive boundary call without an explicit raising validation",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/field.py:114"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/field.py",
+      "occurrences": [
+        "mneme/field.py:114"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "validate-at-the-boundary applies because direct external input reaches a parser or filesystem call.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "sql-aggregation-not-materialization",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/trust.py:157"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/trust.py",
+      "occurrences": [
+        "mneme/trust.py:157"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A batched query or preload should be considered before issuing one query per loop item.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "tamper-evident-audit-chain",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "persistent audit/ledger append has no visible link to a previous entry hash",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "persistent audit/ledger append has no visible link to a previous entry hash",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/trust.py:114"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/trust.py",
+      "occurrences": [
+        "mneme/trust.py:114"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A plain append-only record cannot detect deletion, insertion, or reordering after the fact.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "tamper-evident-audit-chain",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "persistent audit/ledger append has no visible link to a previous entry hash",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "persistent audit/ledger append has no visible link to a previous entry hash",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/trust.py:221"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/trust.py",
+      "occurrences": [
+        "mneme/trust.py:221"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A plain append-only record cannot detect deletion, insertion, or reordering after the fact.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "tamper-evident-audit-chain",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "persistent audit/ledger append has no visible link to a previous entry hash",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "persistent audit/ledger append has no visible link to a previous entry hash",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/trust.py:257"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/trust.py",
+      "occurrences": [
+        "mneme/trust.py:257"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A plain append-only record cannot detect deletion, insertion, or reordering after the fact.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "tamper-evident-audit-chain",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "persistent audit/ledger append has no visible link to a previous entry hash",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "persistent audit/ledger append has no visible link to a previous entry hash",
+          "kind": "source",
+          "role": "primary",
+          "source": "mneme/trust.py:293"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "mneme/trust.py",
+      "occurrences": [
+        "mneme/trust.py:293"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A plain append-only record cannot detect deletion, insertion, or reordering after the fact.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "sql-aggregation-not-materialization",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_bundle_pure.py:83"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_bundle_pure.py",
+      "occurrences": [
+        "tests/test_bundle_pure.py:83"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A batched query or preload should be considered before issuing one query per loop item.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "sql-aggregation-not-materialization",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_custody_pure.py:57"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_custody_pure.py",
+      "occurrences": [
+        "tests/test_custody_pure.py:57"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A batched query or preload should be considered before issuing one query per loop item.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "sql-aggregation-not-materialization",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_field_pure.py:162"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_field_pure.py",
+      "occurrences": [
+        "tests/test_field_pure.py:162"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A batched query or preload should be considered before issuing one query per loop item.",
+      "severity": "LOW"
+    },
+    {
+      "agent": "sql-aggregation-not-materialization",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+      "epistemic_level": "PROTOCOL_GAP",
+      "evidence": [
+        {
+          "detail": "SQL execute occurs inside an application loop (potential N+1 query pattern)",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_field_pure.py:54"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_field_pure.py",
+      "occurrences": [
+        "tests/test_field_pure.py:54"
+      ],
+      "outcome": "PROTOCOL_GAP",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "A batched query or preload should be considered before issuing one query per loop item.",
+      "severity": "LOW"
+    }
+  ],
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784335762,
+  "hypotheses_schema_version": "1.0",
+  "induction": [
+    {
+      "detail": "Malformed input reached an opaque AttributeError, but the exception did not originate at the hypothesized parser call.",
+      "evidence": "mneme/bundle.py:180: AttributeError: 'str' object has no attribute 'execute' [target frames: /home/labestiadevigia/mneme/mneme/bundle.py:130]",
+      "family": "parser",
+      "line": "180",
+      "module_path": "mneme/bundle.py",
+      "status": "ERROR_PATH_REACHABLE"
+    },
+    {
+      "detail": "Malformed input reached an opaque TypeError, but the exception did not originate at the hypothesized parser call.",
+      "evidence": "mneme/bundle.py:216: TypeError: string indices must be integers, not 'str' [target frames: /home/labestiadevigia/mneme/mneme/bundle.py:214]",
+      "family": "parser",
+      "line": "216",
+      "module_path": "mneme/bundle.py",
+      "status": "ERROR_PATH_REACHABLE"
+    },
+    {
+      "detail": "Malformed input was accepted without an exception.",
+      "evidence": "mneme/bundle.py:283: returned tuple",
+      "family": "parser",
+      "line": "283",
+      "module_path": "mneme/bundle.py",
+      "status": "FALSIFIED"
+    },
+    {
+      "detail": "Malformed input was accepted without an exception.",
+      "evidence": "mneme/bundle.py:307: returned tuple",
+      "family": "parser",
+      "line": "307",
+      "module_path": "mneme/bundle.py",
+      "status": "FALSIFIED"
+    },
+    {
+      "detail": "Malformed input was accepted without an exception.",
+      "evidence": "mneme/bundle.py:311: returned tuple",
+      "family": "parser",
+      "line": "311",
+      "module_path": "mneme/bundle.py",
+      "status": "FALSIFIED"
+    },
+    {
+      "detail": "Named boundary error JSONDecodeError was raised for malformed input.",
+      "evidence": "mneme/field.py:114: JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1) [target frames: /home/labestiadevigia/mneme/mneme/field.py:114]",
+      "family": "parser",
+      "line": "114",
+      "module_path": "mneme/field.py",
+      "status": "FALSIFIED"
+    },
+    {
+      "detail": "Malformed input reached an opaque TypeError, but the exception did not originate at the hypothesized parser call.",
+      "evidence": "mneme/field.py:212: TypeError: store() takes 1 positional argument but 7 were given",
+      "family": "parser",
+      "line": "212",
+      "module_path": "mneme/field.py",
+      "status": "ERROR_PATH_REACHABLE"
+    },
+    {
+      "detail": "Malformed input reached an opaque AttributeError, but the exception did not originate at the hypothesized parser call.",
+      "evidence": "mneme/field.py:461: AttributeError: 'str' object has no attribute 'execute' [target frames: /home/labestiadevigia/mneme/mneme/field.py:454]",
+      "family": "parser",
+      "line": "461",
+      "module_path": "mneme/field.py",
+      "status": "ERROR_PATH_REACHABLE"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:134",
+      "family": "parser",
+      "line": "134",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:139",
+      "family": "parser",
+      "line": "139",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:191",
+      "family": "parser",
+      "line": "191",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:199",
+      "family": "parser",
+      "line": "199",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:209",
+      "family": "parser",
+      "line": "209",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:211",
+      "family": "parser",
+      "line": "211",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:215",
+      "family": "parser",
+      "line": "215",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:221",
+      "family": "parser",
+      "line": "221",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:227",
+      "family": "parser",
+      "line": "227",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:235",
+      "family": "parser",
+      "line": "235",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:243",
+      "family": "parser",
+      "line": "243",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:251",
+      "family": "parser",
+      "line": "251",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:260",
+      "family": "parser",
+      "line": "260",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:268",
+      "family": "parser",
+      "line": "268",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:275",
+      "family": "parser",
+      "line": "275",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:283",
+      "family": "parser",
+      "line": "283",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:294",
+      "family": "parser",
+      "line": "294",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:307",
+      "family": "subprocess",
+      "line": "307",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:315",
+      "family": "subprocess",
+      "line": "315",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_bundle_pure.py:324",
+      "family": "subprocess",
+      "line": "324",
+      "module_path": "tests/test_bundle_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_field_pure.py:241",
+      "family": "parser",
+      "line": "241",
+      "module_path": "tests/test_field_pure.py",
+      "status": "UNDETERMINED"
+    },
+    {
+      "detail": "No synchronous module-level function boundary was found.",
+      "evidence": "tests/test_field_pure.py:245",
+      "family": "parser",
+      "line": "245",
+      "module_path": "tests/test_field_pure.py",
+      "status": "UNDETERMINED"
+    }
+  ],
+  "repository_snapshot_sha256": "d4ed45d5cdd37e2e6305a3be097076386301f30e584339d7c2e6746f858248dc",
+  "root": "/home/labestiadevigia/mneme",
+  "schema_version": "2.0",
+  "source_attestation": "982fd6a3aaf9496eafb7fa46fc5ab4c4069f673ddd3ce62373c15244c9c29bb3"
+}

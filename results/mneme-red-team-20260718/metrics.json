@@ -1,0 +1,3307 @@
+{
+  "agent_metrics": {
+    "archaeologist": {
+      "elapsed_seconds": "5.422992",
+      "modules_classified": 12
+    },
+    "bug_investigator": {
+      "discarded": 4,
+      "examinations": {
+        "demo.py": "excluded_by_scope",
+        "mcp_server.py": "excluded_by_scope",
+        "mneme/__init__.py": "no_hypothesis_generated",
+        "mneme/bundle.py": "examined_with_findings",
+        "mneme/canonical.py": "no_hypothesis_generated",
+        "mneme/custody.py": "no_hypothesis_generated",
+        "mneme/field.py": "examined_with_findings",
+        "mneme/trust.py": "no_hypothesis_generated",
+        "tests/test_bundle_pure.py": "examined_with_findings",
+        "tests/test_custody_pure.py": "no_hypothesis_generated",
+        "tests/test_field_pure.py": "examined_with_findings",
+        "verify_offline.py": "excluded_by_scope"
+      },
+      "hypotheses_generated": 30,
+      "survived": 26
+    },
+    "governance_skills": {
+      "applicability_counts": {
+        "APPLICABLE": 7,
+        "NOT_APPLICABLE": 8,
+        "UNDETERMINED": 4
+      },
+      "findings": 16,
+      "loaded": [
+        "atomic-state-mutation",
+        "deterministic-core",
+        "honest-degradation",
+        "sql-aggregation-not-materialization",
+        "tamper-evident-audit-chain",
+        "validate-at-the-boundary"
+      ]
+    },
+    "integrity_inspector": {
+      "examinations": {
+        ".claude/settings.local.json": "excluded_by_scope",
+        ".git/COMMIT_EDITMSG": "excluded_by_policy",
+        ".git/FETCH_HEAD": "excluded_by_policy",
+        ".git/HEAD": "excluded_by_policy",
+        ".git/ORIG_HEAD": "excluded_by_policy",
+        ".git/config": "excluded_by_policy",
+        ".git/description": "excluded_by_policy",
+        ".git/hooks/applypatch-msg.sample": "excluded_by_policy",
+        ".git/hooks/commit-msg.sample": "excluded_by_policy",
+        ".git/hooks/fsmonitor-watchman.sample": "excluded_by_policy",
+        ".git/hooks/post-update.sample": "excluded_by_policy",
+        ".git/hooks/pre-applypatch.sample": "excluded_by_policy",
+        ".git/hooks/pre-commit.sample": "excluded_by_policy",
+        ".git/hooks/pre-merge-commit.sample": "excluded_by_policy",
+        ".git/hooks/pre-push.sample": "excluded_by_policy",
+        ".git/hooks/pre-rebase.sample": "excluded_by_policy",
+        ".git/hooks/pre-receive.sample": "excluded_by_policy",
+        ".git/hooks/prepare-commit-msg.sample": "excluded_by_policy",
+        ".git/hooks/push-to-checkout.sample": "excluded_by_policy",
+        ".git/hooks/sendemail-validate.sample": "excluded_by_policy",
+        ".git/hooks/update.sample": "excluded_by_policy",
+        ".git/index": "excluded_by_policy",
+        ".git/info/exclude": "excluded_by_policy",
+        ".git/logs/HEAD": "excluded_by_policy",
+        ".git/logs/refs/heads/main": "excluded_by_policy",
+        ".git/logs/refs/remotes/origin/claude/project-expansion-peirce-dgx7yr": "excluded_by_policy",
+        ".git/logs/refs/remotes/origin/main": "excluded_by_policy",
+        ".git/objects/00/2df6e7b385c658291043cbffc760d41832d51b": "excluded_by_policy",
+        ".git/objects/01/2a2158c261d6fbcb8a82bcee671dc449357656": "excluded_by_policy",
+        ".git/objects/06/c6a802fe8e8fe18a70404de6f8d9383cb8469c": "excluded_by_policy",
+        ".git/objects/0b/2dd544ddf0ca2043374c8d7dbfe38fd17b5da4": "excluded_by_policy",
+        ".git/objects/0d/59288b6a36d084800890bf74cb9f9e0198824a": "excluded_by_policy",
+        ".git/objects/0e/6c21e56688ebaef585351fcd3016080e04ed64": "excluded_by_policy",
+        ".git/objects/12/8a06525618cf2bfba99ec08b26c65345b46cca": "excluded_by_policy",
+        ".git/objects/1a/df0d33d2f2a1d6b5f6220fbe413be5fd9797af": "excluded_by_policy",
+        ".git/objects/1b/51d0d5239779ca833b7e242af860a75d2b1348": "excluded_by_policy",
+        ".git/objects/1e/771ab65389aa51da43b33e00e121d099124eee": "excluded_by_policy",
+        ".git/objects/1f/f4e06e6df9e5c5425a41bea840a461c729d391": "excluded_by_policy",
+        ".git/objects/26/1eeb9e9f8b2b4b0d119366dda99c6fd7d35c64": "excluded_by_policy",
+        ".git/objects/2f/54d0b33cabe3c83dc50bea359b56d92ae743e6": "excluded_by_policy",
+        ".git/objects/31/800c34839fe26d0047e078c5864748742dcdba": "excluded_by_policy",
+        ".git/objects/32/7d84a85a306a5ffa2eb3d3b272f5ccf28d7154": "excluded_by_policy",
+        ".git/objects/36/5580b61f37cf0214200684a37401beaa2d4a30": "excluded_by_policy",
+        ".git/objects/39/d07294df22dd66b56bc33acaf15681c842bdde": "excluded_by_policy",
+        ".git/objects/40/2bd9ec0006f7fa3fde4157ed307d2cc6fc6293": "excluded_by_policy",
+        ".git/objects/45/3a2d3f49c4013827e551453e0c9f22bcdc2baa": "excluded_by_policy",
+        ".git/objects/4a/e0a743587b9e1c0bdb47f180bc439e706a54d4": "excluded_by_policy",
+        ".git/objects/4f/dd09610b0e07edf2373d1f6adb08264473168e": "excluded_by_policy",
+        ".git/objects/50/25965b6a07f9eff2aa18ee1e90d8dd5138e7bc": "excluded_by_policy",
+        ".git/objects/50/5e5b597bad045f960e290affd430d3b64681dd": "excluded_by_policy",
+        ".git/objects/51/426543d53af33387bc46444bbc41467684ef62": "excluded_by_policy",
+        ".git/objects/55/30645d089cc62c5d5318dba5d706c60547dee4": "excluded_by_policy",
+        ".git/objects/5a/2e1429bc28221fdca7df4950af007ff8cf502e": "excluded_by_policy",
+        ".git/objects/5a/5c17944708e4400be6d5ddc3b05e3a03b0f727": "excluded_by_policy",
+        ".git/objects/5d/5a1788c6a44033448c15aeabb323c0a3db5dc9": "excluded_by_policy",
+        ".git/objects/5f/323422d279e16815b1e4ba2641ba58d42115f5": "excluded_by_policy",
+        ".git/objects/65/d8234586bb878f60a7c501ae00a724662a0460": "excluded_by_policy",
+        ".git/objects/75/378598a732e028020836eaef85f22b8c09eed8": "excluded_by_policy",
+        ".git/objects/7c/1aa3c79079cdf586656571928b6690a99cbdd1": "excluded_by_policy",
+        ".git/objects/7c/32e06fad05d2115a54fca4603696b8b124fcf3": "excluded_by_policy",
+        ".git/objects/7c/331a19f57ab66d51961a8eb931203821b05d01": "excluded_by_policy",
+        ".git/objects/83/4e3271690218872225a489bf306957a5254c5f": "excluded_by_policy",
+        ".git/objects/89/14085620f9abc74be5d63c9864886fcca5f8e0": "excluded_by_policy",
+        ".git/objects/89/360b63dca05d6caaf73e225490d4453af98002": "excluded_by_policy",
+        ".git/objects/89/575a668031e58d2c297055ecebbe9a509a05cc": "excluded_by_policy",
+        ".git/objects/8c/d0bb3ba48199eae07c0e617bddd52db948df19": "excluded_by_policy",
+        ".git/objects/8d/0ac228f3619330040a5f0039155de21030d25c": "excluded_by_policy",
+        ".git/objects/8f/1f0f18ab305ce287da16025710ac8a950ad499": "excluded_by_policy",
+        ".git/objects/8f/57a99980891ccc68701b94b94342f7ae0e02d6": "excluded_by_policy",
+        ".git/objects/90/fdb07d22571c91322f7d64d311962b1982cbc7": "excluded_by_policy",
+        ".git/objects/92/de0392ee5f212bd7cd47f2cf0dc52cc583825c": "excluded_by_policy",
+        ".git/objects/93/df2af551009782a94451e8a6ccfb3720d424fb": "excluded_by_policy",
+        ".git/objects/9b/3e8360366b882f6788e11a5c4b0eb79b65ff4e": "excluded_by_policy",
+        ".git/objects/9e/41fb2af12e7301ded6c93b3977cf14354f6cbf": "excluded_by_policy",
+        ".git/objects/9f/fcd272fb69143aea525c284f46621a3850b5b6": "excluded_by_policy",
+        ".git/objects/a1/91f0fd9a630ebcff6b99b991e19f59345def04": "excluded_by_policy",
+        ".git/objects/a7/4c501256561becb623618faca80e14dc2e9efc": "excluded_by_policy",
+        ".git/objects/a8/ac8297f39cda7a0bbe181212467e78082af1e0": "excluded_by_policy",
+        ".git/objects/aa/2d2ae9416248ca1a92403337834e22e882ad2e": "excluded_by_policy",
+        ".git/objects/b5/0bd80ee5de724470ca6259749939700acdc99d": "excluded_by_policy",
+        ".git/objects/b5/c13559c0473642611652c8fc334e60b1bd17f0": "excluded_by_policy",
+        ".git/objects/b9/5bda8ecb5f0c91877c6160412d12c5fd10c47f": "excluded_by_policy",
+        ".git/objects/bf/56343a23a118daf61450b579cbbf81b0793710": "excluded_by_policy",
+        ".git/objects/c9/05eda6670876e9505574f4639245f59b368377": "excluded_by_policy",
+        ".git/objects/cb/7b07e3aa84db5b0ac8062545b35c82a5103270": "excluded_by_policy",
+        ".git/objects/cb/d35c72417bab73c0511e8cec11854a519215b9": "excluded_by_policy",
+        ".git/objects/cc/8654df1405b201d468a2d8c1e3ae67e16bcb83": "excluded_by_policy",
+        ".git/objects/cc/e3df7e51cea9a1079ea1ae809e151ecf6a1f48": "excluded_by_policy",
+        ".git/objects/d0/77b3c76a5ab38ecf6a8c5f9710192d8087f2c9": "excluded_by_policy",
+        ".git/objects/d3/13167c70033a6c6842e858f49b601950e3ec98": "excluded_by_policy",
+        ".git/objects/d6/19992577acdcaede228140d924a2564aed991c": "excluded_by_policy",
+        ".git/objects/d7/0105e1b41862a7628b0925984a739547585f70": "excluded_by_policy",
+        ".git/objects/de/24360947ce7fa2447762facefe44a03e85a6b1": "excluded_by_policy",
+        ".git/objects/de/7e87665643583990eeb84e5f5b08417b34486f": "excluded_by_policy",
+        ".git/objects/de/b1dda44330d88071ff8770bb685b7f3b2418bb": "excluded_by_policy",
+        ".git/objects/e3/5fc30630d2775b479b5c73a4314f10e8743253": "excluded_by_policy",
+        ".git/objects/e3/f9270ecacd19a22185d139275cf0950ba3dfb3": "excluded_by_policy",
+        ".git/objects/e4/388ac904914df7e6d64f08645227021a78042f": "excluded_by_policy",
+        ".git/objects/e6/b1379444cc36a77dbaa2c4ebfe3012294ca722": "excluded_by_policy",
+        ".git/objects/e7/c00f2304a2b20a86184e051f42f8e056acf96f": "excluded_by_policy",
+        ".git/objects/f0/91a2e107d45db311970ac5df2da755ea19bd2b": "excluded_by_policy",
+        ".git/objects/f4/c80b89cbe6a0b19183efb42f042bff6b2fdea4": "excluded_by_policy",
+        ".git/objects/f9/c41e1d302deb32d3ea548139960e1e59eec124": "excluded_by_policy",
+        ".git/objects/fa/5f53b656299d83ecbe1d9734c22fcaba278ae7": "excluded_by_policy",
+        ".git/objects/ff/a52398f9a25ecef0eb8c6111b7ff3d66dbc5d2": "excluded_by_policy",
+        ".git/refs/heads/main": "excluded_by_policy",
+        ".git/refs/remotes/origin/claude/project-expansion-peirce-dgx7yr": "excluded_by_policy",
+        ".git/refs/remotes/origin/main": "excluded_by_policy",
+        ".git/refs/tags/pre-session-20260710-151220": "excluded_by_policy",
+        ".gitignore": "excluded_by_policy",
+        "ARCHITECTURE.md": "excluded_by_scope",
+        "KNOWN_LIMITATIONS.md": "excluded_by_scope",
+        "LICENSE": "excluded_by_scope",
+        "README.md": "excluded_by_scope",
+        "SECURITY_AUDIT.md": "excluded_by_scope",
+        "__pycache__/mcp_server.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/verify_offline.cpython-312.pyc": "excluded_by_policy",
+        "cronos.db": "binary_file",
+        "demo.py": "excluded_by_scope",
+        "mcp_server.py": "excluded_by_scope",
+        "mneme.html": "excluded_by_scope",
+        "mneme/__init__.py": "examined_clean",
+        "mneme/__pycache__/__init__.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/bundle.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/canonical.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/custody.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/field.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/trust.cpython-312.pyc": "excluded_by_policy",
+        "mneme/bundle.py": "examined_clean",
+        "mneme/canonical.py": "examined_clean",
+        "mneme/custody.py": "examined_clean",
+        "mneme/field.py": "examined_clean",
+        "mneme/schema.sql": "excluded_by_scope",
+        "mneme/trust.py": "examined_clean",
+        "tests/test_bundle_pure.py": "examined_with_findings",
+        "tests/test_custody_pure.py": "examined_with_findings",
+        "tests/test_field_pure.py": "examined_clean",
+        "verify_offline.py": "excluded_by_scope"
+      },
+      "findings_per_family": {
+        "decision-adjacent-float": 0,
+        "money-as-float": 0,
+        "unversioned-serialization": 15
+      }
+    },
+    "security_auditor": {
+      "examinations": {
+        ".claude/settings.local.json": "excluded_by_scope",
+        ".git/COMMIT_EDITMSG": "excluded_by_policy",
+        ".git/FETCH_HEAD": "excluded_by_policy",
+        ".git/HEAD": "excluded_by_policy",
+        ".git/ORIG_HEAD": "excluded_by_policy",
+        ".git/config": "excluded_by_policy",
+        ".git/description": "excluded_by_policy",
+        ".git/hooks/applypatch-msg.sample": "excluded_by_policy",
+        ".git/hooks/commit-msg.sample": "excluded_by_policy",
+        ".git/hooks/fsmonitor-watchman.sample": "excluded_by_policy",
+        ".git/hooks/post-update.sample": "excluded_by_policy",
+        ".git/hooks/pre-applypatch.sample": "excluded_by_policy",
+        ".git/hooks/pre-commit.sample": "excluded_by_policy",
+        ".git/hooks/pre-merge-commit.sample": "excluded_by_policy",
+        ".git/hooks/pre-push.sample": "excluded_by_policy",
+        ".git/hooks/pre-rebase.sample": "excluded_by_policy",
+        ".git/hooks/pre-receive.sample": "excluded_by_policy",
+        ".git/hooks/prepare-commit-msg.sample": "excluded_by_policy",
+        ".git/hooks/push-to-checkout.sample": "excluded_by_policy",
+        ".git/hooks/sendemail-validate.sample": "excluded_by_policy",
+        ".git/hooks/update.sample": "excluded_by_policy",
+        ".git/index": "excluded_by_policy",
+        ".git/info/exclude": "excluded_by_policy",
+        ".git/logs/HEAD": "excluded_by_policy",
+        ".git/logs/refs/heads/main": "excluded_by_policy",
+        ".git/logs/refs/remotes/origin/claude/project-expansion-peirce-dgx7yr": "excluded_by_policy",
+        ".git/logs/refs/remotes/origin/main": "excluded_by_policy",
+        ".git/objects/00/2df6e7b385c658291043cbffc760d41832d51b": "excluded_by_policy",
+        ".git/objects/01/2a2158c261d6fbcb8a82bcee671dc449357656": "excluded_by_policy",
+        ".git/objects/06/c6a802fe8e8fe18a70404de6f8d9383cb8469c": "excluded_by_policy",
+        ".git/objects/0b/2dd544ddf0ca2043374c8d7dbfe38fd17b5da4": "excluded_by_policy",
+        ".git/objects/0d/59288b6a36d084800890bf74cb9f9e0198824a": "excluded_by_policy",
+        ".git/objects/0e/6c21e56688ebaef585351fcd3016080e04ed64": "excluded_by_policy",
+        ".git/objects/12/8a06525618cf2bfba99ec08b26c65345b46cca": "excluded_by_policy",
+        ".git/objects/1a/df0d33d2f2a1d6b5f6220fbe413be5fd9797af": "excluded_by_policy",
+        ".git/objects/1b/51d0d5239779ca833b7e242af860a75d2b1348": "excluded_by_policy",
+        ".git/objects/1e/771ab65389aa51da43b33e00e121d099124eee": "excluded_by_policy",
+        ".git/objects/1f/f4e06e6df9e5c5425a41bea840a461c729d391": "excluded_by_policy",
+        ".git/objects/26/1eeb9e9f8b2b4b0d119366dda99c6fd7d35c64": "excluded_by_policy",
+        ".git/objects/2f/54d0b33cabe3c83dc50bea359b56d92ae743e6": "excluded_by_policy",
+        ".git/objects/31/800c34839fe26d0047e078c5864748742dcdba": "excluded_by_policy",
+        ".git/objects/32/7d84a85a306a5ffa2eb3d3b272f5ccf28d7154": "excluded_by_policy",
+        ".git/objects/36/5580b61f37cf0214200684a37401beaa2d4a30": "excluded_by_policy",
+        ".git/objects/39/d07294df22dd66b56bc33acaf15681c842bdde": "excluded_by_policy",
+        ".git/objects/40/2bd9ec0006f7fa3fde4157ed307d2cc6fc6293": "excluded_by_policy",
+        ".git/objects/45/3a2d3f49c4013827e551453e0c9f22bcdc2baa": "excluded_by_policy",
+        ".git/objects/4a/e0a743587b9e1c0bdb47f180bc439e706a54d4": "excluded_by_policy",
+        ".git/objects/4f/dd09610b0e07edf2373d1f6adb08264473168e": "excluded_by_policy",
+        ".git/objects/50/25965b6a07f9eff2aa18ee1e90d8dd5138e7bc": "excluded_by_policy",
+        ".git/objects/50/5e5b597bad045f960e290affd430d3b64681dd": "excluded_by_policy",
+        ".git/objects/51/426543d53af33387bc46444bbc41467684ef62": "excluded_by_policy",
+        ".git/objects/55/30645d089cc62c5d5318dba5d706c60547dee4": "excluded_by_policy",
+        ".git/objects/5a/2e1429bc28221fdca7df4950af007ff8cf502e": "excluded_by_policy",
+        ".git/objects/5a/5c17944708e4400be6d5ddc3b05e3a03b0f727": "excluded_by_policy",
+        ".git/objects/5d/5a1788c6a44033448c15aeabb323c0a3db5dc9": "excluded_by_policy",
+        ".git/objects/5f/323422d279e16815b1e4ba2641ba58d42115f5": "excluded_by_policy",
+        ".git/objects/65/d8234586bb878f60a7c501ae00a724662a0460": "excluded_by_policy",
+        ".git/objects/75/378598a732e028020836eaef85f22b8c09eed8": "excluded_by_policy",
+        ".git/objects/7c/1aa3c79079cdf586656571928b6690a99cbdd1": "excluded_by_policy",
+        ".git/objects/7c/32e06fad05d2115a54fca4603696b8b124fcf3": "excluded_by_policy",
+        ".git/objects/7c/331a19f57ab66d51961a8eb931203821b05d01": "excluded_by_policy",
+        ".git/objects/83/4e3271690218872225a489bf306957a5254c5f": "excluded_by_policy",
+        ".git/objects/89/14085620f9abc74be5d63c9864886fcca5f8e0": "excluded_by_policy",
+        ".git/objects/89/360b63dca05d6caaf73e225490d4453af98002": "excluded_by_policy",
+        ".git/objects/89/575a668031e58d2c297055ecebbe9a509a05cc": "excluded_by_policy",
+        ".git/objects/8c/d0bb3ba48199eae07c0e617bddd52db948df19": "excluded_by_policy",
+        ".git/objects/8d/0ac228f3619330040a5f0039155de21030d25c": "excluded_by_policy",
+        ".git/objects/8f/1f0f18ab305ce287da16025710ac8a950ad499": "excluded_by_policy",
+        ".git/objects/8f/57a99980891ccc68701b94b94342f7ae0e02d6": "excluded_by_policy",
+        ".git/objects/90/fdb07d22571c91322f7d64d311962b1982cbc7": "excluded_by_policy",
+        ".git/objects/92/de0392ee5f212bd7cd47f2cf0dc52cc583825c": "excluded_by_policy",
+        ".git/objects/93/df2af551009782a94451e8a6ccfb3720d424fb": "excluded_by_policy",
+        ".git/objects/9b/3e8360366b882f6788e11a5c4b0eb79b65ff4e": "excluded_by_policy",
+        ".git/objects/9e/41fb2af12e7301ded6c93b3977cf14354f6cbf": "excluded_by_policy",
+        ".git/objects/9f/fcd272fb69143aea525c284f46621a3850b5b6": "excluded_by_policy",
+        ".git/objects/a1/91f0fd9a630ebcff6b99b991e19f59345def04": "excluded_by_policy",
+        ".git/objects/a7/4c501256561becb623618faca80e14dc2e9efc": "excluded_by_policy",
+        ".git/objects/a8/ac8297f39cda7a0bbe181212467e78082af1e0": "excluded_by_policy",
+        ".git/objects/aa/2d2ae9416248ca1a92403337834e22e882ad2e": "excluded_by_policy",
+        ".git/objects/b5/0bd80ee5de724470ca6259749939700acdc99d": "excluded_by_policy",
+        ".git/objects/b5/c13559c0473642611652c8fc334e60b1bd17f0": "excluded_by_policy",
+        ".git/objects/b9/5bda8ecb5f0c91877c6160412d12c5fd10c47f": "excluded_by_policy",
+        ".git/objects/bf/56343a23a118daf61450b579cbbf81b0793710": "excluded_by_policy",
+        ".git/objects/c9/05eda6670876e9505574f4639245f59b368377": "excluded_by_policy",
+        ".git/objects/cb/7b07e3aa84db5b0ac8062545b35c82a5103270": "excluded_by_policy",
+        ".git/objects/cb/d35c72417bab73c0511e8cec11854a519215b9": "excluded_by_policy",
+        ".git/objects/cc/8654df1405b201d468a2d8c1e3ae67e16bcb83": "excluded_by_policy",
+        ".git/objects/cc/e3df7e51cea9a1079ea1ae809e151ecf6a1f48": "excluded_by_policy",
+        ".git/objects/d0/77b3c76a5ab38ecf6a8c5f9710192d8087f2c9": "excluded_by_policy",
+        ".git/objects/d3/13167c70033a6c6842e858f49b601950e3ec98": "excluded_by_policy",
+        ".git/objects/d6/19992577acdcaede228140d924a2564aed991c": "excluded_by_policy",
+        ".git/objects/d7/0105e1b41862a7628b0925984a739547585f70": "excluded_by_policy",
+        ".git/objects/de/24360947ce7fa2447762facefe44a03e85a6b1": "excluded_by_policy",
+        ".git/objects/de/7e87665643583990eeb84e5f5b08417b34486f": "excluded_by_policy",
+        ".git/objects/de/b1dda44330d88071ff8770bb685b7f3b2418bb": "excluded_by_policy",
+        ".git/objects/e3/5fc30630d2775b479b5c73a4314f10e8743253": "excluded_by_policy",
+        ".git/objects/e3/f9270ecacd19a22185d139275cf0950ba3dfb3": "excluded_by_policy",
+        ".git/objects/e4/388ac904914df7e6d64f08645227021a78042f": "excluded_by_policy",
+        ".git/objects/e6/b1379444cc36a77dbaa2c4ebfe3012294ca722": "excluded_by_policy",
+        ".git/objects/e7/c00f2304a2b20a86184e051f42f8e056acf96f": "excluded_by_policy",
+        ".git/objects/f0/91a2e107d45db311970ac5df2da755ea19bd2b": "excluded_by_policy",
+        ".git/objects/f4/c80b89cbe6a0b19183efb42f042bff6b2fdea4": "excluded_by_policy",
+        ".git/objects/f9/c41e1d302deb32d3ea548139960e1e59eec124": "excluded_by_policy",
+        ".git/objects/fa/5f53b656299d83ecbe1d9734c22fcaba278ae7": "excluded_by_policy",
+        ".git/objects/ff/a52398f9a25ecef0eb8c6111b7ff3d66dbc5d2": "excluded_by_policy",
+        ".git/refs/heads/main": "excluded_by_policy",
+        ".git/refs/remotes/origin/claude/project-expansion-peirce-dgx7yr": "excluded_by_policy",
+        ".git/refs/remotes/origin/main": "excluded_by_policy",
+        ".git/refs/tags/pre-session-20260710-151220": "excluded_by_policy",
+        ".gitignore": "excluded_by_policy",
+        "ARCHITECTURE.md": "excluded_by_scope",
+        "KNOWN_LIMITATIONS.md": "excluded_by_scope",
+        "LICENSE": "excluded_by_scope",
+        "README.md": "excluded_by_scope",
+        "SECURITY_AUDIT.md": "excluded_by_scope",
+        "__pycache__/mcp_server.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/verify_offline.cpython-312.pyc": "excluded_by_policy",
+        "cronos.db": "binary_file",
+        "demo.py": "excluded_by_scope",
+        "mcp_server.py": "excluded_by_scope",
+        "mneme.html": "excluded_by_scope",
+        "mneme/__init__.py": "examined_clean",
+        "mneme/__pycache__/__init__.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/bundle.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/canonical.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/custody.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/field.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/trust.cpython-312.pyc": "excluded_by_policy",
+        "mneme/bundle.py": "examined_clean",
+        "mneme/canonical.py": "examined_clean",
+        "mneme/custody.py": "examined_clean",
+        "mneme/field.py": "examined_clean",
+        "mneme/schema.sql": "excluded_by_scope",
+        "mneme/trust.py": "examined_with_findings",
+        "tests/test_bundle_pure.py": "examined_clean",
+        "tests/test_custody_pure.py": "examined_clean",
+        "tests/test_field_pure.py": "examined_clean",
+        "verify_offline.py": "excluded_by_scope"
+      },
+      "findings_per_family": {
+        "hardcoded-credential": 0,
+        "path-traversal": 0,
+        "unsafe-deserialization": 0,
+        "unverified-webhook": 0
+      }
+    },
+    "web_auditor": {
+      "examinations": {
+        ".claude/settings.local.json": "excluded_by_scope",
+        ".git/COMMIT_EDITMSG": "excluded_by_policy",
+        ".git/FETCH_HEAD": "excluded_by_policy",
+        ".git/HEAD": "excluded_by_policy",
+        ".git/ORIG_HEAD": "excluded_by_policy",
+        ".git/config": "excluded_by_policy",
+        ".git/description": "excluded_by_policy",
+        ".git/hooks/applypatch-msg.sample": "excluded_by_policy",
+        ".git/hooks/commit-msg.sample": "excluded_by_policy",
+        ".git/hooks/fsmonitor-watchman.sample": "excluded_by_policy",
+        ".git/hooks/post-update.sample": "excluded_by_policy",
+        ".git/hooks/pre-applypatch.sample": "excluded_by_policy",
+        ".git/hooks/pre-commit.sample": "excluded_by_policy",
+        ".git/hooks/pre-merge-commit.sample": "excluded_by_policy",
+        ".git/hooks/pre-push.sample": "excluded_by_policy",
+        ".git/hooks/pre-rebase.sample": "excluded_by_policy",
+        ".git/hooks/pre-receive.sample": "excluded_by_policy",
+        ".git/hooks/prepare-commit-msg.sample": "excluded_by_policy",
+        ".git/hooks/push-to-checkout.sample": "excluded_by_policy",
+        ".git/hooks/sendemail-validate.sample": "excluded_by_policy",
+        ".git/hooks/update.sample": "excluded_by_policy",
+        ".git/index": "excluded_by_policy",
+        ".git/info/exclude": "excluded_by_policy",
+        ".git/logs/HEAD": "excluded_by_policy",
+        ".git/logs/refs/heads/main": "excluded_by_policy",
+        ".git/logs/refs/remotes/origin/claude/project-expansion-peirce-dgx7yr": "excluded_by_policy",
+        ".git/logs/refs/remotes/origin/main": "excluded_by_policy",
+        ".git/objects/00/2df6e7b385c658291043cbffc760d41832d51b": "excluded_by_policy",
+        ".git/objects/01/2a2158c261d6fbcb8a82bcee671dc449357656": "excluded_by_policy",
+        ".git/objects/06/c6a802fe8e8fe18a70404de6f8d9383cb8469c": "excluded_by_policy",
+        ".git/objects/0b/2dd544ddf0ca2043374c8d7dbfe38fd17b5da4": "excluded_by_policy",
+        ".git/objects/0d/59288b6a36d084800890bf74cb9f9e0198824a": "excluded_by_policy",
+        ".git/objects/0e/6c21e56688ebaef585351fcd3016080e04ed64": "excluded_by_policy",
+        ".git/objects/12/8a06525618cf2bfba99ec08b26c65345b46cca": "excluded_by_policy",
+        ".git/objects/1a/df0d33d2f2a1d6b5f6220fbe413be5fd9797af": "excluded_by_policy",
+        ".git/objects/1b/51d0d5239779ca833b7e242af860a75d2b1348": "excluded_by_policy",
+        ".git/objects/1e/771ab65389aa51da43b33e00e121d099124eee": "excluded_by_policy",
+        ".git/objects/1f/f4e06e6df9e5c5425a41bea840a461c729d391": "excluded_by_policy",
+        ".git/objects/26/1eeb9e9f8b2b4b0d119366dda99c6fd7d35c64": "excluded_by_policy",
+        ".git/objects/2f/54d0b33cabe3c83dc50bea359b56d92ae743e6": "excluded_by_policy",
+        ".git/objects/31/800c34839fe26d0047e078c5864748742dcdba": "excluded_by_policy",
+        ".git/objects/32/7d84a85a306a5ffa2eb3d3b272f5ccf28d7154": "excluded_by_policy",
+        ".git/objects/36/5580b61f37cf0214200684a37401beaa2d4a30": "excluded_by_policy",
+        ".git/objects/39/d07294df22dd66b56bc33acaf15681c842bdde": "excluded_by_policy",
+        ".git/objects/40/2bd9ec0006f7fa3fde4157ed307d2cc6fc6293": "excluded_by_policy",
+        ".git/objects/45/3a2d3f49c4013827e551453e0c9f22bcdc2baa": "excluded_by_policy",
+        ".git/objects/4a/e0a743587b9e1c0bdb47f180bc439e706a54d4": "excluded_by_policy",
+        ".git/objects/4f/dd09610b0e07edf2373d1f6adb08264473168e": "excluded_by_policy",
+        ".git/objects/50/25965b6a07f9eff2aa18ee1e90d8dd5138e7bc": "excluded_by_policy",
+        ".git/objects/50/5e5b597bad045f960e290affd430d3b64681dd": "excluded_by_policy",
+        ".git/objects/51/426543d53af33387bc46444bbc41467684ef62": "excluded_by_policy",
+        ".git/objects/55/30645d089cc62c5d5318dba5d706c60547dee4": "excluded_by_policy",
+        ".git/objects/5a/2e1429bc28221fdca7df4950af007ff8cf502e": "excluded_by_policy",
+        ".git/objects/5a/5c17944708e4400be6d5ddc3b05e3a03b0f727": "excluded_by_policy",
+        ".git/objects/5d/5a1788c6a44033448c15aeabb323c0a3db5dc9": "excluded_by_policy",
+        ".git/objects/5f/323422d279e16815b1e4ba2641ba58d42115f5": "excluded_by_policy",
+        ".git/objects/65/d8234586bb878f60a7c501ae00a724662a0460": "excluded_by_policy",
+        ".git/objects/75/378598a732e028020836eaef85f22b8c09eed8": "excluded_by_policy",
+        ".git/objects/7c/1aa3c79079cdf586656571928b6690a99cbdd1": "excluded_by_policy",
+        ".git/objects/7c/32e06fad05d2115a54fca4603696b8b124fcf3": "excluded_by_policy",
+        ".git/objects/7c/331a19f57ab66d51961a8eb931203821b05d01": "excluded_by_policy",
+        ".git/objects/83/4e3271690218872225a489bf306957a5254c5f": "excluded_by_policy",
+        ".git/objects/89/14085620f9abc74be5d63c9864886fcca5f8e0": "excluded_by_policy",
+        ".git/objects/89/360b63dca05d6caaf73e225490d4453af98002": "excluded_by_policy",
+        ".git/objects/89/575a668031e58d2c297055ecebbe9a509a05cc": "excluded_by_policy",
+        ".git/objects/8c/d0bb3ba48199eae07c0e617bddd52db948df19": "excluded_by_policy",
+        ".git/objects/8d/0ac228f3619330040a5f0039155de21030d25c": "excluded_by_policy",
+        ".git/objects/8f/1f0f18ab305ce287da16025710ac8a950ad499": "excluded_by_policy",
+        ".git/objects/8f/57a99980891ccc68701b94b94342f7ae0e02d6": "excluded_by_policy",
+        ".git/objects/90/fdb07d22571c91322f7d64d311962b1982cbc7": "excluded_by_policy",
+        ".git/objects/92/de0392ee5f212bd7cd47f2cf0dc52cc583825c": "excluded_by_policy",
+        ".git/objects/93/df2af551009782a94451e8a6ccfb3720d424fb": "excluded_by_policy",
+        ".git/objects/9b/3e8360366b882f6788e11a5c4b0eb79b65ff4e": "excluded_by_policy",
+        ".git/objects/9e/41fb2af12e7301ded6c93b3977cf14354f6cbf": "excluded_by_policy",
+        ".git/objects/9f/fcd272fb69143aea525c284f46621a3850b5b6": "excluded_by_policy",
+        ".git/objects/a1/91f0fd9a630ebcff6b99b991e19f59345def04": "excluded_by_policy",
+        ".git/objects/a7/4c501256561becb623618faca80e14dc2e9efc": "excluded_by_policy",
+        ".git/objects/a8/ac8297f39cda7a0bbe181212467e78082af1e0": "excluded_by_policy",
+        ".git/objects/aa/2d2ae9416248ca1a92403337834e22e882ad2e": "excluded_by_policy",
+        ".git/objects/b5/0bd80ee5de724470ca6259749939700acdc99d": "excluded_by_policy",
+        ".git/objects/b5/c13559c0473642611652c8fc334e60b1bd17f0": "excluded_by_policy",
+        ".git/objects/b9/5bda8ecb5f0c91877c6160412d12c5fd10c47f": "excluded_by_policy",
+        ".git/objects/bf/56343a23a118daf61450b579cbbf81b0793710": "excluded_by_policy",
+        ".git/objects/c9/05eda6670876e9505574f4639245f59b368377": "excluded_by_policy",
+        ".git/objects/cb/7b07e3aa84db5b0ac8062545b35c82a5103270": "excluded_by_policy",
+        ".git/objects/cb/d35c72417bab73c0511e8cec11854a519215b9": "excluded_by_policy",
+        ".git/objects/cc/8654df1405b201d468a2d8c1e3ae67e16bcb83": "excluded_by_policy",
+        ".git/objects/cc/e3df7e51cea9a1079ea1ae809e151ecf6a1f48": "excluded_by_policy",
+        ".git/objects/d0/77b3c76a5ab38ecf6a8c5f9710192d8087f2c9": "excluded_by_policy",
+        ".git/objects/d3/13167c70033a6c6842e858f49b601950e3ec98": "excluded_by_policy",
+        ".git/objects/d6/19992577acdcaede228140d924a2564aed991c": "excluded_by_policy",
+        ".git/objects/d7/0105e1b41862a7628b0925984a739547585f70": "excluded_by_policy",
+        ".git/objects/de/24360947ce7fa2447762facefe44a03e85a6b1": "excluded_by_policy",
+        ".git/objects/de/7e87665643583990eeb84e5f5b08417b34486f": "excluded_by_policy",
+        ".git/objects/de/b1dda44330d88071ff8770bb685b7f3b2418bb": "excluded_by_policy",
+        ".git/objects/e3/5fc30630d2775b479b5c73a4314f10e8743253": "excluded_by_policy",
+        ".git/objects/e3/f9270ecacd19a22185d139275cf0950ba3dfb3": "excluded_by_policy",
+        ".git/objects/e4/388ac904914df7e6d64f08645227021a78042f": "excluded_by_policy",
+        ".git/objects/e6/b1379444cc36a77dbaa2c4ebfe3012294ca722": "excluded_by_policy",
+        ".git/objects/e7/c00f2304a2b20a86184e051f42f8e056acf96f": "excluded_by_policy",
+        ".git/objects/f0/91a2e107d45db311970ac5df2da755ea19bd2b": "excluded_by_policy",
+        ".git/objects/f4/c80b89cbe6a0b19183efb42f042bff6b2fdea4": "excluded_by_policy",
+        ".git/objects/f9/c41e1d302deb32d3ea548139960e1e59eec124": "excluded_by_policy",
+        ".git/objects/fa/5f53b656299d83ecbe1d9734c22fcaba278ae7": "excluded_by_policy",
+        ".git/objects/ff/a52398f9a25ecef0eb8c6111b7ff3d66dbc5d2": "excluded_by_policy",
+        ".git/refs/heads/main": "excluded_by_policy",
+        ".git/refs/remotes/origin/claude/project-expansion-peirce-dgx7yr": "excluded_by_policy",
+        ".git/refs/remotes/origin/main": "excluded_by_policy",
+        ".git/refs/tags/pre-session-20260710-151220": "excluded_by_policy",
+        ".gitignore": "excluded_by_policy",
+        "ARCHITECTURE.md": "excluded_by_scope",
+        "KNOWN_LIMITATIONS.md": "excluded_by_scope",
+        "LICENSE": "excluded_by_scope",
+        "README.md": "excluded_by_scope",
+        "SECURITY_AUDIT.md": "excluded_by_scope",
+        "__pycache__/mcp_server.cpython-312.pyc": "excluded_by_policy",
+        "__pycache__/verify_offline.cpython-312.pyc": "excluded_by_policy",
+        "cronos.db": "binary_file",
+        "demo.py": "excluded_by_scope",
+        "mcp_server.py": "excluded_by_scope",
+        "mneme.html": "excluded_by_scope",
+        "mneme/__init__.py": "excluded_by_scope",
+        "mneme/__pycache__/__init__.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/bundle.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/canonical.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/custody.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/field.cpython-312.pyc": "excluded_by_policy",
+        "mneme/__pycache__/trust.cpython-312.pyc": "excluded_by_policy",
+        "mneme/bundle.py": "excluded_by_scope",
+        "mneme/canonical.py": "excluded_by_scope",
+        "mneme/custody.py": "excluded_by_scope",
+        "mneme/field.py": "excluded_by_scope",
+        "mneme/schema.sql": "excluded_by_scope",
+        "mneme/trust.py": "excluded_by_scope",
+        "tests/test_bundle_pure.py": "excluded_by_scope",
+        "tests/test_custody_pure.py": "excluded_by_scope",
+        "tests/test_field_pure.py": "excluded_by_scope",
+        "verify_offline.py": "excluded_by_scope"
+      },
+      "findings_per_family": {
+        "dynamic-evaluation": 0,
+        "parser-boundary": 0,
+        "path-traversal": 0,
+        "subprocess": 0
+      }
+    }
+  },
+  "agent_protocols": {
+    "archaeologist": {
+      "adi": [
+        {
+          "evidence": [
+            "classified 12 modules and recorded caller/Git evidence"
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: classified 12 modules and recorded caller/Git evidence.",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "classified 12 modules and recorded caller/Git evidence"
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "classified 12 modules and recorded caller/Git evidence"
+          ],
+          "stage": "induction",
+          "statement": "No language-specific induction harness was registered for this observation.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "archaeologist",
+      "scope": [
+        "demo.py",
+        "mcp_server.py",
+        "mneme/__init__.py",
+        "mneme/bundle.py",
+        "mneme/canonical.py",
+        "mneme/custody.py",
+        "mneme/field.py",
+        "mneme/trust.py",
+        "tests/test_bundle_pure.py",
+        "tests/test_custody_pure.py",
+        "tests/test_field_pure.py",
+        "verify_offline.py"
+      ],
+      "skills": [
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "mneme/field.py:334"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract deterministic-core evaluated applicable modules with no protocol gap."
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract honest-degradation evaluated applicable modules with no protocol gap."
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "mneme/bundle.py:138",
+            "mneme/bundle.py:145",
+            "mneme/field.py:218",
+            "mneme/trust.py:157",
+            "tests/test_bundle_pure.py:83",
+            "tests/test_custody_pure.py:57",
+            "tests/test_field_pure.py:162",
+            "tests/test_field_pure.py:54"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "mneme/bundle.py:226",
+            "mneme/trust.py:114",
+            "mneme/trust.py:221",
+            "mneme/trust.py:257",
+            "mneme/trust.py:293"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "mneme/bundle.py:255",
+            "mneme/field.py:114"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "archaeologist received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "bug_investigator": {
+      "adi": [
+        {
+          "evidence": [
+            "The parser call `sid = json.loads(pj).get(\"sweep_id\")` at mneme/bundle.py:180 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `payload = json.loads(r[\"payload_json\"])` at mneme/bundle.py:216 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `birth = json.loads(chain[0][\"payload_json\"])` at mneme/bundle.py:283 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `sid = json.loads(r[\"payload_json\"]).get(\"sweep_id\")` at mneme/bundle.py:307 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `succ = json.loads(r[\"payload_json\"]).get(\"successor_memory_id\")` at mneme/bundle.py:311 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `data = json.loads(s)` at mneme/field.py:114 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `other_claim = json.loads(pj).get(\"claim\")` at mneme/field.py:212 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `served = json.loads(served_json)[\"served\"]` at mneme/field.py:461 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `pbody = json.loads(partial)[\"body\"]` at tests/test_bundle_pure.py:134 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `json.loads(honest)[\"body\"][\"excluded_sweeps\"] == [])` at tests/test_bundle_pure.py:139 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `tb = json.loads(bundle.export_bundle(cur4))` at tests/test_bundle_pure.py:191 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `payload=json.loads(ch[1][\"payload_json\"]))` at tests/test_bundle_pure.py:199 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `doc = json.loads(honest)` at tests/test_bundle_pure.py:209 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:211 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:215 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:221 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:227 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:235 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:243 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:251 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(partial)` at tests/test_bundle_pure.py:260 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(partial)` at tests/test_bundle_pure.py:268 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:275 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:283 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:294 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The dynamic command invocation `r = subprocess.run([sys.executable,` at tests/test_bundle_pure.py:307 may pass attacker-controlled arguments without an enclosing failure boundary.",
+            "The dynamic command invocation `r = subprocess.run([sys.executable,` at tests/test_bundle_pure.py:315 may pass attacker-controlled arguments without an enclosing failure boundary.",
+            "The dynamic command invocation `r = subprocess.run([sys.executable,` at tests/test_bundle_pure.py:324 may pass attacker-controlled arguments without an enclosing failure boundary.",
+            "The parser call `and json.loads(last[1])[\"successor_memory_id\"] == \"mem-new\", str(last))` at tests/test_field_pure.py:241 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `json.loads(birth).get(\"supersedes\") == \"mem-old\")` at tests/test_field_pure.py:245 has no nearby exception handling, so malformed input may escape as an opaque failure."
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: The parser call `sid = json.loads(pj).get(\"sweep_id\")` at mneme/bundle.py:180 has no nearby exception handling, so malformed input may escape as an opaque failure.; The parser call `payload = json.loads(r[\"payload_json\"])` at mneme/bundle.py:216 has no nearby exception handling, so malformed input may escape as an opaque failure.; The parser call `birth = json.loads(chain[0][\"payload_json\"])` at mneme/bundle.py:283 has no nearby exception handling, so malformed input may escape as an opaque failure.; The parser call `sid = json.loads(r[\"payload_json\"]).get(\"sweep_id\")` at mneme/bundle.py:307 has no nearby exception handling, so malformed input may escape as an opaque failure.; The parser call `succ = json.loads(r[\"payload_json\"]).get(\"successor_memory_id\")` at mneme/bundle.py:311 has no nearby exception handling, so malformed input may escape as an opaque failure..",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "The parser call `sid = json.loads(pj).get(\"sweep_id\")` at mneme/bundle.py:180 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `payload = json.loads(r[\"payload_json\"])` at mneme/bundle.py:216 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `birth = json.loads(chain[0][\"payload_json\"])` at mneme/bundle.py:283 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `sid = json.loads(r[\"payload_json\"]).get(\"sweep_id\")` at mneme/bundle.py:307 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `succ = json.loads(r[\"payload_json\"]).get(\"successor_memory_id\")` at mneme/bundle.py:311 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `data = json.loads(s)` at mneme/field.py:114 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `other_claim = json.loads(pj).get(\"claim\")` at mneme/field.py:212 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `served = json.loads(served_json)[\"served\"]` at mneme/field.py:461 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `pbody = json.loads(partial)[\"body\"]` at tests/test_bundle_pure.py:134 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `json.loads(honest)[\"body\"][\"excluded_sweeps\"] == [])` at tests/test_bundle_pure.py:139 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `tb = json.loads(bundle.export_bundle(cur4))` at tests/test_bundle_pure.py:191 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `payload=json.loads(ch[1][\"payload_json\"]))` at tests/test_bundle_pure.py:199 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `doc = json.loads(honest)` at tests/test_bundle_pure.py:209 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:211 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:215 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:221 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:227 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:235 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:243 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:251 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(partial)` at tests/test_bundle_pure.py:260 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(partial)` at tests/test_bundle_pure.py:268 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:275 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:283 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:294 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The dynamic command invocation `r = subprocess.run([sys.executable,` at tests/test_bundle_pure.py:307 may pass attacker-controlled arguments without an enclosing failure boundary.",
+            "The dynamic command invocation `r = subprocess.run([sys.executable,` at tests/test_bundle_pure.py:315 may pass attacker-controlled arguments without an enclosing failure boundary.",
+            "The dynamic command invocation `r = subprocess.run([sys.executable,` at tests/test_bundle_pure.py:324 may pass attacker-controlled arguments without an enclosing failure boundary.",
+            "The parser call `and json.loads(last[1])[\"successor_memory_id\"] == \"mem-new\", str(last))` at tests/test_field_pure.py:241 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `json.loads(birth).get(\"supersedes\") == \"mem-old\")` at tests/test_field_pure.py:245 has no nearby exception handling, so malformed input may escape as an opaque failure."
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "The parser call `sid = json.loads(pj).get(\"sweep_id\")` at mneme/bundle.py:180 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `payload = json.loads(r[\"payload_json\"])` at mneme/bundle.py:216 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `birth = json.loads(chain[0][\"payload_json\"])` at mneme/bundle.py:283 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `sid = json.loads(r[\"payload_json\"]).get(\"sweep_id\")` at mneme/bundle.py:307 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `succ = json.loads(r[\"payload_json\"]).get(\"successor_memory_id\")` at mneme/bundle.py:311 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `data = json.loads(s)` at mneme/field.py:114 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `other_claim = json.loads(pj).get(\"claim\")` at mneme/field.py:212 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `served = json.loads(served_json)[\"served\"]` at mneme/field.py:461 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `pbody = json.loads(partial)[\"body\"]` at tests/test_bundle_pure.py:134 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `json.loads(honest)[\"body\"][\"excluded_sweeps\"] == [])` at tests/test_bundle_pure.py:139 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `tb = json.loads(bundle.export_bundle(cur4))` at tests/test_bundle_pure.py:191 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `payload=json.loads(ch[1][\"payload_json\"]))` at tests/test_bundle_pure.py:199 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `doc = json.loads(honest)` at tests/test_bundle_pure.py:209 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:211 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:215 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:221 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:227 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:235 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:243 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:251 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(partial)` at tests/test_bundle_pure.py:260 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(partial)` at tests/test_bundle_pure.py:268 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:275 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:283 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `t = json.loads(honest)` at tests/test_bundle_pure.py:294 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The dynamic command invocation `r = subprocess.run([sys.executable,` at tests/test_bundle_pure.py:307 may pass attacker-controlled arguments without an enclosing failure boundary.",
+            "The dynamic command invocation `r = subprocess.run([sys.executable,` at tests/test_bundle_pure.py:315 may pass attacker-controlled arguments without an enclosing failure boundary.",
+            "The dynamic command invocation `r = subprocess.run([sys.executable,` at tests/test_bundle_pure.py:324 may pass attacker-controlled arguments without an enclosing failure boundary.",
+            "The parser call `and json.loads(last[1])[\"successor_memory_id\"] == \"mem-new\", str(last))` at tests/test_field_pure.py:241 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+            "The parser call `json.loads(birth).get(\"supersedes\") == \"mem-old\")` at tests/test_field_pure.py:245 has no nearby exception handling, so malformed input may escape as an opaque failure."
+          ],
+          "stage": "induction",
+          "statement": "Module 3 verification executed; each unsupported family remains explicitly UNDETERMINED.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "bug_investigator",
+      "scope": [
+        "mneme/__init__.py",
+        "mneme/bundle.py",
+        "mneme/canonical.py",
+        "mneme/custody.py",
+        "mneme/field.py",
+        "mneme/trust.py",
+        "tests/test_bundle_pure.py",
+        "tests/test_custody_pure.py",
+        "tests/test_field_pure.py"
+      ],
+      "skills": [
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "mneme/field.py:334"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract deterministic-core evaluated applicable modules with no protocol gap."
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract honest-degradation evaluated applicable modules with no protocol gap."
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "mneme/bundle.py:138",
+            "mneme/bundle.py:145",
+            "mneme/field.py:218",
+            "mneme/trust.py:157",
+            "tests/test_bundle_pure.py:83",
+            "tests/test_custody_pure.py:57",
+            "tests/test_field_pure.py:162",
+            "tests/test_field_pure.py:54"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "mneme/bundle.py:226",
+            "mneme/trust.py:114",
+            "mneme/trust.py:221",
+            "mneme/trust.py:257",
+            "mneme/trust.py:293"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "mneme/bundle.py:255",
+            "mneme/field.py:114"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "bug_investigator received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "integrity_inspector": {
+      "adi": [
+        {
+          "evidence": [
+            "unversioned-serialization observed at tests/test_custody_pure.py:149",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:204",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:213",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:219",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:225",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:233",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:241",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:249",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:258",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:266",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:273",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:281",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:292",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:298",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:322"
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: unversioned-serialization observed at tests/test_custody_pure.py:149; unversioned-serialization observed at tests/test_bundle_pure.py:204; unversioned-serialization observed at tests/test_bundle_pure.py:213; unversioned-serialization observed at tests/test_bundle_pure.py:219; unversioned-serialization observed at tests/test_bundle_pure.py:225.",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "unversioned-serialization observed at tests/test_custody_pure.py:149",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:204",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:213",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:219",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:225",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:233",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:241",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:249",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:258",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:266",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:273",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:281",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:292",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:298",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:322"
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "unversioned-serialization observed at tests/test_custody_pure.py:149",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:204",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:213",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:219",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:225",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:233",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:241",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:249",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:258",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:266",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:273",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:281",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:292",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:298",
+            "unversioned-serialization observed at tests/test_bundle_pure.py:322"
+          ],
+          "stage": "induction",
+          "statement": "No language-specific induction harness was registered for this observation.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "integrity_inspector",
+      "scope": [
+        ".gitignore",
+        "LICENSE",
+        "SECURITY_AUDIT.md",
+        "demo.py",
+        "ARCHITECTURE.md",
+        "mcp_server.py",
+        "verify_offline.py",
+        "cronos.db",
+        "README.md",
+        "mneme.html",
+        "KNOWN_LIMITATIONS.md",
+        "__pycache__/mcp_server.cpython-312.pyc",
+        "__pycache__/verify_offline.cpython-312.pyc",
+        ".git/config",
+        ".git/COMMIT_EDITMSG",
+        ".git/index",
+        ".git/ORIG_HEAD",
+        ".git/HEAD",
+        ".git/FETCH_HEAD",
+        ".git/description",
+        "mneme/schema.sql",
+        ".claude/settings.local.json",
+        ".git/logs/HEAD",
+        ".git/info/exclude",
+        ".git/hooks/pre-push.sample",
+        ".git/hooks/fsmonitor-watchman.sample",
+        ".git/hooks/post-update.sample",
+        ".git/hooks/pre-rebase.sample",
+        ".git/hooks/pre-commit.sample",
+        ".git/hooks/push-to-checkout.sample",
+        ".git/hooks/commit-msg.sample",
+        ".git/hooks/sendemail-validate.sample",
+        ".git/hooks/pre-applypatch.sample",
+        ".git/hooks/pre-merge-commit.sample",
+        ".git/hooks/applypatch-msg.sample",
+        ".git/hooks/prepare-commit-msg.sample",
+        ".git/hooks/pre-receive.sample",
+        ".git/hooks/update.sample",
+        ".git/logs/refs/heads/main",
+        ".git/logs/refs/remotes/origin/main",
+        ".git/logs/refs/remotes/origin/claude/project-expansion-peirce-dgx7yr",
+        ".git/objects/83/4e3271690218872225a489bf306957a5254c5f",
+        ".git/objects/2f/54d0b33cabe3c83dc50bea359b56d92ae743e6",
+        ".git/objects/1f/f4e06e6df9e5c5425a41bea840a461c729d391",
+        ".git/objects/e6/b1379444cc36a77dbaa2c4ebfe3012294ca722",
+        ".git/objects/f4/c80b89cbe6a0b19183efb42f042bff6b2fdea4",
+        ".git/objects/36/5580b61f37cf0214200684a37401beaa2d4a30",
+        ".git/objects/93/df2af551009782a94451e8a6ccfb3720d424fb",
+        ".git/objects/b5/0bd80ee5de724470ca6259749939700acdc99d",
+        ".git/objects/b5/c13559c0473642611652c8fc334e60b1bd17f0",
+        ".git/objects/1a/df0d33d2f2a1d6b5f6220fbe413be5fd9797af",
+        ".git/objects/bf/56343a23a118daf61450b579cbbf81b0793710",
+        ".git/objects/7c/331a19f57ab66d51961a8eb931203821b05d01",
+        ".git/objects/7c/32e06fad05d2115a54fca4603696b8b124fcf3",
+        ".git/objects/7c/1aa3c79079cdf586656571928b6690a99cbdd1",
+        ".git/objects/26/1eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+        ".git/objects/ff/a52398f9a25ecef0eb8c6111b7ff3d66dbc5d2",
+        ".git/objects/32/7d84a85a306a5ffa2eb3d3b272f5ccf28d7154",
+        ".git/objects/1b/51d0d5239779ca833b7e242af860a75d2b1348",
+        ".git/objects/75/378598a732e028020836eaef85f22b8c09eed8",
+        ".git/objects/a7/4c501256561becb623618faca80e14dc2e9efc",
+        ".git/objects/0d/59288b6a36d084800890bf74cb9f9e0198824a",
+        ".git/objects/f9/c41e1d302deb32d3ea548139960e1e59eec124",
+        ".git/objects/92/de0392ee5f212bd7cd47f2cf0dc52cc583825c",
+        ".git/objects/8f/57a99980891ccc68701b94b94342f7ae0e02d6",
+        ".git/objects/8f/1f0f18ab305ce287da16025710ac8a950ad499",
+        ".git/objects/de/7e87665643583990eeb84e5f5b08417b34486f",
+        ".git/objects/de/b1dda44330d88071ff8770bb685b7f3b2418bb",
+        ".git/objects/de/24360947ce7fa2447762facefe44a03e85a6b1",
+        ".git/objects/8d/0ac228f3619330040a5f0039155de21030d25c",
+        ".git/objects/d7/0105e1b41862a7628b0925984a739547585f70",
+        ".git/objects/e7/c00f2304a2b20a86184e051f42f8e056acf96f",
+        ".git/objects/89/360b63dca05d6caaf73e225490d4453af98002",
+        ".git/objects/89/575a668031e58d2c297055ecebbe9a509a05cc",
+        ".git/objects/89/14085620f9abc74be5d63c9864886fcca5f8e0",
+        ".git/objects/d6/19992577acdcaede228140d924a2564aed991c",
+        ".git/objects/cb/7b07e3aa84db5b0ac8062545b35c82a5103270",
+        ".git/objects/cb/d35c72417bab73c0511e8cec11854a519215b9",
+        ".git/objects/12/8a06525618cf2bfba99ec08b26c65345b46cca",
+        ".git/objects/9e/41fb2af12e7301ded6c93b3977cf14354f6cbf",
+        ".git/objects/55/30645d089cc62c5d5318dba5d706c60547dee4",
+        ".git/objects/5d/5a1788c6a44033448c15aeabb323c0a3db5dc9",
+        ".git/objects/5a/5c17944708e4400be6d5ddc3b05e3a03b0f727",
+        ".git/objects/5a/2e1429bc28221fdca7df4950af007ff8cf502e",
+        ".git/objects/00/2df6e7b385c658291043cbffc760d41832d51b",
+        ".git/objects/5f/323422d279e16815b1e4ba2641ba58d42115f5",
+        ".git/objects/d3/13167c70033a6c6842e858f49b601950e3ec98",
+        ".git/objects/0e/6c21e56688ebaef585351fcd3016080e04ed64",
+        ".git/objects/9b/3e8360366b882f6788e11a5c4b0eb79b65ff4e",
+        ".git/objects/e4/388ac904914df7e6d64f08645227021a78042f",
+        ".git/objects/aa/2d2ae9416248ca1a92403337834e22e882ad2e",
+        ".git/objects/a1/91f0fd9a630ebcff6b99b991e19f59345def04",
+        ".git/objects/9f/fcd272fb69143aea525c284f46621a3850b5b6",
+        ".git/objects/31/800c34839fe26d0047e078c5864748742dcdba",
+        ".git/objects/51/426543d53af33387bc46444bbc41467684ef62",
+        ".git/objects/4a/e0a743587b9e1c0bdb47f180bc439e706a54d4",
+        ".git/objects/06/c6a802fe8e8fe18a70404de6f8d9383cb8469c",
+        ".git/objects/fa/5f53b656299d83ecbe1d9734c22fcaba278ae7",
+        ".git/objects/e3/f9270ecacd19a22185d139275cf0950ba3dfb3",
+        ".git/objects/e3/5fc30630d2775b479b5c73a4314f10e8743253",
+        ".git/objects/d0/77b3c76a5ab38ecf6a8c5f9710192d8087f2c9",
+        ".git/objects/cc/8654df1405b201d468a2d8c1e3ae67e16bcb83",
+        ".git/objects/cc/e3df7e51cea9a1079ea1ae809e151ecf6a1f48",
+        ".git/objects/4f/dd09610b0e07edf2373d1f6adb08264473168e",
+        ".git/objects/a8/ac8297f39cda7a0bbe181212467e78082af1e0",
+        ".git/objects/90/fdb07d22571c91322f7d64d311962b1982cbc7",
+        ".git/objects/50/5e5b597bad045f960e290affd430d3b64681dd",
+        ".git/objects/50/25965b6a07f9eff2aa18ee1e90d8dd5138e7bc",
+        ".git/objects/8c/d0bb3ba48199eae07c0e617bddd52db948df19",
+        ".git/objects/0b/2dd544ddf0ca2043374c8d7dbfe38fd17b5da4",
+        ".git/objects/40/2bd9ec0006f7fa3fde4157ed307d2cc6fc6293",
+        ".git/objects/1e/771ab65389aa51da43b33e00e121d099124eee",
+        ".git/objects/39/d07294df22dd66b56bc33acaf15681c842bdde",
+        ".git/objects/c9/05eda6670876e9505574f4639245f59b368377",
+        ".git/objects/f0/91a2e107d45db311970ac5df2da755ea19bd2b",
+        ".git/objects/45/3a2d3f49c4013827e551453e0c9f22bcdc2baa",
+        ".git/objects/65/d8234586bb878f60a7c501ae00a724662a0460",
+        ".git/objects/01/2a2158c261d6fbcb8a82bcee671dc449357656",
+        ".git/objects/b9/5bda8ecb5f0c91877c6160412d12c5fd10c47f",
+        ".git/refs/heads/main",
+        ".git/refs/tags/pre-session-20260710-151220",
+        ".git/refs/remotes/origin/main",
+        ".git/refs/remotes/origin/claude/project-expansion-peirce-dgx7yr",
+        "mneme/__pycache__/bundle.cpython-312.pyc",
+        "mneme/__pycache__/field.cpython-312.pyc",
+        "mneme/__pycache__/canonical.cpython-312.pyc",
+        "mneme/__pycache__/__init__.cpython-312.pyc",
+        "mneme/__pycache__/trust.cpython-312.pyc",
+        "mneme/__pycache__/custody.cpython-312.pyc",
+        "tests/test_field_pure.py",
+        "tests/test_custody_pure.py",
+        "tests/test_bundle_pure.py",
+        "mneme/custody.py",
+        "mneme/__init__.py",
+        "mneme/bundle.py",
+        "mneme/field.py",
+        "mneme/canonical.py",
+        "mneme/trust.py"
+      ],
+      "skills": [
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "mneme/field.py:334"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract deterministic-core evaluated applicable modules with no protocol gap."
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract honest-degradation evaluated applicable modules with no protocol gap."
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "mneme/bundle.py:138",
+            "mneme/bundle.py:145",
+            "mneme/field.py:218",
+            "mneme/trust.py:157",
+            "tests/test_bundle_pure.py:83",
+            "tests/test_custody_pure.py:57",
+            "tests/test_field_pure.py:162",
+            "tests/test_field_pure.py:54"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "mneme/bundle.py:226",
+            "mneme/trust.py:114",
+            "mneme/trust.py:221",
+            "mneme/trust.py:257",
+            "mneme/trust.py:293"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "mneme/bundle.py:255",
+            "mneme/field.py:114"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "integrity_inspector received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "patch_reviewer": {
+      "adi": [
+        {
+          "evidence": [
+            "no patch supplied; patch-review contract evaluated for repository audit without a patch"
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: no patch supplied; patch-review contract evaluated for repository audit without a patch.",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "no patch supplied; patch-review contract evaluated for repository audit without a patch"
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "no patch supplied; patch-review contract evaluated for repository audit without a patch"
+          ],
+          "stage": "induction",
+          "statement": "No patch was supplied to the repository-audit entrypoint; semantic patch induction is not applicable.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "patch_reviewer",
+      "scope": [],
+      "skills": [
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract atomic-state-mutation could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract deterministic-core could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract honest-degradation could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract sql-aggregation-not-materialization could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract tamper-evident-audit-chain could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "Native contract validate-at-the-boundary could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "patch_reviewer received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "recommendation_agent": {
+      "adi": [
+        {
+          "evidence": [
+            "recommendations derive from sealed evidence at sealed manifest"
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: recommendations derive from sealed evidence at sealed manifest.",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "recommendations derive from sealed evidence at sealed manifest"
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "recommendations derive from sealed evidence at sealed manifest"
+          ],
+          "stage": "induction",
+          "statement": "Recommendation actionability requires owner validation and is not a security finding.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "recommendation_agent",
+      "scope": [],
+      "skills": [
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract atomic-state-mutation could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract deterministic-core could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract honest-degradation could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract sql-aggregation-not-materialization could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract tamper-evident-audit-chain could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "Native contract validate-at-the-boundary could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "recommendation_agent received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "report_composer": {
+      "adi": [
+        {
+          "evidence": [
+            "report composition target: report"
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: report composition target: report.",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "report composition target: report"
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "report composition target: report"
+          ],
+          "stage": "induction",
+          "statement": "Report rendering is deterministic; reader interpretation and finding correctness remain separate questions.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "report_composer",
+      "scope": [],
+      "skills": [
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract atomic-state-mutation could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract deterministic-core could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract honest-degradation could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract sql-aggregation-not-materialization could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract tamper-evident-audit-chain could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "Native contract validate-at-the-boundary could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "report_composer received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "security_auditor": {
+      "adi": [
+        {
+          "evidence": [
+            "sql-injection observed at mneme/trust.py:175"
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: sql-injection observed at mneme/trust.py:175.",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "sql-injection observed at mneme/trust.py:175"
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "sql-injection observed at mneme/trust.py:175"
+          ],
+          "stage": "induction",
+          "statement": "No language-specific induction harness was registered for this observation.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "security_auditor",
+      "scope": [
+        ".gitignore",
+        "LICENSE",
+        "SECURITY_AUDIT.md",
+        "demo.py",
+        "ARCHITECTURE.md",
+        "mcp_server.py",
+        "verify_offline.py",
+        "cronos.db",
+        "README.md",
+        "mneme.html",
+        "KNOWN_LIMITATIONS.md",
+        "__pycache__/mcp_server.cpython-312.pyc",
+        "__pycache__/verify_offline.cpython-312.pyc",
+        ".git/config",
+        ".git/COMMIT_EDITMSG",
+        ".git/index",
+        ".git/ORIG_HEAD",
+        ".git/HEAD",
+        ".git/FETCH_HEAD",
+        ".git/description",
+        "mneme/schema.sql",
+        ".claude/settings.local.json",
+        ".git/logs/HEAD",
+        ".git/info/exclude",
+        ".git/hooks/pre-push.sample",
+        ".git/hooks/fsmonitor-watchman.sample",
+        ".git/hooks/post-update.sample",
+        ".git/hooks/pre-rebase.sample",
+        ".git/hooks/pre-commit.sample",
+        ".git/hooks/push-to-checkout.sample",
+        ".git/hooks/commit-msg.sample",
+        ".git/hooks/sendemail-validate.sample",
+        ".git/hooks/pre-applypatch.sample",
+        ".git/hooks/pre-merge-commit.sample",
+        ".git/hooks/applypatch-msg.sample",
+        ".git/hooks/prepare-commit-msg.sample",
+        ".git/hooks/pre-receive.sample",
+        ".git/hooks/update.sample",
+        ".git/logs/refs/heads/main",
+        ".git/logs/refs/remotes/origin/main",
+        ".git/logs/refs/remotes/origin/claude/project-expansion-peirce-dgx7yr",
+        ".git/objects/83/4e3271690218872225a489bf306957a5254c5f",
+        ".git/objects/2f/54d0b33cabe3c83dc50bea359b56d92ae743e6",
+        ".git/objects/1f/f4e06e6df9e5c5425a41bea840a461c729d391",
+        ".git/objects/e6/b1379444cc36a77dbaa2c4ebfe3012294ca722",
+        ".git/objects/f4/c80b89cbe6a0b19183efb42f042bff6b2fdea4",
+        ".git/objects/36/5580b61f37cf0214200684a37401beaa2d4a30",
+        ".git/objects/93/df2af551009782a94451e8a6ccfb3720d424fb",
+        ".git/objects/b5/0bd80ee5de724470ca6259749939700acdc99d",
+        ".git/objects/b5/c13559c0473642611652c8fc334e60b1bd17f0",
+        ".git/objects/1a/df0d33d2f2a1d6b5f6220fbe413be5fd9797af",
+        ".git/objects/bf/56343a23a118daf61450b579cbbf81b0793710",
+        ".git/objects/7c/331a19f57ab66d51961a8eb931203821b05d01",
+        ".git/objects/7c/32e06fad05d2115a54fca4603696b8b124fcf3",
+        ".git/objects/7c/1aa3c79079cdf586656571928b6690a99cbdd1",
+        ".git/objects/26/1eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+        ".git/objects/ff/a52398f9a25ecef0eb8c6111b7ff3d66dbc5d2",
+        ".git/objects/32/7d84a85a306a5ffa2eb3d3b272f5ccf28d7154",
+        ".git/objects/1b/51d0d5239779ca833b7e242af860a75d2b1348",
+        ".git/objects/75/378598a732e028020836eaef85f22b8c09eed8",
+        ".git/objects/a7/4c501256561becb623618faca80e14dc2e9efc",
+        ".git/objects/0d/59288b6a36d084800890bf74cb9f9e0198824a",
+        ".git/objects/f9/c41e1d302deb32d3ea548139960e1e59eec124",
+        ".git/objects/92/de0392ee5f212bd7cd47f2cf0dc52cc583825c",
+        ".git/objects/8f/57a99980891ccc68701b94b94342f7ae0e02d6",
+        ".git/objects/8f/1f0f18ab305ce287da16025710ac8a950ad499",
+        ".git/objects/de/7e87665643583990eeb84e5f5b08417b34486f",
+        ".git/objects/de/b1dda44330d88071ff8770bb685b7f3b2418bb",
+        ".git/objects/de/24360947ce7fa2447762facefe44a03e85a6b1",
+        ".git/objects/8d/0ac228f3619330040a5f0039155de21030d25c",
+        ".git/objects/d7/0105e1b41862a7628b0925984a739547585f70",
+        ".git/objects/e7/c00f2304a2b20a86184e051f42f8e056acf96f",
+        ".git/objects/89/360b63dca05d6caaf73e225490d4453af98002",
+        ".git/objects/89/575a668031e58d2c297055ecebbe9a509a05cc",
+        ".git/objects/89/14085620f9abc74be5d63c9864886fcca5f8e0",
+        ".git/objects/d6/19992577acdcaede228140d924a2564aed991c",
+        ".git/objects/cb/7b07e3aa84db5b0ac8062545b35c82a5103270",
+        ".git/objects/cb/d35c72417bab73c0511e8cec11854a519215b9",
+        ".git/objects/12/8a06525618cf2bfba99ec08b26c65345b46cca",
+        ".git/objects/9e/41fb2af12e7301ded6c93b3977cf14354f6cbf",
+        ".git/objects/55/30645d089cc62c5d5318dba5d706c60547dee4",
+        ".git/objects/5d/5a1788c6a44033448c15aeabb323c0a3db5dc9",
+        ".git/objects/5a/5c17944708e4400be6d5ddc3b05e3a03b0f727",
+        ".git/objects/5a/2e1429bc28221fdca7df4950af007ff8cf502e",
+        ".git/objects/00/2df6e7b385c658291043cbffc760d41832d51b",
+        ".git/objects/5f/323422d279e16815b1e4ba2641ba58d42115f5",
+        ".git/objects/d3/13167c70033a6c6842e858f49b601950e3ec98",
+        ".git/objects/0e/6c21e56688ebaef585351fcd3016080e04ed64",
+        ".git/objects/9b/3e8360366b882f6788e11a5c4b0eb79b65ff4e",
+        ".git/objects/e4/388ac904914df7e6d64f08645227021a78042f",
+        ".git/objects/aa/2d2ae9416248ca1a92403337834e22e882ad2e",
+        ".git/objects/a1/91f0fd9a630ebcff6b99b991e19f59345def04",
+        ".git/objects/9f/fcd272fb69143aea525c284f46621a3850b5b6",
+        ".git/objects/31/800c34839fe26d0047e078c5864748742dcdba",
+        ".git/objects/51/426543d53af33387bc46444bbc41467684ef62",
+        ".git/objects/4a/e0a743587b9e1c0bdb47f180bc439e706a54d4",
+        ".git/objects/06/c6a802fe8e8fe18a70404de6f8d9383cb8469c",
+        ".git/objects/fa/5f53b656299d83ecbe1d9734c22fcaba278ae7",
+        ".git/objects/e3/f9270ecacd19a22185d139275cf0950ba3dfb3",
+        ".git/objects/e3/5fc30630d2775b479b5c73a4314f10e8743253",
+        ".git/objects/d0/77b3c76a5ab38ecf6a8c5f9710192d8087f2c9",
+        ".git/objects/cc/8654df1405b201d468a2d8c1e3ae67e16bcb83",
+        ".git/objects/cc/e3df7e51cea9a1079ea1ae809e151ecf6a1f48",
+        ".git/objects/4f/dd09610b0e07edf2373d1f6adb08264473168e",
+        ".git/objects/a8/ac8297f39cda7a0bbe181212467e78082af1e0",
+        ".git/objects/90/fdb07d22571c91322f7d64d311962b1982cbc7",
+        ".git/objects/50/5e5b597bad045f960e290affd430d3b64681dd",
+        ".git/objects/50/25965b6a07f9eff2aa18ee1e90d8dd5138e7bc",
+        ".git/objects/8c/d0bb3ba48199eae07c0e617bddd52db948df19",
+        ".git/objects/0b/2dd544ddf0ca2043374c8d7dbfe38fd17b5da4",
+        ".git/objects/40/2bd9ec0006f7fa3fde4157ed307d2cc6fc6293",
+        ".git/objects/1e/771ab65389aa51da43b33e00e121d099124eee",
+        ".git/objects/39/d07294df22dd66b56bc33acaf15681c842bdde",
+        ".git/objects/c9/05eda6670876e9505574f4639245f59b368377",
+        ".git/objects/f0/91a2e107d45db311970ac5df2da755ea19bd2b",
+        ".git/objects/45/3a2d3f49c4013827e551453e0c9f22bcdc2baa",
+        ".git/objects/65/d8234586bb878f60a7c501ae00a724662a0460",
+        ".git/objects/01/2a2158c261d6fbcb8a82bcee671dc449357656",
+        ".git/objects/b9/5bda8ecb5f0c91877c6160412d12c5fd10c47f",
+        ".git/refs/heads/main",
+        ".git/refs/tags/pre-session-20260710-151220",
+        ".git/refs/remotes/origin/main",
+        ".git/refs/remotes/origin/claude/project-expansion-peirce-dgx7yr",
+        "mneme/__pycache__/bundle.cpython-312.pyc",
+        "mneme/__pycache__/field.cpython-312.pyc",
+        "mneme/__pycache__/canonical.cpython-312.pyc",
+        "mneme/__pycache__/__init__.cpython-312.pyc",
+        "mneme/__pycache__/trust.cpython-312.pyc",
+        "mneme/__pycache__/custody.cpython-312.pyc",
+        "tests/test_field_pure.py",
+        "tests/test_custody_pure.py",
+        "tests/test_bundle_pure.py",
+        "mneme/custody.py",
+        "mneme/__init__.py",
+        "mneme/bundle.py",
+        "mneme/field.py",
+        "mneme/canonical.py",
+        "mneme/trust.py"
+      ],
+      "skills": [
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "mneme/field.py:334"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract deterministic-core evaluated applicable modules with no protocol gap."
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract honest-degradation evaluated applicable modules with no protocol gap."
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "mneme/bundle.py:138",
+            "mneme/bundle.py:145",
+            "mneme/field.py:218",
+            "mneme/trust.py:157",
+            "tests/test_bundle_pure.py:83",
+            "tests/test_custody_pure.py:57",
+            "tests/test_field_pure.py:162",
+            "tests/test_field_pure.py:54"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "mneme/bundle.py:226",
+            "mneme/trust.py:114",
+            "mneme/trust.py:221",
+            "mneme/trust.py:257",
+            "mneme/trust.py:293"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "mneme/bundle.py:255",
+            "mneme/field.py:114"
+          ],
+          "limitation": "Static contract evidence is structural; aliases and cross-module flow remain limited by the contract.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "APPLIED"
+        },
+        {
+          "evidence": [
+            "security_auditor received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    },
+    "web_auditor": {
+      "adi": [
+        {
+          "evidence": [
+            "No actionable observation was emitted in the examined scope."
+          ],
+          "stage": "abduction",
+          "statement": "Observed evidence may be explained by: No actionable observation was emitted in the examined scope..",
+          "status": "PLAUSIBLE_HYPOTHESIS"
+        },
+        {
+          "evidence": [
+            "No actionable observation was emitted in the examined scope."
+          ],
+          "stage": "deduction",
+          "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+          "status": "PREDICTION_REQUIRED"
+        },
+        {
+          "evidence": [
+            "No actionable observation was emitted in the examined scope."
+          ],
+          "stage": "induction",
+          "statement": "No language-specific induction harness was registered for this observation.",
+          "status": "UNDETERMINED"
+        }
+      ],
+      "agent": "web_auditor",
+      "scope": [],
+      "skills": [
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "abductive-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract atomic-state-mutation could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "atomic-state-mutation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "audit-before-patch",
+          "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "claim-provenance-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "codebase-health-assessment",
+          "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "daubert-defensible-writing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract deterministic-core could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "deterministic-core",
+          "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "diagnosing-bugs",
+          "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "git-discipline",
+          "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract honest-degradation could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "honest-degradation",
+          "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "llm-out-of-the-loop",
+          "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "red-team-auditing",
+          "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "reverse-engineering",
+          "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "secure-by-construction",
+          "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "software-archaeology",
+          "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract sql-aggregation-not-materialization could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "sql-aggregation-not-materialization",
+          "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "This policy governs run-level process and reporting; no module-level contract is claimed."
+          ],
+          "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+          "name": "surgical-patcher",
+          "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+          "status": "PROCESS_LEVEL"
+        },
+        {
+          "evidence": [
+            "Native contract tamper-evident-audit-chain could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "tamper-evident-audit-chain",
+          "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "Native contract validate-at-the-boundary could not establish applicability in this scope."
+          ],
+          "limitation": "Ambiguous source is not promoted to applicability.",
+          "name": "validate-at-the-boundary",
+          "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+          "status": "UNDETERMINED"
+        },
+        {
+          "evidence": [
+            "web_auditor received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+          ],
+          "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+          "name": "versioned-schema-evolution",
+          "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+          "status": "LOADED_ONLY"
+        }
+      ]
+    }
+  },
+  "agents": {
+    "abduction": {
+      "average_evidence_per_hypothesis": null,
+      "hypotheses_discarded": 4,
+      "hypotheses_generated": 1,
+      "hypotheses_merged": null,
+      "patterns_observed": 30
+    },
+    "integrity_inspector": {
+      "applicable": 37,
+      "contracts_evaluated": 37,
+      "design_inconsistencies": 0,
+      "not_applicable": 31,
+      "protocol_gaps": 16,
+      "undetermined": 4
+    },
+    "verification": {
+      "benign_explanations_accepted": 4,
+      "benign_explanations_rejected": 0,
+      "checks_executed": 30,
+      "checks_failed": 0,
+      "checks_note": "Surviving hypotheses are unresolved candidates, not failed tests; dynamic induction is required before calling them defects.",
+      "checks_passed": 4,
+      "checks_unresolved": 26,
+      "structural_proofs_found": 4
+    }
+  },
+  "audit_disposition": {
+    "action_required": "Inspect skipped files and rerun with complete source coverage.",
+    "evidence_boundary": [
+      "binary_file: 1 file(s)",
+      "out_of_scope_modules: 3 module(s)",
+      "skill_applicability: 4 undetermined result(s)"
+    ],
+    "reason": "The run found evidence, but one or more source boundaries were not verified.",
+    "reason_code": "UNVERIFIED_SOURCE_BOUNDARY",
+    "status": "ABSTAIN_INSUFFICIENT_SCOPE"
+  },
+  "audit_trail": {
+    "artifacts_produced": null,
+    "chain_verification": null,
+    "events_hashed": 88,
+    "events_verified": null,
+    "hash_chain_length": null,
+    "partial_trace": false,
+    "runtime_events": 88,
+    "tampering_detected": null
+  },
+  "contradictions": [],
+  "discovery": {
+    "CONNECTED_ALIVE": 9,
+    "DEAD_WEIGHT": 0,
+    "DUPLICATE": 0,
+    "FOSSIL_HIGH_RISK": 3,
+    "FOSSIL_LOW_RISK": 0,
+    "UNKNOWN": 0,
+    "average_dependency_degree": null,
+    "dependency_graph_size": null,
+    "mixed_domain_modules": 11
+  },
+  "domain_classification": {
+    "hypothesis_confidence": [
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "cryptographic",
+          "determinism_sensitive",
+          "input_boundary",
+          "serialization_or_persistence"
+        ],
+        "evidence_count": 4,
+        "module_path": "demo.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "audit_or_ledger",
+          "cryptographic",
+          "determinism_sensitive",
+          "input_boundary",
+          "serialization_or_persistence"
+        ],
+        "evidence_count": 5,
+        "module_path": "mcp_server.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 0
+        },
+        "domains": [],
+        "evidence_count": 0,
+        "module_path": "mneme/__init__.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "audit_or_ledger",
+          "cryptographic",
+          "determinism_sensitive",
+          "input_boundary",
+          "serialization_or_persistence"
+        ],
+        "evidence_count": 5,
+        "module_path": "mneme/bundle.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 3,
+          "numerator": 2
+        },
+        "domains": [
+          "determinism_sensitive",
+          "serialization_or_persistence"
+        ],
+        "evidence_count": 2,
+        "module_path": "mneme/canonical.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "audit_or_ledger",
+          "cryptographic",
+          "determinism_sensitive",
+          "serialization_or_persistence"
+        ],
+        "evidence_count": 4,
+        "module_path": "mneme/custody.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "cryptographic",
+          "determinism_sensitive",
+          "input_boundary",
+          "serialization_or_persistence"
+        ],
+        "evidence_count": 4,
+        "module_path": "mneme/field.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "audit_or_ledger",
+          "cryptographic",
+          "determinism_sensitive",
+          "serialization_or_persistence"
+        ],
+        "evidence_count": 4,
+        "module_path": "mneme/trust.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "audit_or_ledger",
+          "cryptographic",
+          "determinism_sensitive",
+          "input_boundary",
+          "serialization_or_persistence"
+        ],
+        "evidence_count": 5,
+        "module_path": "tests/test_bundle_pure.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "audit_or_ledger",
+          "determinism_sensitive",
+          "input_boundary",
+          "serialization_or_persistence"
+        ],
+        "evidence_count": 4,
+        "module_path": "tests/test_custody_pure.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "audit_or_ledger",
+          "determinism_sensitive",
+          "input_boundary",
+          "serialization_or_persistence"
+        ],
+        "evidence_count": 4,
+        "module_path": "tests/test_field_pure.py"
+      },
+      {
+        "alternatives": [
+          "mixed_or_unknown"
+        ],
+        "confidence": {
+          "denominator": 1,
+          "numerator": 1
+        },
+        "domains": [
+          "audit_or_ledger",
+          "cryptographic",
+          "determinism_sensitive",
+          "input_boundary",
+          "serialization_or_persistence"
+        ],
+        "evidence_count": 5,
+        "module_path": "verify_offline.py"
+      }
+    ],
+    "modules_by_domain": {
+      "audit_or_ledger": 8,
+      "cryptographic": 8,
+      "determinism_sensitive": 11,
+      "input_boundary": 8,
+      "serialization_or_persistence": 11
+    }
+  },
+  "evidence": {
+    "by_kind": {
+      "source": 58
+    },
+    "derived_evidence": 0,
+    "evidence_conflicts": 0,
+    "evidence_items": 58,
+    "evidence_reused": null,
+    "primary_evidence": 58,
+    "recommendation_evidence": 0,
+    "secondary_evidence": 0
+  },
+  "findings": {
+    "by_agent": {
+      "atomic-state-mutation": 1,
+      "bug_investigator": 26,
+      "integrity_inspector": 15,
+      "security_auditor": 1,
+      "sql-aggregation-not-materialization": 8,
+      "tamper-evident-audit-chain": 5,
+      "validate-at-the-boundary": 2
+    },
+    "by_epistemic_level": {
+      "CODE FACT": 16,
+      "PLAUSIBLE HYPOTHESIS": 26,
+      "PROTOCOL_GAP": 16
+    },
+    "by_family": {
+      "dynamic-evaluation": 8,
+      "other": 8,
+      "parser-boundary": 23,
+      "sql-injection": 1,
+      "subprocess": 3,
+      "unversioned-serialization": 15
+    },
+    "by_module": {
+      "mneme/bundle.py": 6,
+      "mneme/field.py": 5,
+      "mneme/trust.py": 6,
+      "tests/test_bundle_pure.py": 35,
+      "tests/test_custody_pure.py": 2,
+      "tests/test_field_pure.py": 4
+    },
+    "by_outcome": {
+      "DESIGN_INCONSISTENCY": 0,
+      "NOT_APPLICABLE": 0,
+      "OBSERVED": 42,
+      "PROTOCOL_GAP": 16,
+      "UNDETERMINED": 0
+    },
+    "by_severity": {
+      "LOW": 16,
+      "MEDIUM": 42
+    },
+    "discarded_hypotheses": 4,
+    "finding_digest": "0430c43927e68f4dd42882d7022992e231f098e86ed728130361bf6ea7537671",
+    "induction": {
+      "confirmed": 0,
+      "falsified": 4,
+      "undetermined": 22
+    }
+  },
+  "honest_degradation": {
+    "limitations": [
+      "Hypotheses require module 3 verification; parser candidates may receive isolated induction, while unsupported families remain AST-only.",
+      "126 discovered file(s) were skipped; see skipped_reasons for the exact paths and policy categories.",
+      "3 triaged module(s) were outside CONNECTED_ALIVE audit scope.",
+      "4 skill applicability result(s) were UNDETERMINED; no conclusion was inferred for them.",
+      "26 hypothesis/hypotheses survived structural verification without dynamic induction; they remain plausible hypotheses, not confirmed defects."
+    ],
+    "skipped_reasons": {
+      "binary_file": [
+        "cronos.db"
+      ],
+      "excluded_by_policy": [
+        ".git/COMMIT_EDITMSG",
+        ".git/FETCH_HEAD",
+        ".git/HEAD",
+        ".git/ORIG_HEAD",
+        ".git/config",
+        ".git/description",
+        ".git/hooks/applypatch-msg.sample",
+        ".git/hooks/commit-msg.sample",
+        ".git/hooks/fsmonitor-watchman.sample",
+        ".git/hooks/post-update.sample",
+        ".git/hooks/pre-applypatch.sample",
+        ".git/hooks/pre-commit.sample",
+        ".git/hooks/pre-merge-commit.sample",
+        ".git/hooks/pre-push.sample",
+        ".git/hooks/pre-rebase.sample",
+        ".git/hooks/pre-receive.sample",
+        ".git/hooks/prepare-commit-msg.sample",
+        ".git/hooks/push-to-checkout.sample",
+        ".git/hooks/sendemail-validate.sample",
+        ".git/hooks/update.sample",
+        ".git/index",
+        ".git/info/exclude",
+        ".git/logs/HEAD",
+        ".git/logs/refs/heads/main",
+        ".git/logs/refs/remotes/origin/claude/project-expansion-peirce-dgx7yr",
+        ".git/logs/refs/remotes/origin/main",
+        ".git/objects/00/2df6e7b385c658291043cbffc760d41832d51b",
+        ".git/objects/01/2a2158c261d6fbcb8a82bcee671dc449357656",
+        ".git/objects/06/c6a802fe8e8fe18a70404de6f8d9383cb8469c",
+        ".git/objects/0b/2dd544ddf0ca2043374c8d7dbfe38fd17b5da4",
+        ".git/objects/0d/59288b6a36d084800890bf74cb9f9e0198824a",
+        ".git/objects/0e/6c21e56688ebaef585351fcd3016080e04ed64",
+        ".git/objects/12/8a06525618cf2bfba99ec08b26c65345b46cca",
+        ".git/objects/1a/df0d33d2f2a1d6b5f6220fbe413be5fd9797af",
+        ".git/objects/1b/51d0d5239779ca833b7e242af860a75d2b1348",
+        ".git/objects/1e/771ab65389aa51da43b33e00e121d099124eee",
+        ".git/objects/1f/f4e06e6df9e5c5425a41bea840a461c729d391",
+        ".git/objects/26/1eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+        ".git/objects/2f/54d0b33cabe3c83dc50bea359b56d92ae743e6",
+        ".git/objects/31/800c34839fe26d0047e078c5864748742dcdba",
+        ".git/objects/32/7d84a85a306a5ffa2eb3d3b272f5ccf28d7154",
+        ".git/objects/36/5580b61f37cf0214200684a37401beaa2d4a30",
+        ".git/objects/39/d07294df22dd66b56bc33acaf15681c842bdde",
+        ".git/objects/40/2bd9ec0006f7fa3fde4157ed307d2cc6fc6293",
+        ".git/objects/45/3a2d3f49c4013827e551453e0c9f22bcdc2baa",
+        ".git/objects/4a/e0a743587b9e1c0bdb47f180bc439e706a54d4",
+        ".git/objects/4f/dd09610b0e07edf2373d1f6adb08264473168e",
+        ".git/objects/50/25965b6a07f9eff2aa18ee1e90d8dd5138e7bc",
+        ".git/objects/50/5e5b597bad045f960e290affd430d3b64681dd",
+        ".git/objects/51/426543d53af33387bc46444bbc41467684ef62",
+        ".git/objects/55/30645d089cc62c5d5318dba5d706c60547dee4",
+        ".git/objects/5a/2e1429bc28221fdca7df4950af007ff8cf502e",
+        ".git/objects/5a/5c17944708e4400be6d5ddc3b05e3a03b0f727",
+        ".git/objects/5d/5a1788c6a44033448c15aeabb323c0a3db5dc9",
+        ".git/objects/5f/323422d279e16815b1e4ba2641ba58d42115f5",
+        ".git/objects/65/d8234586bb878f60a7c501ae00a724662a0460",
+        ".git/objects/75/378598a732e028020836eaef85f22b8c09eed8",
+        ".git/objects/7c/1aa3c79079cdf586656571928b6690a99cbdd1",
+        ".git/objects/7c/32e06fad05d2115a54fca4603696b8b124fcf3",
+        ".git/objects/7c/331a19f57ab66d51961a8eb931203821b05d01",
+        ".git/objects/83/4e3271690218872225a489bf306957a5254c5f",
+        ".git/objects/89/14085620f9abc74be5d63c9864886fcca5f8e0",
+        ".git/objects/89/360b63dca05d6caaf73e225490d4453af98002",
+        ".git/objects/89/575a668031e58d2c297055ecebbe9a509a05cc",
+        ".git/objects/8c/d0bb3ba48199eae07c0e617bddd52db948df19",
+        ".git/objects/8d/0ac228f3619330040a5f0039155de21030d25c",
+        ".git/objects/8f/1f0f18ab305ce287da16025710ac8a950ad499",
+        ".git/objects/8f/57a99980891ccc68701b94b94342f7ae0e02d6",
+        ".git/objects/90/fdb07d22571c91322f7d64d311962b1982cbc7",
+        ".git/objects/92/de0392ee5f212bd7cd47f2cf0dc52cc583825c",
+        ".git/objects/93/df2af551009782a94451e8a6ccfb3720d424fb",
+        ".git/objects/9b/3e8360366b882f6788e11a5c4b0eb79b65ff4e",
+        ".git/objects/9e/41fb2af12e7301ded6c93b3977cf14354f6cbf",
+        ".git/objects/9f/fcd272fb69143aea525c284f46621a3850b5b6",
+        ".git/objects/a1/91f0fd9a630ebcff6b99b991e19f59345def04",
+        ".git/objects/a7/4c501256561becb623618faca80e14dc2e9efc",
+        ".git/objects/a8/ac8297f39cda7a0bbe181212467e78082af1e0",
+        ".git/objects/aa/2d2ae9416248ca1a92403337834e22e882ad2e",
+        ".git/objects/b5/0bd80ee5de724470ca6259749939700acdc99d",
+        ".git/objects/b5/c13559c0473642611652c8fc334e60b1bd17f0",
+        ".git/objects/b9/5bda8ecb5f0c91877c6160412d12c5fd10c47f",
+        ".git/objects/bf/56343a23a118daf61450b579cbbf81b0793710",
+        ".git/objects/c9/05eda6670876e9505574f4639245f59b368377",
+        ".git/objects/cb/7b07e3aa84db5b0ac8062545b35c82a5103270",
+        ".git/objects/cb/d35c72417bab73c0511e8cec11854a519215b9",
+        ".git/objects/cc/8654df1405b201d468a2d8c1e3ae67e16bcb83",
+        ".git/objects/cc/e3df7e51cea9a1079ea1ae809e151ecf6a1f48",
+        ".git/objects/d0/77b3c76a5ab38ecf6a8c5f9710192d8087f2c9",
+        ".git/objects/d3/13167c70033a6c6842e858f49b601950e3ec98",
+        ".git/objects/d6/19992577acdcaede228140d924a2564aed991c",
+        ".git/objects/d7/0105e1b41862a7628b0925984a739547585f70",
+        ".git/objects/de/24360947ce7fa2447762facefe44a03e85a6b1",
+        ".git/objects/de/7e87665643583990eeb84e5f5b08417b34486f",
+        ".git/objects/de/b1dda44330d88071ff8770bb685b7f3b2418bb",
+        ".git/objects/e3/5fc30630d2775b479b5c73a4314f10e8743253",
+        ".git/objects/e3/f9270ecacd19a22185d139275cf0950ba3dfb3",
+        ".git/objects/e4/388ac904914df7e6d64f08645227021a78042f",
+        ".git/objects/e6/b1379444cc36a77dbaa2c4ebfe3012294ca722",
+        ".git/objects/e7/c00f2304a2b20a86184e051f42f8e056acf96f",
+        ".git/objects/f0/91a2e107d45db311970ac5df2da755ea19bd2b",
+        ".git/objects/f4/c80b89cbe6a0b19183efb42f042bff6b2fdea4",
+        ".git/objects/f9/c41e1d302deb32d3ea548139960e1e59eec124",
+        ".git/objects/fa/5f53b656299d83ecbe1d9734c22fcaba278ae7",
+        ".git/objects/ff/a52398f9a25ecef0eb8c6111b7ff3d66dbc5d2",
+        ".git/refs/heads/main",
+        ".git/refs/remotes/origin/claude/project-expansion-peirce-dgx7yr",
+        ".git/refs/remotes/origin/main",
+        ".git/refs/tags/pre-session-20260710-151220",
+        ".gitignore",
+        "__pycache__/mcp_server.cpython-312.pyc",
+        "__pycache__/verify_offline.cpython-312.pyc",
+        "mneme/__pycache__/__init__.cpython-312.pyc",
+        "mneme/__pycache__/bundle.cpython-312.pyc",
+        "mneme/__pycache__/canonical.cpython-312.pyc",
+        "mneme/__pycache__/custody.cpython-312.pyc",
+        "mneme/__pycache__/field.cpython-312.pyc",
+        "mneme/__pycache__/trust.cpython-312.pyc"
+      ],
+      "non_python_not_analyzed": [
+        ".claude/settings.local.json",
+        "ARCHITECTURE.md",
+        "KNOWN_LIMITATIONS.md",
+        "LICENSE",
+        "README.md",
+        "SECURITY_AUDIT.md",
+        "mneme.html",
+        "mneme/schema.sql"
+      ]
+    }
+  },
+  "metrics_schema_version": "1.0",
+  "quality": {
+    "contract_coverage": {
+      "covered": 37,
+      "total": 72
+    },
+    "contract_coverage_note": "6 executable skill(s) loaded; this ratio measures applicability observations for executable skills only, not the documented skills catalog.",
+    "discovery_accounting": {
+      "covered": 12,
+      "total": 138
+    },
+    "evidence_completeness": null,
+    "evidence_completeness_note": "Requires an explicit obligation ledger mapping each executed contract obligation to satisfied or missing Evidence items.",
+    "module_coverage": {
+      "covered": 9,
+      "total": 12
+    },
+    "repository_coverage": {
+      "covered": 12,
+      "total": 12
+    },
+    "verification_coverage": null,
+    "verification_coverage_note": "Requires a count of planned checks versus checks actually executed, including skipped checks and their reasons."
+  },
+  "repository": {
+    "branches_inspected": null,
+    "classes": 5,
+    "configuration_files": 0,
+    "directories": 82,
+    "documentation_files": 4,
+    "files_by_language": {
+      "Other": 126,
+      "Python": 12
+    },
+    "files_discovered": 138,
+    "functions": 77,
+    "git_commits_analyzed": null,
+    "loc": {
+      "blank": 874,
+      "code": 5417,
+      "comment": 775,
+      "total": 7066
+    },
+    "methods": 0,
+    "modules": 12,
+    "tags_inspected": null,
+    "tests": 3
+  },
+  "reproducibility": {
+    "artifact_hashes": null,
+    "environment": {
+      "os": "Linux-6.14.0-37-generic-x86_64-with-glibc2.39",
+      "python": "3.12.3"
+    },
+    "forge_version": "0.1.0",
+    "repository_snapshot_sha256": "d4ed45d5cdd37e2e6305a3be097076386301f30e584339d7c2e6746f858248dc",
+    "runtime_deterministic": null,
+    "runtime_fingerprint": "267e455ebd5b71fd",
+    "runtime_process_imported_at_epoch": 1784335683,
+    "schema_versions": {
+      "triage": "1.1"
+    },
+    "seal_verified": null,
+    "seed_used": null,
+    "skill_versions": {
+      "atomic-state-mutation": "1.0",
+      "deterministic-core": "1.0",
+      "honest-degradation": "1.0",
+      "sql-aggregation-not-materialization": "1.0",
+      "tamper-evident-audit-chain": "1.0",
+      "validate-at-the-boundary": "1.0"
+    }
+  },
+  "runtime": {
+    "peak_rss_bytes": 104263680,
+    "phases": {
+      "bug_investigator": {
+        "elapsed_seconds": "4.39623",
+        "peak_rss_bytes": 104263680,
+        "status": "COMPLETED"
+      },
+      "canonicalization": {
+        "elapsed_seconds": "0.088275",
+        "peak_rss_bytes": 104263680,
+        "status": "COMPLETED"
+      },
+      "coverage": {
+        "elapsed_seconds": "0.027914",
+        "peak_rss_bytes": 104263680,
+        "status": "COMPLETED"
+      },
+      "discovery": {
+        "elapsed_seconds": "0.025638",
+        "peak_rss_bytes": 104263680,
+        "status": "COMPLETED"
+      },
+      "governance": {
+        "elapsed_seconds": "0.294196",
+        "peak_rss_bytes": 104263680,
+        "status": "COMPLETED"
+      },
+      "static_agents": {
+        "elapsed_seconds": "0.499379",
+        "peak_rss_bytes": 104263680,
+        "status": "COMPLETED"
+      },
+      "triage": {
+        "elapsed_seconds": "0.061163",
+        "peak_rss_bytes": 104263680,
+        "status": "COMPLETED"
+      },
+      "web_auditor": {
+        "elapsed_seconds": "0.014152",
+        "peak_rss_bytes": 104263680,
+        "status": "COMPLETED"
+      }
+    }
+  },
+  "scope": {
+    "asts_built": 12,
+    "coverage": {
+      "denominator": 12,
+      "numerator": 12
+    },
+    "discovery_accounting": {
+      "denominator": 138,
+      "numerator": 12
+    },
+    "eligible_source_files": 12,
+    "files_analyzed": 12,
+    "files_skipped": 126,
+    "functions_analyzed": 77,
+    "lines_analyzed": 4030,
+    "modules_excluded": 3,
+    "out_of_scope_modules": [
+      "demo.py",
+      "mcp_server.py",
+      "verify_offline.py"
+    ],
+    "repositories_chained": 1
+  },
+  "self_assessment": {
+    "abstentions": 1,
+    "confidence_boundary": "scope-limited",
+    "contradictions": 0,
+    "coverage": {
+      "covered": 12,
+      "total": 12
+    },
+    "limitations": 5,
+    "note": "Self-assessment describes audit boundaries; it is not a repository quality score.",
+    "specialized_agents": {
+      "available": 5,
+      "total": 5
+    }
+  },
+  "skill_runtime": {
+    "contract_failures": 0,
+    "contracts_executed": 37,
+    "contracts_skipped": 31,
+    "evidence_obligations_missing": null,
+    "evidence_obligations_satisfied": null,
+    "limitations_emitted": 0,
+    "skills_activated": 37,
+    "skills_loaded": 6,
+    "skills_not_applicable": 31,
+    "undetermined_skills": 4
+  }
+}
