@@ -9,7 +9,7 @@
     :root { --ink:#231722; --muted:#523b4b; --paper:#d6abb8; --panel:#efd1d8; --line:#9d6f7d; --accent:#176955; --blue:#24558d; --amber:#794e00; --rose:#9c3048; --navy:#2b1723; --radius:18px; }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; }
-    body { margin:0; color:var(--ink); background:radial-gradient(circle at 10% -10%,#f5d8df 0,transparent 32rem),radial-gradient(circle at 90% 0,#e7bec9 0,transparent 29rem),var(--paper); font:16px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    body { margin:0; color:var(--ink); background:radial-gradient(circle at 10% -10%,#f5d8df 0,transparent 32rem),radial-gradient(circle at 90% 0,#e7bec9 0,transparent 29rem),var(--paper); font:17px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
     a { color:#0d5948; }
     a:hover { color:#073e33; }
     code { color:#d9e6ff; background:#17243b; border:1px solid #344a6e; border-radius:6px; padding:.12rem .35rem; font-size:.9em; }
@@ -18,7 +18,7 @@
     .topbar .shell { min-height:64px; display:flex; gap:1rem; align-items:center; justify-content:space-between; }
     .brand { font-weight:800; letter-spacing:.16em; color:#2b1723; text-decoration:none; }
     nav { display:flex; flex-wrap:wrap; gap:.7rem; align-items:center; }
-    nav a { color:var(--muted); font-size:.9rem; text-decoration:none; }
+    nav a { color:var(--muted); font-size:.95rem; text-decoration:none; }
     button { font:inherit; cursor:pointer; }
     .language { border:1px solid var(--line); color:var(--ink); background:#f4d9df; border-radius:100px; padding:.35rem .7rem; }
     .language:hover { border-color:var(--accent); }
@@ -26,8 +26,8 @@
     .eyebrow { color:#0f5a48; font-weight:800; text-transform:uppercase; letter-spacing:.13em; font-size:.78rem; }
     h1 { max-width:930px; margin:.6rem 0 1rem; font-size:clamp(2.5rem,7vw,5.6rem); line-height:.96; letter-spacing:-.06em; }
     h2 { margin:0 0 .7rem; font-size:clamp(1.7rem,3vw,2.5rem); letter-spacing:-.035em; }
-    h3 { margin:.2rem 0 .5rem; font-size:1.15rem; }
-    .lede { color:#4a3443; font-size:1.15rem; max-width:780px; }
+    h3 { margin:.2rem 0 .5rem; font-size:1.22rem; }
+    .lede { color:#4a3443; font-size:1.22rem; line-height:1.65; max-width:780px; }
     .tagrow { display:flex; flex-wrap:wrap; gap:.6rem; margin:1.5rem 0 0; }
     .tag { border:1px solid var(--line); border-radius:100px; padding:.35rem .7rem; color:var(--muted); font-size:.87rem; }
     .tag.good { border-color:#2c826d; color:var(--accent); }.tag.warn { border-color:#8c6b33; color:var(--amber); }
@@ -37,7 +37,7 @@
     .judge-card { max-width:660px; margin:1.25rem 0 0; padding:.8rem 1rem; border-left:3px solid var(--accent); border-radius:0 12px 12px 0; background:rgba(255,239,244,.68); color:var(--muted); font-size:.84rem; }
     .judge-card h2 { font-size:.94rem; letter-spacing:0; margin:0 0 .25rem; }.judge-card p { color:var(--muted); margin:.2rem 0 .45rem; }.judge-card ul { padding-left:1.05rem; margin:.35rem 0; }.judge-card li { margin:.15rem 0; }.judge-card a { font-weight:700; }
     section { padding:3.8rem 0; border-top:1px solid rgba(137,165,207,.14); }
-    .section-copy { max-width:760px; color:var(--muted); margin:0 0 1.5rem; }
+    .section-copy { max-width:760px; color:var(--muted); font-size:1.07rem; line-height:1.65; margin:0 0 1.5rem; }
     .grid { display:grid; gap:1rem; }.grid.two { grid-template-columns:repeat(2,minmax(0,1fr)); }.grid.three { grid-template-columns:repeat(3,minmax(0,1fr)); }.grid.four { grid-template-columns:repeat(4,minmax(0,1fr)); }
     .card { padding:1.25rem; border:1px solid var(--line); background:linear-gradient(145deg,rgba(255,242,246,.88),rgba(235,199,209,.93)); border-radius:var(--radius); }
     .card p { color:var(--muted); margin:.4rem 0 0; }
@@ -56,14 +56,26 @@
     .agent-type { float:right; color:var(--blue); font-size:.78rem; font-weight:600; }
     .callout { border-left:4px solid var(--amber); border-radius:0 14px 14px 0; padding:1.05rem 1.2rem; background:rgba(255,230,180,.58); color:#4a3000; }
     .source-list { padding-left:1.1rem; margin:.7rem 0 0; }.source-list li { margin:.35rem 0; color:var(--muted); }
+    .case-study { position:relative; overflow:hidden; margin-top:1rem; border-color:rgba(23,105,85,.6); background:linear-gradient(118deg,rgba(255,255,255,.7),rgba(229,246,238,.74)); }
+    .case-study::before { content:""; position:absolute; top:0; left:0; width:100%; height:5px; background:linear-gradient(90deg,var(--accent),#4ca687 58%,#d7ab45); }
+    .case-study-head { display:flex; align-items:flex-start; justify-content:space-between; gap:1.4rem; }
+    .case-kicker { margin:.1rem 0 .45rem; color:var(--accent); font-size:.77rem; font-weight:800; letter-spacing:.12em; }
+    .case-study h3 { max-width:780px; font-size:clamp(1.35rem,2.5vw,1.9rem); }
+    .case-metrics { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.65rem; margin:1.25rem 0; }
+    .case-metrics div { padding:.72rem .8rem; border:1px solid rgba(23,105,85,.26); border-radius:12px; background:rgba(255,255,255,.58); }
+    .case-metrics strong { display:block; color:var(--accent); font-size:1.25rem; line-height:1.15; }
+    .case-metrics span { display:block; margin-top:.2rem; color:var(--muted); font-size:.8rem; line-height:1.3; }
+    .case-links { display:flex; flex-wrap:wrap; gap:.65rem; margin-top:1.1rem; }
+    .case-links a, .case-button { display:inline-block; padding:.58rem .8rem; border:1px solid var(--accent); border-radius:999px; color:#0c4b3c; background:rgba(255,255,255,.7); font-size:.9rem; font-weight:750; text-decoration:none; }
+    .case-links a:hover, .case-button:hover { color:white; background:var(--accent); text-decoration:none; }
     pre { margin:0; overflow:auto; padding:1rem; background:#080f1e; border:1px solid var(--line); border-radius:14px; color:#d3e4ff; }
     .timeline { position:relative; margin-left:.7rem; padding-left:1.7rem; border-left:1px solid var(--line); }.timeline article { position:relative; padding:0 0 1.35rem; }.timeline article::before { content:""; position:absolute; width:.75rem; height:.75rem; border-radius:50%; background:var(--accent); left:-2.1rem; top:.35rem; box-shadow:0 0 0 5px #10203a; }.timeline p { margin:.25rem 0 0; color:var(--muted); }
     .truth-table { width:100%; border-collapse:collapse; overflow:hidden; border:1px solid var(--line); border-radius:14px; }.truth-table th,.truth-table td { padding:.75rem; text-align:left; border-bottom:1px solid var(--line); vertical-align:top; }.truth-table th { color:#0b4e3e; background:#f4d9df; }.truth-table td { color:var(--muted); }.truth-table tr:last-child td { border:0; }
     .comparison-table th:nth-child(2),.comparison-table td:nth-child(2) { background:#f8e2e7; }.comparison-table th:nth-child(3),.comparison-table td:nth-child(3) { background:#fbecef; }.comparison-table td strong { color:var(--ink); }
     .footer { color:var(--muted); font-size:.9rem; padding:2.8rem 0 4rem; }
     .hidden { display:none!important; }
-    @media (max-width:850px) { .grid.two,.grid.three,.grid.four,.flow { grid-template-columns:1fr 1fr; } nav a { display:none; } }
-    @media (max-width:530px) { .grid.two,.grid.three,.grid.four,.flow { grid-template-columns:1fr; } .hero { padding-top:4.2rem; } h1 { font-size:3rem; } }
+    @media (max-width:850px) { .grid.two,.grid.three,.grid.four,.flow { grid-template-columns:1fr 1fr; } nav a { display:none; } .case-metrics { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:530px) { .grid.two,.grid.three,.grid.four,.flow { grid-template-columns:1fr; } .hero { padding-top:4.2rem; } h1 { font-size:3rem; } .case-study-head { flex-direction:column; } .case-metrics { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -175,6 +187,13 @@ verify_seal(sealed_path="forge-run/verification-manifest.sealed.json")</code></p
         <article class="card"><h3>Stylometry: honest false positives</h3><p><a href="https://github.com/annatchijova/stylometry">GitHub</a> · <a href="https://gitlab.com/anna.tchijova/stylometry">GitLab mirror</a>. Stylometry was a real Google-hackathon-winning repository, left untouched for roughly a month before the audit. FORGE produced reproducible findings, including contextual false positives. Codex checked them against the source, isolated a swallowed GitLab delivery failure and an entropy return-type mismatch, and the confirmed fixes were committed as <code>034069c</code> and pushed.</p><p><a href="https://github.com/annatchijova/forge-results">Inspect the sealed runs and HTML reports →</a></p></article>
         <article class="card"><h3>Vigia: a useful false-positive lead</h3><p><a href="https://github.com/annatchijova/vigia-intent-analysis">Vigia Intent Analysis</a> produced an initial signal that looked contextual. The signal was not silently promoted to “confirmed”; Codex followed the evidence and found a separate real bug, which was corrected, committed, and pushed. The lesson is the workflow: deterministic evidence first, human or agent adjudication second.</p><p><a href="https://github.com/annatchijova/vigia-intent-analysis">Inspect the repository history →</a></p></article>
       </div>
+      <article class="card case-study">
+        <div class="case-study-head"><div><p class="case-kicker">SUCCESS CASE · CORVUS × CRONOS</p><h3>Four FORGE frontends, one reproducible baseline, five verified corrections.</h3></div><a class="case-button" href="https://github.com/annatchijova/wolf-and-cronos">Open Wolf &amp; CRONOS on GitHub ↗</a></div>
+        <p>FORGE audited <code>corvus-cronos-bridge</code> through its CLI, Python API, MCP server, and orchestrator. Each frontend converged on the same baseline: a deterministic 50 + 3 shard plan, 53 CONNECTED_ALIVE modules, 73 observations, and one discarded hypothesis.</p>
+        <div class="case-metrics"><div><strong>4 / 4</strong><span>frontends agreed</span></div><div><strong>53</strong><span>CONNECTED_ALIVE modules</span></div><div><strong>73</strong><span>observations, not auto-promoted defects</span></div><div><strong>5</strong><span>confirmed fixes, 230 tests green</span></div></div>
+        <p>Most raw signals were correctly adjudicated as expected behavior. The surrounding review used those leads to find and correct five real reliability and integrity defects: fail-closed bundle verification, visible detector crashes, production CRITICAL-bundle sealing, and missing version identifiers in two audit hash chains. The correction trail, source history, and final verification are public in Wolf &amp; CRONOS.</p>
+        <div class="case-links"><a href="https://github.com/annatchijova/wolf-and-cronos">Wolf &amp; CRONOS — source and history ↗</a><a href="https://annatchijova.github.io/vigia/forge-report.html">Standard FORGE report ↗</a><a href="https://annatchijova.github.io/vigia/forge-extended.html">Extended report ↗</a></div>
+      </article>
       <p class="callout" style="margin-top:1rem"><strong>Boundary:</strong> a FORGE finding is not automatically a confirmed vulnerability, and a false positive is not automatically useless. Both the original evidence and the adjudication remain visible.</p>
       <p><a href="https://github.com/annatchijova/forge/blob/main/docs/real-repository-case-studies.md">Read the full case-study record →</a></p>
     </div></section>
