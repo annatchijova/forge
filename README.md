@@ -11,6 +11,8 @@
 > A deterministic repository-governance engine for forensic software
 > engineering, architectural archaeology, and evidence-driven code review.
 
+**Live** — ▶ [**Preview**](https://forge-preview-lyart.vercel.app) · ▶ [**Technical Companion**](https://forge-technical-companion.vercel.app)
+
 ---
 
 ## Visual walkthrough
@@ -33,18 +35,40 @@ MCP, and the orchestrator against
 [Wolf & CRONOS](https://github.com/annatchijova/wolf-and-cronos). The
 screenshots preserve the run trail and the follow-up adjudication.
 
+**CLI** — the audit run from the command line, then its sealed output verified:
+
 <p align="center">
   <img src="visual/analisis%204%20modes/cli_corvus.png" alt="CLI audit of CORVUS and CRONOS" width="300">
   <img src="visual/analisis%204%20modes/clicorvus2.png" alt="CLI sealed verification" width="300">
+</p>
+
+**Python API** — the same audit run programmatically:
+
+<p align="center">
   <img src="visual/analisis%204%20modes/phyton_corvus.png" alt="Python API audit" width="300">
+</p>
+
+**Orchestrator** — the backward-compatible entry point, sharded and shard-verified:
+
+<p align="center">
   <img src="visual/analisis%204%20modes/orchestator1.png" alt="Orchestrator audit" width="300">
   <img src="visual/analisis%204%20modes/orchestator2.png" alt="Orchestrator shard verification" width="300">
+</p>
+
+**MCP** — the same baseline driven as an MCP tool: audit, artifacts, findings, verification, and the multi-agent canonical result:
+
+<p align="center">
   <img src="visual/analisis%204%20modes/mcp1.png" alt="MCP audit" width="300">
   <img src="visual/analisis%204%20modes/mcp2.png" alt="MCP artifact output" width="300">
   <img src="visual/analisis%204%20modes/mcp3.png" alt="MCP findings" width="300">
   <img src="visual/analisis%204%20modes/mcp4.png" alt="MCP verification" width="300">
   <img src="visual/analisis%204%20modes/mcp5.png" alt="MCP multi-agent result" width="300">
   <img src="visual/analisis%204%20modes/mcp6.png" alt="MCP canonical result" width="300">
+</p>
+
+**The follow-up adjudication** — the four-mode run trail and the post-audit review that separated confirmed anomalies from expected false positives:
+
+<p align="center">
   <img src="visual/analisis%204%20modes/Screenshot%20from%202026-07-19%2017-59-31.png" alt="Four-mode run evidence 1" width="300">
   <img src="visual/analisis%204%20modes/Screenshot%20from%202026-07-19%2018-00-42.png" alt="Four-mode run evidence 2" width="300">
   <img src="visual/analisis%204%20modes/llm_post_analisis.png" alt="Post-audit adjudication" width="300">
@@ -52,8 +76,16 @@ screenshots preserve the run trail and the follow-up adjudication.
 
 ### Native HTML reports
 
+The self-contained interactive dashboard, walked through view by view:
+
 <p align="center">
-  <img src="visual/report_html/Screenshot%20from%202026-07-19%2018-45-30.png" alt="FORGE HTML report 1" width="260">
+  <img src="visual/report_html/Screenshot%20from%202026-07-19%2018-45-30.png" alt="FORGE HTML report — dashboard overview" width="380">
+</p>
+
+<details>
+<summary>15 more views of the same report — severity, findings, coverage, trace (click to expand)</summary>
+<br/>
+<p align="center">
   <img src="visual/report_html/Screenshot%20from%202026-07-19%2018-45-42.png" alt="FORGE HTML report 2" width="260">
   <img src="visual/report_html/Screenshot%20from%202026-07-19%2018-45-56.png" alt="FORGE HTML report 3" width="260">
   <img src="visual/report_html/Screenshot%20from%202026-07-19%2018-46-09.png" alt="FORGE HTML report 4" width="260">
@@ -70,9 +102,12 @@ screenshots preserve the run trail and the follow-up adjudication.
   <img src="visual/report_html/Screenshot%20from%202026-07-19%2018-49-55.png" alt="FORGE HTML report 15" width="260">
   <img src="visual/report_html/Screenshot%20from%202026-07-19%2018-50-23.png" alt="FORGE HTML report 16" width="260">
 </p>
+</details>
 
-Live report views: [standard](https://annatchijova.github.io/vigia/forge-report.html)
-and [extended](https://annatchijova.github.io/vigia/forge-extended.html).
+> **Live report views** — ▶ [**Standard**](https://annatchijova.github.io/vigia/forge-report.html) · ▶ [**Extended**](https://annatchijova.github.io/vigia/forge-extended.html)
+>
+> The rendered HTML reports from a real FORGE audit, in two depths: the
+> standard daily-review pass and the extended forensic deep dive.
 
 ---
 
