@@ -593,3 +593,85 @@ The self-contained interactive dashboard, walked through view by view:
 
 Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for
 the full text and [NOTICE](NOTICE) for attribution.
+
+---
+
+## Anthem — *FORGE*
+
+*by [Olga Vasilieva](https://suno.com/song/fe41e51b-4207-4555-a6f7-25cb69851656)*
+
+Open the code, let the silence speak,
+Every hidden branch, every missing link.
+No lucky guesses, no smoke, no disguise,
+Only what the evidence justifies.
+
+We don't chase shadows, we don't pretend,
+Every trail is followed to the very end.
+Question the pattern, challenge the claim,
+Truth is earned—not assumed by name.
+
+**(Pre-Chorus)**
+
+Observe...
+Hypothesize...
+Break it apart to verify.
+If it survives, let the record show;
+If it falls, we let it go.
+
+**(Chorus)**
+
+FORGE!
+Trust the evidence, not the noise.
+Every finding has a proven voice.
+FORGE!
+Built to verify, built to explain.
+Every answer leaves a trace.
+Seal the truth with SHA-256—
+Nothing hidden, nothing missed.
+
+**(Verse 2)**
+
+Many can search, many can scan,
+Few can explain exactly what they found.
+Scope is visible, limits are clear,
+Every conclusion is engineered.
+
+Agents working side by side,
+One clear purpose, one defined role.
+Read-only eyes, deterministic core,
+Reproducible forevermore.
+
+**(Verse 3)**
+
+Every action leaves a trace,
+Every artifact has its place.
+Nothing hidden, nothing guessed,
+Every outcome stands the test.
+
+From the first step to the seal,
+Every record stays for real.
+Built to verify each node—
+Evidence becomes the code.
+
+**(Bridge)**
+
+Observe.
+Hypothesize.
+Falsify.
+Verify.
+Seal.
+
+Not "Believe me."
+"Check the proof."
+
+**(Final Chorus)**
+
+FORGE!
+Trust the evidence, not the noise.
+Every finding has a proven voice.
+FORGE!
+Transparent from the start to the end.
+Every artifact can stand again.
+Audit the future, protect the code.
+Truth is the only road.
+FORGE!
