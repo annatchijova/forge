@@ -1,6 +1,7 @@
 ---
 name: claim-provenance-discipline
-description: Tracking and preserving the origin of every assertion as it travels through drafts, handoffs, summaries, and documents — ensuring confidence levels, scope bounds, and evidence pointers are never stripped in transit. Use whenever findings move between people or phases: postmortems, incident briefs, audit handoffs, executive summaries, escalation chains, or review cycles. Trigger when a finding is paraphrased without citing its source, when a confidence level disappears in a rewrite, when "it was confirmed" lacks a traceable pointer, or when a summary silently inherits a parent document's assumptions. Pair with daubert-defensible-writing — which governs how individual claims are worded — this skill governs what happens to those claims when they travel.
+description: >-
+  Tracking and preserving the origin of every assertion as it travels through drafts, handoffs, summaries, and documents — ensuring confidence levels, scope bounds, and evidence pointers are never stripped in transit. Use whenever findings move between people or phases: postmortems, incident briefs, audit handoffs, executive summaries, escalation chains, or review cycles. Trigger when a finding is paraphrased without citing its source, when a confidence level disappears in a rewrite, when "it was confirmed" lacks a traceable pointer, or when a summary silently inherits a parent document's assumptions. Pair with daubert-defensible-writing — which governs how individual claims are worded — this skill governs what happens to those claims when they travel.
 ---
 
 # Claim Provenance Discipline
