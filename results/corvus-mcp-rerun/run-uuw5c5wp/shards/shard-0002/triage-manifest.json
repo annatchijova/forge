@@ -1,0 +1,1055 @@
+{
+  "deletion_judgments": {
+    "benchmark/benchmark.py": "deleting would remove unreachable code",
+    "corvus/corvus/__init__.py": "deleting would remove unreachable code",
+    "corvus/corvus/memory/__init__.py": "deleting would remove unreachable code",
+    "corvus/corvus/verdict/__init__.py": "deleting would remove unreachable code",
+    "corvus/mcp_server.py": "deleting would remove unreachable code",
+    "cronos/demo_seed.py": "deleting would remove unreachable code",
+    "cronos/mcp_server.py": "deleting would remove unreachable code",
+    "cronos/recall.py": "deleting would remove unreachable code",
+    "demo/dashboard_data.js": "deleting would remove unreachable code",
+    "demo/export_dashboard_data.py": "deleting would remove unreachable code",
+    "demo/export_static_demo.py": "deleting would remove unreachable code",
+    "demo/render_cronos_report.py": "deleting would remove unreachable code",
+    "web/demo-data.js": "deleting would remove unreachable code"
+  },
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784485683,
+  "limitations": [
+    "This is shard 2/2 of a deterministic 2-shard audit; only its CONNECTED_ALIVE paths are in scope."
+  ],
+  "modules": [
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "gate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "benchmark/benchmark.py"
+        },
+        {
+          "detail": "decision keywords: ['gate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "benchmark/benchmark.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784209411",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "benchmark/benchmark.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784209411,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "benchmark/benchmark.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "DEAD_WEIGHT",
+      "path": "corvus/corvus/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/memory/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/memory/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/memory/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "DEAD_WEIGHT",
+      "path": "corvus/corvus/memory/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/verdict/__init__.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/verdict/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/verdict/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "corvus/corvus/verdict/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Validate",
+        "Verdict",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/mcp_server.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate', 'Verdict', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/mcp_server.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/mcp_server.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "corvus/mcp_server.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/tests/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/tests/__init__.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "corvus/tests/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/tests/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "DUPLICATE",
+      "path": "corvus/tests/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/demo/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/demo/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/demo/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "DUPLICATE",
+      "path": "cronos/demo/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/demo_seed.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/demo_seed.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/demo_seed.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "cronos/demo_seed.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Decision",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/mcp_server.py"
+        },
+        {
+          "detail": "decision keywords: ['Decision', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/mcp_server.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/mcp_server.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "cronos/mcp_server.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/recall.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/recall.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/recall.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "cronos/recall.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/slack/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/slack/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/slack/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "DUPLICATE",
+      "path": "cronos/slack/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/tests/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/tests/__init__.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "cronos/tests/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/tests/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "DUPLICATE",
+      "path": "cronos/tests/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE",
+        "VERDICT",
+        "Verdict",
+        "classification",
+        "decision",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "demo/dashboard_data.js"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'VERDICT', 'Verdict', 'classification', 'decision', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "demo/dashboard_data.js"
+        },
+        {
+          "detail": "last logic-touch epoch 1784395242",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "demo/dashboard_data.js"
+        }
+      ],
+      "import_count": 0,
+      "language": "JavaScript",
+      "last_commit_epoch": 1784395242,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "demo/dashboard_data.js"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE",
+        "Score",
+        "VERDICT",
+        "Verdict",
+        "classification",
+        "decision",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "demo/export_dashboard_data.py"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'Score', 'VERDICT', 'Verdict', 'classification', 'decision', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "demo/export_dashboard_data.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784215888",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "demo/export_dashboard_data.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784215888,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "demo/export_dashboard_data.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "demo/export_static_demo.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "demo/export_static_demo.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784398317",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "demo/export_static_demo.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784398317,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "demo/export_static_demo.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "DECISION",
+        "Decision",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "demo/render_cronos_report.py"
+        },
+        {
+          "detail": "decision keywords: ['DECISION', 'Decision', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "demo/render_cronos_report.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784421595",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "demo/render_cronos_report.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784421595,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "demo/render_cronos_report.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/__init__.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "tests/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783540849",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1783540849,
+      "module_class": "DUPLICATE",
+      "path": "tests/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "decision"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_qwen_agent.py"
+        },
+        {
+          "detail": "decision keywords: ['decision']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_qwen_agent.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "tests/test_qwen_agent.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394980",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_qwen_agent.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394980,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "tests/test_qwen_agent.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_qwen_client.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_qwen_client.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "tests/test_qwen_client.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784312825",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_qwen_client.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784312825,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "tests/test_qwen_client.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_redteam_nightly.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_redteam_nightly.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "tests/test_redteam_nightly.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394980",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_redteam_nightly.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394980,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "tests/test_redteam_nightly.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE",
+        "decision",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "web/demo-data.js"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'decision', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "web/demo-data.js"
+        },
+        {
+          "detail": "last logic-touch epoch 1784477969",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "web/demo-data.js"
+        }
+      ],
+      "import_count": 0,
+      "language": "JavaScript",
+      "last_commit_epoch": 1784477969,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "web/demo-data.js"
+    }
+  ],
+  "protocol": {
+    "adi": [
+      {
+        "evidence": [
+          "classified 71 modules and recorded caller/Git evidence"
+        ],
+        "stage": "abduction",
+        "statement": "Observed evidence may be explained by: classified 71 modules and recorded caller/Git evidence.",
+        "status": "PLAUSIBLE_HYPOTHESIS"
+      },
+      {
+        "evidence": [
+          "classified 71 modules and recorded caller/Git evidence"
+        ],
+        "stage": "deduction",
+        "statement": "A falsification experiment must distinguish the observed mechanism from a benign structural explanation.",
+        "status": "PREDICTION_REQUIRED"
+      },
+      {
+        "evidence": [
+          "classified 71 modules and recorded caller/Git evidence"
+        ],
+        "stage": "induction",
+        "statement": "No language-specific induction harness was registered for this observation.",
+        "status": "UNDETERMINED"
+      }
+    ],
+    "agent": "archaeologist",
+    "scope": [
+      "api_server.py",
+      "benchmark/benchmark.py",
+      "corvus/corvus/__init__.py",
+      "corvus/corvus/analysis/__init__.py",
+      "corvus/corvus/analysis/l1_grice.py",
+      "corvus/corvus/analysis/l2_carnegie_cialdini.py",
+      "corvus/corvus/analysis/l3_aristotle.py",
+      "corvus/corvus/analysis/l4_berne.py",
+      "corvus/corvus/analysis/l5_linguistics.py",
+      "corvus/corvus/analysis/l6_peirce.py",
+      "corvus/corvus/config.py",
+      "corvus/corvus/memory/__init__.py",
+      "corvus/corvus/memory/audit.py",
+      "corvus/corvus/memory/consolidator.py",
+      "corvus/corvus/memory/engine.py",
+      "corvus/corvus/models.py",
+      "corvus/corvus/verdict/__init__.py",
+      "corvus/corvus/verdict/bundle.py",
+      "corvus/corvus/verdict/engine.py",
+      "corvus/mcp_server.py",
+      "corvus/tests/__init__.py",
+      "corvus/tests/test_analysis.py",
+      "corvus/tests/test_memory.py",
+      "corvus/tests/test_regressions.py",
+      "corvus/tests/test_verdict.py",
+      "corvus_cronos/__init__.py",
+      "corvus_cronos/bridge.py",
+      "corvus_cronos/narrator.py",
+      "corvus_cronos/qwen_agent.py",
+      "corvus_cronos/qwen_client.py",
+      "cronos/config.py",
+      "cronos/cronos/__init__.py",
+      "cronos/cronos/chain.py",
+      "cronos/cronos/models.py",
+      "cronos/cronos/narrator.py",
+      "cronos/cronos/quality.py",
+      "cronos/cronos/store.py",
+      "cronos/cronos/tracer.py",
+      "cronos/demo/__init__.py",
+      "cronos/demo/agent.py",
+      "cronos/demo_seed.py",
+      "cronos/main.py",
+      "cronos/mcp_server.py",
+      "cronos/recall.py",
+      "cronos/slack/__init__.py",
+      "cronos/slack/bot.py",
+      "cronos/slack/commands.py",
+      "cronos/slack/output.py",
+      "cronos/tests/__init__.py",
+      "cronos/tests/test_chain.py",
+      "cronos/tests/test_narrator.py",
+      "cronos/tests/test_output.py",
+      "cronos/tests/test_quality.py",
+      "cronos/tests/test_store.py",
+      "cronos/tests/test_tracer.py",
+      "demo/dashboard_data.js",
+      "demo/export_dashboard_data.py",
+      "demo/export_static_demo.py",
+      "demo/render_cronos_report.py",
+      "scripts/demo.py",
+      "scripts/redteam_nightly.py",
+      "scripts/showcase.py",
+      "tests/__init__.py",
+      "tests/test_api_server.py",
+      "tests/test_bridge.py",
+      "tests/test_full_integration.py",
+      "tests/test_landing_page.py",
+      "tests/test_qwen_agent.py",
+      "tests/test_qwen_client.py",
+      "tests/test_redteam_nightly.py",
+      "web/demo-data.js"
+    ],
+    "skills": [
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "abductive-engineering",
+        "source": "/home/labestiadevigia/forge/skills-gpt/abductive-engineering.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry atomic-state-mutation before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "atomic-state-mutation",
+        "source": "/home/labestiadevigia/forge/skills-gpt/atomic-state-mutation.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "audit-before-patch",
+        "source": "/home/labestiadevigia/forge/skills-gpt/audit-before-patch.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "claim-provenance-discipline",
+        "source": "/home/labestiadevigia/forge/skills-gpt/claim-provenance-discipline.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "codebase-health-assessment",
+        "source": "/home/labestiadevigia/forge/skills-gpt/codebase-health-assessment.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "daubert-defensible-writing",
+        "source": "/home/labestiadevigia/forge/skills-gpt/daubert-defensible-writing.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry deterministic-core before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "deterministic-core",
+        "source": "/home/labestiadevigia/forge/skills-gpt/deterministic-core.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "diagnosing-bugs",
+        "source": "/home/labestiadevigia/forge/skills-gpt/diagnosing-bugs.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "git-discipline",
+        "source": "/home/labestiadevigia/forge/skills-gpt/git-discipline.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry honest-degradation before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "honest-degradation",
+        "source": "/home/labestiadevigia/forge/skills-gpt/honest-degradation.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "llm-out-of-the-loop",
+        "source": "/home/labestiadevigia/forge/skills-gpt/llm-out-of-the-loop.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "red-team-auditing",
+        "source": "/home/labestiadevigia/forge/skills-gpt/red-team-auditing.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "reverse-engineering",
+        "source": "/home/labestiadevigia/forge/skills-gpt/reverse-engineering.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "secure-by-construction",
+        "source": "/home/labestiadevigia/forge/skills-gpt/secure-by-construction.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "software-archaeology",
+        "source": "/home/labestiadevigia/forge/skills-gpt/software-archaeology.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry sql-aggregation-not-materialization before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "sql-aggregation-not-materialization",
+        "source": "/home/labestiadevigia/forge/skills-gpt/sql-aggregation-not-materialization.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "This policy governs run-level process and reporting; no module-level contract is claimed."
+        ],
+        "limitation": "Run-level enforcement is an explicit future contract, not a fabricated module scan.",
+        "name": "surgical-patcher",
+        "source": "/home/labestiadevigia/forge/skills-gpt/surgical-patcher.md",
+        "status": "PROCESS_LEVEL"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry tamper-evident-audit-chain before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "tamper-evident-audit-chain",
+        "source": "/home/labestiadevigia/forge/skills-gpt/tamper-evident-audit-chain.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry validate-at-the-boundary before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "validate-at-the-boundary",
+        "source": "/home/labestiadevigia/forge/skills-gpt/validate-at-the-boundary.md",
+        "status": "LOADED_ONLY"
+      },
+      {
+        "evidence": [
+          "archaeologist received the mandatory policy catalog entry versioned-schema-evolution before producing its result."
+        ],
+        "limitation": "Policy text is loaded and recorded; semantic enforcement requires an executable checker for this skill.",
+        "name": "versioned-schema-evolution",
+        "source": "/home/labestiadevigia/forge/skills-gpt/versioned-schema-evolution.md",
+        "status": "LOADED_ONLY"
+      }
+    ]
+  },
+  "root": "/home/labestiadevigia/corvus-cronos-bridge",
+  "schema_version": "1.1",
+  "stacks": [
+    {
+      "confidence": {
+        "denominator": 1420,
+        "numerator": 1327
+      },
+      "evidence": [
+        {
+          "detail": "Python: 69 files with extension",
+          "kind": "file_count",
+          "role": "primary",
+          "source": "filesystem"
+        },
+        {
+          "detail": "pyproject.toml, requirements.txt present",
+          "kind": "manifest",
+          "role": "primary",
+          "source": "filesystem"
+        }
+      ],
+      "name": "Python"
+    },
+    {
+      "confidence": {
+        "denominator": 710,
+        "numerator": 11
+      },
+      "evidence": [
+        {
+          "detail": "JavaScript: 2 files with extension",
+          "kind": "file_count",
+          "role": "primary",
+          "source": "filesystem"
+        }
+      ],
+      "name": "JavaScript"
+    }
+  ],
+  "summary": {
+    "CONNECTED_ALIVE": 3,
+    "DEAD_WEIGHT": 2,
+    "DUPLICATE": 5,
+    "FOSSIL_HIGH_RISK": 11
+  }
+}

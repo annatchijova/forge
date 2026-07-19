@@ -560,6 +560,7 @@ class Runtime:
                     "status": result.status,
                     "findings": result.findings,
                     "discarded": result.discarded,
+                    "coverage": result.coverage,
                     "artifacts": result.artifacts,
                 })
             except Exception as exc:
@@ -579,16 +580,60 @@ class Runtime:
         plan_path = out / "shards.json"
         out.mkdir(parents=True, exist_ok=True)
         plan_path.write_text(json.dumps(plan, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        analyzed = sum(item.get("coverage", {}).get("files_analyzed", 0) for item in records if item.get("status") == "COMPLETE")
-        coverage = {
-            "sharded": True,
-            "files_discovered": len(discovered),
-            "files_analyzed": analyzed,
-            "files_skipped": max(0, len(discovered) - analyzed),
-            "coverage_ratio": {"numerator": analyzed, "denominator": len(discovered) or 1},
-            "shard_count": len(shards),
+        # Every shard parses the same repository tree to retain complete AST
+        # accounting, while each shard limits only CONNECTED_ALIVE detector
+        # scope.  Do not add those identical parse counts: that would turn one
+        # repository into N fictitious repositories.  Reuse one complete
+        # snapshot only when all completed shards agree; otherwise abstain from
+        # publishing a parent coverage ratio.
+        completed_coverage = [item["coverage"] for item in records if item.get("status") == "COMPLETE" and isinstance(item.get("coverage"), dict)]
+        # Detector-scope fields are expected to differ per shard.  Compare only
+        # the repository-wide parse snapshot before deciding whether a parent
+        # source-coverage claim can be deduplicated.
+        scope_keys = {
+            "connected_alive_modules",
+            "detector_scope_excluded_modules",
+            "detector_scope_excluded_by_class",
         }
-        artifacts = {"shards": str(plan_path)}
+        source_snapshots = [{key: value for key, value in item.items() if key not in scope_keys} for item in completed_coverage]
+        distinct_coverage = {json.dumps(item, sort_keys=True) for item in source_snapshots}
+        if completed_coverage and len(distinct_coverage) == 1:
+            coverage = dict(source_snapshots[0])
+            coverage.update({
+                "sharded": True,
+                "shard_count": len(shards),
+                "connected_alive_modules": len(connected_paths),
+                "detector_scope_by_shard": [
+                    {"index": item["index"], "connected_alive_modules": len(item["paths"])}
+                    for item in records
+                ],
+                "coverage_aggregation": "DEDUPLICATED_IDENTICAL_PARSE_SNAPSHOTS",
+                "coverage_note": "Source parsing counts are one repository-wide snapshot, not a sum across shards; detector scope is listed separately per shard.",
+            })
+        else:
+            coverage = {
+                "sharded": True,
+                "files_discovered": len(discovered),
+                "files_analyzed": None,
+                "files_skipped": None,
+                "coverage_ratio": None,
+                "shard_count": len(shards),
+                "connected_alive_modules": len(connected_paths),
+                "detector_scope_by_shard": [
+                    {"index": item["index"], "connected_alive_modules": len(item["paths"])}
+                    for item in records
+                ],
+                "coverage_aggregation": "ABSTAIN_INCONSISTENT_SHARD_SNAPSHOTS",
+                "coverage_note": "Shard parse snapshots differed, so no parent coverage count was inferred.",
+            }
+        self._event(trace, cronos, "run_completed", findings=len(findings), sharded=True)
+        trace_path = out / "audit-trace.json"
+        trace_path.write_text(json.dumps(trace.to_dict(), indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        coverage_path = out / "coverage-report.json"
+        coverage_path.write_text(json.dumps(coverage, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        artifacts = {"shards": str(plan_path), "coverage": str(coverage_path), "trace": str(trace_path)}
+        if self.cronos_db is not None:
+            artifacts["cronos_db"] = str(self.cronos_db)
         return AuditResult(str(root), len(connected_paths), len(findings), discarded, tuple(findings), coverage, artifacts, status)
 
     def audit_ref(self, repo: str | Path, ref: str, output_dir: str | Path,

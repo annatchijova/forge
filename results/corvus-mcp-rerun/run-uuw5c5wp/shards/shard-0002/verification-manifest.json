@@ -1,0 +1,121 @@
+{
+  "ast_unverified_families": [],
+  "ast_verified_families": [
+    "subprocess",
+    "parser",
+    "float comparison",
+    "eval/exec",
+    "sql injection"
+  ],
+  "discarded": [],
+  "findings": [
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The parser call `data = json.loads(msg[\"content\"])` at tests/test_qwen_agent.py:132 has no nearby exception handling, so malformed input may escape as an opaque failure.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "data = json.loads(msg[\"content\"])",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_qwen_agent.py:132"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_qwen_agent.py",
+      "occurrences": [
+        "tests/test_qwen_agent.py:132"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "Observed construct matches, but induction only established that an error path is reachable: Malformed input reached an opaque AttributeError, but the exception did not originate at the hypothesized parser call. Evidence: tests/test_qwen_agent.py:132: AttributeError: module 'tests.test_qwen_agent' has no attribute '__call__'",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "bug_investigator",
+      "category": "INFERRED",
+      "controllability": "UNDETERMINED",
+      "description": "The dynamic command invocation `proc = subprocess.run(` at tests/test_redteam_nightly.py:107 may pass attacker-controlled arguments without an enclosing failure boundary.",
+      "epistemic_level": "PLAUSIBLE HYPOTHESIS",
+      "evidence": [
+        {
+          "detail": "proc = subprocess.run(",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_redteam_nightly.py:107"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_redteam_nightly.py",
+      "occurrences": [
+        "tests/test_redteam_nightly.py:107"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED"
+      ],
+      "reasoning": "Observed construct matches, but induction only established that an error path is reachable: Malformed input reached an opaque AttributeError, but the exception did not originate at the hypothesized parser call. Evidence: tests/test_redteam_nightly.py:107: AttributeError: module 'tests.test_redteam_nightly' has no attribute 'test_refuses_without_api_key'",
+      "severity": "MEDIUM"
+    },
+    {
+      "agent": "integrity_inspector",
+      "category": "OBSERVED",
+      "controllability": "UNDETERMINED",
+      "description": "unversioned serialization",
+      "epistemic_level": "CODE FACT",
+      "evidence": [
+        {
+          "detail": "unversioned serialization",
+          "kind": "source",
+          "role": "primary",
+          "source": "tests/test_qwen_agent.py:49"
+        }
+      ],
+      "exploitability": "NOT_ASSESSED",
+      "module_path": "tests/test_qwen_agent.py",
+      "occurrences": [
+        "tests/test_qwen_agent.py:49"
+      ],
+      "outcome": "OBSERVED",
+      "provenance": [
+        "AST",
+        "RUNTIME_NOT_EXECUTED",
+        "MULTIPLE_AGENTS"
+      ],
+      "reasoning": "AST detector emitted this observation: unversioned-serialization.",
+      "severity": "MEDIUM"
+    }
+  ],
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784485693,
+  "hypotheses_schema_version": "1.0",
+  "induction": [
+    {
+      "detail": "Malformed input reached an opaque AttributeError, but the exception did not originate at the hypothesized parser call.",
+      "evidence": "tests/test_qwen_agent.py:132: AttributeError: module 'tests.test_qwen_agent' has no attribute '__call__'",
+      "family": "parser",
+      "line": "132",
+      "module_path": "tests/test_qwen_agent.py",
+      "status": "ERROR_PATH_REACHABLE"
+    },
+    {
+      "detail": "Malformed input reached an opaque AttributeError, but the exception did not originate at the hypothesized parser call.",
+      "evidence": "tests/test_redteam_nightly.py:107: AttributeError: module 'tests.test_redteam_nightly' has no attribute 'test_refuses_without_api_key'",
+      "family": "subprocess",
+      "line": "107",
+      "module_path": "tests/test_redteam_nightly.py",
+      "status": "ERROR_PATH_REACHABLE"
+    }
+  ],
+  "repository_snapshot_sha256": "e13891ef0696ff0a05c53c1901b271b04a4ef148dd074f0799e310ba44c75df0",
+  "root": "/home/labestiadevigia/corvus-cronos-bridge",
+  "schema_version": "2.0",
+  "source_attestation": "ba2af1cb43c8be533fda885202b23f9ef4972b97cc875f4209f06723e44be6ef"
+}

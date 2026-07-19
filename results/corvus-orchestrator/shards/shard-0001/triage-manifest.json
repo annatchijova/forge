@@ -1,0 +1,2374 @@
+{
+  "deletion_judgments": {},
+  "forge_version": "0.1.0",
+  "generated_at_epoch": 1784494719,
+  "limitations": [
+    "This is shard 1/2 of a deterministic 2-shard audit; only its CONNECTED_ALIVE paths are in scope."
+  ],
+  "modules": [
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "SCORE",
+        "VERDICT",
+        "decision",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "api_server.py"
+        },
+        {
+          "detail": "decision keywords: ['SCORE', 'VERDICT', 'decision', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "api_server.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784413704",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "api_server.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1784413704,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "api_server.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "gate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "benchmark/benchmark.py"
+        },
+        {
+          "detail": "decision keywords: ['gate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "benchmark/benchmark.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784209411",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "benchmark/benchmark.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784209411,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "benchmark/benchmark.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "DEAD_WEIGHT",
+      "path": "corvus/corvus/__init__.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/__init__.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/analysis/__init__.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l1_grice.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l1_grice.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l1_grice.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/analysis/l1_grice.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "Score",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l2_carnegie_cialdini.py"
+        },
+        {
+          "detail": "decision keywords: ['Score', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l2_carnegie_cialdini.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l2_carnegie_cialdini.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/analysis/l2_carnegie_cialdini.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l3_aristotle.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l3_aristotle.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l3_aristotle.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/analysis/l3_aristotle.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "Classify"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l4_berne.py"
+        },
+        {
+          "detail": "decision keywords: ['Classify']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l4_berne.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l4_berne.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/analysis/l4_berne.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l5_linguistics.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l5_linguistics.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l5_linguistics.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/analysis/l5_linguistics.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l6_peirce.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l6_peirce.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/analysis/l6_peirce.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/analysis/l6_peirce.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "Verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/config.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/config.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/config.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/config.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/memory/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/memory/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/memory/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "DEAD_WEIGHT",
+      "path": "corvus/corvus/memory/__init__.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/memory/audit.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/memory/audit.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/memory/audit.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/memory/audit.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/memory/consolidator.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/memory/consolidator.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/memory/consolidator.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/memory/consolidator.py"
+    },
+    {
+      "caller_count": 4,
+      "decision_keywords": [
+        "Verdict",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "4 caller(s), 4 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/memory/engine.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/memory/engine.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/memory/engine.py"
+        }
+      ],
+      "import_count": 4,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/memory/engine.py"
+    },
+    {
+      "caller_count": 14,
+      "decision_keywords": [
+        "Verdict",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "14 caller(s), 14 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/models.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/models.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/models.py"
+        }
+      ],
+      "import_count": 14,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/models.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/verdict/__init__.py"
+        },
+        {
+          "detail": "decision keywords: ['verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/verdict/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/verdict/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "corvus/corvus/verdict/__init__.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "Verdict",
+        "decision",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/verdict/bundle.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict', 'decision', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/verdict/bundle.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/verdict/bundle.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/verdict/bundle.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "Verdict",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/corvus/verdict/engine.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/corvus/verdict/engine.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/corvus/verdict/engine.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/corvus/verdict/engine.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Validate",
+        "Verdict",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/mcp_server.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate', 'Verdict', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/mcp_server.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/mcp_server.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "corvus/mcp_server.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/tests/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/tests/__init__.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "corvus/tests/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/tests/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "DUPLICATE",
+      "path": "corvus/tests/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/tests/test_analysis.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/tests/test_analysis.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "corvus/tests/test_analysis.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/tests/test_analysis.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/tests/test_analysis.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Verdict",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/tests/test_memory.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/tests/test_memory.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "corvus/tests/test_memory.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/tests/test_memory.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/tests/test_memory.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Verdict",
+        "decision",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/tests/test_regressions.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict', 'decision', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/tests/test_regressions.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "corvus/tests/test_regressions.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/tests/test_regressions.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/tests/test_regressions.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Verdict",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus/tests/test_verdict.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus/tests/test_verdict.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "corvus/tests/test_verdict.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus/tests/test_verdict.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus/tests/test_verdict.py"
+    },
+    {
+      "caller_count": 7,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "7 caller(s), 7 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus_cronos/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus_cronos/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783543447",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus_cronos/__init__.py"
+        }
+      ],
+      "import_count": 7,
+      "language": "Python",
+      "last_commit_epoch": 1783543447,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus_cronos/__init__.py"
+    },
+    {
+      "caller_count": 6,
+      "decision_keywords": [
+        "Classify",
+        "GATE",
+        "Gate",
+        "Verdict",
+        "classification",
+        "decision",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "6 caller(s), 6 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus_cronos/bridge.py"
+        },
+        {
+          "detail": "decision keywords: ['Classify', 'GATE', 'Gate', 'Verdict', 'classification', 'decision', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus_cronos/bridge.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus_cronos/bridge.py"
+        }
+      ],
+      "import_count": 6,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus_cronos/bridge.py"
+    },
+    {
+      "caller_count": 5,
+      "decision_keywords": [
+        "GATE",
+        "Gate",
+        "Score",
+        "VERDICT",
+        "Verdict",
+        "decision",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "5 caller(s), 5 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus_cronos/narrator.py"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'Gate', 'Score', 'VERDICT', 'Verdict', 'decision', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus_cronos/narrator.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784312825",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus_cronos/narrator.py"
+        }
+      ],
+      "import_count": 5,
+      "language": "Python",
+      "last_commit_epoch": 1784312825,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus_cronos/narrator.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus_cronos/qwen_agent.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus_cronos/qwen_agent.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394980",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus_cronos/qwen_agent.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1784394980,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus_cronos/qwen_agent.py"
+    },
+    {
+      "caller_count": 8,
+      "decision_keywords": [
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "8 caller(s), 8 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "corvus_cronos/qwen_client.py"
+        },
+        {
+          "detail": "decision keywords: ['gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "corvus_cronos/qwen_client.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784209411",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "corvus_cronos/qwen_client.py"
+        }
+      ],
+      "import_count": 8,
+      "language": "Python",
+      "last_commit_epoch": 1784209411,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "corvus_cronos/qwen_client.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "Validate"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/config.py"
+        },
+        {
+          "detail": "decision keywords: ['Validate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/config.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/config.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/config.py"
+    },
+    {
+      "caller_count": 7,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "7 caller(s), 7 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/cronos/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/cronos/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/cronos/__init__.py"
+        }
+      ],
+      "import_count": 7,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/cronos/__init__.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "decision"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/cronos/chain.py"
+        },
+        {
+          "detail": "decision keywords: ['decision']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/cronos/chain.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/cronos/chain.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/cronos/chain.py"
+    },
+    {
+      "caller_count": 10,
+      "decision_keywords": [
+        "DECISION",
+        "decision"
+      ],
+      "evidence": [
+        {
+          "detail": "10 caller(s), 10 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/cronos/models.py"
+        },
+        {
+          "detail": "decision keywords: ['DECISION', 'decision']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/cronos/models.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/cronos/models.py"
+        }
+      ],
+      "import_count": 10,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/cronos/models.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "Decision",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/cronos/narrator.py"
+        },
+        {
+          "detail": "decision keywords: ['Decision', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/cronos/narrator.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/cronos/narrator.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/cronos/narrator.py"
+    },
+    {
+      "caller_count": 3,
+      "decision_keywords": [
+        "Classify",
+        "decision",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "3 caller(s), 3 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/cronos/quality.py"
+        },
+        {
+          "detail": "decision keywords: ['Classify', 'decision', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/cronos/quality.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/cronos/quality.py"
+        }
+      ],
+      "import_count": 3,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/cronos/quality.py"
+    },
+    {
+      "caller_count": 7,
+      "decision_keywords": [
+        "decision"
+      ],
+      "evidence": [
+        {
+          "detail": "7 caller(s), 7 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/cronos/store.py"
+        },
+        {
+          "detail": "decision keywords: ['decision']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/cronos/store.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/cronos/store.py"
+        }
+      ],
+      "import_count": 7,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/cronos/store.py"
+    },
+    {
+      "caller_count": 2,
+      "decision_keywords": [
+        "DECISION",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "2 caller(s), 2 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/cronos/tracer.py"
+        },
+        {
+          "detail": "decision keywords: ['DECISION', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/cronos/tracer.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/cronos/tracer.py"
+        }
+      ],
+      "import_count": 2,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/cronos/tracer.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/demo/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/demo/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/demo/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "DUPLICATE",
+      "path": "cronos/demo/__init__.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/demo/agent.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/demo/agent.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/demo/agent.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/demo/agent.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/demo_seed.py"
+        },
+        {
+          "detail": "decision keywords: ['decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/demo_seed.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/demo_seed.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "cronos/demo_seed.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/main.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/main.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "cronos/main.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/main.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/main.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Decision",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/mcp_server.py"
+        },
+        {
+          "detail": "decision keywords: ['Decision', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/mcp_server.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/mcp_server.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "cronos/mcp_server.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/recall.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/recall.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/recall.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "cronos/recall.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/slack/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/slack/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/slack/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "DUPLICATE",
+      "path": "cronos/slack/__init__.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/slack/bot.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/slack/bot.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/slack/bot.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/slack/bot.py"
+    },
+    {
+      "caller_count": 1,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "1 caller(s), 1 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/slack/commands.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/slack/commands.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/slack/commands.py"
+        }
+      ],
+      "import_count": 1,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/slack/commands.py"
+    },
+    {
+      "caller_count": 5,
+      "decision_keywords": [
+        "Decision",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "5 caller(s), 5 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/slack/output.py"
+        },
+        {
+          "detail": "decision keywords: ['Decision', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/slack/output.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/slack/output.py"
+        }
+      ],
+      "import_count": 5,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/slack/output.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/tests/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/tests/__init__.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "cronos/tests/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/tests/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "DUPLICATE",
+      "path": "cronos/tests/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "decision"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/tests/test_chain.py"
+        },
+        {
+          "detail": "decision keywords: ['decision']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/tests/test_chain.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "cronos/tests/test_chain.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/tests/test_chain.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/tests/test_chain.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Decision",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/tests/test_narrator.py"
+        },
+        {
+          "detail": "decision keywords: ['Decision', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/tests/test_narrator.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "cronos/tests/test_narrator.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/tests/test_narrator.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/tests/test_narrator.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/tests/test_output.py"
+        },
+        {
+          "detail": "decision keywords: ['score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/tests/test_output.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "cronos/tests/test_output.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/tests/test_output.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/tests/test_output.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "DECISION",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/tests/test_quality.py"
+        },
+        {
+          "detail": "decision keywords: ['DECISION', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/tests/test_quality.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "cronos/tests/test_quality.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/tests/test_quality.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/tests/test_quality.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "DECISION",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/tests/test_store.py"
+        },
+        {
+          "detail": "decision keywords: ['DECISION', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/tests/test_store.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "cronos/tests/test_store.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/tests/test_store.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/tests/test_store.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "DECISION",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "cronos/tests/test_tracer.py"
+        },
+        {
+          "detail": "decision keywords: ['DECISION', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "cronos/tests/test_tracer.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "cronos/tests/test_tracer.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "cronos/tests/test_tracer.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "cronos/tests/test_tracer.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE",
+        "VERDICT",
+        "Verdict",
+        "classification",
+        "decision",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "demo/dashboard_data.js"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'VERDICT', 'Verdict', 'classification', 'decision', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "demo/dashboard_data.js"
+        },
+        {
+          "detail": "last logic-touch epoch 1784395242",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "demo/dashboard_data.js"
+        }
+      ],
+      "import_count": 0,
+      "language": "JavaScript",
+      "last_commit_epoch": 1784395242,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "demo/dashboard_data.js"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE",
+        "Score",
+        "VERDICT",
+        "Verdict",
+        "classification",
+        "decision",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "demo/export_dashboard_data.py"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'Score', 'VERDICT', 'Verdict', 'classification', 'decision', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "demo/export_dashboard_data.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784215888",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "demo/export_dashboard_data.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784215888,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "demo/export_dashboard_data.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "demo/export_static_demo.py"
+        },
+        {
+          "detail": "decision keywords: ['score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "demo/export_static_demo.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784398317",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "demo/export_static_demo.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784398317,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "demo/export_static_demo.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "DECISION",
+        "Decision",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "demo/render_cronos_report.py"
+        },
+        {
+          "detail": "decision keywords: ['DECISION', 'Decision', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "demo/render_cronos_report.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784421595",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "demo/render_cronos_report.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784421595,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "demo/render_cronos_report.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "SCORE",
+        "VERDICT",
+        "decision",
+        "score"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "scripts/demo.py"
+        },
+        {
+          "detail": "decision keywords: ['SCORE', 'VERDICT', 'decision', 'score']",
+          "kind": "content",
+          "role": "primary",
+          "source": "scripts/demo.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "scripts/demo.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783541160",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "scripts/demo.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1783541160,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "scripts/demo.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "Verdict",
+        "decision",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "scripts/redteam_nightly.py"
+        },
+        {
+          "detail": "decision keywords: ['Verdict', 'decision', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "scripts/redteam_nightly.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "scripts/redteam_nightly.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394980",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "scripts/redteam_nightly.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394980,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "scripts/redteam_nightly.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE",
+        "VERDICT",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "scripts/showcase.py"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'VERDICT', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "scripts/showcase.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "scripts/showcase.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784215888",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "scripts/showcase.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784215888,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "scripts/showcase.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/__init__.py"
+        },
+        {
+          "detail": "decision keywords: []",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/__init__.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "tests/__init__.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1783540849",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/__init__.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1783540849,
+      "module_class": "DUPLICATE",
+      "path": "tests/__init__.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE",
+        "gate",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_api_server.py"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'gate', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_api_server.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "tests/test_api_server.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784413704",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_api_server.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784413704,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "tests/test_api_server.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE",
+        "Gate",
+        "Score",
+        "VERDICT",
+        "Verdict",
+        "classification",
+        "decision",
+        "gate",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_bridge.py"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'Gate', 'Score', 'VERDICT', 'Verdict', 'classification', 'decision', 'gate', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_bridge.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "tests/test_bridge.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_bridge.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "tests/test_bridge.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE",
+        "gate"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_full_integration.py"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'gate']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_full_integration.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "tests/test_full_integration.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784394963",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_full_integration.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784394963,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "tests/test_full_integration.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "tests/test_landing_page.py"
+        },
+        {
+          "detail": "decision keywords: ['GATE']",
+          "kind": "content",
+          "role": "primary",
+          "source": "tests/test_landing_page.py"
+        },
+        {
+          "detail": "recognized executable, test, script, or configured console entry point",
+          "kind": "entry_point",
+          "role": "primary",
+          "source": "tests/test_landing_page.py"
+        },
+        {
+          "detail": "last logic-touch epoch 1784413704",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "tests/test_landing_page.py"
+        }
+      ],
+      "import_count": 0,
+      "language": "Python",
+      "last_commit_epoch": 1784413704,
+      "module_class": "CONNECTED_ALIVE",
+      "path": "tests/test_landing_page.py"
+    },
+    {
+      "caller_count": 0,
+      "decision_keywords": [
+        "GATE",
+        "decision",
+        "score",
+        "verdict"
+      ],
+      "evidence": [
+        {
+          "detail": "0 caller(s), 0 import reference(s)",
+          "kind": "caller_graph",
+          "role": "primary",
+          "source": "web/demo-data.js"
+        },
+        {
+          "detail": "decision keywords: ['GATE', 'decision', 'score', 'verdict']",
+          "kind": "content",
+          "role": "primary",
+          "source": "web/demo-data.js"
+        },
+        {
+          "detail": "last logic-touch epoch 1784477969",
+          "kind": "git_log",
+          "role": "primary",
+          "source": "web/demo-data.js"
+        }
+      ],
+      "import_count": 0,
+      "language": "JavaScript",
+      "last_commit_epoch": 1784477969,
+      "module_class": "FOSSIL_HIGH_RISK",
+      "path": "web/demo-data.js"
+    }
+  ],
+  "protocol": null,
+  "root": "/home/labestiadevigia/corvus-cronos-bridge",
+  "schema_version": "1.1",
+  "stacks": [
+    {
+      "confidence": {
+        "denominator": 1420,
+        "numerator": 1327
+      },
+      "evidence": [
+        {
+          "detail": "Python: 69 files with extension",
+          "kind": "file_count",
+          "role": "primary",
+          "source": "filesystem"
+        },
+        {
+          "detail": "pyproject.toml, requirements.txt present",
+          "kind": "manifest",
+          "role": "primary",
+          "source": "filesystem"
+        }
+      ],
+      "name": "Python"
+    },
+    {
+      "confidence": {
+        "denominator": 710,
+        "numerator": 11
+      },
+      "evidence": [
+        {
+          "detail": "JavaScript: 2 files with extension",
+          "kind": "file_count",
+          "role": "primary",
+          "source": "filesystem"
+        }
+      ],
+      "name": "JavaScript"
+    }
+  ],
+  "summary": {
+    "CONNECTED_ALIVE": 50,
+    "DEAD_WEIGHT": 2,
+    "DUPLICATE": 5,
+    "FOSSIL_HIGH_RISK": 11
+  }
+}

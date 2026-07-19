@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "source_layer": "codex_external",
+  "analytical_provenance": "Three independently scoped external reviews: surface mapping, CRONOS chain review, and adversarial reachability/hostile-input analysis.",
+  "findings": [
+    {
+      "id": "external-SM-H1",
+      "agent": "surface_mapper",
+      "epistemic_status": "UNDETERMINED",
+      "category": "PLAUSIBLE HYPOTHESIS",
+      "description": "The JSON bundle boundary requires reachability and input-control evidence before any defect claim.",
+      "evidence": ["corvus/corvus/verdict/bundle.py:83", "corvus/corvus/verdict/bundle.py:95", "corvus/corvus/verdict/bundle.py:96"],
+      "induction": "No executed induction; not a confirmed defect."
+    },
+    {
+      "id": "external-CR-H1",
+      "agent": "chain_reviewer",
+      "epistemic_status": "UNDETERMINED",
+      "category": "CODE FACT REVIEW",
+      "description": "Observed CRONOS persistence and chain operations require end-to-end failure-path execution before any integrity defect claim.",
+      "evidence": ["cronos/cronos/store.py:143", "cronos/cronos/chain.py:55", "cronos/cronos/chain.py:98"],
+      "induction": "No executed induction; not a confirmed defect."
+    },
+    {
+      "id": "external-AR-H1",
+      "agent": "adversarial_reviewer",
+      "epistemic_status": "UNDETERMINED",
+      "category": "PLAUSIBLE HYPOTHESIS",
+      "description": "Hostile path and malformed-JSON candidates lack proven external control, reachable mechanism, and successful package-context execution.",
+      "evidence": ["corvus/corvus/verdict/bundle.py:83:10", "corvus/corvus/verdict/bundle.py:95:10", "corvus/corvus/verdict/bundle.py:96"],
+      "induction": "Native package-context attempt was not executable (ModuleNotFoundError: corvus.models); not a confirmed defect."
+    }
+  ],
+  "abstentions": [
+    "No external candidate was promoted without executed induction.",
+    "The external analysis does not establish exploitability, reachability, or a confirmed defect."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "agents": [
+    "surface_mapper",
+    "chain_reviewer",
+    "adversarial_reviewer"
+  ],
+  "independence_schema_version": "1.0",
+  "status": "INDEPENDENCE_VERIFIED",
+  "unique_work_products": 3,
+  "work_product_digests": {
+    "adversarial_reviewer": "a9348a89ecbc816edbe6904227340673789b6da80dc347d1bdee21d2afa6fa80",
+    "chain_reviewer": "f76f47fc52eeda4b94b8007e9de241bcaf27fb0e17e7debcf3dd9cd4308f17f0",
+    "surface_mapper": "e9748ac8f49421b5421d7a838446e085e5d4513db7f8c79d49e3bf4eb3c8277d"
+  }
+}

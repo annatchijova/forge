@@ -63,6 +63,7 @@ def test_audit_writes_one_findings_jsonl_record_per_sealed_finding(tmp_path):
 def test_mcp_interactive_operations_delegate_to_runtime(tmp_path):
     put(tmp_path, "main.py", "import json\n")
     put(tmp_path, "loader.py", "import json\ndef load(raw):\n    return json.loads(raw)\n")
+    from forge.agent_protocol import skills_catalog
     from forge.mcp_server import infer_module_domains, list_available_skills, repository_summary, run_skill, triage_repository
     assert triage_repository(str(tmp_path))["ok"]
     assert infer_module_domains(str(tmp_path))["ok"]
@@ -70,7 +71,11 @@ def test_mcp_interactive_operations_delegate_to_runtime(tmp_path):
     # Membership, not skills[0]: asserting on index 0 couples this test to
     # today's single-plugin load order and would break for an unrelated
     # reason the moment a second skill is added ahead of it alphabetically.
-    assert any(item["name"] == "validate-at-the-boundary" for item in list_available_skills()["skills"])
+    listed = list_available_skills()
+    assert any(item["name"] == "validate-at-the-boundary" for item in listed["skills"])
+    assert {item["name"] for item in listed["skills"]} == {name for name, _source, _text in skills_catalog()}
+    assert listed["ledger_required_skill_count"] == len(skills_catalog())
+    assert listed["skills_catalog_digest"]
     assert run_skill(str(tmp_path), "validate-at-the-boundary")["ok"]
 
 def test_audit_result_reports_discarded_count(tmp_path):

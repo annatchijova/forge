@@ -1,0 +1,661 @@
+{
+  "applicability": {
+    "benchmark/benchmark.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "corvus/corvus/__init__.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "corvus/corvus/memory/__init__.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "corvus/corvus/verdict/__init__.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "corvus/mcp_server.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "corvus/tests/__init__.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "cronos/demo/__init__.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "cronos/demo_seed.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "cronos/mcp_server.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "cronos/recall.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "cronos/slack/__init__.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "cronos/tests/__init__.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "demo/dashboard_data.js": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "demo/export_dashboard_data.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "demo/export_static_demo.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "demo/render_cronos_report.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "tests/__init__.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    },
+    "tests/test_qwen_agent.py": {
+      "atomic-state-mutation": "APPLICABLE",
+      "deterministic-core": "APPLICABLE",
+      "honest-degradation": "APPLICABLE",
+      "sql-aggregation-not-materialization": "APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "APPLICABLE"
+    },
+    "tests/test_qwen_client.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "APPLICABLE",
+      "honest-degradation": "APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "tests/test_redteam_nightly.py": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "UNDETERMINED"
+    },
+    "web/demo-data.js": {
+      "atomic-state-mutation": "NOT_APPLICABLE",
+      "deterministic-core": "NOT_APPLICABLE",
+      "honest-degradation": "NOT_APPLICABLE",
+      "sql-aggregation-not-materialization": "NOT_APPLICABLE",
+      "tamper-evident-audit-chain": "NOT_APPLICABLE",
+      "validate-at-the-boundary": "NOT_APPLICABLE"
+    }
+  },
+  "domain_hypotheses": [
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "benchmark/benchmark.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "corvus/corvus/__init__.py"
+    },
+    {
+      "alternatives": [],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 1
+      },
+      "domains": [
+        "audit_or_ledger"
+      ],
+      "evidence": [
+        {
+          "detail": "audit or ledger vocabulary",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "corvus/corvus/memory/__init__.py"
+        }
+      ],
+      "module_path": "corvus/corvus/memory/__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "corvus/corvus/verdict/__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "audit_or_ledger",
+        "determinism_sensitive"
+      ],
+      "evidence": [
+        {
+          "detail": "audit or ledger vocabulary",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "corvus/mcp_server.py"
+        },
+        {
+          "detail": "canonicalization, sealing, or hash operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "corvus/mcp_server.py"
+        }
+      ],
+      "module_path": "corvus/mcp_server.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "corvus/tests/__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "cronos/demo/__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "audit_or_ledger",
+        "serialization_or_persistence"
+      ],
+      "evidence": [
+        {
+          "detail": "serialization or persistence operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "cronos/demo_seed.py"
+        },
+        {
+          "detail": "audit or ledger vocabulary",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "cronos/demo_seed.py"
+        }
+      ],
+      "module_path": "cronos/demo_seed.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "audit_or_ledger",
+        "determinism_sensitive"
+      ],
+      "evidence": [
+        {
+          "detail": "audit or ledger vocabulary",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "cronos/mcp_server.py"
+        },
+        {
+          "detail": "canonicalization, sealing, or hash operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "cronos/mcp_server.py"
+        }
+      ],
+      "module_path": "cronos/mcp_server.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "cronos/recall.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "cronos/slack/__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "cronos/tests/__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "audit_or_ledger",
+        "determinism_sensitive"
+      ],
+      "evidence": [
+        {
+          "detail": "audit or ledger vocabulary",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/dashboard_data.js"
+        },
+        {
+          "detail": "canonicalization, sealing, or hash operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/dashboard_data.js"
+        }
+      ],
+      "module_path": "demo/dashboard_data.js"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 1
+      },
+      "domains": [
+        "audit_or_ledger",
+        "determinism_sensitive",
+        "input_boundary",
+        "serialization_or_persistence"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/export_dashboard_data.py"
+        },
+        {
+          "detail": "serialization or persistence operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/export_dashboard_data.py"
+        },
+        {
+          "detail": "audit or ledger vocabulary",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/export_dashboard_data.py"
+        },
+        {
+          "detail": "canonicalization, sealing, or hash operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/export_dashboard_data.py"
+        }
+      ],
+      "module_path": "demo/export_dashboard_data.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 1
+      },
+      "domains": [
+        "audit_or_ledger",
+        "determinism_sensitive",
+        "input_boundary",
+        "serialization_or_persistence"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/export_static_demo.py"
+        },
+        {
+          "detail": "serialization or persistence operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/export_static_demo.py"
+        },
+        {
+          "detail": "audit or ledger vocabulary",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/export_static_demo.py"
+        },
+        {
+          "detail": "canonicalization, sealing, or hash operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/export_static_demo.py"
+        }
+      ],
+      "module_path": "demo/export_static_demo.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 1
+      },
+      "domains": [
+        "audit_or_ledger",
+        "determinism_sensitive",
+        "input_boundary"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/render_cronos_report.py"
+        },
+        {
+          "detail": "audit or ledger vocabulary",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/render_cronos_report.py"
+        },
+        {
+          "detail": "canonicalization, sealing, or hash operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "demo/render_cronos_report.py"
+        }
+      ],
+      "module_path": "demo/render_cronos_report.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "domains": [],
+      "evidence": [],
+      "module_path": "tests/__init__.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 1,
+        "numerator": 1
+      },
+      "domains": [
+        "determinism_sensitive",
+        "input_boundary",
+        "serialization_or_persistence"
+      ],
+      "evidence": [
+        {
+          "detail": "input or parser boundary call",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "tests/test_qwen_agent.py"
+        },
+        {
+          "detail": "serialization or persistence operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "tests/test_qwen_agent.py"
+        },
+        {
+          "detail": "canonicalization, sealing, or hash operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "tests/test_qwen_agent.py"
+        }
+      ],
+      "module_path": "tests/test_qwen_agent.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "audit_or_ledger",
+        "determinism_sensitive"
+      ],
+      "evidence": [
+        {
+          "detail": "audit or ledger vocabulary",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "tests/test_qwen_client.py"
+        },
+        {
+          "detail": "canonicalization, sealing, or hash operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "tests/test_qwen_client.py"
+        }
+      ],
+      "module_path": "tests/test_qwen_client.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "audit_or_ledger",
+        "determinism_sensitive"
+      ],
+      "evidence": [
+        {
+          "detail": "audit or ledger vocabulary",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "tests/test_redteam_nightly.py"
+        },
+        {
+          "detail": "canonicalization, sealing, or hash operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "tests/test_redteam_nightly.py"
+        }
+      ],
+      "module_path": "tests/test_redteam_nightly.py"
+    },
+    {
+      "alternatives": [
+        "mixed_or_unknown"
+      ],
+      "confidence": {
+        "denominator": 3,
+        "numerator": 2
+      },
+      "domains": [
+        "audit_or_ledger",
+        "determinism_sensitive"
+      ],
+      "evidence": [
+        {
+          "detail": "audit or ledger vocabulary",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "web/demo-data.js"
+        },
+        {
+          "detail": "canonicalization, sealing, or hash operation",
+          "kind": "source_pattern",
+          "role": "primary",
+          "source": "web/demo-data.js"
+        }
+      ],
+      "module_path": "web/demo-data.js"
+    }
+  ],
+  "executable_skills": [
+    "atomic-state-mutation",
+    "deterministic-core",
+    "honest-degradation",
+    "sql-aggregation-not-materialization",
+    "tamper-evident-audit-chain",
+    "validate-at-the-boundary"
+  ],
+  "findings": [],
+  "limitations": []
+}

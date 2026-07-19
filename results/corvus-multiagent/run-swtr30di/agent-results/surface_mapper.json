@@ -1,0 +1,36 @@
+{
+  "agent": "surface_mapper",
+  "skills": [
+    {"skill_name":"atomic-state-mutation","concrete_action":"Reviewed the loaded contract and excluded it from this entry-point/data-flow map because no multi-write SQL mutation was inspected.","evidence":["list_available_skills(): direct SQL transaction check contract"],"result":"UNDETERMINED"},
+    {"skill_name":"deterministic-core","concrete_action":"Reviewed the loaded contract and did not infer serialization determinism from surface evidence.","evidence":["list_available_skills(): seal-input AST requirement"],"result":"UNDETERMINED"},
+    {"skill_name":"honest-degradation","concrete_action":"Reviewed the loaded contract; opaque parser failure is recorded only as a boundary hypothesis, not a degradation conclusion.","evidence":["list_available_skills(): direct Python AST limitation","corvus/corvus/verdict/bundle.py:96"],"result":"UNDETERMINED"},
+    {"skill_name":"sql-aggregation-not-materialization","concrete_action":"Reviewed the loaded contract and excluded aggregation performance from the public-entry-point mapping scope.","evidence":["list_available_skills(): len(fetchall())/loop check contract"],"result":"UNDETERMINED"},
+    {"skill_name":"tamper-evident-audit-chain","concrete_action":"Reviewed the loaded contract and deliberately left ledger persistence to the distinct chain_reviewer role.","evidence":["list_available_skills(): preceding-entry-hash contract"],"result":"UNDETERMINED"},
+    {"skill_name":"validate-at-the-boundary","concrete_action":"Ran the boundary skill and used its direct AST evidence to identify a path-to-sensitive-call boundary.","evidence":["corvus/corvus/verdict/bundle.py:95: parameter path reaches sensitive boundary without explicit raising validation","corvus/corvus/verdict/bundle.py:96: bundle = json.load(fh)"],"result":"UNDETERMINED"}
+  ],
+  "work_product": {
+    "observations": [
+      {"id":"SM-O1","statement":"The repository summary classifies api_server.py as CONNECTED_ALIVE with two callers and two import references; it contains decision vocabulary.","evidence":["api_server.py (triage caller graph: 2 callers, 2 imports)"]},
+      {"id":"SM-O2","statement":"The analysis layer is reachable according to triage: l1_grice.py through l5_linguistics.py each have three callers/import references, and l1/l2/l4/l5 contain decision or score vocabulary.","evidence":["corvus/corvus/analysis/l1_grice.py (3 callers, 3 imports)","corvus/corvus/analysis/l2_carnegie_cialdini.py (3 callers, 3 imports)","corvus/corvus/analysis/l4_berne.py (3 callers, 3 imports)","corvus/corvus/analysis/l5_linguistics.py (3 callers, 3 imports)"]},
+      {"id":"SM-O3","statement":"A direct boundary observation exists: path reaches a sensitive boundary at bundle.py:95, followed by json.load at :96; the audit did not execute a package-context induction harness.","evidence":["corvus/corvus/verdict/bundle.py:95","corvus/corvus/verdict/bundle.py:96","native finding reasoning: RUNTIME_NOT_EXECUTED / package load failure"]}
+    ],
+    "hypotheses": [
+      {"hypothesis_id":"SM-H1","statement":"The reachable API/analysis surface may carry externally supplied material into verdict-bundle loading without an explicit raising path validation.","status":"UNDETERMINED","basis":"Static triage and boundary AST evidence identify connected decision modules and a path-to-loader boundary, but do not prove call-chain reachability from an untrusted request."}
+    ],
+    "deductions": [
+      {"id":"SM-D1","statement":"The public/reachable surface map should prioritize api_server.py, the connected analysis modules, and verdict bundle loading; test-only path observations do not establish production exposure.","evidence":["api_server.py triage","corvus/corvus/analysis/l1_grice.py triage","corvus/corvus/verdict/bundle.py:95-96"]}
+    ],
+    "evidence": [
+      {"source":"api_server.py","line_reference":null,"kind":"triage","detail":"CONNECTED_ALIVE; 2 callers; 2 import references; decision vocabulary."},
+      {"source":"corvus/corvus/analysis/l1_grice.py","line_reference":null,"kind":"triage","detail":"CONNECTED_ALIVE; 3 callers; 3 import references; decision/score vocabulary."},
+      {"source":"corvus/corvus/verdict/bundle.py","line_reference":"95","kind":"boundary-skill AST","detail":"path reaches a sensitive boundary without explicit raising validation."},
+      {"source":"corvus/corvus/verdict/bundle.py","line_reference":"96","kind":"native finding AST","detail":"bundle = json.load(fh)."}
+    ],
+    "decision": "ABSTAIN: No confirmed defect is asserted. The boundary candidate remains UNDETERMINED because executed induction did not establish both untrusted reachability and a mechanism.",
+    "adi": [
+      {"hypothesis_id":"SM-H1","stage":"abduction","statement":"Connected API and analysis modules plus the path-to-json loader can explain a reachable trust-boundary concern.","evidence":["api_server.py triage","corvus/corvus/verdict/bundle.py:95-96"],"status":"PLAUSIBLE_HYPOTHESIS"},
+      {"hypothesis_id":"SM-H1","stage":"deduction","statement":"If this candidate is real, an instrumented public request or supported API invocation must reach bundle loading with a caller-controlled path and show whether validation raises before filesystem/parser use.","evidence":["corvus/corvus/verdict/bundle.py:95-96"],"status":"PREDICTION_REQUIRED"},
+      {"hypothesis_id":"SM-H1","stage":"induction","statement":"No executed induction demonstrated that request-to-loader reachability or a failure mechanism; native evidence reports runtime not executed/package-context loading failure.","evidence":["native finding provenance: RUNTIME_NOT_EXECUTED","native finding reasoning: ModuleNotFoundError: No module named 'corvus.models'"],"status":"UNDETERMINED"}
+    ]
+  }
+}

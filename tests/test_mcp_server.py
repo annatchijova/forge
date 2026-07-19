@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from forge.mcp_server import audit_repository, get_findings, narrate_findings, verify_seal, review_patch, runtime_info
+from forge.mcp_server import audit_repository, get_audit_trace, get_coverage, get_findings, narrate_findings, verify_seal, review_patch, runtime_info
 from forge.build_info import RUNTIME_FINGERPRINT
 
 def put(root, name, text):
@@ -32,6 +32,38 @@ def test_mcp_get_findings_filters_agent(tmp_path):
     run_dir=result["artifacts"]["sealed"].rsplit("/", 1)[0]
     findings=get_findings(run_dir, "security_auditor")
     assert findings and all(item["agent"] == "security_auditor" for item in findings)
+
+
+def test_mcp_sharded_audit_returns_a_plan_and_parent_readers_work(tmp_path):
+    put(tmp_path, "main.py", "import one\nimport two\n")
+    put(tmp_path, "one.py", "password = 'secret'\n")
+    put(tmp_path, "two.py", "def run(expr):\n    return eval(expr)\n")
+
+    result = audit_repository(str(tmp_path), max_connected=1, output_dir=str(tmp_path.parent / "mcp-runs"))
+
+    assert result["ok"] is True
+    assert result["status"] == "PARTIAL_SHARDED"
+    assert result["sharded"] is True
+    assert "report_html_path" not in result
+    assert Path(result["shard_plan_path"]).is_file()
+    assert [item["index"] for item in result["shards"]] == [1, 2, 3]
+    assert all("sealed" in item["artifacts"] for item in result["shards"])
+
+    run_dir = str(Path(result["artifacts"]["shards"]).parent)
+    coverage = get_coverage(run_dir)
+    assert coverage["ok"] is True
+    assert coverage["sharded"] is True
+    assert coverage["coverage_aggregation"] == "DEDUPLICATED_IDENTICAL_PARSE_SNAPSHOTS"
+    assert coverage["connected_alive_modules"] == 3
+    assert [item["connected_alive_modules"] for item in coverage["detector_scope_by_shard"]] == [1, 1, 1]
+
+    findings = get_findings(run_dir)
+    assert isinstance(findings, list)
+    assert len(findings) == result["findings"]
+
+    trace = get_audit_trace(run_dir)
+    assert trace["ok"] is True
+    assert any(event["kind"] == "run_completed" for event in trace["trace"]["events"])
 
 def test_mcp_verify_seal_reports_tamper(tmp_path):
     put(tmp_path, "main.py", "def run(expr):\n    return eval(expr)\n")

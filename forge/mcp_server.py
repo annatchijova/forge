@@ -5,6 +5,7 @@ tests independent of a running MCP client. They never write to an audited
 repository; audit output is placed in a temporary directory outside it.
 """
 from __future__ import annotations
+import hashlib
 import json
 import tempfile
 from dataclasses import asdict
@@ -45,6 +46,7 @@ from forge.sealing import verify_sealed
 from forge.agents.patch_reviewer import review as review_patch_impl
 from forge.comparison import compare_runs
 from forge.agent_independence import load_and_validate, write_validation_artifact, AgentIndependenceError
+from forge.agent_protocol import skills_catalog
 from forge.multi_agent import finalize_multi_agent_run
 from forge.build_info import RUNTIME_FINGERPRINT, PROCESS_IMPORTED_AT_EPOCH
 
@@ -102,9 +104,30 @@ def audit_repository(path: str, max_connected: int = 100, output_dir: str | None
             output = Path(tempfile.mkdtemp(prefix="run-", dir=output_root))
         configured_runtime = Runtime(max_connected=max_connected, model_routing=ModelRouting(orchestrator_model, agent_models or {}), cronos_db=cronos_db, induction=induction)
         result = configured_runtime.audit(root, output).to_dict()
-        result["report_html_path"] = result["artifacts"]["report"]; result["ok"] = True
+        artifacts = result["artifacts"]
+        if "report" in artifacts:
+            result["report_html_path"] = artifacts["report"]
+        elif "shards" in artifacts:
+            # A sharded audit intentionally has no parent report or seal.
+            # Return the plan so the caller can traverse independently sealed
+            # shard artifacts without mistaking navigation for evidence.
+            result["sharded"] = True
+            result["shard_plan_path"] = artifacts["shards"]
+            plan = json.loads(Path(artifacts["shards"]).read_text(encoding="utf-8"))
+            result["shards"] = [
+                {
+                    "index": item.get("index"),
+                    "status": item.get("status"),
+                    "paths": item.get("paths", []),
+                    "artifacts": item.get("artifacts", {}),
+                }
+                for item in plan.get("shards", [])
+            ]
+        else:
+            return _error("malformed_audit_result", "audit returned neither a report nor a shard plan")
+        result["ok"] = True
         return result
-    except (OSError, ValueError, RuntimeError) as exc:
+    except (OSError, ValueError, RuntimeError, KeyError, json.JSONDecodeError) as exc:
         return _error("audit_failed", str(exc))
 
 @mcp.tool()
@@ -163,13 +186,32 @@ def get_findings(run_output_dir: str, agent: str | None = None) -> list | dict:
     "integrity_inspector"). Each finding carries category, epistemic_level,
     module_path, description, evidence, and reasoning.
     """
-    path = Path(run_output_dir) / "verification-manifest.sealed.json"
+    run = Path(run_output_dir)
+    path = run / "verification-manifest.sealed.json"
     allowed = {"bug_investigator", "security_auditor", "integrity_inspector"}
     if agent is not None and agent not in allowed: return _error("invalid_agent", f"unsupported agent filter: {agent}")
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-        if not isinstance(data.get("chain"), list): return _error("malformed_artifact", "sealed manifest has no chain list")
-        return runtime.get_findings(run_output_dir, agent)
+        if path.is_file():
+            data = json.loads(path.read_text(encoding="utf-8"))
+            if not isinstance(data.get("chain"), list): return _error("malformed_artifact", "sealed manifest has no chain list")
+            return runtime.get_findings(run, agent)
+
+        # A sharded run deliberately has no parent sealed manifest.  Read each
+        # independently sealed shard in deterministic plan order instead.
+        plan = json.loads((run / "shards.json").read_text(encoding="utf-8"))
+        findings: list[dict[str, Any]] = []
+        for shard in sorted(plan.get("shards", []), key=lambda item: int(item.get("index", 0))):
+            if shard.get("status") != "COMPLETE":
+                continue
+            sealed = Path(shard.get("artifacts", {}).get("sealed", ""))
+            data = json.loads(sealed.read_text(encoding="utf-8"))
+            if not isinstance(data.get("chain"), list):
+                return _error("malformed_artifact", f"sealed shard manifest has no chain list: {sealed}")
+            for entry in data["chain"]:
+                finding = entry.get("finding", {})
+                if agent is None or finding.get("agent", "bug_investigator") == agent:
+                    findings.append(finding)
+        return findings
     except FileNotFoundError: return _error("missing_artifact", f"sealed manifest not found: {path}")
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc: return _error("malformed_artifact", f"could not read sealed manifest: {exc}")
 
@@ -250,8 +292,34 @@ def infer_module_domains(path: str) -> dict[str, Any]:
 
 @mcp.tool()
 def list_available_skills() -> dict[str, Any]:
-    """List the governance skill plugins loaded from forge/skills/, with their contracts."""
-    try: return {"ok": True, "skills": list(runtime.list_available_skills())}
+    """List the complete multi-agent ledger catalog and executable skill state.
+
+    External agents must ledger every policy skill required by
+    ``validate_agent_results()``, not only the subset with an executable
+    plugin under ``forge/skills/``.  Returning just that subset made the MCP
+    discovery contract impossible to satisfy honestly.
+    """
+    try:
+        executable = {item["name"]: item for item in runtime.list_available_skills()}
+        skills = []
+        for name, source, _text in skills_catalog():
+            item = dict(executable.get(name, {}))
+            item.update({
+                "name": name,
+                "source": source,
+                "ledger_required": True,
+                "execution": "EXECUTABLE" if name in executable else "POLICY_ONLY",
+            })
+            skills.append(item)
+        digest_payload = [{"name": item["name"], "source": item["source"], "execution": item["execution"]} for item in skills]
+        digest = hashlib.sha256(json.dumps(digest_payload, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+        return {
+            "ok": True,
+            "skills": skills,
+            "skills_catalog_digest": digest,
+            "executable_skill_count": len(executable),
+            "ledger_required_skill_count": len(skills),
+        }
     except (OSError, ValueError, json.JSONDecodeError) as exc: return _error("skill_loading_failed", str(exc))
 
 @mcp.tool()
