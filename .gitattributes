@@ -1,0 +1,4 @@
+# Reports and companion pages are published artifacts, not implementation code.
+# Keep them visible in the repository while excluding them from GitHub's language bar.
+*.html linguist-detectable=false
+results/** linguist-generated=true

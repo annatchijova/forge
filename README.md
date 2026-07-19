@@ -76,6 +76,45 @@ and [extended](https://annatchijova.github.io/vigia/forge-extended.html).
 
 ---
 
+## Repository map
+
+This is the implementation tree, intentionally excluding generated caches,
+archived run payloads, and the visual gallery above. The full evidence archive
+remains under [`results/`](results/).
+
+```text
+forge/
+├── .github/workflows/        # CI
+├── agents/                   # concise public agent overview
+├── docs/                     # contracts, methodology, red-team records, guides
+│   └── images/               # documentation assets
+├── forge/                    # Python implementation
+│   ├── agents/               # bounded specialist detectors
+│   ├── cronos/               # trace chain, store, quality, narration
+│   ├── detector/             # discovery and detector-scope stack
+│   ├── governance/           # executable governance runtime
+│   ├── harness/              # bounded self-improvement and validation
+│   ├── skills/               # executable domain contracts
+│   ├── cli.py                # CLI frontend
+│   ├── mcp_server.py         # MCP frontend
+│   ├── multi_agent.py        # external work-product validation
+│   ├── orchestrator.py       # compatibility frontend
+│   ├── runtime.py            # one canonical audit runtime
+│   ├── sealing.py            # manifests and integrity seals
+│   └── verification.py       # independent verification
+├── results/                  # preserved, sealed audit evidence
+├── skills-gpt/               # human-readable governance skill material
+├── tests/                    # unit, integration, corpus, recall and hardening tests
+│   └── corpus/               # positive, negative, and out-of-scope fixtures
+├── visual/                   # README run and report screenshots
+├── CODEX.md                  # collaboration contract
+├── DECISIONS.md              # architectural decision record
+├── pyproject.toml            # packaging and test configuration
+└── README.md
+```
+
+---
+
 ## Why FORGE?
 
 Modern AI coding assistants are excellent at producing code.
