@@ -25,6 +25,22 @@ demo outputs: self-audits, real-repository case studies, benchmark runs, false
 positives, discarded hypotheses, traces, manifests, and regression-backed
 fixes remain available for inspection.
 
+### Reproducible repository scale
+
+The following counts were produced with `cloc` over tracked `.py`, `.md`,
+`.json`, `.sql`, and `.html` files on 2026-07-21. They distinguish the FORGE
+runtime from its separately versioned audit corpus:
+
+| Repository | Tracked files counted | Total lines | What the count represents |
+|---|---:|---:|---|
+| [`forge`](../) | 479 | **743,646** | Runtime code, documentation, sealed reports, and checked-in audit artifacts |
+| [`forge-results`](https://github.com/annatchijova/forge-results) | 563 | **7,868,088** | Independently versioned archive of generated JSON/HTML evidence and reports |
+
+The headline is intentionally not presented as “lines of Python.” The runtime
+contains **11,603 Python LOC**; most of the total is the inspectable evidence
+corpus that FORGE generates and preserves. That distinction is part of the
+project's provenance claim, not a cosmetic metric.
+
 ## Developer-tool surface
 
 - **Terminal-first local audits.** `python3 -m forge audit /path/to/repository`
