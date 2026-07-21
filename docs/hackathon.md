@@ -192,7 +192,10 @@ that external identifier.
 
 Known Codex sessions used during the build:
 
+* `019f6326-682a-76a1-884b-7440b954eb96`
+* `019f636f-ff93-79c0-9c99-8320abc066f1`
 * `019f65d2-230f-71d2-ab70-e8195fb8fae0`
 * `019f6693-c5fa-75e1-bc61-3c7af5ab6cc0`
 * `019f6706-b195-7981-b21a-a01f98a6f785`
-* _Three additional session IDs pending retrieval from screenshots._
+* `019f6bd5-7ee4-7822-807c-8e2281bc96b3`
+* `019f6c10-dfa8-7990-9e3c-76a56454bdd7`
