@@ -27,6 +27,23 @@
 > tool boundary rather than a prompt being treated as audit authority. The core
 > audit path is local, read-only, stdlib-only, and needs no API key or network.
 
+## Documentation as a first-class artifact
+
+FORGE is documented as rigorously as it is implemented. Its documentation is
+not installation filler or a retrospective sales layer: it is part of the
+system's evidence.
+
+The repository records architectural decisions, governance contracts, threat
+models, epistemic and reasoning methodology, skill contracts, benchmark and
+recall reports, red-team investigations, reproducibility instructions, scripts
+for the public demo, real-repository case studies, explicit limits, and the
+`ABSTAIN` disposition. Together with the sealed artifacts, those documents let
+a reviewer inspect not only what FORGE concluded, but why the runtime was
+allowed to reach that conclusion and where it was required to stop.
+
+> **FORGE is designed to leave an investigation record, not merely print a
+> result.**
+
 ## Evidence at hackathon scale
 
 > **Over 800 MB of reproducible audit evidence — approaching a gigabyte.**
